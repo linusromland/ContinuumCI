@@ -1,0 +1,13 @@
+{
+	"name": "shared",
+	"scripts": {
+		"lint": "eslint src/**/*.ts"
+	},
+	"dependencies": {
+		"typescript": "4.9.3"
+	},
+	"devDependencies": {
+		"eslint-config-custom": "*",
+		"tsconfig": "*"
+	}
+}
