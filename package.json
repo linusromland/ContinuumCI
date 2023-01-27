@@ -1,0 +1,45 @@
+{
+	"name": "continuumci",
+	"description": "ContinuumCI is tool for easy, self-hosted continuous deployment.",
+	"version": "0.0.1",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/linusromland/ContinuumCI.git"
+	},
+	"keywords": [
+		"continuumci",
+		"ci"
+	],
+	"author": "Linus Romland",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/linusromland/ContinuumCI/issues"
+	},
+	"homepage": "https://github.com/linusromland/ContinuumCI#readme",
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev --parallel",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\""
+	},
+	"devDependencies": {
+		"eslint-config-custom": "*",
+		"prettier": "latest",
+		"turbo": "latest"
+	},
+	"engines": {
+		"node": ">=14.0.0"
+	},
+	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "5.44.0",
+		"@typescript-eslint/parser": "5.44.0",
+		"eslint-config-prettier": "8.5.0",
+		"eslint-config-turbo": "0.0.4",
+		"eslint-plugin-turbo": "^0.0.4"
+	},
+	"packageManager": "npm@8.19.2"
+}
