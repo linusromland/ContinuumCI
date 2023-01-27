@@ -6,10 +6,15 @@
 
 <div align="center">
 	<div>
-		<img src="docs/logo.svg" alt="ContinuumCI Logo" width="100" height="100" />
-		<h1>ContinuumCI</h1>
-	</div>
-	<p>ContinuumCI is a self-hosted continuous deployment tool that makes it easy to automatically deploy code from GitHub. It is built using Nest.JS and Svelte, and is designed to be easy to set up and use.</p>
+		<picture>
+			<source media="(prefers-color-scheme: dark)" srcset="docs/logo.svg">
+			<source media="(prefers-color-scheme: light)" srcset="docs/logo_dark.svg">
+			<img alt="ContinuumCI logo" src="docs/logo_dark.svg" width="100" height="100">
+		</picture>
+    	<h1>ContinuumCI</h1>
+    </div>
+    <p>ContinuumCI is a self-hosted continuous deployment tool that makes it easy to automatically deploy code from GitHub. It is built using Nest.JS and Svelte, and is designed to be easy to set up and use.</p>
+
 </div>
 
 ## Table of Contents
