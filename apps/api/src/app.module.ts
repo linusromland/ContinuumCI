@@ -6,9 +6,11 @@ import { databaseProviders, schemaProviders } from './providers';
 
 // Modules import
 import { WelcomeModule } from './routes/welcome/welcome.module';
+import { AuthModule } from './routes/auth/auth.module';
+import { UsersModule } from './routes/users/users.module';
 
 @Module({
-	imports: [WelcomeModule],
+	imports: [WelcomeModule, AuthModule, UsersModule],
 	providers: [...databaseProviders, ...schemaProviders],
 	exports: [...databaseProviders, ...schemaProviders]
 })
