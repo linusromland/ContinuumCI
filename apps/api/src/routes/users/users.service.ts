@@ -53,7 +53,6 @@ export class UsersService {
 
 	async updateUsername(user: JwtType, newUsername: string): Promise<ResponseType> {
 		try {
-			console.log(user);
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
 				return {
@@ -72,8 +71,6 @@ export class UsersService {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
-			console.log(error);
-
 			//check if error is duplicate key error on username or email
 			if (error.code === 11000 && error.keyPattern['username']) {
 				return {
