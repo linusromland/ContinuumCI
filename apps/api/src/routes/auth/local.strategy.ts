@@ -1,6 +1,9 @@
+// External dependencies
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+
+// Internal dependencies
 import { AuthService } from './auth.service';
 
 @Injectable()

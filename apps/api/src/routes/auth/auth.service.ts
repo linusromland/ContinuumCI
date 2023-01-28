@@ -1,4 +1,7 @@
+// External dependencies
 import { Injectable } from '@nestjs/common';
+
+// Internal dependencies
 import { UsersService } from '../users/users.service';
 
 @Injectable()
