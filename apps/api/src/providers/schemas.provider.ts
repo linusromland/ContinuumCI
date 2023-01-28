@@ -3,14 +3,14 @@
 import { Connection } from 'mongoose';
 
 // Internal dependencies
-// import { ExampleSchema } from '../schemas';
+import { UserSchema } from '../schemas';
 
 const schemaProviders = [
-	/*{
-	provide: 'EXAMPLE_MODEL',
-	useFactory: (connection: Connection) => connection.model('Example', ExampleSchema),
-	inject: ['DATABASE_CONNECTION']
-	}*/
+	{
+		provide: 'USER_MODEL',
+		useFactory: (connection: Connection) => connection.model('users', UserSchema),
+		inject: ['DATABASE_CONNECTION']
+	}
 ];
 
 export default schemaProviders;
