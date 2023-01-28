@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 
 // Internal dependencies
 import { jwtConstants } from '../../constants/auth';
+import { JwtType } from 'shared/src/types';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -16,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	async validate(payload: { username: string; sub: string; iat: number; exp: number }) {
+	async validate(payload: JwtType) {
 		return payload;
 	}
 }

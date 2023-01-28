@@ -3,7 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import { UserType, ResponseType } from 'shared/src/types';
+import { JwtType, UserType, ResponseType } from 'shared/src/types';
 
 @Injectable()
 export class UsersService {
@@ -21,7 +21,8 @@ export class UsersService {
 			const role = (await this.UserModel.countDocuments()) === 0 ? 'root' : 'user';
 			const createdUser = new this.UserModel({
 				...user,
-				role
+				role,
+				verifiedEmail: role === 'root' ? true : false
 			});
 
 			await createdUser.save();
@@ -36,6 +37,44 @@ export class UsersService {
 				return {
 					success: false,
 					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
+				};
+			}
+
+			return {
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			};
+		}
+	}
+
+	async updateUsername(user: JwtType, newUsername: string): Promise<ResponseType> {
+		try {
+			console.log(user);
+			const updatedUser = await this.UserModel.findById(user.sub);
+			if (!updatedUser) {
+				return {
+					success: false,
+					message: 'User not found'
+				};
+			}
+
+			updatedUser.username = newUsername;
+			await updatedUser.save();
+
+			return {
+				success: true,
+				message: 'Username updated successfully'
+			};
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			console.log(error);
+
+			//check if error is duplicate key error on username or email
+			if (error.code === 11000 && error.keyPattern['username']) {
+				return {
+					success: false,
+					message: 'Username already in use'
 				};
 			}
 
