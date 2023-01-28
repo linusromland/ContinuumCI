@@ -10,7 +10,7 @@ import { UsersService } from './users.service';
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
-	@Post()
+	@Post('create')
 	getProfile(@Request() req) {
 		return this.usersService.create(req.body);
 	}

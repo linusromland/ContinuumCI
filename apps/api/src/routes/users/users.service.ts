@@ -16,6 +16,10 @@ export class UsersService {
 		return await this.UserModel.findOne({ username });
 	}
 
+	async findOneById(id: string): Promise<UserType | undefined> {
+		return await this.UserModel.findById(id).select('-password');
+	}
+
 	async create(user: UserType): Promise<ResponseType> {
 		try {
 			const role = (await this.UserModel.countDocuments()) === 0 ? 'root' : 'user';

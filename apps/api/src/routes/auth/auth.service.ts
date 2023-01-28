@@ -10,6 +10,10 @@ import { LoginType, UserType } from 'shared/src/types';
 export class AuthService {
 	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
+	async getUser(id: string): Promise<UserType> {
+		return await this.usersService.findOneById(id);
+	}
+
 	async validateUser(username: string, pass: string): Promise<UserType> {
 		const user = await this.usersService.findOne(username);
 		if (user && user.password === pass) {
