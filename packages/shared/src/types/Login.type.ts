@@ -1,5 +1,10 @@
+// Internal dependencies
+import { ResponseType } from './';
+
 type LoginType = {
-	access_token: string;
+	access_token?: string;
 };
 
-export default LoginType;
+type LoginResponseType = LoginType & ResponseType;
+
+export default LoginResponseType;

@@ -1,3 +1,6 @@
+// Internal dependencies
+import { ResponseType } from './';
+
 type UserType = {
 	_id: string;
 	username: string;
@@ -7,4 +10,6 @@ type UserType = {
 	verifiedEmail: boolean;
 };
 
-export default UserType;
+type UserResponseType = UserType & ResponseType;
+
+export { UserResponseType, UserType };

@@ -6,6 +6,9 @@ import { WelcomeType } from 'shared/src/types';
 
 export class WelcomeEntity implements WelcomeType {
 	@ApiProperty()
+	success: WelcomeType['success'];
+
+	@ApiProperty()
 	message: WelcomeType['message'];
 
 	@ApiProperty()

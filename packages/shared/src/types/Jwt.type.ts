@@ -1,3 +1,6 @@
+// Internal dependencies
+import { ResponseType } from './';
+
 type JwtType = {
 	username: string;
 	email: string;
@@ -7,4 +10,6 @@ type JwtType = {
 	exp: number;
 };
 
-export default JwtType;
+type JwtResponseType = JwtType & ResponseType;
+
+export default JwtResponseType;

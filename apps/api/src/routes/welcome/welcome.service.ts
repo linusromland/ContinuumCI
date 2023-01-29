@@ -8,6 +8,7 @@ import { WelcomeType } from 'shared/src/types';
 export class WelcomeService {
 	getWelcomeMessage(): WelcomeType {
 		return {
+			success: true,
 			message: 'ContinuumCI API',
 			firstTimeSetup: true
 		};
