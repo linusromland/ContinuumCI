@@ -12,4 +12,4 @@ type JwtType = {
 
 type JwtResponseType = JwtType & ResponseType;
 
-export default JwtResponseType;
+export { JwtResponseType, JwtType };

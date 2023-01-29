@@ -3,4 +3,4 @@ type ResponseType = {
 	success: boolean;
 };
 
-export default ResponseType;
+export { ResponseType };

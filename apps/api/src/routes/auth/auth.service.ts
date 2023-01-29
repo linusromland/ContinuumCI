@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import { LoginType, UserResponseType, UserType, ResponseType } from 'shared/src/types';
+import { LoginResponseType, UserResponseType, UserType, ResponseType } from 'shared/src/types';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +45,7 @@ export class AuthService {
 		return null;
 	}
 
-	async login(user: UserType): Promise<LoginType> {
+	async login(user: UserType): Promise<LoginResponseType> {
 		const payload = {
 			username: user.username,
 			email: user.email,

@@ -2,15 +2,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 // Internal dependencies
-import { WelcomeType } from 'shared/src/types';
+import { WelcomeResponseType } from 'shared/src/types';
 
-export class WelcomeEntity implements WelcomeType {
+export class WelcomeEntity implements WelcomeResponseType {
 	@ApiProperty()
-	success: WelcomeType['success'];
-
-	@ApiProperty()
-	message: WelcomeType['message'];
+	success: WelcomeResponseType['success'];
 
 	@ApiProperty()
-	firstTimeSetup: WelcomeType['firstTimeSetup'];
+	message: WelcomeResponseType['message'];
+
+	@ApiProperty()
+	firstTimeSetup: WelcomeResponseType['firstTimeSetup'];
 }

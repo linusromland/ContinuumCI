@@ -7,4 +7,4 @@ type LoginType = {
 
 type LoginResponseType = LoginType & ResponseType;
 
-export default LoginResponseType;
+export { LoginResponseType, LoginType };

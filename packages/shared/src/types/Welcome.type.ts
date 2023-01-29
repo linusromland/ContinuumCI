@@ -7,4 +7,4 @@ type WelcomeType = {
 
 type WelcomeResponseType = WelcomeType & ResponseType;
 
-export default WelcomeResponseType;
+export { WelcomeResponseType, WelcomeType };
