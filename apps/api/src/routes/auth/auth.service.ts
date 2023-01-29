@@ -1,21 +1,43 @@
 // External dependencies
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Model } from 'mongoose';
 
 // Internal dependencies
-import { UsersService } from '../users/users.service';
-import { LoginType, UserType } from 'shared/src/types';
+import { LoginType, UserResponseType, UserType, ResponseType } from 'shared/src/types';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService, private jwtService: JwtService) {}
+	constructor(
+		private jwtService: JwtService,
+		@Inject('USER_MODEL')
+		private UserModel: Model<UserType>
+	) {}
 
-	async getUser(id: string): Promise<UserType> {
-		return await this.usersService.findOneById(id);
+	async getUser(id: string): Promise<UserResponseType | ResponseType> {
+		const user: UserType = await this.UserModel.findById(id).select('-password');
+
+		if (user) {
+			return {
+				success: true,
+				message: 'User found',
+				_id: user._id,
+				username: user.username,
+				email: user.email,
+				verifiedEmail: user.verifiedEmail,
+				role: user.role
+			};
+		}
+
+		return {
+			success: false,
+			message: 'User not found'
+		};
 	}
 
 	async validateUser(username: string, pass: string): Promise<UserType> {
-		const user = await this.usersService.findOne(username);
+		const user = await this.UserModel.findOne({ username });
+
 		if (user && user.password === pass) {
 			delete user.password;
 			return user;
@@ -30,8 +52,18 @@ export class AuthService {
 			verifiedEmail: user.verifiedEmail,
 			sub: user._id
 		};
-		return {
-			access_token: this.jwtService.sign(payload)
-		};
+		try {
+			const token = this.jwtService.sign(payload);
+			return {
+				success: true,
+				message: 'Login successful',
+				access_token: token
+			};
+		} catch (error) {
+			return {
+				success: false,
+				message: 'Something went wrong'
+			};
+		}
 	}
 }
