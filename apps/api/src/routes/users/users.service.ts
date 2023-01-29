@@ -12,14 +12,6 @@ export class UsersService {
 		private UserModel: Model<UserType>
 	) {}
 
-	async findOne(username: string): Promise<UserType | undefined> {
-		return await this.UserModel.findOne({ username });
-	}
-
-	async findOneById(id: string): Promise<UserType | undefined> {
-		return await this.UserModel.findById(id).select('-password');
-	}
-
 	async create(user: UserType): Promise<ResponseType> {
 		try {
 			const role = (await this.UserModel.countDocuments()) === 0 ? 'root' : 'user';
@@ -41,6 +33,14 @@ export class UsersService {
 				return {
 					success: false,
 					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
+				};
+			}
+
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				return {
+					success: false,
+					message: 'Missing required fields'
 				};
 			}
 
@@ -76,6 +76,62 @@ export class UsersService {
 				return {
 					success: false,
 					message: 'Username already in use'
+				};
+			}
+
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				return {
+					success: false,
+					message: 'Missing required fields'
+				};
+			}
+
+			return {
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			};
+		}
+	}
+
+	async updatePassword(user: JwtType, oldPassword: string, newPassword: string): Promise<ResponseType> {
+		try {
+			if (!oldPassword || !newPassword) {
+				return {
+					success: false,
+					message: 'Missing required fields'
+				};
+			}
+
+			const updatedUser = await this.UserModel.findById(user.sub);
+			if (!updatedUser) {
+				return {
+					success: false,
+					message: 'User not found'
+				};
+			}
+
+			if (updatedUser.password !== oldPassword) {
+				return {
+					success: false,
+					message: 'Old password is incorrect'
+				};
+			}
+
+			updatedUser.password = newPassword;
+			await updatedUser.save();
+
+			return {
+				success: true,
+				message: 'Password updated successfully'
+			};
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				return {
+					success: false,
+					message: 'Missing required fields'
 				};
 			}
 
