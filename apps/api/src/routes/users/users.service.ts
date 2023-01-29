@@ -183,6 +183,13 @@ export class UsersService {
 				};
 			}
 
+			if (updateUser.role === 'root') {
+				return {
+					success: false,
+					message: 'Cannot change root role'
+				};
+			}
+
 			updateUser.role = newRole;
 			await updateUser.save();
 
