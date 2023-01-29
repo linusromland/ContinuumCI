@@ -1,6 +1,6 @@
 // External dependencies
 import { Injectable, Inject } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 
 // Internal dependencies
 import { JwtType, UserType, ResponseType } from 'shared/src/types';
@@ -135,6 +135,64 @@ export class UsersService {
 				};
 			}
 
+			return {
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			};
+		}
+	}
+
+	async updateRole(jwtUser: JwtType, userId: string, newRole: string): Promise<ResponseType> {
+		try {
+			if (isValidObjectId(userId) === false) {
+				return {
+					success: false,
+					message: 'Invalid user id'
+				};
+			}
+
+			const user = await this.UserModel.findById(jwtUser.sub);
+
+			if (!user || user.role !== 'root') {
+				return {
+					success: false,
+					message: 'Unauthorized'
+				};
+			}
+
+			if (newRole !== 'user' && newRole !== 'admin') {
+				return {
+					success: false,
+					message: 'Invalid role'
+				};
+			}
+
+			const updateUser = await this.UserModel.findById(userId);
+
+			if (!updateUser) {
+				return {
+					success: false,
+					message: 'User not found'
+				};
+			}
+
+			if (updateUser.role === newRole) {
+				return {
+					success: false,
+					message: 'Role is already set to ' + newRole
+				};
+			}
+
+			updateUser.role = newRole;
+			await updateUser.save();
+
+			return {
+				success: true,
+				message: 'Role updated successfully'
+			};
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (error: any) {
 			return {
 				success: false,
 				message: (error as string | null) || 'Something went wrong'

@@ -26,4 +26,10 @@ export class UsersController {
 	updatePassword(@Request() req) {
 		return this.usersService.updatePassword(req.user, req.body.oldPassword, req.body.newPassword);
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Put('edit/role')
+	updateRole(@Request() req) {
+		return this.usersService.updateRole(req.user, req.body.userId, req.body.role);
+	}
 }
