@@ -34,3 +34,6 @@ yarn-error.log*
 
 # NestJS Build
 dist
+
+# Environment Variables files
+.env

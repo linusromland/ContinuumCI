@@ -1,6 +1,10 @@
+// Internal dependencies
+import { ResponseType } from './';
+
 type WelcomeType = {
-	message: string;
 	firstTimeSetup: boolean;
 };
 
-export default WelcomeType;
+type WelcomeResponseType = WelcomeType & ResponseType;
+
+export { WelcomeResponseType, WelcomeType };
