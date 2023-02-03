@@ -9,13 +9,19 @@ import {
 import { isValidObjectId, Model } from 'mongoose';
 
 // Internal dependencies
-import { JwtType, UserType, ResponseType } from 'shared/src/types';
+import { JwtType, UserType, ResponseType, EmailVerificationResponseType } from 'shared/src/types';
+import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
 export class UsersService {
 	constructor(
+		private emailConfigurationService: EmailConfigurationService,
+
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserType>
+		private UserModel: Model<UserType>,
+
+		@Inject('EMAIL_VERIFICATION_MODEL')
+		private EmailVerificationModel: Model<EmailVerificationResponseType>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {
@@ -26,6 +32,17 @@ export class UsersService {
 				role,
 				verifiedEmail: role === 'root' ? true : false
 			});
+
+			if (!createdUser.verifiedEmail) {
+				const emailVerification = new this.EmailVerificationModel({
+					user: createdUser._id
+				});
+
+				await emailVerification.save();
+
+				// Send email verification email
+				await this.emailConfigurationService.sendVerificationEmail(createdUser.email, emailVerification._id);
+			}
 
 			await createdUser.save();
 			return {

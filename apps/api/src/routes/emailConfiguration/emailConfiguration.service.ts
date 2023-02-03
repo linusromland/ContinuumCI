@@ -61,4 +61,46 @@ export class EmailConfigurationService {
 	async get(): Promise<EmailConfigurationResponseType> {
 		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
 	}
+
+	async sendVerificationEmail(email: string, verificationToken: string): Promise<ResponseType> {
+		try {
+			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();
+
+			if (!emailConfiguration) {
+				throw new InternalServerErrorException({
+					success: false,
+					message: 'Email configuration not found'
+				});
+			}
+
+			const transporter = nodemailer.createTransport({
+				service: emailConfiguration.service,
+				auth: {
+					user: emailConfiguration.auth.user,
+					pass: emailConfiguration.auth.pass
+				}
+			});
+
+			await transporter.sendMail({
+				from: emailConfiguration.auth.user,
+				to: email,
+				subject: 'Verify your email',
+				html: `<p>Click <a href="http://localhost:3000/verify-email/${verificationToken}">here</a> to verify your email</p>`
+			});
+
+			return {
+				success: true,
+				message: 'Verification email sent successfully'
+			};
+		} catch (error) {
+			if (error instanceof InternalServerErrorException) {
+				throw error;
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
 }
