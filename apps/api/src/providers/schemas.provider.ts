@@ -3,9 +3,19 @@
 import { Connection } from 'mongoose';
 
 // Internal dependencies
-import { UserSchema } from '../schemas';
+import { EmailConfigurationSchema, EmailVerificationSchema, UserSchema } from '../schemas';
 
 const schemaProviders = [
+	{
+		provide: 'EMAIL_CONFIGURATION_MODEL',
+		useFactory: (connection: Connection) => connection.model('emailConfigurations', EmailConfigurationSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'EMAIL_VERIFICATION_MODEL',
+		useFactory: (connection: Connection) => connection.model('emailVerifications', EmailVerificationSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
 	{
 		provide: 'USER_MODEL',
 		useFactory: (connection: Connection) => connection.model('users', UserSchema),

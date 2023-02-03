@@ -1,5 +1,11 @@
 // External dependencies
-import { Injectable, Inject } from '@nestjs/common';
+import {
+	Injectable,
+	Inject,
+	BadRequestException,
+	InternalServerErrorException,
+	UnauthorizedException
+} from '@nestjs/common';
 import { isValidObjectId, Model } from 'mongoose';
 
 // Internal dependencies
@@ -30,24 +36,24 @@ export class UsersService {
 		} catch (error: any) {
 			//check if error is duplicate key error on username or email
 			if (error.code === 11000 && (error.keyPattern['username'] || error.keyPattern['email'])) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
-				};
+				});
 			}
 
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 
@@ -73,49 +79,49 @@ export class UsersService {
 		} catch (error: any) {
 			//check if error is duplicate key error on username or email
 			if (error.code === 11000 && error.keyPattern['username']) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Username already in use'
-				};
+				});
 			}
 
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 
 	async updatePassword(user: JwtType, oldPassword: string, newPassword: string): Promise<ResponseType> {
 		try {
 			if (!oldPassword || !newPassword) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'User not found'
-				};
+				});
 			}
 
 			if (updatedUser.password !== oldPassword) {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Old password is incorrect'
-				};
+					message: 'Incorrect password'
+				});
 			}
 
 			updatedUser.password = newPassword;
@@ -129,65 +135,65 @@ export class UsersService {
 		} catch (error: any) {
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 
 	async updateRole(jwtUser: JwtType, userId: string, newRole: string): Promise<ResponseType> {
 		try {
 			if (isValidObjectId(userId) === false) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Invalid user id'
-				};
+				});
 			}
 
 			const user = await this.UserModel.findById(jwtUser.sub);
 
 			if (!user || user.role !== 'root') {
-				return {
+				throw new UnauthorizedException({
 					success: false,
 					message: 'Unauthorized'
-				};
+				});
 			}
 
 			if (newRole !== 'user' && newRole !== 'admin') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Invalid role'
-				};
+				});
 			}
 
 			const updateUser = await this.UserModel.findById(userId);
 
 			if (!updateUser) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'User not found'
-				};
+				});
 			}
 
 			if (updateUser.role === newRole) {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Role is already set to ' + newRole
-				};
+					message: 'User already set to ' + newRole
+				});
 			}
 
 			if (updateUser.role === 'root') {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Cannot change root role'
-				};
+					message: 'Cannot change root user role'
+				});
 			}
 
 			updateUser.role = newRole;
@@ -200,10 +206,10 @@ export class UsersService {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 }
