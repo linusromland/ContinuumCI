@@ -19,7 +19,6 @@
 		"@nestjs/mongoose": "^9.2.1",
 		"@nestjs/passport": "^9.0.0",
 		"@nestjs/platform-express": "^9.0.0",
-		"@nestjs/swagger": "^6.1.4",
 		"dotenv": "^16.0.3",
 		"eslint-config-custom": "*",
 		"mongoose": "^6.9.0",
@@ -28,8 +27,8 @@
 		"passport-local": "^1.0.0",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^7.2.0",
-		"shared": "*",
-		"tsconfig": "*"
+		"tsconfig": "*",
+		"shared": "*"
 	},
 	"devDependencies": {
 		"@nestjs/cli": "^9.0.0",
