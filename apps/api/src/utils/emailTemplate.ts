@@ -9,15 +9,17 @@ const emailTemplate = (
 	}
 ): string => {
 	const templatePath = `../templates/${templateName}.html`;
-	const templateContent = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
+	let templateContent = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
 
 	if (!templateContent) throw new Error('Template not found');
 
 	const templateKeys = Object.keys(template);
-	templateKeys.forEach((key) => {
-		const regex = new RegExp(`{{${key}}}`, 'g');
-		templateContent.replace(regex, template[key]);
-	});
+	for (const key of templateKeys) {
+		const templateValue = template[key];
+		console.log(`{{${key}}}`);
+		const templateRegex = new RegExp(`{{${key}}}`, 'g');
+		templateContent = templateContent.replace(templateRegex, templateValue);
+	}
 
 	return templateContent;
 };
