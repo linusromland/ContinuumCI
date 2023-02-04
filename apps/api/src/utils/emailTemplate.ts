@@ -2,6 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 
+//TODO: implement some email template engine
+// Ex. https://mjml.io/
+
 const emailTemplate = (
 	templateName: string,
 	template: {

@@ -22,31 +22,31 @@
 				padding: 0;
 			}
 
-			header {
+			.emailTemplateHeader {
 				background-color: #1a1c1e;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 			}
 
-			header h1 {
-				color: #ffffff;
-				margin-right: 0.5rem;
-			}
-
-			header img {
+			.emailTemplateHeaderLogo {
 				width: 50px;
 				height: 50px;
 				margin-right: 10px;
 			}
 
-			main {
+			.emailTemplateHeaderTitle {
+				color: #ffffff;
+				margin-right: 0.5rem;
+			}
+
+			.emailTemplateMain {
 				display: flex;
 				justify-content: center;
 				margin-top: 2rem;
 			}
 
-			section {
+			.emailTemplateMainSection {
 				background-color: #ffffff;
 				padding: 1rem;
 				margin: 1rem;
@@ -57,57 +57,72 @@
 				flex-direction: column;
 			}
 
-			button {
+			.emailTemplateMainSectionTitle {
+				margin: 0;
+				margin-bottom: 1rem;
+			}
+
+			.emailTemplateMainSectionText {
+				margin: 0;
+				margin-bottom: 1rem;
+			}
+
+			.emailTemplateMainSectionButton {
 				background-color: #1a1c1e;
 				color: #ffffff;
 				border: none;
 				border-radius: 0.5rem;
 				padding: 1rem 4rem;
-				margin-top: 1rem;
+				margin-bottom: 1.5rem;
 				width: fit-content;
 			}
 
-			button a {
+			.emailTemplateMainSectionButtonLink {
 				text-decoration: none;
 				color: #ffffff;
 			}
 
-			button:hover {
+			.emailTemplateMainSectionButton:hover {
 				background-color: #333;
 			}
 		</style>
 	</head>
 	<body>
-		<header>
+		<header class="emailTemplateHeader">
 			<img
+				class="emailTemplateHeaderLogo"
 				src="https://raw.githubusercontent.com/linusromland/ContinuumCI/master/docs/logo.svg"
 				alt="ContinuumCI Logo"
 			/>
-			<h1>ContinuumCI</h1>
+			<h1 class="emailTemplateHeaderTitle">ContinuumCI</h1>
 		</header>
-		<main>
-			<section>
-				<h1>Account verification request</h1>
-				<p>Dear {{name}},</p>
+		<main class="emailTemplateMain">
+			<section class="emailTemplateMainSection">
+				<h1 class="emailTemplateMainSectionTitle">Account verification request</h1>
+				<p class="emailTemplateMainSectionText">Dear {{name}},</p>
 
-				<p>
+				<p class="emailTemplateMainSectionText">
 					You have registered an account on ContinuumCI. To complete your account setup, we need to verify
 					your email address. Please follow the link bellow to verify your email and get started using
 					ContinuumCI.
 				</p>
 
-				<button>
-					<a href="{{url}}">Verify email</a>
+				<button class="emailTemplateMainSectionButton">
+					<a
+						class="emailTemplateMainSectionButtonLink"
+						href="{{url}}"
+						>Verify email</a
+					>
 				</button>
 
-				<p>This link will expire in 30 minutes. ({{expires}})</p>
+				<p class="emailTemplateMainSectionText">This link will expire in 30 minutes. ({{expires}})</p>
 
-				<p>
+				<p class="emailTemplateMainSectionText">
 					If you have any issues regarding the verification process, please add a new issue on the
 					<a href="https://github.com/linusromland/ContinuumCI">GitHub repository</a>.
 				</p>
 
-				<p>Best regards, ContinuumCI</p>
+				<p class="emailTemplateMainSectionText">Best regards, ContinuumCI</p>
 			</section>
 		</main>
 	</body>
