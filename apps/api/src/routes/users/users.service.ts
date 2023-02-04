@@ -1,15 +1,28 @@
 // External dependencies
-import { Injectable, Inject } from '@nestjs/common';
+import {
+	Injectable,
+	Inject,
+	BadRequestException,
+	InternalServerErrorException,
+	UnauthorizedException
+} from '@nestjs/common';
 import { isValidObjectId, Model } from 'mongoose';
+import dayjs from 'dayjs';
 
 // Internal dependencies
-import { JwtType, UserType, ResponseType } from 'shared/src/types';
+import { JwtType, UserType, ResponseType, EmailVerification } from 'shared/src/types';
+import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
 export class UsersService {
 	constructor(
+		private emailConfigurationService: EmailConfigurationService,
+
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserType>
+		private UserModel: Model<UserType>,
+
+		@Inject('EMAIL_VERIFICATION_MODEL')
+		private EmailVerificationModel: Model<EmailVerification>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {
@@ -21,6 +34,21 @@ export class UsersService {
 				verifiedEmail: role === 'root' ? true : false
 			});
 
+			if (!createdUser.verifiedEmail) {
+				const emailVerification = new this.EmailVerificationModel({
+					user: createdUser._id
+				});
+
+				await emailVerification.save();
+
+				// Send email verification email
+				await this.emailConfigurationService.sendVerificationEmail(
+					createdUser.email,
+					emailVerification._id,
+					dayjs(emailVerification.createdAt).add(30, 'minutes').toDate()
+				);
+			}
+
 			await createdUser.save();
 			return {
 				success: true,
@@ -30,24 +58,80 @@ export class UsersService {
 		} catch (error: any) {
 			//check if error is duplicate key error on username or email
 			if (error.code === 11000 && (error.keyPattern['username'] || error.keyPattern['email'])) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
-				};
+				});
 			}
 
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
+	async verifyUser(verificationId: string) {
+		try {
+			const emailVerification = await this.EmailVerificationModel.findById(verificationId);
+			if (!emailVerification) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Invalid verification id'
+				});
+			}
+
+			const user = await this.UserModel.findById(emailVerification.user);
+			if (!user) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			await emailVerification.remove();
+
+			// Check if verification link is expired (30 minutes old or more)
+			if (dayjs(emailVerification.createdAt).add(30, 'minutes').isBefore(dayjs())) {
+				throw new UnauthorizedException({
+					success: false,
+					message: 'Verification link expired'
+				});
+			}
+
+			user.verifiedEmail = true;
+			await user.save();
+
+			return {
+				success: true,
+				message: 'User verified successfully'
 			};
+			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				throw new BadRequestException({
+					success: false,
+					message: 'Missing required fields'
+				});
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
 		}
 	}
 
@@ -73,49 +157,49 @@ export class UsersService {
 		} catch (error: any) {
 			//check if error is duplicate key error on username or email
 			if (error.code === 11000 && error.keyPattern['username']) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Username already in use'
-				};
+				});
 			}
 
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 
 	async updatePassword(user: JwtType, oldPassword: string, newPassword: string): Promise<ResponseType> {
 		try {
 			if (!oldPassword || !newPassword) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
-				};
+				});
 			}
 
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'User not found'
-				};
+				});
 			}
 
 			if (updatedUser.password !== oldPassword) {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Old password is incorrect'
-				};
+					message: 'Incorrect password'
+				});
 			}
 
 			updatedUser.password = newPassword;
@@ -127,67 +211,71 @@ export class UsersService {
 			};
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
-			//check if error is validation error for missing required fields
-			if (error.name === 'ValidationError') {
-				return {
-					success: false,
-					message: 'Missing required fields'
-				};
+			if (error instanceof BadRequestException) {
+				throw error;
 			}
 
-			return {
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				throw new BadRequestException({
+					success: false,
+					message: 'Missing required fields'
+				});
+			}
+
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 
 	async updateRole(jwtUser: JwtType, userId: string, newRole: string): Promise<ResponseType> {
 		try {
 			if (isValidObjectId(userId) === false) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Invalid user id'
-				};
+				});
 			}
 
 			const user = await this.UserModel.findById(jwtUser.sub);
 
 			if (!user || user.role !== 'root') {
-				return {
+				throw new UnauthorizedException({
 					success: false,
 					message: 'Unauthorized'
-				};
+				});
 			}
 
 			if (newRole !== 'user' && newRole !== 'admin') {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'Invalid role'
-				};
+				});
 			}
 
 			const updateUser = await this.UserModel.findById(userId);
 
 			if (!updateUser) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'User not found'
-				};
+				});
 			}
 
 			if (updateUser.role === newRole) {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Role is already set to ' + newRole
-				};
+					message: 'User already set to ' + newRole
+				});
 			}
 
 			if (updateUser.role === 'root') {
-				return {
+				throw new BadRequestException({
 					success: false,
-					message: 'Cannot change root role'
-				};
+					message: 'Cannot change root user role'
+				});
 			}
 
 			updateUser.role = newRole;
@@ -200,10 +288,14 @@ export class UsersService {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
-			return {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
+			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
-			};
+			});
 		}
 	}
 }
