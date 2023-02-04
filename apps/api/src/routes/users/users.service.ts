@@ -9,7 +9,7 @@ import {
 import { isValidObjectId, Model } from 'mongoose';
 
 // Internal dependencies
-import { JwtType, UserType, ResponseType, EmailVerificationResponseType } from 'shared/src/types';
+import { JwtType, UserType, ResponseType, EmailVerification } from 'shared/src/types';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class UsersService {
 		private UserModel: Model<UserType>,
 
 		@Inject('EMAIL_VERIFICATION_MODEL')
-		private EmailVerificationModel: Model<EmailVerificationResponseType>
+		private EmailVerificationModel: Model<EmailVerification>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {
@@ -57,6 +57,62 @@ export class UsersService {
 					success: false,
 					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
 				});
+			}
+
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				throw new BadRequestException({
+					success: false,
+					message: 'Missing required fields'
+				});
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
+	async verifyUser(verificationId: string) {
+		try {
+			const emailVerification = await this.EmailVerificationModel.findById(verificationId);
+			if (!emailVerification) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Invalid verification id'
+				});
+			}
+
+			const user = await this.UserModel.findById(emailVerification.user);
+			if (!user) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			await emailVerification.remove();
+
+			// Check if verification link is expired (30 minutes old or more)
+			if (emailVerification.createdAt.getTime() + 30 * 60 * 1000 < Date.now()) {
+				throw new UnauthorizedException({
+					success: false,
+					message: 'Verification link expired'
+				});
+			}
+
+			user.verifiedEmail = true;
+			await user.save();
+
+			return {
+				success: true,
+				message: 'User verified successfully'
+			};
+			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			if (error instanceof BadRequestException) {
+				throw error;
 			}
 
 			//check if error is validation error for missing required fields
@@ -150,6 +206,10 @@ export class UsersService {
 			};
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
 			//check if error is validation error for missing required fields
 			if (error.name === 'ValidationError') {
 				throw new BadRequestException({
@@ -223,6 +283,10 @@ export class UsersService {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
 			throw new InternalServerErrorException({
 				success: false,
 				message: (error as string | null) || 'Something went wrong'

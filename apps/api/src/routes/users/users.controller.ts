@@ -1,6 +1,6 @@
 // External dependencies
-import { Controller, Request, Post, Put } from '@nestjs/common';
-import { Body, UseGuards } from '@nestjs/common/decorators';
+import { Controller, Request, Get, Post, Put } from '@nestjs/common';
+import { Body, Param, UseGuards } from '@nestjs/common/decorators';
 import { UserType } from 'shared/src/types';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
@@ -14,6 +14,11 @@ export class UsersController {
 	@Post('create')
 	getProfile(@Body() user: UserType) {
 		return this.usersService.create(user);
+	}
+
+	@Get('verify/:verificationId')
+	verifyUser(@Param('verificationId') verificationId: string) {
+		return this.usersService.verifyUser(verificationId);
 	}
 
 	@UseGuards(JwtAuthGuard)

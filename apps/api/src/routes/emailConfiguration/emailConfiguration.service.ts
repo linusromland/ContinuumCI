@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer';
 
 // Internal dependencies
 import { EmailConfigurationResponseType, EmailConfigurationType, ResponseType } from 'shared/src/types';
+import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
 
 @Injectable()
@@ -88,7 +89,7 @@ export class EmailConfigurationService {
 				subject: 'Verify your email',
 				html: emailTemplate('verifyAccount', {
 					name: email,
-					url: `http://localhost:3000/verify-account?token=${verificationToken}`
+					url: `${API_HOST}/users/verify/${verificationToken}`
 				})
 			});
 
