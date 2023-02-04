@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>ContinuumCI Verify Account</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+			body {
+				font-family: 'Raleway', sans-serif;
+				background-color: #e3e3e3;
+				color: #333;
+				margin: 0;
+				padding: 0;
+			}
+
+			header {
+				background-color: #1a1c1e;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			header h1 {
+				color: #ffffff;
+				margin-right: 0.5rem;
+			}
+
+			header img {
+				width: 50px;
+				height: 50px;
+				margin-right: 10px;
+			}
+
+			main {
+				display: flex;
+				justify-content: center;
+				margin-top: 2rem;
+			}
+
+			section {
+				background-color: #ffffff;
+				padding: 1rem;
+				margin: 1rem;
+				border-radius: 0.5rem;
+				min-width: 40vw;
+				max-width: 912px;
+				display: flex;
+				flex-direction: column;
+			}
+
+			button {
+				background-color: #1a1c1e;
+				color: #ffffff;
+				border: none;
+				border-radius: 0.5rem;
+				padding: 1rem 4rem;
+				margin-top: 1rem;
+				width: fit-content;
+			}
+
+			button a {
+				text-decoration: none;
+				color: #ffffff;
+			}
+
+			button:hover {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<img
+				src="https://raw.githubusercontent.com/linusromland/ContinuumCI/master/docs/logo.svg"
+				alt="ContinuumCI Logo"
+			/>
+			<h1>ContinuumCI</h1>
+		</header>
+		<main>
+			<section>
+				<h1>Account verification request</h1>
+				<p>Dear {{name}},</p>
+
+				<p>
+					You have registered an account on ContinuumCI. To complete your account setup, we need to verify
+					your email address. Please follow the link bellow to verify your email and get started using
+					ContinuumCI.
+				</p>
+
+				<button>
+					<a href="{{url}}">Verify email</a>
+				</button>
+
+				<p>This link will expire in 30 minutes. ({{expires}})</p>
+
+				<p>
+					If you have any issues regarding the verification process, please add a new issue on the
+					<a href="https://github.com/linusromland/ContinuumCI">GitHub repository</a>.
+				</p>
+
+				<p>Best regards, ContinuumCI</p>
+			</section>
+		</main>
+	</body>
+</html>
