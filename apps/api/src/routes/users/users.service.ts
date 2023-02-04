@@ -7,6 +7,7 @@ import {
 	UnauthorizedException
 } from '@nestjs/common';
 import { isValidObjectId, Model } from 'mongoose';
+import dayjs from 'dayjs';
 
 // Internal dependencies
 import { JwtType, UserType, ResponseType, EmailVerification } from 'shared/src/types';
@@ -41,7 +42,11 @@ export class UsersService {
 				await emailVerification.save();
 
 				// Send email verification email
-				await this.emailConfigurationService.sendVerificationEmail(createdUser.email, emailVerification._id);
+				await this.emailConfigurationService.sendVerificationEmail(
+					createdUser.email,
+					emailVerification._id,
+					dayjs(emailVerification.createdAt).add(30, 'minutes').toDate()
+				);
 			}
 
 			await createdUser.save();
@@ -95,7 +100,7 @@ export class UsersService {
 			await emailVerification.remove();
 
 			// Check if verification link is expired (30 minutes old or more)
-			if (emailVerification.createdAt.getTime() + 30 * 60 * 1000 < Date.now()) {
+			if (dayjs(emailVerification.createdAt).add(30, 'minutes').isBefore(dayjs())) {
 				throw new UnauthorizedException({
 					success: false,
 					message: 'Verification link expired'

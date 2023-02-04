@@ -2,6 +2,7 @@
 import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import nodemailer from 'nodemailer';
+import dayjs from 'dayjs';
 
 // Internal dependencies
 import { EmailConfigurationResponseType, EmailConfigurationType, ResponseType } from 'shared/src/types';
@@ -64,7 +65,7 @@ export class EmailConfigurationService {
 		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
 	}
 
-	async sendVerificationEmail(email: string, verificationToken: string): Promise<ResponseType> {
+	async sendVerificationEmail(email: string, verificationToken: string, expires: Date): Promise<ResponseType> {
 		try {
 			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();
 
@@ -89,7 +90,8 @@ export class EmailConfigurationService {
 				subject: 'Verify your email',
 				html: emailTemplate('verifyAccount', {
 					name: email,
-					url: `${API_HOST}/users/verify/${verificationToken}`
+					url: `${API_HOST}/users/verify/${verificationToken}`,
+					expires: dayjs(expires).format('DD MMMM YYYY HH:mm')
 				})
 			});
 
