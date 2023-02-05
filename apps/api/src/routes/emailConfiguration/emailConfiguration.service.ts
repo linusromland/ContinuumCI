@@ -18,18 +18,8 @@ export class EmailConfigurationService {
 
 	async create(emailConfiguration: EmailConfigurationType): Promise<ResponseType> {
 		try {
-			//Test the email configuration
-			const transporter = nodemailer.createTransport({
-				service: emailConfiguration.service,
-				auth: {
-					user: emailConfiguration.auth.user,
-					pass: emailConfiguration.auth.pass
-				}
-			});
-
-			try {
-				await transporter.verify();
-			} catch (error) {
+			//Verify the email configuration
+			if (!(await this.verifyEmailConfiguration(emailConfiguration))) {
 				throw new BadRequestException({
 					success: false,
 					message: 'Invalid email configuration'
@@ -58,6 +48,24 @@ export class EmailConfigurationService {
 				success: false,
 				message: (error as string | null) || 'Something went wrong'
 			});
+		}
+	}
+
+	async verifyEmailConfiguration(emailConfiguration: EmailConfigurationType): Promise<boolean> {
+		//Test the email configuration
+		const transporter = nodemailer.createTransport({
+			service: emailConfiguration.service,
+			auth: {
+				user: emailConfiguration.auth.user,
+				pass: emailConfiguration.auth.pass
+			}
+		});
+
+		try {
+			await transporter.verify();
+			return true;
+		} catch (error) {
+			return false;
 		}
 	}
 

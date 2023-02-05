@@ -10,7 +10,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import dayjs from 'dayjs';
 
 // Internal dependencies
-import { JwtType, UserType, ResponseType, EmailVerification } from 'shared/src/types';
+import { JwtType, UserType, ResponseType, EmailVerificationType } from 'shared/src/types';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UsersService {
 		private UserModel: Model<UserType>,
 
 		@Inject('EMAIL_VERIFICATION_MODEL')
-		private EmailVerificationModel: Model<EmailVerification>
+		private EmailVerificationModel: Model<EmailVerificationType>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {
