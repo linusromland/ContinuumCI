@@ -37,3 +37,6 @@ dist
 
 # Environment Variables files
 .env
+
+# Nginx access log
+access.log

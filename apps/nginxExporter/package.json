@@ -1,0 +1,20 @@
+{
+	"name": "nginxexporter",
+	"version": "1.0.0",
+	"description": "Nginx Exporter for ContinuumCI",
+	"main": "src/app.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/app.js",
+		"dev": "nodemon src/app.ts"
+	},
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"@robojones/nginx-log-parser": "^0.0.6",
+		"nodemon": "^2.0.20",
+		"typescript": "^4.9.5",
+		"shared": "*",
+		"tsconfig": "*"
+	}
+}
