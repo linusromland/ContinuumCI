@@ -9,8 +9,7 @@ export class WelcomeService {
 	getWelcomeMessage(): WelcomeResponseType {
 		return {
 			success: true,
-			message: 'ContinuumCI API',
-			firstTimeSetup: true
+			message: 'ContinuumCI API'
 		};
 	}
 }
