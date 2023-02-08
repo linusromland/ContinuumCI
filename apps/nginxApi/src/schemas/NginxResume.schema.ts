@@ -1,5 +1,5 @@
 // External dependencies
-import { Schema, model } from 'mongoose';
+import { Schema } from 'mongoose';
 
 export const NginxResumeSchema = new Schema(
 	{
@@ -9,5 +9,3 @@ export const NginxResumeSchema = new Schema(
 		}
 	}
 );
-
-export const NginxResumeModel = model('nginxresume', NginxResumeSchema);
