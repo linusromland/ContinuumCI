@@ -32,7 +32,7 @@ import { NginxResumeModel } from './schemas/NginxResume.schema';
 
 	console.log('Watching access.log');
 	setInterval(async () => {
-		console.log('Change detected in access.log');
+		console.log('Checking for new logs');
 		const file = fs.readFileSync(path.join(__dirname, '../access.log'), 'utf8');
 		const lines = file.split('\n');
 
