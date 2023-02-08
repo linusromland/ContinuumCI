@@ -19,7 +19,6 @@ const emailTemplate = (
 	const templateKeys = Object.keys(template);
 	for (const key of templateKeys) {
 		const templateValue = template[key];
-		console.log(`{{${key}}}`);
 		const templateRegex = new RegExp(`{{${key}}}`, 'g');
 		templateContent = templateContent.replace(templateRegex, templateValue);
 	}
