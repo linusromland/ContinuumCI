@@ -9,7 +9,6 @@ export const NginxLogsSchema = new Schema(
 		},
 		remote_user: {
 			type: String,
-			required: true
 		},
 		time_local: {
 			type: String,
@@ -41,11 +40,9 @@ export const NginxLogsSchema = new Schema(
 		},
 		http_user_agent: {
 			type: String,
-			required: true
 		},
 		http_x_forwarded_for: {
 			type: String,
-			required: true
 		}
 	},
 	{

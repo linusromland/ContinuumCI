@@ -13,7 +13,6 @@ access_log /var/log/nginx/custom.log custom_format;
  * This will export the logs to /var/log/nginx/custom.log
  */
 
-
 // External dependencies
 import fs from 'fs';
 import path from 'path';
@@ -21,35 +20,52 @@ import mongoose from 'mongoose';
 
 // Internal dependencies
 import { NginxLogsSchema } from 'shared/src/schemas';
+import { NginxResumeModel } from './schemas/NginxResume.schema';
 
 (async () => {
 	// Connect to MongoDB
 	await mongoose.connect('mongodb://127.0.0.1:27017/ContinuumCI');
-	mongoose.set("strictQuery", false);
+	mongoose.set('strictQuery', false);
 
 	// Create a model
 	const NginxModel = mongoose.model('nginxlogs', NginxLogsSchema);
 
-	const file = fs.readFileSync(path.join(__dirname, '../access.log'), 'utf8');
+	console.log('Watching access.log');
+	setInterval(async () => {
+		console.log('Change detected in access.log');
+		const file = fs.readFileSync(path.join(__dirname, '../access.log'), 'utf8');
+		const lines = file.split('\n');
 
-	const lines = file.split('\n');
+		const lineStart = await NginxResumeModel.findOne({}).select('resume_position');
 
-	for (let i = 0; i < lines.length; i++) {
-		const line = lines[i];
-		const parts = line.split(' __|__');
+		console.log('Starting at line', lineStart ? lineStart.resume_position : 0);
 
-		const obj: {
-			[key: string]: string;
-		} = {};
+		for (let i = lineStart ? lineStart.resume_position : 0; i < lines.length; i++) {
+			const line = lines[i];
+			console.log('Line', i, line);
 
-		for (let j = 0; j < parts.length; j++) {
-			const part = parts[j];
-			const partParts = part.split('__:__');
-			obj[partParts[0]] = partParts[1];
+			if (line === '') continue;
+			await NginxResumeModel.findOneAndUpdate({}, { resume_position: i + 1 }, { upsert: true });
+
+			const parts = line.split(' __|__');
+
+			const obj: {
+				[key: string]: string;
+			} = {};
+
+			for (let j = 0; j < parts.length; j++) {
+				const part = parts[j];
+				const partParts = part.split('__:__');
+				obj[partParts[0]] = partParts[1];
+			}
+
+			try {
+				const nginx = new NginxModel(obj);
+				await nginx.save();
+				console.log('New nginx log saved');
+			} catch (err) {
+				console.log('Error saving nginx log');
+			}
 		}
-
-		const nginx = new NginxModel(obj);
-		await nginx.save();
-		console.log("New nginx log saved")
-	}
+	}, 30000);
 })();
