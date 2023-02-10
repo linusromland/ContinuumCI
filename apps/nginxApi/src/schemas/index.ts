@@ -1,5 +1,6 @@
 // Internal dependencies
+import { NginxConfigurationSchema } from './NginxConfiguration.schema';
 import { NginxLogsSchema } from './NginxLogs.schema';
 import { NginxResumeSchema } from './NginxResume.schema';
 
-export { NginxLogsSchema, NginxResumeSchema };
+export { NginxConfigurationSchema, NginxLogsSchema, NginxResumeSchema };

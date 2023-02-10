@@ -3,10 +3,14 @@
 import { Connection } from 'mongoose';
 
 // Internal dependencies
-import { NginxLogsSchema, NginxResumeSchema } from '../schemas';
-
+import { NginxConfigurationSchema, NginxLogsSchema, NginxResumeSchema } from '../schemas';
 
 const schemaProviders = [
+	{
+		provide: 'NGINX_CONFIGURATION_MODEL',
+		useFactory: (connection: Connection) => connection.model('nginxconfiguration', NginxConfigurationSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
 	{
 		provide: 'NGINX_LOGS_MODEL',
 		useFactory: (connection: Connection) => connection.model('nginxlogs', NginxLogsSchema),

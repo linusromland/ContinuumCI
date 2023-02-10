@@ -3,6 +3,7 @@ import { EmailConfigurationResponseType, EmailConfigurationType } from './EmailC
 import { EmailVerificationResponseType, EmailVerificationType } from './EmailVerification.type';
 import { JwtType, JwtResponseType } from './Jwt.type';
 import { LoginType, LoginResponseType } from './Login.type';
+import { NginxConfigurationResponseType, NginxConfigurationType } from './NginxConfiguration.type';
 import { NginxLogsType } from './NginxLogs.type';
 import { ResponseType } from './Response.type';
 import { SetupType, SetupResponseType } from './Setup.type';
@@ -19,6 +20,8 @@ export type {
 	NginxLogsType,
 	LoginType,
 	LoginResponseType,
+	NginxConfigurationResponseType,
+	NginxConfigurationType,
 	ResponseType,
 	SetupType,
 	SetupResponseType,

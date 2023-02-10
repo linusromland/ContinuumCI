@@ -7,9 +7,10 @@ import { databaseProviders, schemaProviders } from './providers';
 
 // Modules import
 import { WelcomeModule } from './routes/welcome/welcome.module';
+import { ConfigurationModule } from './routes/configuration/configuration.module';
 
 @Module({
-	imports: [WelcomeModule],
+	imports: [WelcomeModule, ConfigurationModule],
 	controllers: [],
 	providers: [LogWatcherService, ...databaseProviders, ...schemaProviders],
 	exports: [LogWatcherService, ...databaseProviders, ...schemaProviders]
