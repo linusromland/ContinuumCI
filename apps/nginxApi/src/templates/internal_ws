@@ -1,0 +1,15 @@
+server {
+        server_name www.{{url}} {{url}};
+        location / {
+                proxy_pass {{proxy_pass}};
+
+                # Configure 403 page
+                error_page 403 /403.html;
+        }
+
+        # 403 Forbidden for all other IPs
+        location /403.html {
+                root /var/www/html;
+        }
+
+}
