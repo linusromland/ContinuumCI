@@ -9,6 +9,12 @@ import { UsersModule } from './routes/users/users.module';
 import { WelcomeModule } from './routes/welcome/welcome.module';
 
 @Module({
-	imports: [AuthModule, EmailConfigurationModule, SetupModule, UsersModule, WelcomeModule]
+	imports: [
+		AuthModule,
+		EmailConfigurationModule,
+		SetupModule,
+		UsersModule,
+		WelcomeModule
+	]
 })
 export class AppModule {}

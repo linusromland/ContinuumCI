@@ -6,10 +6,14 @@ import { EmailConfigurationService } from './emailConfiguration.service';
 
 @Controller('emailConfiguration')
 export class EmailConfigurationController {
-	constructor(private readonly emailConfigurationService: EmailConfigurationService) {}
+	constructor(
+		private readonly emailConfigurationService: EmailConfigurationService
+	) {}
 
 	@Put()
-	async create(@Body() emailConfiguration: EmailConfigurationType): Promise<ResponseType> {
+	async create(
+		@Body() emailConfiguration: EmailConfigurationType
+	): Promise<ResponseType> {
 		return this.emailConfigurationService.create(emailConfiguration);
 	}
 

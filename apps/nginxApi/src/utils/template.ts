@@ -25,7 +25,7 @@ const internalLocationTemplate = fs.readFileSync(
 );
 const internalWebsocketLocationTemplate = fs.readFileSync(
 	path.resolve(__dirname, `${templateDir}/internalWebsocketLocation`),
-	'utf8'	
+	'utf8'
 );
 
 const template = (deployment: NginxDeploymentType, localIps): string => {
@@ -35,7 +35,7 @@ const template = (deployment: NginxDeploymentType, localIps): string => {
 	if (ssl) console.log('SSL is not implemented yet');
 
 	let templateContent = baseTemplate.replace('{{server_name}}', server_name);
-	
+
 	//Loop to replace all {{url}} with server_name (because there are two {{url}} in the template for www and non-www)
 	for (let i = 0; i < 1; i++) {
 		templateContent = templateContent.replace('{{url}}', server_name);

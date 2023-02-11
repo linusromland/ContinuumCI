@@ -1,10 +1,22 @@
 // Internal dependencies¨
-import { EmailConfigurationResponseType, EmailConfigurationType } from './EmailConfiguration.type';
-import { EmailVerificationResponseType, EmailVerificationType } from './EmailVerification.type';
+import {
+	EmailConfigurationResponseType,
+	EmailConfigurationType
+} from './EmailConfiguration.type';
+import {
+	EmailVerificationResponseType,
+	EmailVerificationType
+} from './EmailVerification.type';
 import { JwtType, JwtResponseType } from './Jwt.type';
 import { LoginType, LoginResponseType } from './Login.type';
-import { NginxConfigurationResponseType, NginxConfigurationType } from './NginxConfiguration.type';
-import { NginxDeploymentResponseType, NginxDeploymentType } from './NginxDeployment.type';
+import {
+	NginxConfigurationResponseType,
+	NginxConfigurationType
+} from './NginxConfiguration.type';
+import {
+	NginxDeploymentResponseType,
+	NginxDeploymentType
+} from './NginxDeployment.type';
 import { NginxLogsType } from './NginxLogs.type';
 import { ResponseType } from './Response.type';
 import { SetupType, SetupResponseType } from './Setup.type';

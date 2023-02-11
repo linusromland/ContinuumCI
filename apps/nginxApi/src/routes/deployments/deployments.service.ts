@@ -3,7 +3,11 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import { ResponseType, NginxDeploymentResponseType, NginxDeploymentType } from 'shared/src/types';
+import {
+	ResponseType,
+	NginxDeploymentResponseType,
+	NginxDeploymentType
+} from 'shared/src/types';
 import template from 'src/utils/template';
 
 @Injectable()
@@ -13,12 +17,19 @@ export class DeploymentsService {
 		private NginxDeploymentsModel: Model<NginxDeploymentType>
 	) {}
 
-	async create(deploymentConfiguration: NginxDeploymentType): Promise<ResponseType> {
+	async create(
+		deploymentConfiguration: NginxDeploymentType
+	): Promise<ResponseType> {
 		try {
-			const deployment = new this.NginxDeploymentsModel(deploymentConfiguration);
+			const deployment = new this.NginxDeploymentsModel(
+				deploymentConfiguration
+			);
 			await deployment.save();
 
-			const nginxTemplate = template(deploymentConfiguration, "EXAMPLE_LOCAL_IPS");
+			const nginxTemplate = template(
+				deploymentConfiguration,
+				'EXAMPLE_LOCAL_IPS'
+			);
 			console.log(nginxTemplate);
 
 			return {
@@ -42,7 +53,9 @@ export class DeploymentsService {
 		}
 
 		try {
-			const deployments = await this.NginxDeploymentsModel.find({ _id: { $in: ids } });
+			const deployments = await this.NginxDeploymentsModel.find({
+				_id: { $in: ids }
+			});
 			return {
 				success: true,
 				message: 'Deployments found',
@@ -85,6 +98,5 @@ export class DeploymentsService {
 				message: "Couldn't delete deployment"
 			});
 		}
-		
 	}
 }

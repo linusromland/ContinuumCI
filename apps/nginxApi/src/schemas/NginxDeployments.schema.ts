@@ -31,4 +31,3 @@ export const NginxDeploymentsSchema = new Schema({
 		required: true
 	}
 });
-

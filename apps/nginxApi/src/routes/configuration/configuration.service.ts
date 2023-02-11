@@ -3,7 +3,11 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import { ResponseType, NginxConfigurationType, NginxConfigurationResponseType } from 'shared/src/types';
+import {
+	ResponseType,
+	NginxConfigurationType,
+	NginxConfigurationResponseType
+} from 'shared/src/types';
 
 @Injectable()
 export class ConfigurationService {
@@ -12,9 +16,15 @@ export class ConfigurationService {
 		private NginxConfigurationModel: Model<NginxConfigurationType>
 	) {}
 
-	async edit(nginxConfiguration: NginxConfigurationType): Promise<ResponseType> {
+	async edit(
+		nginxConfiguration: NginxConfigurationType
+	): Promise<ResponseType> {
 		try {
-			await this.NginxConfigurationModel.updateOne({}, nginxConfiguration, { upsert: true });
+			await this.NginxConfigurationModel.updateOne(
+				{},
+				nginxConfiguration,
+				{ upsert: true }
+			);
 
 			return {
 				success: true,
@@ -30,7 +40,8 @@ export class ConfigurationService {
 
 	async get(): Promise<NginxConfigurationResponseType> {
 		try {
-			const nginxConfiguration = await this.NginxConfigurationModel.findOne({});
+			const nginxConfiguration =
+				await this.NginxConfigurationModel.findOne({});
 
 			return {
 				success: true,
@@ -38,7 +49,6 @@ export class ConfigurationService {
 				localIps: nginxConfiguration.localIps,
 				domains: nginxConfiguration.domains
 			};
-			
 		} catch (error) {
 			throw new BadRequestException({
 				success: false,

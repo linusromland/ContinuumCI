@@ -28,23 +28,36 @@ export class LogWatcherService {
 				this.logger.log('Checking for new logs');
 
 				// Read the file
-				const file = fs.readFileSync(path.join(__dirname, '../access.log'), 'utf8');
+				const file = fs.readFileSync(
+					path.join(__dirname, '../access.log'),
+					'utf8'
+				);
 
 				// Split the file into lines
 				const lines = file.split('\n');
 
 				// Get the last line number we saved
-				const lineStart = await this.NginxResumeModel.findOne({}).select('resume_position');
+				const lineStart = await this.NginxResumeModel.findOne(
+					{}
+				).select('resume_position');
 
 				// Loop through each line
-				for (let i = lineStart ? lineStart.resume_position : 0; i < lines.length; i++) {
+				for (
+					let i = lineStart ? lineStart.resume_position : 0;
+					i < lines.length;
+					i++
+				) {
 					const line = lines[i];
 
 					// Skip empty lines
 					if (line === '') continue;
 
 					// Save the current line number so we can resume from here next time
-					await this.NginxResumeModel.findOneAndUpdate({}, { resume_position: i + 1 }, { upsert: true });
+					await this.NginxResumeModel.findOneAndUpdate(
+						{},
+						{ resume_position: i + 1 },
+						{ upsert: true }
+					);
 
 					// Split the line into parts
 					const parts = line.split(' __|__');
@@ -70,7 +83,9 @@ export class LogWatcherService {
 					}
 				}
 			} catch (error) {
-				this.logger.error('Something went wrong while watching access.log');
+				this.logger.error(
+					'Something went wrong while watching access.log'
+				);
 			}
 		}, 30000); // Check for new logs every 30 seconds
 	}

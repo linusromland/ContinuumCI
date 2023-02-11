@@ -3,5 +3,4 @@ type NginxResumeType = {
 	resume_position: number;
 };
 
-
 export { NginxResumeType };

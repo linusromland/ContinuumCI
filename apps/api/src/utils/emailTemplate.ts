@@ -12,7 +12,10 @@ const emailTemplate = (
 	}
 ): string => {
 	const templatePath = `../templates/${templateName}.html`;
-	let templateContent = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
+	let templateContent = fs.readFileSync(
+		path.resolve(__dirname, templatePath),
+		'utf8'
+	);
 
 	if (!templateContent) throw new Error('Template not found');
 
