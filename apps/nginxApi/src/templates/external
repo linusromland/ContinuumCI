@@ -3,10 +3,6 @@ server {
         location / {
                 proxy_pass {{proxy_pass}};
 
-                # Configurations for Internal Access
-                allow   {{internal_ips}};
-                deny    all;
-
                 # Configure 403 page
                 error_page 403 /403.html;
         }
