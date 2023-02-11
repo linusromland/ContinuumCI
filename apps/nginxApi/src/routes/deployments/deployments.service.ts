@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 
 // Internal dependencies
 import { ResponseType, NginxDeploymentResponseType, NginxDeploymentType } from 'shared/src/types';
+import template from 'src/utils/template';
 
 @Injectable()
 export class DeploymentsService {
@@ -16,6 +17,10 @@ export class DeploymentsService {
 		try {
 			const deployment = new this.NginxDeploymentsModel(deploymentConfiguration);
 			await deployment.save();
+
+			const nginxTemplate = template(deploymentConfiguration, "EXAMPLE_LOCAL_IPS");
+			console.log(nginxTemplate);
+
 			return {
 				success: true,
 				message: 'Deployment created'
