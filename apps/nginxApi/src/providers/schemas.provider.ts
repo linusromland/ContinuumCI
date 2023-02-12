@@ -7,6 +7,7 @@ import {
 	NginxConfigurationSchema,
 	NginxDeploymentsSchema,
 	NginxLogsSchema,
+	NginxReloadLogsSchema,
 	NginxResumeSchema
 } from '../schemas';
 
@@ -27,6 +28,12 @@ const schemaProviders = [
 		provide: 'NGINX_LOGS_MODEL',
 		useFactory: (connection: Connection) =>
 			connection.model('nginxlogs', NginxLogsSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'NGINX_RELOAD_LOGS_MODEL',
+		useFactory: (connection: Connection) =>
+			connection.model('nginxreloadlogs', NginxReloadLogsSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{

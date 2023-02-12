@@ -18,6 +18,7 @@ import {
 	NginxDeploymentType
 } from './NginxDeployment.type';
 import { NginxLogsType } from './NginxLogs.type';
+import {NginxReloadLogsType} from './NginxReloadLogs.type';
 import { ResponseType } from './Response.type';
 import { SetupType, SetupResponseType } from './Setup.type';
 import { UserType, UserResponseType } from './User.type';
@@ -37,6 +38,7 @@ export type {
 	NginxConfigurationType,
 	NginxDeploymentResponseType,
 	NginxDeploymentType,
+	NginxReloadLogsType,
 	ResponseType,
 	SetupType,
 	SetupResponseType,
