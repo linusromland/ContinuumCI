@@ -26,6 +26,9 @@ services:
             - '80:80'
             - '443:443'
             - '3001:3001'
+        volumes:
+            - nginx_sites_enabled:/etc/nginx/sites-enabled
+            - nginx_logs:/var/log/nginx
     api:
         depends_on:
             - mongo
@@ -46,3 +49,5 @@ networks:
 volumes:
     mongodb_data:
     mongodb_config:
+    nginx_sites_enabled:
+    nginx_logs:
