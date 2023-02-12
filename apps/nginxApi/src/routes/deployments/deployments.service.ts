@@ -10,7 +10,8 @@ import {
 	ResponseType,
 	NginxDeploymentResponseType,
 	NginxDeploymentType,
-	NginxConfigurationType
+	NginxConfigurationType,
+	NginxReloadLogsType
 } from 'shared/src/types';
 import template from 'src/utils/template';
 
@@ -21,7 +22,9 @@ export class DeploymentsService {
 		private NginxDeploymentsModel: Model<NginxDeploymentType>,
 
 		@Inject('NGINX_CONFIGURATION_MODEL')
-		private NginxConfigurationModel: Model<NginxConfigurationType>
+		private NginxConfigurationModel: Model<NginxConfigurationType>,
+		@Inject('NGINX_RELOAD_LOGS_MODEL')
+		private NginxReloadLogsModel: Model<NginxReloadLogsType>
 	) {}
 
 	async create(
@@ -76,6 +79,9 @@ export class DeploymentsService {
 
 			const reloadResult = (await reloadCommand) as NginxReloadLogsType;
 
+			const reloadLog = new this.NginxReloadLogsModel(reloadResult);
+			await reloadLog.save();
+
 			if (!reloadResult.success) {
 				throw new BadRequestException({
 					success: reloadResult.success,
@@ -84,8 +90,8 @@ export class DeploymentsService {
 			}
 
 			return {
-				success: true,
-				message: 'Deployment created'
+				success: reloadResult.success,
+				message: reloadResult.message
 			};
 		} catch (error) {
 			throw new BadRequestException({
