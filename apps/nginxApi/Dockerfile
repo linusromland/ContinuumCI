@@ -24,5 +24,5 @@ RUN npm run build -w nginxapi
 # Expose the port 80 & 443
 EXPOSE 80 443 3001
 
-# Start nginx server
+# Start nginx & api
 CMD nginx -g 'daemon off;' & npm run start:prod -w nginxapi

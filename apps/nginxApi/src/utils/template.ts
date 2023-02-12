@@ -35,10 +35,8 @@ const template = (deployment: NginxDeploymentType, localIps): string => {
 
 	let templateContent = baseTemplate.replace('{{server_name}}', server_name);
 
-	//Loop to replace all {{url}} with server_name (because there are two {{url}} in the template for www and non-www)
-	for (let i = 0; i < 1; i++) {
-		templateContent = templateContent.replace('{{url}}', server_name);
-	}
+	templateContent = templateContent.replace('{{url}}', server_name);
+	templateContent = templateContent.replace('{{url}}', server_name);
 
 	let locationContent = '';
 

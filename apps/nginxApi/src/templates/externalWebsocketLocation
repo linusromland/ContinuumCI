@@ -6,8 +6,5 @@ location {{location}} {
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
                 proxy_read_timeout 86400;
-
-                # Configure 403 page
-                error_page 403 /403.html;
         }
         
