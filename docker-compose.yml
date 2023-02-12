@@ -9,6 +9,8 @@ services:
             - mongodb_config:/data/configdb
         networks:
             - default
+        ports:
+            - '27018:27017'
     nginx-api:
         depends_on:
             - mongo
