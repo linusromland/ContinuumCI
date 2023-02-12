@@ -1,6 +1,7 @@
 // External dependencies
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -52,6 +53,35 @@ export class DeploymentsService {
 				),
 				nginxTemplate
 			);
+
+			const reloadCommand = new Promise((resolve, reject) => {
+				exec('nginx -s reload', (error, stdout, stderr) => {
+					if (error) {
+						reject({
+							success: false,
+							message: "Couldn't create deployment",
+							logs: error
+						});
+					}
+
+					if (stderr) {
+						resolve({
+							success: true,
+							message: 'Deployment created',
+							logs: stderr
+						});
+					}
+				});
+			});
+
+			const reloadResult = (await reloadCommand) as NginxReloadLogsType;
+
+			if (!reloadResult.success) {
+				throw new BadRequestException({
+					success: reloadResult.success,
+					message: reloadResult.message
+				});
+			}
 
 			return {
 				success: true,
