@@ -44,7 +44,7 @@ export class DeploymentsService {
 				deploymentConfiguration,
 				configuration.localIps
 			);
-			
+
 			fs.writeFileSync(
 				path.join(
 					configuration.sitesEnabledLocation,
@@ -66,13 +66,6 @@ export class DeploymentsService {
 	}
 
 	async get(ids: string[]): Promise<NginxDeploymentResponseType> {
-		if (!ids || ids.length <= 0) {
-			throw new BadRequestException({
-				success: false,
-				message: 'No ids provided'
-			});
-		}
-
 		try {
 			const deployments = await this.NginxDeploymentsModel.find({
 				_id: { $in: ids }
@@ -97,6 +90,13 @@ export class DeploymentsService {
 				message: 'No id provided'
 			});
 		}
+		const configuration = await this.NginxConfigurationModel.findOne();
+		if (!configuration) {
+			throw new BadRequestException({
+				success: false,
+				message: 'No configuration found'
+			});
+		}
 
 		try {
 			const deployment = await this.NginxDeploymentsModel.findById(id);
@@ -108,7 +108,19 @@ export class DeploymentsService {
 				});
 			}
 
+			try {
+				fs.unlinkSync(
+					path.join(
+						configuration.sitesEnabledLocation,
+						`${deployment._id}.conf`
+					)
+				);
+			} catch (error) {
+				console.log(error);
+			}
+
 			await deployment.remove();
+
 			return {
 				success: true,
 				message: 'Deployment deleted'
