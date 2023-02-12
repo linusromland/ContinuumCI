@@ -2,34 +2,52 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import fs from 'fs';
-import path from 'path';
 
 // Internal dependencies
-import { NginxLogsType } from 'shared/src/types';
+import { NginxConfigurationType, NginxLogsType } from 'shared/src/types';
 import { NginxResumeType } from '../types';
 
+// Local variables
+let logWatcherInterval: NodeJS.Timer | null = null;
 @Injectable()
 export class LogWatcherService {
 	private readonly logger = new Logger(LogWatcherService.name);
+	
 
 	constructor(
 		@Inject('NGINX_LOGS_MODEL')
 		private NginxLogsModel: Model<NginxLogsType>,
 		@Inject('NGINX_RESUME_MODEL')
-		private NginxResumeModel: Model<NginxResumeType>
+		private NginxResumeModel: Model<NginxResumeType>,
+		@Inject('NGINX_CONFIGURATION_MODEL')
+		private NginxConfigurationModel: Model<NginxConfigurationType>
 	) {
-		this.init();
+		this.startLogWatcher();
 	}
 
-	init() {
-		this.logger.log('Watching access.log');
-		setInterval(async () => {
+	async startLogWatcher() {
+		if (logWatcherInterval) {
+			clearInterval(logWatcherInterval);
+		}
+
+		const configuration = await this.NginxConfigurationModel.findOne({});
+
+		if(!configuration) {
+			this.logger.error('No configuration found');
+			return;
+		}
+
+		this.logger.log(
+			`Starting watching for logs in file ${configuration.accessLogLocation}`
+		);
+
+		logWatcherInterval = setInterval(async () => {
 			try {
 				this.logger.log('Checking for new logs');
 
 				// Read the file
 				const file = fs.readFileSync(
-					path.join(__dirname, '../access.log'),
+					configuration.accessLogLocation,
 					'utf8'
 				);
 

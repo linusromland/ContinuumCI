@@ -39,6 +39,11 @@ export class ConfigurationController {
 						required: true
 					},
 					{
+						argument: 'accessLogLocation',
+						type: 'string',
+						required: true
+					},
+					{
 						argument: 'domains',
 						type: 'object',
 						required: true,
@@ -90,6 +95,29 @@ export class ConfigurationController {
 			throw new BadRequestException({
 				success: false,
 				message: 'The sites-enabled location is not writable'
+			});
+		}
+
+		const accessLogLocation = nginxConfiguration.accessLogLocation;
+
+		// Check if the access log location exists, is a file and is writable
+		if (
+			!fs.existsSync(accessLogLocation) ||
+			!fs.lstatSync(accessLogLocation).isFile()
+		) {
+			throw new BadRequestException({
+				success: false,
+				message:
+					'The access log location does not exist or is not a file'
+			});
+		}
+
+		try {
+			fs.accessSync(accessLogLocation, fs.constants.W_OK);
+		} catch (error) {
+			throw new BadRequestException({
+				success: false,
+				message: 'The access log location is not writable'
 			});
 		}
 

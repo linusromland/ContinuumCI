@@ -8,12 +8,15 @@ import {
 	NginxConfigurationType,
 	NginxConfigurationResponseType
 } from 'shared/src/types';
+import { LogWatcherService } from 'src/services/logWatcher.service';
 
 @Injectable()
 export class ConfigurationService {
 	constructor(
 		@Inject('NGINX_CONFIGURATION_MODEL')
-		private NginxConfigurationModel: Model<NginxConfigurationType>
+		private NginxConfigurationModel: Model<NginxConfigurationType>,
+
+		private readonly logWatcherService: LogWatcherService
 	) {}
 
 	async edit(
@@ -25,6 +28,8 @@ export class ConfigurationService {
 				nginxConfiguration,
 				{ upsert: true }
 			);
+
+			await this.logWatcherService.startLogWatcher();
 
 			return {
 				success: true,
@@ -48,6 +53,7 @@ export class ConfigurationService {
 				message: 'Nginx configuration',
 				localIps: nginxConfiguration.localIps,
 				sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
+				accessLogLocation: nginxConfiguration.accessLogLocation,
 				domains: nginxConfiguration.domains
 			};
 		} catch (error) {

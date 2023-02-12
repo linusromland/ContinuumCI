@@ -10,6 +10,10 @@ export const NginxConfigurationSchema = new Schema({
 		type: String,
 		required: true
 	},
+	accessLogLocation: {
+		type: String,
+		required: true
+	},
 	domains: [
 		{
 			name: {
