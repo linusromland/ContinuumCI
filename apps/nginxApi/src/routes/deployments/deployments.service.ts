@@ -62,7 +62,8 @@ export class DeploymentsService {
 					if (error) {
 						reject({
 							success: false,
-							message: "Couldn't create deployment",
+							message:
+								'Deployment created, nginx failed to reload',
 							logs: error
 						});
 					}
