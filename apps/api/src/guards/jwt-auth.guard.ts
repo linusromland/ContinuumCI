@@ -1,5 +1,10 @@
 // External dependencies
-import { ExecutionContext, Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import {
+	ExecutionContext,
+	Injectable,
+	Inject,
+	UnauthorizedException
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import { AuthGuard } from '@nestjs/passport';
 

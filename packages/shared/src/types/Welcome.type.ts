@@ -1,9 +1,8 @@
 // Internal dependencies
 import { ResponseType } from './';
 
-type WelcomeType = {
-	firstTimeSetup: boolean;
-};
+// eslint-disable-next-line @typescript-eslint/ban-types
+type WelcomeType = {};
 
 type WelcomeResponseType = WelcomeType & ResponseType;
 

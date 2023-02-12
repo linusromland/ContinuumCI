@@ -1,0 +1,51 @@
+{
+	"name": "nginxapi",
+	"version": "0.0.1",
+	"description": "",
+	"author": "",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"build": "npm run moveTemplates && nest build",
+		"start": "nest start",
+		"moveTemplates": "rimraf dist && npx mkdirp dist/apps/nginxApi/src && cp -R src/templates dist/apps/nginxApi/src/templates",
+		"dev": "npm run moveTemplates && nest start --watch",
+		"start:prod": "node dist/apps/nginxApi/src/main",
+		"lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
+	},
+	"dependencies": {
+		"@nestjs/common": "^9.0.0",
+		"@nestjs/core": "^9.0.0",
+		"@nestjs/jwt": "^10.0.1",
+		"@nestjs/mongoose": "^9.2.1",
+		"@nestjs/passport": "^9.0.0",
+		"@nestjs/platform-express": "^9.0.0",
+		"dayjs": "^1.11.7",
+		"dotenv": "^16.0.3",
+		"eslint-config-custom": "*",
+		"mongoose": "^6.9.0",
+		"nodemailer": "^6.9.1",
+		"passport": "^0.6.0",
+		"passport-jwt": "^4.0.1",
+		"passport-local": "^1.0.0",
+		"reflect-metadata": "^0.1.13",
+		"rxjs": "^7.2.0",
+		"shared": "*",
+		"tsconfig": "*"
+	},
+	"devDependencies": {
+		"@nestjs/cli": "^9.0.0",
+		"@nestjs/schematics": "^9.0.0",
+		"@types/express": "^4.17.13",
+		"@types/node": "18.11.18",
+		"@types/passport-jwt": "^3.0.8",
+		"@types/passport-local": "^1.0.35",
+		"eslint": "^8.0.1",
+		"source-map-support": "^0.5.20",
+		"ts-jest": "29.0.3",
+		"ts-loader": "^9.2.3",
+		"ts-node": "^10.0.0",
+		"tsconfig-paths": "4.1.1",
+		"typescript": "^4.7.4"
+	}
+}

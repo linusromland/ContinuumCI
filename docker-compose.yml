@@ -1,0 +1,53 @@
+version: '3.7'
+name: 'continuumci'
+services:
+    mongo:
+        image: mongo:6.0.4
+        restart: unless-stopped
+        volumes:
+            - mongodb_data:/data/db
+            - mongodb_config:/data/configdb
+        networks:
+            - default
+        ports:
+            - '27018:27017'
+    nginx-api:
+        depends_on:
+            - mongo
+        restart: unless-stopped
+        build:
+            context: ./
+            dockerfile: apps/nginxApi/Dockerfile
+        environment:
+            - MONGODB_URI=mongodb://mongo:27017/ContinuumCI
+        networks:
+            - default
+        ports:
+            - '80:80'
+            - '443:443'
+            - '3001:3001'
+        volumes:
+            - nginx_sites_enabled:/etc/nginx/sites-enabled
+            - nginx_logs:/var/log/nginx
+    api:
+        depends_on:
+            - mongo
+        restart: unless-stopped
+        build:
+            context: ./
+            dockerfile: apps/api/Dockerfile
+        environment:
+            - MONGODB_URI=mongodb://mongo:27017/ContinuumCI
+            - NGINX_API_URL=http://nginx-api:3001
+        networks:
+            - default
+        ports:
+            - '3000:3000'
+
+networks:
+    default:
+volumes:
+    mongodb_data:
+    mongodb_config:
+    nginx_sites_enabled:
+    nginx_logs:

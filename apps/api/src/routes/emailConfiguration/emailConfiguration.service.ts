@@ -1,11 +1,20 @@
 // External dependencies
-import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Inject,
+	Injectable,
+	InternalServerErrorException
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import nodemailer from 'nodemailer';
 import dayjs from 'dayjs';
 
 // Internal dependencies
-import { EmailConfigurationResponseType, EmailConfigurationType, ResponseType } from 'shared/src/types';
+import {
+	EmailConfigurationResponseType,
+	EmailConfigurationType,
+	ResponseType
+} from 'shared/src/types';
 import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
 
@@ -16,7 +25,9 @@ export class EmailConfigurationService {
 		private EmailConfigurationModel: Model<EmailConfigurationType>
 	) {}
 
-	async create(emailConfiguration: EmailConfigurationType): Promise<ResponseType> {
+	async create(
+		emailConfiguration: EmailConfigurationType
+	): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
 			if (!(await this.verifyEmailConfiguration(emailConfiguration))) {
@@ -28,7 +39,11 @@ export class EmailConfigurationService {
 
 			//Save the email configuration
 			try {
-				await this.EmailConfigurationModel.updateOne({}, emailConfiguration, { upsert: true });
+				await this.EmailConfigurationModel.updateOne(
+					{},
+					emailConfiguration,
+					{ upsert: true }
+				);
 				return {
 					success: true,
 					message: 'Email configuration saved successfully'
@@ -51,7 +66,9 @@ export class EmailConfigurationService {
 		}
 	}
 
-	async verifyEmailConfiguration(emailConfiguration: EmailConfigurationType): Promise<boolean> {
+	async verifyEmailConfiguration(
+		emailConfiguration: EmailConfigurationType
+	): Promise<boolean> {
 		//Test the email configuration
 		const transporter = nodemailer.createTransport({
 			service: emailConfiguration.service,
@@ -70,12 +87,19 @@ export class EmailConfigurationService {
 	}
 
 	async get(): Promise<EmailConfigurationResponseType> {
-		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
+		return await this.EmailConfigurationModel.findOne()
+			.select('-_id -__v -auth.pass')
+			.lean();
 	}
 
-	async sendVerificationEmail(email: string, verificationToken: string, expires: Date): Promise<ResponseType> {
+	async sendVerificationEmail(
+		email: string,
+		verificationToken: string,
+		expires: Date
+	): Promise<ResponseType> {
 		try {
-			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();
+			const emailConfiguration =
+				await this.EmailConfigurationModel.findOne().lean();
 
 			if (!emailConfiguration) {
 				throw new InternalServerErrorException({

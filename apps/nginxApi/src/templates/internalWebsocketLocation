@@ -1,0 +1,17 @@
+location {{location}} {
+                proxy_pass {{proxy_pass}};
+
+                # Configurations for WebSocket
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_read_timeout 86400;
+
+                # Configurations for Internal Access
+                allow   {{internal_ips}};
+                deny    all;
+
+                # Configure 403 page
+                error_page 403 /403.html;
+        }
+        
