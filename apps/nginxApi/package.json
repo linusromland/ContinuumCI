@@ -8,9 +8,9 @@
 	"scripts": {
 		"build": "npm run moveTemplates && nest build",
 		"start": "nest start",
-		"moveTemplates": "rm -Rf dist && mkdir dist && cp -R src/templates dist/templates",
+		"moveTemplates": "rimraf dist && npx mkdirp dist/apps/nginxApi/src && cp -R src/templates dist/apps/nginxApi/src/templates",
 		"dev": "npm run moveTemplates && nest start --watch",
-		"start:prod": "node dist/main",
+		"start:prod": "node dist/apps/nginxApi/src/main",
 		"lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
 	},
 	"dependencies": {
