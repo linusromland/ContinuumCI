@@ -1,5 +1,4 @@
 // External dependencies
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Connection } from 'mongoose';
 
 // Internal dependencies
