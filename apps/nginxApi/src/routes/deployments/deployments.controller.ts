@@ -14,6 +14,7 @@ import {
 	NginxDeploymentType,
 	ResponseType
 } from 'shared/src/types';
+import argumentValidator from 'src/utils/argumentValidator';
 import { DeploymentsService } from './deployments.service';
 
 @Controller('deployments')
@@ -24,6 +25,65 @@ export class DeploymentsController {
 	async create(
 		@Body() deploymentConfiguration: NginxDeploymentType
 	): Promise<ResponseType> {
+		try {
+			argumentValidator(
+				[
+					{
+						argument: 'server_name',
+						type: 'string',
+						required: true
+					},
+					{
+						argument: 'locations',
+						type: 'object',
+						required: true,
+						array: true
+					},
+					{
+						argument: "ssl",
+						type: "boolean",
+						required: true
+					}
+				],
+				deploymentConfiguration
+			);
+
+			for(const location of deploymentConfiguration.locations){
+				argumentValidator(
+					[
+						{
+							argument: 'location',
+							type: 'string',
+							required: true
+						},
+						{
+							argument: 'proxy_pass',
+							type: 'string',
+							required: true
+						},
+						{
+							argument: 'websocket',
+							type: 'boolean',
+							required: true
+						},
+						{
+							argument: 'internal',
+							type: 'boolean',
+							required: true
+						}
+					],
+					location
+				);
+			}
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			throw new BadRequestException({
+				success: false,
+				message: error.message
+			});
+		}
+
 		return this.deploymentsService.create(deploymentConfiguration);
 	}
 

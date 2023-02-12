@@ -1,5 +1,11 @@
 // External dependencies
-import { BadRequestException, Body, Controller, Get, Put } from '@nestjs/common';
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	Get,
+	Put
+} from '@nestjs/common';
 import fs from 'fs';
 
 // Internal dependencies
@@ -19,30 +25,45 @@ export class ConfigurationController {
 	async edit(
 		@Body() nginxConfiguration: NginxConfigurationType
 	): Promise<ResponseType> {
-		try{
+		try {
 			argumentValidator(
-			[
-				{
-					argument: 'localIps',
-					type: 'string',
-					required: true
-				},
-				{
-					argument: 'sitesEnabledLocation',
-					type: 'string',
-					required: true
-				},
-				{
-					argument: 'domains',
-					type: 'object',
-					required: true,
-					array: true
-				}
-			],
-			nginxConfiguration
-		)
-	
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				[
+					{
+						argument: 'localIps',
+						type: 'string',
+						required: true
+					},
+					{
+						argument: 'sitesEnabledLocation',
+						type: 'string',
+						required: true
+					},
+					{
+						argument: 'domains',
+						type: 'object',
+						required: true,
+						array: true
+					}
+				],
+				nginxConfiguration
+			);
+
+			for (const domain of nginxConfiguration.domains) {
+				argumentValidator(
+					[
+						{
+							argument: 'name',
+							type: 'string',
+							required: true
+						}
+					],
+
+					domain
+				);
+			}
+
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
 			throw new BadRequestException({
 				success: false,
