@@ -158,9 +158,41 @@ export class DeploymentsService {
 
 			await deployment.remove();
 
+			const reloadCommand = new Promise((resolve, reject) => {
+				exec('nginx -s reload', (error, stdout, stderr) => {
+					if (error) {
+						reject({
+							success: false,
+							message: 'Deployment deleted, nginx failed to reload',
+							logs: error
+						});
+					}
+
+					if (stderr) {
+						resolve({
+							success: true,
+							message: 'Deployment deleted',
+							logs: stderr
+						});
+					}
+				});
+			});
+
+			const reloadResult = (await reloadCommand) as NginxReloadLogsType;
+
+			const reloadLog = new this.NginxReloadLogsModel(reloadResult);
+			await reloadLog.save();
+
+			if (!reloadResult.success) {
+				throw new BadRequestException({
+					success: reloadResult.success,
+					message: reloadResult.message
+				});
+			}
+
 			return {
-				success: true,
-				message: 'Deployment deleted'
+				success: reloadResult.success,
+				message: reloadResult.message
 			};
 		} catch (error) {
 			throw new BadRequestException({
