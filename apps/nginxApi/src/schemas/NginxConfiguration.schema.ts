@@ -3,12 +3,18 @@ import { Schema } from 'mongoose';
 
 export const NginxConfigurationSchema = new Schema({
 	localIps: {
-		type: String
+		type: String,
+		required: true
+	},
+	sitesEnabledLocation: {
+		type: String,
+		required: true
 	},
 	domains: [
 		{
 			name: {
-				type: String
+				type: String,
+				required: true
 			}
 		}
 	]

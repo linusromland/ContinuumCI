@@ -4,6 +4,7 @@ import { ResponseType } from './';
 type NginxConfigurationType = {
 	_id?: string;
 	localIps: string;
+	sitesEnabledLocation: string;
 	domains: {
 		name: string;
 	}[];

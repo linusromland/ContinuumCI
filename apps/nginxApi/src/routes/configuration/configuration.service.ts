@@ -47,6 +47,7 @@ export class ConfigurationService {
 				success: true,
 				message: 'Nginx configuration',
 				localIps: nginxConfiguration.localIps,
+				sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
 				domains: nginxConfiguration.domains
 			};
 		} catch (error) {
