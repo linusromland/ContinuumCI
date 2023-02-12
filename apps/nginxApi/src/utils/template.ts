@@ -29,7 +29,6 @@ const internalWebsocketLocationTemplate = fs.readFileSync(
 );
 
 const template = (deployment: NginxDeploymentType, localIps): string => {
-	console.log('template');
 	const { server_name, locations, ssl } = deployment;
 
 	if (ssl) console.log('SSL is not implemented yet');

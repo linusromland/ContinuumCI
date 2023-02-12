@@ -25,7 +25,7 @@ const argumentValidator = (tests: argumentValidator[], args: any) => {
 			throw new Error(`Argument ${test.argument} is not an array`);
 		}
 
-		if(test.required && !args[test.argument]){
+		if(test.required && args[test.argument] === undefined){
 			throw new Error(`Argument ${test.argument} is required`);
 		}
 

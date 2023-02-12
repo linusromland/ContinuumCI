@@ -1,12 +1,15 @@
 // External dependencies
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
+import fs from 'fs';
+import path from 'path';
 
 // Internal dependencies
 import {
 	ResponseType,
 	NginxDeploymentResponseType,
-	NginxDeploymentType
+	NginxDeploymentType,
+	NginxConfigurationType
 } from 'shared/src/types';
 import template from 'src/utils/template';
 
@@ -14,13 +17,24 @@ import template from 'src/utils/template';
 export class DeploymentsService {
 	constructor(
 		@Inject('NGINX_DEPLOYMENTS_MODEL')
-		private NginxDeploymentsModel: Model<NginxDeploymentType>
+		private NginxDeploymentsModel: Model<NginxDeploymentType>,
+
+		@Inject('NGINX_CONFIGURATION_MODEL')
+		private NginxConfigurationModel: Model<NginxConfigurationType>
 	) {}
 
 	async create(
 		deploymentConfiguration: NginxDeploymentType
 	): Promise<ResponseType> {
 		try {
+			const configuration = await this.NginxConfigurationModel.findOne();
+			if (!configuration) {
+				throw new BadRequestException({
+					success: false,
+					message: 'No configuration found'
+				});
+			}
+
 			const deployment = new this.NginxDeploymentsModel(
 				deploymentConfiguration
 			);
@@ -28,9 +42,16 @@ export class DeploymentsService {
 
 			const nginxTemplate = template(
 				deploymentConfiguration,
-				'EXAMPLE_LOCAL_IPS'
+				configuration.localIps
 			);
-			console.log(nginxTemplate);
+			
+			fs.writeFileSync(
+				path.join(
+					configuration.sitesEnabledLocation,
+					`${deployment._id}.conf`
+				),
+				nginxTemplate
+			);
 
 			return {
 				success: true,
