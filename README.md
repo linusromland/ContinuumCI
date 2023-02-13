@@ -68,4 +68,4 @@ This will start the ContinuumCI server and all its dependencies. You can then ac
 
 ## License
 
-ContinuumCI is open source and is released under the MIT license. You can find the full license text here.
+ContinuumCI is open source and is released under the MIT license. You can find the full license text [here](LICENSE).
