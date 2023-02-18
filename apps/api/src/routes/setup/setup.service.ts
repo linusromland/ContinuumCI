@@ -6,7 +6,6 @@ import { Model } from 'mongoose';
 import {
 	EmailConfigurationType,
 	SetupResponseType,
-	ResponseType,
 	UserType
 } from 'shared/src/types';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
