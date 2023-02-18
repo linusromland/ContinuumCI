@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // Routes imports
 import Home from './Home/Home';
 import Layout from './Layout/Layout';
+import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
 
 export default function Router(): JSX.Element {
@@ -21,6 +22,10 @@ export default function Router(): JSX.Element {
 					<Route
 						path='/welcome'
 						element={<Welcome />}
+					/>
+					<Route
+						path='/setup'
+						element={<Setup />}
 					/>
 					<Route
 						path='*'

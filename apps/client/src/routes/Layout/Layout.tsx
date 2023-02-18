@@ -15,7 +15,6 @@ export default function Layout(): JSX.Element {
 		(async () => {
 			const setup = await getSetup();
 			if (setup && setup.status == 'incomplete') navigate('/welcome');
-			else if (setup && setup.status == 'complete') navigate('/');
 			setLoading(false);
 		})();
 	}, []);

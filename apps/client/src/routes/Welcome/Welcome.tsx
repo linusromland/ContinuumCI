@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Internal Dependencies
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import Button from '../../components/Button/Button';
 import style from './Welcome.module.scss';
 
 export default function Welcome(): JSX.Element {
@@ -36,12 +37,10 @@ export default function Welcome(): JSX.Element {
 					logging into the ContinuumCI web interface and following the
 					prompts to create your user.
 				</p>
-				<button
-					className={style.button}
+				<Button
 					onClick={handleGetStarted}
-				>
-					Get Started
-				</button>
+					text='Get Started'
+				/>
 			</div>
 		</SetupLayout>
 	);
