@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client';
 
 // Internal dependencies
 import Router from './routes';
-import './main.scss';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
