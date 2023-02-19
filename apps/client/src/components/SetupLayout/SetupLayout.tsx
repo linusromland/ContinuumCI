@@ -13,8 +13,6 @@ export default function SetupLayout({
 	children: JSX.Element;
 }): JSX.Element {
 	const particlesInit = useCallback(async (engine: Engine) => {
-		console.log(engine);
-
 		await loadFull(engine);
 	}, []);
 
@@ -95,9 +93,7 @@ export default function SetupLayout({
 							},
 							value: 100
 						},
-						opacity: {
-							value: 0.5
-						},
+
 						shape: {
 							type: 'rectangle'
 						},
