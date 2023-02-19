@@ -1,5 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 // Internal Dependencies
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
@@ -52,6 +53,10 @@ export default function Setup(): JSX.Element {
 
 							if (userCreated) {
 								setStage(1);
+							} else {
+								toast.error(
+									'An error occurred while creating the root user.'
+								);
 							}
 						}}
 					/>
