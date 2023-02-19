@@ -17,6 +17,7 @@ const UserSchema = Yup.object().shape({
 		.required('Password is required'),
 	confirmPassword: Yup.string()
 		.oneOf([Yup.ref('password'), ''], 'Passwords must match')
+		.min(8, 'Password must be at least 8 characters')
 		.required('Confirm Password is required')
 });
 
