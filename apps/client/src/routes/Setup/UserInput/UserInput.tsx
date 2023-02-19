@@ -1,5 +1,5 @@
 // External Dependencies
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
 
 // Internal Dependencies
@@ -39,14 +39,12 @@ export default function UserInput({
 				password: '',
 				confirmPassword: ''
 			}}
-			onSubmit={onSubmit}
 			validationSchema={UserSchema}
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			onSubmit={() => {}} // This is required for the validation to work
 		>
-			{({ handleSubmit }) => (
-				<form
-					onSubmit={handleSubmit}
-					className={style.form}
-				>
+			{({ values }) => (
+				<Form className={style.form}>
 					<Field
 						name='username'
 						placeholder='Username'
@@ -95,9 +93,9 @@ export default function UserInput({
 
 					<Button
 						text='Create User'
-						onClick={handleSubmit}
+						onClick={() => onSubmit(values)}
 					/>
-				</form>
+				</Form>
 			)}
 		</Formik>
 	);

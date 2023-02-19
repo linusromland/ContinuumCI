@@ -44,20 +44,25 @@ export default function Setup(): JSX.Element {
 				<div className={style.container}>
 					<p className={style.subtitle}>{infoText}</p>
 					<UserInput
-						onSubmit={async (values) => {
-							const userCreated = await createUser({
-								username: values.username,
-								email: values.email,
-								password: values.password
-							});
+						onSubmit={(values) => {
+							(async () => {
+								console.log('Creating user');
+								const userCreated = await createUser({
+									username: values.username,
+									email: values.email,
+									password: values.password
+								});
 
-							if (userCreated) {
-								setStage(1);
-							} else {
-								toast.error(
-									'An error occurred while creating the root user.'
-								);
-							}
+								console.log('User created', userCreated);
+
+								if (userCreated) {
+									setStage(1);
+								} else {
+									toast.error(
+										'An error occurred while creating the root user.'
+									);
+								}
+							})();
 						}}
 					/>
 				</div>
