@@ -14,7 +14,7 @@ export default function Welcome(): JSX.Element {
 	}
 
 	return (
-		<SetupLayout title='Welcome to ContinuumCI!'>
+		<SetupLayout>
 			<div className={style.container}>
 				<p className={style.subtitle}>
 					We are thrilled to have you on board and ready to start

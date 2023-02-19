@@ -39,7 +39,7 @@ export default function Setup(): JSX.Element {
 	}, []);
 
 	return (
-		<SetupLayout title='Welcome to ContinuumCI!'>
+		<SetupLayout>
 			<>
 				<div className={style.container}>
 					<p className={style.subtitle}>{infoText}</p>
