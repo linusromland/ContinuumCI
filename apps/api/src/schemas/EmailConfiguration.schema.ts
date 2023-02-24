@@ -6,7 +6,7 @@ export const EmailConfigurationSchema = new Schema(
 		service: {
 			type: String,
 			required: true,
-			enum: ['gmail']
+			enum: ['gmail', 'skipped']
 		},
 		auth: {
 			user: {

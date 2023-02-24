@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Routes imports
 import Home from './Home/Home';
-import About from './About/About';
+import Layout from './Layout/Layout';
+import Setup from './Setup/Setup';
+import Welcome from './Welcome/Welcome';
 
 export default function Router(): JSX.Element {
 	return (
@@ -11,16 +13,25 @@ export default function Router(): JSX.Element {
 			<Routes>
 				<Route
 					path='/'
-					element={<Home />}
-				/>
-				<Route
-					path='/about'
-					element={<About />}
-				/>
-				<Route
-					path='*'
-					element={<Navigate to='/' />}
-				/>
+					element={<Layout />}
+				>
+					<Route
+						path='/'
+						element={<Home />}
+					/>
+					<Route
+						path='/welcome'
+						element={<Welcome />}
+					/>
+					<Route
+						path='/setup'
+						element={<Setup />}
+					/>
+					<Route
+						path='*'
+						element={<Navigate to='/' />}
+					/>
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	);

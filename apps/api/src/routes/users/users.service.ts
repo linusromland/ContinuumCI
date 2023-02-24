@@ -14,7 +14,8 @@ import {
 	JwtType,
 	UserType,
 	ResponseType,
-	EmailVerificationType
+	EmailVerificationType,
+	EmailConfigurationType
 } from 'shared/src/types';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
@@ -27,7 +28,10 @@ export class UsersService {
 		private UserModel: Model<UserType>,
 
 		@Inject('EMAIL_VERIFICATION_MODEL')
-		private EmailVerificationModel: Model<EmailVerificationType>
+		private EmailVerificationModel: Model<EmailVerificationType>,
+
+		@Inject('EMAIL_CONFIGURATION_MODEL')
+		private EmailConfigurationModel: Model<EmailConfigurationType>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {
@@ -41,20 +45,28 @@ export class UsersService {
 			});
 
 			if (!createdUser.verifiedEmail) {
-				const emailVerification = new this.EmailVerificationModel({
-					user: createdUser._id
-				});
+				if (
+					!(await this.EmailConfigurationModel.countDocuments({
+						service: { $ne: 'skipped' }
+					}))
+				) {
+					createdUser.verifiedEmail = true;
+				} else {
+					const emailVerification = new this.EmailVerificationModel({
+						user: createdUser._id
+					});
 
-				await emailVerification.save();
+					await emailVerification.save();
 
-				// Send email verification email
-				await this.emailConfigurationService.sendVerificationEmail(
-					createdUser.email,
-					emailVerification._id,
-					dayjs(emailVerification.createdAt)
-						.add(30, 'minutes')
-						.toDate()
-				);
+					// Send email verification email
+					await this.emailConfigurationService.sendVerificationEmail(
+						createdUser.email,
+						emailVerification._id,
+						dayjs(emailVerification.createdAt)
+							.add(30, 'minutes')
+							.toDate()
+					);
+				}
 			}
 
 			await createdUser.save();

@@ -1,5 +1,6 @@
 enum EmailConfigurationServiceEnum {
-	GMAIL = 'gmail'
+	GMAIL = 'gmail',
+	SKIPPED = 'skipped'
 }
 
 export default EmailConfigurationServiceEnum;

@@ -1,0 +1,57 @@
+@use 'src/styles' as *;
+
+.main {
+	/* gradient bg */
+	background: linear-gradient(180deg, $primary 0%, $secondary 100%);
+	min-height: 100vh;
+	min-width: 100vw;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.content {
+	background-color: $background;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	min-width: 20rem;
+	transition: all 0.2s ease-in-out;
+	opacity: 1 !important;
+
+	* {
+		opacity: 1 !important;
+	}
+}
+
+.logo {
+	width: 3rem;
+	height: 3rem;
+}
+
+.logoWrapper {
+	padding: 0.5rem 0;
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+	align-items: flex-end;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: $text-primary;
+}
+
+.footer {
+	margin-top: auto;
+	padding: 0.25rem 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p {
+		font-size: 0.8rem;
+		color: $text-primary;
+	}
+}
