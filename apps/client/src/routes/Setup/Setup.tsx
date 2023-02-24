@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 // Internal Dependencies
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import UserInput from './UserInput/UserInput';
+import EmailConfigurationInput from './EmailConfigurationInput/EmailConfigurationInput';
 import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';
@@ -43,28 +44,48 @@ export default function Setup(): JSX.Element {
 			<>
 				<div className={style.container}>
 					<p className={style.subtitle}>{infoText}</p>
-					<UserInput
-						onSubmit={(values) => {
-							(async () => {
-								console.log('Creating user');
-								const userCreated = await createUser({
-									username: values.username,
-									email: values.email,
-									password: values.password
-								});
+					{
+						{
+							0: (
+								<UserInput
+									onSubmit={(values) => {
+										(async () => {
+											console.log('Creating user');
+											const userCreated =
+												await createUser({
+													username: values.username,
+													email: values.email,
+													password: values.password
+												});
 
-								console.log('User created', userCreated);
+											console.log(
+												'User created',
+												userCreated
+											);
 
-								if (userCreated) {
-									setStage(1);
-								} else {
-									toast.error(
-										'An error occurred while creating the root user.'
-									);
-								}
-							})();
-						}}
-					/>
+											if (userCreated) {
+												setStage(1);
+											} else {
+												toast.error(
+													'An error occurred while creating the root user.'
+												);
+											}
+										})();
+									}}
+								/>
+							),
+							1: (
+								<EmailConfigurationInput
+									onSubmit={(values) => {
+										console.log(
+											'Email configuration submitted with values ',
+											values
+										);
+									}}
+								/>
+							)
+						}[stage]
+					}
 				</div>
 			</>
 		</SetupLayout>
