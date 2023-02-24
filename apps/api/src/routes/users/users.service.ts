@@ -45,7 +45,11 @@ export class UsersService {
 			});
 
 			if (!createdUser.verifiedEmail) {
-				if (!(await this.EmailConfigurationModel.countDocuments())) {
+				if (
+					!(await this.EmailConfigurationModel.countDocuments({
+						service: { $ne: 'skipped' }
+					}))
+				) {
 					createdUser.verifiedEmail = true;
 				} else {
 					const emailVerification = new this.EmailVerificationModel({

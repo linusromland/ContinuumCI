@@ -1,6 +1,5 @@
 // Internal dependencies
 import api from './';
-import { ResponseType } from 'shared/src/types';
 
 async function createUser({
 	username,
@@ -11,13 +10,13 @@ async function createUser({
 	email: string;
 	password: string;
 }): Promise<boolean> {
-	const request = (await api.post('/users/create', {
+	const request = await api.post('/users/create', {
 		username,
 		email,
 		password
-	})) as ResponseType;
+	});
 
-	return request.success;
+	return request.data.success;
 }
 
 export { createUser };

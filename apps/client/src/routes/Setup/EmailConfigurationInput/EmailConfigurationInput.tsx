@@ -23,16 +23,19 @@ const EmailConfigurationSchema = Yup.object().shape({
 export default function EmailConfigurationInput({
 	onSubmit
 }: {
-	onSubmit: (values: {
-		service: {
-			value: string;
-			label: string;
-		};
-		gmail: {
-			email: string;
-			password: string;
-		};
-	}) => void;
+	onSubmit: (
+		skip?: boolean,
+		values?: {
+			service: {
+				value: string;
+				label: string;
+			};
+			gmail: {
+				email: string;
+				password: string;
+			};
+		}
+	) => void;
 }): JSX.Element {
 	return (
 		<Formik
@@ -89,11 +92,17 @@ export default function EmailConfigurationInput({
 							/>
 						</>
 					)}
+					<div className={style.buttons}>
+						<Button
+							text='Skip'
+							onClick={() => onSubmit(true)}
+						/>
 
-					<Button
-						text='Continue'
-						onClick={() => onSubmit(values)}
-					/>
+						<Button
+							text='Continue'
+							onClick={() => onSubmit(false, values)}
+						/>
+					</div>
 				</Form>
 			)}
 		</Formik>

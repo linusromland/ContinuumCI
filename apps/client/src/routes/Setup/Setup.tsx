@@ -1,5 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // Internal Dependencies
@@ -9,8 +10,13 @@ import EmailConfigurationInput from './EmailConfigurationInput/EmailConfiguratio
 import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';
+import { updateEmailConfiguration } from '../../utils/api/emailConfiguration';
+import { getToken } from '../../utils/api/getToken';
+import api from '../../utils/api';
 
 export default function Setup(): JSX.Element {
+	const navigate = useNavigate();
+
 	const [stage, setStage] = useState(0);
 	const [infoText, setInfoText] = useState('');
 
@@ -50,7 +56,6 @@ export default function Setup(): JSX.Element {
 								<UserInput
 									onSubmit={(values) => {
 										(async () => {
-											console.log('Creating user');
 											const userCreated =
 												await createUser({
 													username: values.username,
@@ -58,12 +63,18 @@ export default function Setup(): JSX.Element {
 													password: values.password
 												});
 
-											console.log(
-												'User created',
-												userCreated
-											);
-
 											if (userCreated) {
+												const token = await getToken(
+													values.username,
+													values.password
+												);
+
+												if (token) {
+													api.defaults.headers.common[
+														'Authorization'
+													] = `Bearer ${token.access_token}`;
+												}
+
 												setStage(1);
 											} else {
 												toast.error(
@@ -76,11 +87,33 @@ export default function Setup(): JSX.Element {
 							),
 							1: (
 								<EmailConfigurationInput
-									onSubmit={(values) => {
-										console.log(
-											'Email configuration submitted with values ',
-											values
-										);
+									onSubmit={(skip, values) => {
+										(async () => {
+											const emailConfiguration =
+												await updateEmailConfiguration({
+													service: skip
+														? 'skipped'
+														: values?.service
+																?.value || '',
+													auth: {
+														user:
+															values?.gmail
+																?.email || '',
+														pass:
+															values?.gmail
+																?.password || ''
+													}
+												});
+
+											if (emailConfiguration.success) {
+												navigate('/');
+											} else {
+												toast.error(
+													emailConfiguration.message ||
+														'An error occurred while configuring the email settings.'
+												);
+											}
+										})();
 									}}
 								/>
 							)

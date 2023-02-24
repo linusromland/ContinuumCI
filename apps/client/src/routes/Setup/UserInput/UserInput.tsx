@@ -90,11 +90,12 @@ export default function UserInput({
 						component='div'
 						className={style.error}
 					/>
-
-					<Button
-						text='Create User'
-						onClick={() => onSubmit(values)}
-					/>
+					<div className={style.buttons}>
+						<Button
+							text='Create User'
+							onClick={() => onSubmit(values)}
+						/>
+					</div>
 				</Form>
 			)}
 		</Formik>

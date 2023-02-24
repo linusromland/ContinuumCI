@@ -17,6 +17,7 @@ import {
 } from 'shared/src/types';
 import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
+import { EmailConfigurationServiceEnum } from 'shared/src/enums';
 
 @Injectable()
 export class EmailConfigurationService {
@@ -30,7 +31,11 @@ export class EmailConfigurationService {
 	): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
-			if (!(await this.verifyEmailConfiguration(emailConfiguration))) {
+			if (
+				emailConfiguration.service !==
+					EmailConfigurationServiceEnum.SKIPPED &&
+				!(await this.verifyEmailConfiguration(emailConfiguration))
+			) {
 				throw new BadRequestException({
 					success: false,
 					message: 'Invalid email configuration'
