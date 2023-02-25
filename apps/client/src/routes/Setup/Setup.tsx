@@ -39,6 +39,10 @@ export default function Setup(): JSX.Element {
 		(async () => {
 			const setup = await getSetup();
 
+			if (setup.status === 'complete') {
+				navigate('/');
+			}
+
 			if (setup.rootUser) {
 				setStage(1);
 			}
