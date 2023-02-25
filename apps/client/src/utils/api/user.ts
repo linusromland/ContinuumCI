@@ -19,4 +19,10 @@ async function createUser({
 	return request.data.success;
 }
 
-export { createUser };
+async function getUser(): Promise<boolean> {
+	const request = await api.get('/profile');
+
+	return request.data.success;
+}
+
+export { createUser, getUser };
