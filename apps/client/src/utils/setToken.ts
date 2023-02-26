@@ -5,10 +5,12 @@ import { getToken } from './api/getToken';
 async function setToken({
 	email,
 	password,
+	rememberMe,
 	token
 }: {
 	email?: string;
 	password?: string;
+	rememberMe?: boolean;
 	token?: string;
 }) {
 	if (!email && !password && !token) {
@@ -26,6 +28,9 @@ async function setToken({
 
 	const tokenRequest = await getToken(email, password);
 
+	if (rememberMe) {
+		localStorage.setItem('token', tokenRequest.access_token as string);
+	}
 	if (tokenRequest.success) {
 		updateHeader(tokenRequest.access_token as string);
 		return;

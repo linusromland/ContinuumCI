@@ -54,7 +54,8 @@ export default function Login(): JSX.Element {
 							(async () => {
 								await setToken({
 									email: values.email,
-									password: values.password
+									password: values.password,
+									rememberMe: values.rememberMe
 								});
 								toast.success('Successfully logged in!');
 								navigate('/');
