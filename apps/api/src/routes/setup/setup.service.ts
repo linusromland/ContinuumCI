@@ -1,6 +1,7 @@
 // External dependencies
 import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { EmailConfigurationServiceEnum } from 'shared/src/enums';
 
 // Internal dependencies
 import {
@@ -25,6 +26,8 @@ export class SetupService {
 	async getSetup(): Promise<SetupResponseType> {
 		const emailConfiguration = await this.EmailConfigurationModel.findOne();
 		const verifiedEmailConfiguration =
+			emailConfiguration.service ===
+				EmailConfigurationServiceEnum.SKIPPED ||
 			(emailConfiguration &&
 				(await this.emailConfigurationService.verifyEmailConfiguration(
 					emailConfiguration

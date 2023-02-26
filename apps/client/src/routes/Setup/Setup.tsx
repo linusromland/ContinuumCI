@@ -5,14 +5,13 @@ import { toast } from 'react-toastify';
 
 // Internal Dependencies
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
-import UserInput from './UserInput/UserInput';
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import EmailConfigurationInput from './EmailConfigurationInput/EmailConfigurationInput';
 import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';
 import { updateEmailConfiguration } from '../../utils/api/emailConfiguration';
-import { getToken } from '../../utils/api/getToken';
-import api from '../../utils/api';
+import setToken from '../../utils/setToken';
 
 export default function Setup(): JSX.Element {
 	const navigate = useNavigate();
@@ -39,6 +38,10 @@ export default function Setup(): JSX.Element {
 		(async () => {
 			const setup = await getSetup();
 
+			if (setup.status === 'complete') {
+				navigate('/');
+			}
+
 			if (setup.rootUser) {
 				setStage(1);
 			}
@@ -53,7 +56,7 @@ export default function Setup(): JSX.Element {
 					{
 						{
 							0: (
-								<UserInput
+								<RegistrationForm
 									onSubmit={(values) => {
 										(async () => {
 											const userCreated =
@@ -64,16 +67,10 @@ export default function Setup(): JSX.Element {
 												});
 
 											if (userCreated) {
-												const token = await getToken(
-													values.username,
-													values.password
-												);
-
-												if (token) {
-													api.defaults.headers.common[
-														'Authorization'
-													] = `Bearer ${token.access_token}`;
-												}
+												await setToken({
+													email: values.email,
+													password: values.password
+												});
 
 												setStage(1);
 											} else {

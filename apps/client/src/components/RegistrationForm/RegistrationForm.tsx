@@ -3,8 +3,8 @@ import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
 
 // Internal Dependencies
-import Button from '../../../components/Button/Button';
-import style from './UserInput.module.scss';
+import Button from '../Button/Button';
+import style from './RegistrationForm.module.scss';
 
 const UserSchema = Yup.object().shape({
 	username: Yup.string()
@@ -21,7 +21,7 @@ const UserSchema = Yup.object().shape({
 		.required('Confirm Password is required')
 });
 
-export default function UserInput({
+export default function RegistrationForm({
 	onSubmit
 }: {
 	onSubmit: (values: {
