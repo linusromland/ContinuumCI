@@ -3,11 +3,11 @@ import api from './';
 import { LoginResponseType } from 'shared/src/types';
 
 async function getToken(
-	username: string,
+	email: string,
 	password: string
 ): Promise<LoginResponseType> {
 	const request = await api.post('/auth/login', {
-		username,
+		email,
 		password
 	});
 

@@ -69,7 +69,7 @@ export default function Setup(): JSX.Element {
 
 											if (userCreated) {
 												const token = await getToken(
-													values.username,
+													values.email,
 													values.password
 												);
 

@@ -42,8 +42,8 @@ export class AuthService {
 		};
 	}
 
-	async validateUser(username: string, pass: string): Promise<UserType> {
-		const user = await this.UserModel.findOne({ username });
+	async validateUser(email: string, pass: string): Promise<UserType> {
+		const user = await this.UserModel.findOne({ email });
 
 		if (user && user.password === pass) {
 			delete user.password;
