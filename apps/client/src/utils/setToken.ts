@@ -2,10 +2,38 @@
 import api from './api';
 import { getToken } from './api/getToken';
 
-async function setToken(email: string, password: string) {
+async function setToken({
+	email,
+	password,
+	token
+}: {
+	email?: string;
+	password?: string;
+	token?: string;
+}) {
+	if (!email && !password && !token) {
+		throw new Error('No credentials provided');
+	}
+
+	if (token) {
+		updateHeader(token);
+		return;
+	}
+
+	if (!email || !password) {
+		throw new Error('No email or password provided');
+	}
+
 	const tokenRequest = await getToken(email, password);
 
-	api.defaults.headers.common.Authorization = `Bearer ${tokenRequest.access_token}`;
+	if (tokenRequest.success) {
+		updateHeader(tokenRequest.access_token as string);
+		return;
+	}
+}
+
+function updateHeader(token: string) {
+	api.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 export default setToken;

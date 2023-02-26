@@ -67,10 +67,10 @@ export default function Setup(): JSX.Element {
 												});
 
 											if (userCreated) {
-												await setToken(
-													values.email,
-													values.password
-												);
+												await setToken({
+													email: values.email,
+													password: values.password
+												});
 
 												setStage(1);
 											} else {
