@@ -11,8 +11,7 @@ import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';
 import { updateEmailConfiguration } from '../../utils/api/emailConfiguration';
-import { getToken } from '../../utils/api/getToken';
-import api from '../../utils/api';
+import setToken from '../../utils/setToken';
 
 export default function Setup(): JSX.Element {
 	const navigate = useNavigate();
@@ -68,16 +67,10 @@ export default function Setup(): JSX.Element {
 												});
 
 											if (userCreated) {
-												const token = await getToken(
+												await setToken(
 													values.email,
 													values.password
 												);
-
-												if (token) {
-													api.defaults.headers.common[
-														'Authorization'
-													] = `Bearer ${token.access_token}`;
-												}
 
 												setStage(1);
 											} else {
