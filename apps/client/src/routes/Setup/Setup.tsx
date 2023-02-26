@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 // Internal Dependencies
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
-import UserInput from './UserInput/UserInput';
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import EmailConfigurationInput from './EmailConfigurationInput/EmailConfigurationInput';
 import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
@@ -57,7 +57,7 @@ export default function Setup(): JSX.Element {
 					{
 						{
 							0: (
-								<UserInput
+								<RegistrationForm
 									onSubmit={(values) => {
 										(async () => {
 											const userCreated =
