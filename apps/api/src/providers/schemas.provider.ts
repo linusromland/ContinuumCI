@@ -5,6 +5,7 @@ import { Connection } from 'mongoose';
 import {
 	EmailConfigurationSchema,
 	EmailVerificationSchema,
+	ProjectSchema,
 	UserSchema
 } from '../schemas';
 
@@ -19,6 +20,12 @@ const schemaProviders = [
 		provide: 'EMAIL_VERIFICATION_MODEL',
 		useFactory: (connection: Connection) =>
 			connection.model('emailVerifications', EmailVerificationSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'PROJECT_MODEL',
+		useFactory: (connection: Connection) =>
+			connection.model('projects', ProjectSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
