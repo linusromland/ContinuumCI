@@ -43,6 +43,8 @@ services:
             - default
         ports:
             - '3000:3000'
+        volumes:
+            - projects_data:/apps/api/src/projects
 
 networks:
     default:
@@ -51,3 +53,4 @@ volumes:
     mongodb_config:
     nginx_sites_enabled:
     nginx_logs:
+    projects_data:
