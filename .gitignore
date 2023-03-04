@@ -40,3 +40,7 @@ dist
 
 # Nginx access log
 access.log
+
+# Git Clone Directory
+apps/api/src/repositories/*
+!apps/api/src/repositories/.gitkeep

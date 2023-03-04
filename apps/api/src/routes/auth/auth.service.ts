@@ -4,12 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import {
-	LoginResponseType,
-	UserResponseType,
-	UserType,
-	ResponseType
-} from 'shared/src/types';
+import { UserType, ResponseType } from 'shared/src/types';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +14,7 @@ export class AuthService {
 		private UserModel: Model<UserType>
 	) {}
 
-	async getUser(id: string): Promise<UserResponseType | ResponseType> {
+	async getUser(id: string): Promise<ResponseType> {
 		const user: UserType = await this.UserModel.findById(id).select(
 			'-password'
 		);
@@ -28,11 +23,13 @@ export class AuthService {
 			return {
 				success: true,
 				message: 'User found',
-				_id: user._id,
-				username: user.username,
-				email: user.email,
-				verifiedEmail: user.verifiedEmail,
-				role: user.role
+				data: {
+					_id: user._id,
+					username: user.username,
+					email: user.email,
+					verifiedEmail: user.verifiedEmail,
+					role: user.role
+				}
 			};
 		}
 
@@ -52,7 +49,7 @@ export class AuthService {
 		return null;
 	}
 
-	async login(user: UserType): Promise<LoginResponseType> {
+	async login(user: UserType): Promise<ResponseType> {
 		const payload = {
 			username: user.username,
 			email: user.email,
@@ -64,7 +61,7 @@ export class AuthService {
 			return {
 				success: true,
 				message: 'Login successful',
-				access_token: token
+				data: { access_token: token }
 			};
 		} catch (error) {
 			return {

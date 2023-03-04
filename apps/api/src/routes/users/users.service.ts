@@ -14,9 +14,9 @@ import {
 	JwtType,
 	UserType,
 	ResponseType,
-	EmailVerificationType,
-	EmailConfigurationType
+	EmailVerificationType
 } from 'shared/src/types';
+import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class UsersService {
 		private EmailVerificationModel: Model<EmailVerificationType>,
 
 		@Inject('EMAIL_CONFIGURATION_MODEL')
-		private EmailConfigurationModel: Model<EmailConfigurationType>
+		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
 	async create(user: UserType): Promise<ResponseType> {

@@ -2,7 +2,8 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 
 // Internal dependencies
-import { EmailConfigurationType, ResponseType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
+import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from './emailConfiguration.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
@@ -15,7 +16,7 @@ export class EmailConfigurationController {
 	@UseGuards(JwtAuthGuard)
 	@Put()
 	async create(
-		@Body() emailConfiguration: EmailConfigurationType
+		@Body() emailConfiguration: EmailConfigurationClass
 	): Promise<ResponseType> {
 		return this.emailConfigurationService.create(emailConfiguration);
 	}

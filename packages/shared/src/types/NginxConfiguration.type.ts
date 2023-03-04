@@ -1,6 +1,3 @@
-// Internal dependencies
-import { ResponseType } from './';
-
 type NginxConfigurationType = {
 	_id?: string;
 	localIps: string;
@@ -11,6 +8,4 @@ type NginxConfigurationType = {
 	}[];
 };
 
-type NginxConfigurationResponseType = NginxConfigurationType & ResponseType;
-
-export { NginxConfigurationResponseType, NginxConfigurationType };
+export { NginxConfigurationType };

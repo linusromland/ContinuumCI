@@ -12,7 +12,7 @@ export class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@Post('create')
-	getProfile(@Body() user: UserType) {
+	createUser(@Body() user: UserType) {
 		return this.usersService.create(user);
 	}
 

@@ -9,11 +9,7 @@ import {
 } from '@nestjs/common';
 
 // Internal dependencies
-import {
-	NginxDeploymentResponseType,
-	NginxDeploymentType,
-	ResponseType
-} from 'shared/src/types';
+import { NginxDeploymentType, ResponseType } from 'shared/src/types';
 import argumentValidator from 'src/utils/argumentValidator';
 import { DeploymentsService } from './deployments.service';
 
@@ -40,15 +36,15 @@ export class DeploymentsController {
 						array: true
 					},
 					{
-						argument: "ssl",
-						type: "boolean",
+						argument: 'ssl',
+						type: 'boolean',
 						required: true
 					}
 				],
 				deploymentConfiguration
 			);
 
-			for(const location of deploymentConfiguration.locations){
+			for (const location of deploymentConfiguration.locations) {
 				argumentValidator(
 					[
 						{
@@ -88,7 +84,7 @@ export class DeploymentsController {
 	}
 
 	@Get()
-	async get(@Query('id') id: string): Promise<NginxDeploymentResponseType> {
+	async get(@Query('id') id: string): Promise<ResponseType> {
 		if (!id)
 			throw new BadRequestException({
 				success: false,

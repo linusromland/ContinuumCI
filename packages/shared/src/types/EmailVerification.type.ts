@@ -1,5 +1,5 @@
 // Internal dependencies
-import { ResponseType, UserType } from './';
+import { UserType } from './';
 
 type EmailVerificationType = {
 	_id: string;
@@ -7,6 +7,4 @@ type EmailVerificationType = {
 	createdAt: Date;
 };
 
-type EmailVerificationResponseType = EmailVerificationType & ResponseType;
-
-export { EmailVerificationResponseType, EmailVerificationType };
+export { EmailVerificationType };

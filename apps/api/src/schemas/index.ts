@@ -1,6 +1,12 @@
 // Internal dependencies
 import { EmailConfigurationSchema } from './EmailConfiguration.schema';
 import { EmailVerificationSchema } from './EmailVerification.schema';
+import { ProjectSchema } from './Project.schema';
 import { UserSchema } from './User.schema';
 
-export { EmailConfigurationSchema, EmailVerificationSchema, UserSchema };
+export {
+	EmailConfigurationSchema,
+	EmailVerificationSchema,
+	ProjectSchema,
+	UserSchema
+};

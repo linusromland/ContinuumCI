@@ -83,6 +83,7 @@ export default function EmailConfigurationInput({
 							<Field
 								name='gmail.password'
 								placeholder='One Time Password'
+								type='password'
 								className={style.input}
 							/>
 							<ErrorMessage

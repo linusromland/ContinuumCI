@@ -1,17 +1,17 @@
 // Internal dependencies
 import api from './';
-import { LoginResponseType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
 
 async function getToken(
 	email: string,
 	password: string
-): Promise<LoginResponseType> {
+): Promise<ResponseType> {
 	const request = await api.post('/auth/login', {
 		email,
 		password
 	});
 
-	return request.data as LoginResponseType;
+	return request.data as ResponseType;
 }
 
 export { getToken };

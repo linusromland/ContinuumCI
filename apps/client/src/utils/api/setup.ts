@@ -1,11 +1,11 @@
 // Internal dependencies
 import api from './';
-import { SetupResponseType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
 
-async function getSetup(): Promise<SetupResponseType> {
+async function getSetup(): Promise<ResponseType> {
 	const request = await api.get('/setup');
 
-	return request.data as SetupResponseType;
+	return request.data as ResponseType;
 }
 
 export { getSetup };
