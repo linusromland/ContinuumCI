@@ -1,5 +1,5 @@
 // External Dependencies
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -9,11 +9,18 @@ import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import setToken from '../../utils/setToken';
-import { createUser } from '../../utils/api/user';
+import { createUser, getUser } from '../../utils/api/user';
 
 export default function Login(): JSX.Element {
 	const navigate = useNavigate();
 	const [registered, setRegistered] = useState(false);
+
+	useEffect(() => {
+		(async () => {
+			const authenticated = await getUser();
+			if (authenticated) navigate('/');
+		})();
+	}, []);
 
 	return (
 		<SetupLayout>
