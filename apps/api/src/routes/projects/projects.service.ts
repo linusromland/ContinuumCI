@@ -2,6 +2,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import simpleGit from 'simple-git';
+import fs from 'fs';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
@@ -206,6 +207,13 @@ export class ProjectsService {
 		}
 
 		//TODO: Add remove deployment
+
+		//Remove from the repository directory
+		fs.rmSync(`${REPOSITORIES_DIRECTORY}/${updatedProject._id}`, {
+			recursive: true,
+			force: true
+		});
+
 		await updatedProject.remove();
 
 		return {
