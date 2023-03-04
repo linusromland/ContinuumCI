@@ -13,12 +13,17 @@ import { Type } from 'class-transformer';
 import { ProjectRoleEnum } from '../enums';
 
 export class ProjectClass {
+	@IsOptional()
+	@IsString()
+	_id: string;
+
 	@IsString()
 	name: string;
 
 	@Matches(
 		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
 	)
+	@IsOptional()
 	@IsString()
 	gitUrl: string;
 
