@@ -10,11 +10,8 @@ import nodemailer from 'nodemailer';
 import dayjs from 'dayjs';
 
 // Internal dependencies
-import {
-	EmailConfigurationResponseType,
-	EmailConfigurationType,
-	ResponseType
-} from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
+import { EmailConfigurationClass } from 'shared/src/classes';
 import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
 import { EmailConfigurationServiceEnum } from 'shared/src/enums';
@@ -23,11 +20,11 @@ import { EmailConfigurationServiceEnum } from 'shared/src/enums';
 export class EmailConfigurationService {
 	constructor(
 		@Inject('EMAIL_CONFIGURATION_MODEL')
-		private EmailConfigurationModel: Model<EmailConfigurationType>
+		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
 	async create(
-		emailConfiguration: EmailConfigurationType
+		emailConfiguration: EmailConfigurationClass
 	): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
@@ -72,7 +69,7 @@ export class EmailConfigurationService {
 	}
 
 	async verifyEmailConfiguration(
-		emailConfiguration: EmailConfigurationType
+		emailConfiguration: EmailConfigurationClass
 	): Promise<boolean> {
 		//Test the email configuration
 		const transporter = nodemailer.createTransport({
@@ -91,7 +88,7 @@ export class EmailConfigurationService {
 		}
 	}
 
-	async get(): Promise<EmailConfigurationResponseType> {
+	async get(): Promise<ResponseType> {
 		return await this.EmailConfigurationModel.findOne()
 			.select('-_id -__v -auth.pass')
 			.lean();

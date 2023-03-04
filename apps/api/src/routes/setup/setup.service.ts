@@ -4,11 +4,8 @@ import { Model } from 'mongoose';
 import { EmailConfigurationServiceEnum } from 'shared/src/enums';
 
 // Internal dependencies
-import {
-	EmailConfigurationType,
-	SetupResponseType,
-	UserType
-} from 'shared/src/types';
+import { ResponseType, UserType } from 'shared/src/types';
+import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 
 @Injectable()
@@ -17,16 +14,16 @@ export class SetupService {
 		private emailConfigurationService: EmailConfigurationService,
 
 		@Inject('EMAIL_CONFIGURATION_MODEL')
-		private EmailConfigurationModel: Model<EmailConfigurationType>,
+		private EmailConfigurationModel: Model<EmailConfigurationClass>,
 
 		@Inject('USER_MODEL')
 		private UserModel: Model<UserType>
 	) {}
 
-	async getSetup(): Promise<SetupResponseType> {
+	async getSetup(): Promise<ResponseType> {
 		const emailConfiguration = await this.EmailConfigurationModel.findOne();
 		const verifiedEmailConfiguration =
-			emailConfiguration.service ===
+			emailConfiguration?.service ===
 				EmailConfigurationServiceEnum.SKIPPED ||
 			(emailConfiguration &&
 				(await this.emailConfigurationService.verifyEmailConfiguration(
@@ -39,10 +36,14 @@ export class SetupService {
 		return {
 			success: true,
 			message: 'Setup status fetched successfully',
-			status:
-				verifiedEmailConfiguration && user ? 'complete' : 'incomplete',
-			emailConfiguration: verifiedEmailConfiguration,
-			rootUser: !!user
+			data: {
+				status:
+					verifiedEmailConfiguration && user
+						? 'complete'
+						: 'incomplete',
+				emailConfiguration: verifiedEmailConfiguration,
+				rootUser: !!user
+			}
 		};
 	}
 }

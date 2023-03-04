@@ -10,10 +10,5 @@ type NginxDeploymentType = {
 	ssl: boolean;
 };
 
-type NginxDeploymentResponseType = {
-	success: boolean;
-	message: string;
-	data?: NginxDeploymentType[];
-};
 
-export { NginxDeploymentResponseType, NginxDeploymentType };
+export { NginxDeploymentType };

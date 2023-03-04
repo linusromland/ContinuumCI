@@ -2,11 +2,11 @@
 import { Injectable } from '@nestjs/common';
 
 // Internal dependencies
-import { WelcomeResponseType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
 
 @Injectable()
 export class WelcomeService {
-	getWelcomeMessage(): WelcomeResponseType {
+	getWelcomeMessage(): ResponseType {
 		return {
 			success: true,
 			message: 'ContinuumCI API'

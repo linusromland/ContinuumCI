@@ -8,7 +8,6 @@ import path from 'path';
 // Internal dependencies
 import {
 	ResponseType,
-	NginxDeploymentResponseType,
 	NginxDeploymentType,
 	NginxConfigurationType,
 	NginxReloadLogsType
@@ -102,7 +101,7 @@ export class DeploymentsService {
 		}
 	}
 
-	async get(ids: string[]): Promise<NginxDeploymentResponseType> {
+	async get(ids: string[]): Promise<ResponseType> {
 		try {
 			const deployments = await this.NginxDeploymentsModel.find({
 				_id: { $in: ids }
@@ -163,7 +162,8 @@ export class DeploymentsService {
 					if (error) {
 						reject({
 							success: false,
-							message: 'Deployment deleted, nginx failed to reload',
+							message:
+								'Deployment deleted, nginx failed to reload',
 							logs: error
 						});
 					}

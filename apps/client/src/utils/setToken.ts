@@ -27,12 +27,13 @@ async function setToken({
 	}
 
 	const tokenRequest = await getToken(email, password);
+	const tokenData = tokenRequest.data as { access_token: string };
 
 	if (rememberMe) {
-		localStorage.setItem('token', tokenRequest.access_token as string);
+		localStorage.setItem('token', tokenData.access_token as string);
 	}
 	if (tokenRequest.success) {
-		updateHeader(tokenRequest.access_token as string);
+		updateHeader(tokenData.access_token as string);
 		return;
 	}
 }

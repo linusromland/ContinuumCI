@@ -1,3 +1,4 @@
+import { EmailConfigurationClass } from './EmailConfiguration.class';
 import { ProjectClass } from './Project.class';
 
-export { ProjectClass };
+export { EmailConfigurationClass, ProjectClass };

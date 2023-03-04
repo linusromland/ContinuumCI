@@ -14,5 +14,5 @@
 			"shared/*": ["../../packages/shared/*"]
 		}
 	},
-	"exclude": ["dist"]
+	"exclude": ["dist", "repositories", "node_modules"]
 }

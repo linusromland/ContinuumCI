@@ -3,11 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import {
-	ResponseType,
-	NginxConfigurationType,
-	NginxConfigurationResponseType
-} from 'shared/src/types';
+import { ResponseType, NginxConfigurationType } from 'shared/src/types';
 import { LogWatcherService } from 'src/services/logWatcher.service';
 
 @Injectable()
@@ -43,7 +39,7 @@ export class ConfigurationService {
 		}
 	}
 
-	async get(): Promise<NginxConfigurationResponseType> {
+	async get(): Promise<ResponseType> {
 		try {
 			const nginxConfiguration =
 				await this.NginxConfigurationModel.findOne({});
@@ -51,10 +47,13 @@ export class ConfigurationService {
 			return {
 				success: true,
 				message: 'Nginx configuration',
-				localIps: nginxConfiguration.localIps,
-				sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
-				accessLogLocation: nginxConfiguration.accessLogLocation,
-				domains: nginxConfiguration.domains
+				data: {
+					localIps: nginxConfiguration.localIps,
+					sitesEnabledLocation:
+						nginxConfiguration.sitesEnabledLocation,
+					accessLogLocation: nginxConfiguration.accessLogLocation,
+					domains: nginxConfiguration.domains
+				}
 			};
 		} catch (error) {
 			throw new BadRequestException({

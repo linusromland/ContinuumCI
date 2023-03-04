@@ -9,11 +9,7 @@ import {
 import fs from 'fs';
 
 // Internal dependencies
-import {
-	NginxConfigurationResponseType,
-	NginxConfigurationType,
-	ResponseType
-} from 'shared/src/types';
+import { NginxConfigurationType, ResponseType } from 'shared/src/types';
 import { ConfigurationService } from './configuration.service';
 import argumentValidator from 'src/utils/argumentValidator';
 
@@ -66,7 +62,6 @@ export class ConfigurationController {
 					domain
 				);
 			}
-
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
@@ -125,7 +120,7 @@ export class ConfigurationController {
 	}
 
 	@Get()
-	async get(): Promise<NginxConfigurationResponseType> {
+	async get(): Promise<ResponseType> {
 		return this.configurationService.get();
 	}
 }
