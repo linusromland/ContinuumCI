@@ -6,7 +6,8 @@ import {
 	Param,
 	Put,
 	UseGuards,
-	UsePipes
+	UsePipes,
+	Delete
 } from '@nestjs/common/decorators';
 import { ProjectClass } from 'shared/src/classes';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
@@ -34,5 +35,11 @@ export class ProjectsController {
 		@Body() project: ProjectClass
 	) {
 		return this.projectsService.update(req.user.sub, projectId, project);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Delete('delete/:projectId')
+	deleteProject(@Request() req, @Param('projectId') projectId: string) {
+		return this.projectsService.delete(req.user.sub, projectId);
 	}
 }

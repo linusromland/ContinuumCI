@@ -165,4 +165,52 @@ export class ProjectsService {
 			data: updatedProject
 		};
 	}
+
+	async delete(userId: string, projectId: string): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		if (!['admin', 'root'].includes(user.role)) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Not allowed to delete projects'
+			});
+		}
+
+		const updatedProject = await this.ProjectModel.findById(projectId);
+
+		if (!updatedProject) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		if (user.role !== 'root') {
+			const user = updatedProject.permissions.find(
+				(permission) => permission.user.toString() === userId
+			);
+
+			if (!user || user.role !== ProjectRoleEnum.OWNER) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Only the owner or root can delete the project'
+				});
+			}
+		}
+
+		//TODO: Add remove deployment
+		await updatedProject.remove();
+
+		return {
+			success: true,
+			message: 'Project deleted successfully'
+		};
+	}
 }
