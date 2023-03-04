@@ -6,7 +6,7 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
-		"build": "npm run moveTemplates && nest build",
+		"build": "npm run moveTemplates && npx mkdirp dist/apps/api/src/repositories && nest build",
 		"start": "nest start",
 		"moveTemplates": "rimraf dist && npx mkdirp dist/apps/api/src && cp -R src/templates dist/apps/api/src/templates",
 		"dev": "npm run moveTemplates && nest start --watch",

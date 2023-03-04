@@ -27,6 +27,10 @@ export class ProjectClass {
 	@IsString()
 	gitUrl: string;
 
+	@IsOptional()
+	@IsString()
+	branch: string;
+
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => PermissionClass)

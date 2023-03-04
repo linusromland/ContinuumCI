@@ -45,11 +45,24 @@ export class ProjectsService {
 		});
 
 		// Clone the Git repository
-		const git = simpleGit();
-		await git.clone(
+		const cloneGit = simpleGit();
+		await cloneGit.clone(
 			createdProject.gitUrl,
 			`${REPOSITORIES_DIRECTORY}/${createdProject._id}`
 		);
+
+		const git = simpleGit(
+			`${REPOSITORIES_DIRECTORY}/${createdProject._id}`
+		);
+
+		// Get the default branch
+		if (!createdProject.branch) {
+			const branches = await git.branchLocal();
+			createdProject.branch = branches.current;
+		} else {
+			// Switch to the branch
+			await git.checkout(createdProject.branch);
+		}
 
 		await createdProject.save();
 
@@ -92,6 +105,13 @@ export class ProjectsService {
 			throw new BadRequestException({
 				success: false,
 				message: 'Not allowed to update the Git URL'
+			});
+		}
+
+		if (project.branch) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Not allowed to update the branch'
 			});
 		}
 
@@ -219,6 +239,60 @@ export class ProjectsService {
 		return {
 			success: true,
 			message: 'Project deleted successfully'
+		};
+	}
+
+	async updateRepository(
+		userId: string,
+		projectId: string
+	): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		if (!['admin', 'root'].includes(user.role)) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Not allowed to update projects'
+			});
+		}
+
+		const project = await this.ProjectModel.findById(projectId);
+
+		if (!project) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		if (user.role !== 'root') {
+			const user = project.permissions.find(
+				(permission) => permission.user.toString() === userId
+			);
+
+			if (!user || user.role == ProjectRoleEnum.VIEWER) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Not allowed to update this project'
+				});
+			}
+		}
+
+		const git = simpleGit(`${REPOSITORIES_DIRECTORY}/${project._id}`);
+
+		await git.pull();
+
+		// TODO: Update deployment
+
+		return {
+			success: true,
+			message: 'Project updated successfully'
 		};
 	}
 }

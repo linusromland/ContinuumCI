@@ -21,6 +21,9 @@ export const ProjectSchema = new Schema(
 				}
 			]
 		},
+		branch: {
+			type: String
+		},
 		permissions: [
 			{
 				user: {
