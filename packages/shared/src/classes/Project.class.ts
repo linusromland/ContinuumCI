@@ -4,6 +4,7 @@ import {
 	IsDate,
 	IsOptional,
 	IsString,
+	Matches,
 	ValidateNested
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -15,6 +16,9 @@ export class ProjectClass {
 	@IsString()
 	name: string;
 
+	@Matches(
+		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
+	)
 	@IsString()
 	gitUrl: string;
 
