@@ -27,9 +27,16 @@ export default function Layout(): JSX.Element {
 			const token = localStorage.getItem('token');
 
 			if (token)
-				setToken({
+				await setToken({
 					token: token
 				});
+			else {
+				const sessionToken = sessionStorage.getItem('token');
+				if (sessionToken)
+					await setToken({
+						token: sessionToken
+					});
+			}
 
 			const authenticated = await getUser();
 			if (!authenticated) navigate('/login');

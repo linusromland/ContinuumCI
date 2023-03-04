@@ -31,7 +31,10 @@ async function setToken({
 
 	if (rememberMe) {
 		localStorage.setItem('token', tokenData.access_token as string);
+	} else {
+		sessionStorage.setItem('token', tokenData.access_token as string);
 	}
+
 	if (tokenRequest.success) {
 		updateHeader(tokenData.access_token as string);
 		return;
