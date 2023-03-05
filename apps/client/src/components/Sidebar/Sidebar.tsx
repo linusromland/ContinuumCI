@@ -29,11 +29,58 @@ export default function Sidebar() {
 					</>
 				</ButtonWrapper>
 				<ButtonWrapper text='DEPLOYMENTS'>
-					<p>Deployments</p>
+					<>
+						<Button
+							text='Applications'
+							icon='/icons/applications.svg'
+							onClick={() => console.log('Applications')}
+						/>
+						<Button
+							text='Containers'
+							icon='/icons/containers.svg'
+							onClick={() => console.log('Containers')}
+						/>
+						<Button
+							text='Domains'
+							icon='/icons/nginx.svg'
+							onClick={() => console.log('Domains')}
+						/>
+					</>
 				</ButtonWrapper>
 				<ButtonWrapper text='SETTINGS'>
-					<p>Deployments</p>
+					<>
+						<Button
+							text='General'
+							icon='/icons/settings.svg'
+							onClick={() => console.log('General')}
+						/>
+						<Button
+							text='Users'
+							icon='/icons/users.svg'
+							onClick={() => console.log('Users')}
+						/>
+						<Button
+							text='Docker'
+							icon='/icons/docker.svg'
+							onClick={() => console.log('Docker')}
+						/>
+						<Button
+							text='Nginx'
+							icon='/icons/nginx.svg'
+							onClick={() => console.log('Nginx')}
+						/>
+					</>
 				</ButtonWrapper>
+			</div>
+			<div className={style.footer}>
+				<p>
+					Authenticated as: <span>Linus</span>
+				</p>
+				<Button
+					text='Sign out'
+					icon='/icons/signout.svg'
+					onClick={() => console.log('Sign out')}
+				/>
 			</div>
 		</div>
 	);
