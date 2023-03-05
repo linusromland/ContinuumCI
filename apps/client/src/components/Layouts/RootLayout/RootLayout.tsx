@@ -4,11 +4,11 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { SetupType } from 'shared/src/types';
 
 // Internal Dependencies
-import { getSetup } from '../../utils/api/setup';
-import { getUser } from '../../utils/api/user';
-import setToken from '../../utils/setToken';
+import { getSetup } from '../../../utils/api/setup';
+import { getUser } from '../../../utils/api/user';
+import setToken from '../../../utils/setToken';
 
-export default function Layout(): JSX.Element {
+export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 
@@ -27,12 +27,19 @@ export default function Layout(): JSX.Element {
 			const token = localStorage.getItem('token');
 
 			if (token)
-				setToken({
+				await setToken({
 					token: token
 				});
+			else {
+				const sessionToken = sessionStorage.getItem('token');
+				if (sessionToken)
+					await setToken({
+						token: sessionToken
+					});
+			}
 
-			const authenticated = await getUser();
-			if (!authenticated) navigate('/login');
+			const response = await getUser();
+			if (!response.success) navigate('/login');
 
 			setLoading(false);
 		})();

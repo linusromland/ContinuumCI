@@ -1,4 +1,5 @@
 // Internal dependencies
+import { ResponseType } from 'shared/src/types';
 import api from './';
 
 async function createUser({
@@ -19,10 +20,10 @@ async function createUser({
 	return request.data.success;
 }
 
-async function getUser(): Promise<boolean> {
+async function getUser(): Promise<ResponseType> {
 	const request = await api.get('/profile');
 
-	return request.data.success;
+	return request.data;
 }
 
 export { createUser, getUser };

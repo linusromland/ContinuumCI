@@ -2,7 +2,6 @@
 import { useNavigate } from 'react-router-dom';
 
 // Internal Dependencies
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import Button from '../../components/Button/Button';
 import style from './Welcome.module.scss';
 
@@ -14,7 +13,7 @@ export default function Welcome(): JSX.Element {
 	}
 
 	return (
-		<SetupLayout>
+		<>
 			<div className={style.container}>
 				<p className={style.subtitle}>
 					We are thrilled to have you on board and ready to start
@@ -42,6 +41,6 @@ export default function Welcome(): JSX.Element {
 					text='Get Started'
 				/>
 			</div>
-		</SetupLayout>
+		</>
 	);
 }

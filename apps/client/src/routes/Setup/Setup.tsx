@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // Internal Dependencies
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import EmailConfigurationInput from './EmailConfigurationInput/EmailConfigurationInput';
 import style from './Setup.module.scss';
@@ -12,6 +11,7 @@ import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';
 import { updateEmailConfiguration } from '../../utils/api/emailConfiguration';
 import setToken from '../../utils/setToken';
+import { SetupType } from 'shared/src/types';
 
 export default function Setup(): JSX.Element {
 	const navigate = useNavigate();
@@ -37,19 +37,20 @@ export default function Setup(): JSX.Element {
 	useEffect(() => {
 		(async () => {
 			const setup = await getSetup();
+			const setupResponse = setup.data as SetupType;
 
-			if (setup.status === 'complete') {
+			if (setupResponse.status === 'complete') {
 				navigate('/');
 			}
 
-			if (setup.rootUser) {
+			if (setupResponse.rootUser) {
 				setStage(1);
 			}
 		})();
 	}, []);
 
 	return (
-		<SetupLayout>
+		<>
 			<>
 				<div className={style.container}>
 					<p className={style.subtitle}>{infoText}</p>
@@ -118,6 +119,6 @@ export default function Setup(): JSX.Element {
 					}
 				</div>
 			</>
-		</SetupLayout>
+		</>
 	);
 }
