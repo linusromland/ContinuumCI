@@ -16,8 +16,8 @@ export default function Login(): JSX.Element {
 
 	useEffect(() => {
 		(async () => {
-			const authenticated = await getUser();
-			if (authenticated) navigate('/');
+			const response = await getUser();
+			if (response.success) navigate('/');
 		})();
 	}, []);
 

@@ -1,9 +1,27 @@
+// External Dependencies
+import { useEffect, useState } from 'react';
+
 // Internal Dependencies
 import style from './Sidebar.module.scss';
 import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
+import { getUser } from '../../utils/api/user';
+import { UserType } from 'shared/src/types';
 
 export default function Sidebar() {
+	const [user, setUser] = useState('null');
+
+	useEffect(() => {
+		(async () => {
+			const userResponse = await getUser();
+			const user = userResponse.data as UserType;
+
+			if (user && user.username) {
+				setUser(user.username);
+			}
+		})();
+	}, []);
+
 	return (
 		<div className={style.sidebar}>
 			<div className={style.contentWrapper}>
@@ -74,7 +92,7 @@ export default function Sidebar() {
 			</div>
 			<div className={style.footer}>
 				<p>
-					Authenticated as: <span>Linus</span>
+					Authenticated as: <span>{user}</span>
 				</p>
 				<Button
 					text='Sign out'

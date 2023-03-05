@@ -38,8 +38,8 @@ export default function RootLayout(): JSX.Element {
 					});
 			}
 
-			const authenticated = await getUser();
-			if (!authenticated) navigate('/login');
+			const response = await getUser();
+			if (!response.success) navigate('/login');
 
 			setLoading(false);
 		})();
