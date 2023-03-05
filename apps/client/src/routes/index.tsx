@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Routes imports
 import RootLayout from '../components/Layouts/RootLayout/RootLayout';
+import MainLayout from '../components/Layouts/MainLayout/MainLayout';
 import SetupLayout from '../components/Layouts/SetupLayout/SetupLayout';
 import Home from './Home/Home';
 import Login from './Login/Login';
@@ -13,14 +14,13 @@ export default function Router(): JSX.Element {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route
-					path='/'
-					element={<RootLayout />}
-				>
-					<Route
-						path='/'
-						element={<Home />}
-					/>
+				<Route element={<RootLayout />}>
+					<Route element={<MainLayout />}>
+						<Route
+							path='/'
+							element={<Home />}
+						/>
+					</Route>
 					<Route element={<SetupLayout />}>
 						<Route
 							path='/welcome'

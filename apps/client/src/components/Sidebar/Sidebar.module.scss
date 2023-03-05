@@ -1,0 +1,19 @@
+@use 'src/styles' as *;
+
+.sidebar {
+	background-color: $background-secondary;
+	display: flex;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+
+	h1 {
+		color: $text-secondary;
+		font-size: 1.3rem;
+		font-weight: 300;
+		margin-left: 1rem;
+	}
+}
