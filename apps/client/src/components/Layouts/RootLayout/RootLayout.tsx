@@ -4,11 +4,11 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { SetupType } from 'shared/src/types';
 
 // Internal Dependencies
-import { getSetup } from '../../utils/api/setup';
-import { getUser } from '../../utils/api/user';
-import setToken from '../../utils/setToken';
+import { getSetup } from '../../../utils/api/setup';
+import { getUser } from '../../../utils/api/user';
+import setToken from '../../../utils/setToken';
 
-export default function Layout(): JSX.Element {
+export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 

@@ -2,16 +2,13 @@
 import { useCallback } from 'react';
 import type { Container, Engine } from 'tsparticles-engine';
 import { loadFull } from 'tsparticles';
+import { Outlet } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 
 // Internal Dependencies
 import style from './SetupLayout.module.scss';
 
-export default function SetupLayout({
-	children
-}: {
-	children: JSX.Element;
-}): JSX.Element {
+export default function SetupLayout(): JSX.Element {
 	const particlesInit = useCallback(async (engine: Engine) => {
 		await loadFull(engine);
 	}, []);
@@ -115,7 +112,7 @@ export default function SetupLayout({
 						/>
 						<h1 className={style.title}>ContinuumCI</h1>
 					</div>
-					{children}
+					<Outlet />
 				</div>
 				<div className={style.footer}>
 					<p>

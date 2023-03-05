@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 // Internal Dependencies
 import style from './Login.module.scss';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import setToken from '../../utils/setToken';
@@ -23,7 +22,7 @@ export default function Login(): JSX.Element {
 	}, []);
 
 	return (
-		<SetupLayout>
+		<>
 			<div className={style.container}>
 				<p className={style.subtitle}>
 					{registered
@@ -83,6 +82,6 @@ export default function Login(): JSX.Element {
 					</a>
 				</p>
 			</div>
-		</SetupLayout>
+		</>
 	);
 }
