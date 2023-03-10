@@ -4,9 +4,10 @@ import { Model } from 'mongoose';
 import { EmailConfigurationServiceEnum } from 'shared/src/enums';
 
 // Internal dependencies
-import { ResponseType, UserType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
+import { UserClass } from 'shared/src/classes';
 
 @Injectable()
 export class SetupService {
@@ -17,7 +18,7 @@ export class SetupService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserType>
+		private UserModel: Model<UserClass>
 	) {}
 
 	async getSetup(): Promise<ResponseType> {

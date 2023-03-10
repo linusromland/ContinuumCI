@@ -1,18 +1,18 @@
 // External dependencies
 import { Controller, Request, Get, Post, Put } from '@nestjs/common';
 import { Body, Param, UseGuards } from '@nestjs/common/decorators';
-import { UserType } from 'shared/src/types';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 // Internal dependencies
 import { UsersService } from './users.service';
+import { UserClass } from 'shared/src/classes';
 
 @Controller('users')
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@Post('create')
-	createUser(@Body() user: UserType) {
+	createUser(@Body() user: UserClass) {
 		return this.usersService.create(user);
 	}
 

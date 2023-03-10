@@ -8,7 +8,6 @@ import { NginxLogsType } from './NginxLogs.type';
 import { NginxReloadLogsType } from './NginxReloadLogs.type';
 import { ResponseType } from './Response.type';
 import { SetupType } from './Setup.type';
-import { UserType } from './User.type';
 
 export type {
 	EmailVerificationType,
@@ -19,6 +18,5 @@ export type {
 	NginxDeploymentType,
 	NginxReloadLogsType,
 	ResponseType,
-	SetupType,
-	UserType
+	SetupType
 };

@@ -6,7 +6,8 @@ import fs from 'fs';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
-import { ResponseType, UserType } from 'shared/src/types';
+import { ResponseType } from 'shared/src/types';
+import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
 import { ProjectRoleEnum } from 'shared/src/enums';
 
@@ -17,7 +18,7 @@ export class ProjectsService {
 		private ProjectModel: Model<ProjectClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserType>
+		private UserModel: Model<UserClass>
 	) {}
 
 	async create(project: ProjectClass, userId: string): Promise<ResponseType> {

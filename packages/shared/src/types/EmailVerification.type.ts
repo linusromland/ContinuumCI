@@ -1,9 +1,9 @@
 // Internal dependencies
-import { UserType } from './';
+import { UserClass } from '../classes/User.class';
 
 type EmailVerificationType = {
 	_id: string;
-	user: string | UserType;
+	user: string | UserClass;
 	createdAt: Date;
 };
 

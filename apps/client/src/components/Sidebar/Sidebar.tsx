@@ -6,7 +6,7 @@ import style from './Sidebar.module.scss';
 import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
 import { getUser } from '../../utils/api/user';
-import { UserType } from 'shared/src/types';
+import { UserClass } from 'shared/src/classes';
 
 export default function Sidebar() {
 	const [user, setUser] = useState('null');
@@ -14,7 +14,7 @@ export default function Sidebar() {
 	useEffect(() => {
 		(async () => {
 			const userResponse = await getUser();
-			const user = userResponse.data as UserType;
+			const user = userResponse.data as UserClass;
 
 			if (user && user.username) {
 				setUser(user.username);
