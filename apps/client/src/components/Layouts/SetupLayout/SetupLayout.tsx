@@ -26,6 +26,7 @@ export default function SetupLayout(): JSX.Element {
 				id='tsparticles'
 				init={particlesInit}
 				loaded={particlesLoaded}
+				className={style.particles}
 				options={{
 					fpsLimit: 120,
 					interactivity: {

@@ -18,10 +18,15 @@
 	min-width: 20rem;
 	transition: all 0.2s ease-in-out;
 	opacity: 1 !important;
+	z-index: 2;
 
 	* {
 		opacity: 1 !important;
 	}
+}
+
+.particles {
+	z-index: 1;
 }
 
 .logo {
