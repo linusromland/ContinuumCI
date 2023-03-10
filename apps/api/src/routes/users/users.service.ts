@@ -10,14 +10,11 @@ import { isValidObjectId, Model } from 'mongoose';
 import dayjs from 'dayjs';
 
 // Internal dependencies
-import {
-	JwtType,
-	UserType,
-	ResponseType,
-	EmailVerificationType
-} from 'shared/src/types';
+import { JwtType, ResponseType, EmailVerificationType } from 'shared/src/types';
+import { UserClass } from 'shared/src/classes';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
+import { UserRoleEnum } from 'shared/src/enums';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +22,7 @@ export class UsersService {
 		private emailConfigurationService: EmailConfigurationService,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserType>,
+		private UserModel: Model<UserClass>,
 
 		@Inject('EMAIL_VERIFICATION_MODEL')
 		private EmailVerificationModel: Model<EmailVerificationType>,
@@ -34,14 +31,16 @@ export class UsersService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
-	async create(user: UserType): Promise<ResponseType> {
+	async create(user: UserClass): Promise<ResponseType> {
 		try {
 			const role =
-				(await this.UserModel.countDocuments()) === 0 ? 'root' : 'user';
+				(await this.UserModel.countDocuments()) === 0
+					? UserRoleEnum.ROOT
+					: UserRoleEnum.USER;
 			const createdUser = new this.UserModel({
 				...user,
 				role,
-				verifiedEmail: role === 'root' ? true : false
+				verifiedEmail: role === UserRoleEnum.ROOT ? true : false
 			});
 
 			if (!createdUser.verifiedEmail) {
@@ -282,14 +281,17 @@ export class UsersService {
 
 			const user = await this.UserModel.findById(jwtUser.sub);
 
-			if (!user || user.role !== 'root') {
+			if (!user || user.role !== UserRoleEnum.ROOT) {
 				throw new UnauthorizedException({
 					success: false,
 					message: 'Unauthorized'
 				});
 			}
 
-			if (newRole !== 'user' && newRole !== 'admin') {
+			if (
+				newRole !== UserRoleEnum.USER &&
+				newRole !== UserRoleEnum.ADMIN
+			) {
 				throw new BadRequestException({
 					success: false,
 					message: 'Invalid role'
