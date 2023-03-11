@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import RootLayout from '../components/Layouts/RootLayout/RootLayout';
 import MainLayout from '../components/Layouts/MainLayout/MainLayout';
 import SetupLayout from '../components/Layouts/SetupLayout/SetupLayout';
-import Home from './Home/Home';
+import Overview from './Overview/Overview';
 import Login from './Login/Login';
 import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
@@ -18,7 +18,7 @@ export default function Router(): JSX.Element {
 					<Route element={<MainLayout />}>
 						<Route
 							path='/'
-							element={<Home />}
+							element={<Overview />}
 						/>
 					</Route>
 					<Route element={<SetupLayout />}>
