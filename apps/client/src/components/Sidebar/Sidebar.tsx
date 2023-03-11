@@ -42,11 +42,6 @@ export default function Sidebar() {
 							onClick={() => console.log('Overview')}
 							selected={location.pathname === '/'}
 						/>
-						<Button
-							text='Logs'
-							icon='/icons/logs.svg'
-							onClick={() => console.log('Logs')}
-						/>
 					</>
 				</ButtonWrapper>
 				<ButtonWrapper text='DEPLOYMENTS'>
