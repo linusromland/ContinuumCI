@@ -1,6 +1,8 @@
+// External Dependencies
+import clsx from 'clsx';
+
 // Internal dependencies
 import style from './StatsWidget.module.scss';
-import cs from '../../../../utils/classNames';
 import Widget from '../../../../components/Widget/Widget';
 
 export default function StatsWidget({
@@ -69,7 +71,7 @@ export default function StatsWidget({
 		<Widget>
 			<>
 				<h3 className={style.title}>{title}</h3>
-				<p className={cs(style.value, getStatusClass())}>
+				<p className={clsx(style.value, getStatusClass())}>
 					{value}
 					{unit}
 				</p>

@@ -1,6 +1,8 @@
+// External Dependencies
+import clsx from 'clsx';
+
 // Internal Dependencies
 import style from './Button.module.scss';
-import cs from '../../../utils/classNames';
 
 export default function Button({
 	text,
@@ -15,7 +17,7 @@ export default function Button({
 }): JSX.Element {
 	return (
 		<button
-			className={cs(style.button, selected ? style.selected : '')}
+			className={clsx(style.button, selected ? style.selected : '')}
 			onClick={onClick}
 		>
 			<img
