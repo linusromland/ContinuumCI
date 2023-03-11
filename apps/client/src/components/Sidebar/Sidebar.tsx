@@ -1,5 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // Internal Dependencies
 import style from './Sidebar.module.scss';
@@ -9,6 +10,7 @@ import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 
 export default function Sidebar() {
+	const location = useLocation();
 	const [user, setUser] = useState('null');
 
 	useEffect(() => {
@@ -38,6 +40,7 @@ export default function Sidebar() {
 							text='Overview'
 							icon='/icons/overview.svg'
 							onClick={() => console.log('Overview')}
+							selected={location.pathname === '/'}
 						/>
 						<Button
 							text='Logs'
