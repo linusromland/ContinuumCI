@@ -1,14 +1,21 @@
 // External dependencies
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Routes imports
+// Layouts
 import RootLayout from '../components/Layouts/RootLayout/RootLayout';
 import MainLayout from '../components/Layouts/MainLayout/MainLayout';
 import SetupLayout from '../components/Layouts/SetupLayout/SetupLayout';
-import Overview from './Overview/Overview';
+
+// Setup/Login Pages
 import Login from './Login/Login';
 import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
+
+// Analytics Pages
+import Overview from './Overview/Overview';
+
+// Settings Pages
+import GeneralSettings from './Settings/General/General';
 
 export default function Router(): JSX.Element {
 	return (
@@ -20,6 +27,12 @@ export default function Router(): JSX.Element {
 							path='/'
 							element={<Overview />}
 						/>
+						<Route>
+							<Route
+								path='/settings'
+								element={<GeneralSettings />}
+							/>
+						</Route>
 					</Route>
 					<Route element={<SetupLayout />}>
 						<Route

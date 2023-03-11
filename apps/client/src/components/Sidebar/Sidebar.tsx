@@ -1,6 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Internal Dependencies
 import style from './Sidebar.module.scss';
@@ -11,6 +11,7 @@ import { UserClass } from 'shared/src/classes';
 
 export default function Sidebar() {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [user, setUser] = useState('null');
 
 	useEffect(() => {
@@ -39,7 +40,7 @@ export default function Sidebar() {
 						<Button
 							text='Overview'
 							icon='/icons/overview.svg'
-							onClick={() => console.log('Overview')}
+							onClick={() => navigate('/')}
 							selected={location.pathname === '/'}
 						/>
 					</>
@@ -68,7 +69,8 @@ export default function Sidebar() {
 						<Button
 							text='General'
 							icon='/icons/settings.svg'
-							onClick={() => console.log('General')}
+							onClick={() => navigate('/settings')}
+							selected={location.pathname === '/settings'}
 						/>
 						<Button
 							text='Users'
