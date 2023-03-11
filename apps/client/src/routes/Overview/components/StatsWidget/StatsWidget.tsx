@@ -54,8 +54,6 @@ export default function StatsWidget({
 			return '';
 		}
 
-		console.log(title, range);
-
 		if (value >= range.ok[0] && value <= range.ok[1]) {
 			return style.ok;
 		} else if (value >= range.warning[0] && value <= range.warning[1]) {
