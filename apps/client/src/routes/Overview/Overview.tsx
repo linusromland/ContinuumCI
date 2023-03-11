@@ -8,6 +8,7 @@ import { UserClass } from 'shared/src/classes';
 import StatsWidget from './components/StatsWidget/StatsWidget';
 import ApplicationWidget from './components/ApplicationWidget/ApplicationWidget';
 import InfoWidget from './components/InfoWidget/InfoWidget';
+import Table from '../../components/Table/Table';
 
 export default function Overview(): JSX.Element {
 	const [user, setUser] = useState('null');
@@ -80,6 +81,101 @@ export default function Overview(): JSX.Element {
 						/>
 					</div>
 				</div>
+			</div>
+			<div className={style.table}>
+				<h2 className={style.subtitle}>10 latests requests</h2>
+				<Table
+					headers={[
+						'Time',
+						'Method',
+						'Status',
+						'URL',
+						'IP',
+						'Project'
+					]}
+					data={[
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							'200 OK',
+							'https://romland.dev/api/user',
+							'192.168.1.1',
+							'Romland.dev'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							'404 Not Found',
+							'https://romland.dev/api/setup',
+							'192.168.1.1',
+							'Romland.dev'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							'200 OK',
+							'https://romland.dev/api/user',
+							'192.168.1.1',
+							'Romland.dev'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							'404 Not Found',
+							'https://romland.dev/api/setup',
+							'192.168.1.1',
+							'Romland.dev'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						],
+						[
+							'2021-03-01 12:00:00',
+							'GET',
+							"418 I'm a teapot",
+							'https://linusromland.com/api/projects',
+							'192.168.1.1',
+							'linusromland.com'
+						]
+					]}
+				/>
 			</div>
 		</div>
 	);

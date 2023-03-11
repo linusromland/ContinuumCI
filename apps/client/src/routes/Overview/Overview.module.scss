@@ -15,14 +15,25 @@
 	}
 }
 
+.table {
+	margin-top: 1rem;
+}
+
+.subtitle {
+	font-size: 1.3rem;
+	color: $text-primary;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
 .widgets {
 	display: flex;
-	gap: 1rem;
+	gap: 1.5rem;
 }
 
 .smallWidgets {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem;
+	gap: 1rem;
 	justify-content: space-between;
 }
