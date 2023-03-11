@@ -1,0 +1,26 @@
+@use 'src/styles' as *;
+
+.container {
+	display: flex;
+	align-items: center;
+}
+
+.icon {
+	width: 3rem;
+	height: 3rem;
+	background-color: $secondary;
+	padding: 0.5rem;
+	border-radius: 9999px;
+	margin-right: 1rem;
+}
+
+.value {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.label {
+	font-size: 1rem;
+	font-weight: 400;
+}
