@@ -1,7 +1,7 @@
 // Internal dependencies
 import style from './StatsWidget.module.scss';
-import cs from '../../utils/classNames';
-import Widget from '../Widget/Widget';
+import cs from '../../../../utils/classNames';
+import Widget from '../../../../components/Widget/Widget';
 
 export default function StatsWidget({
 	title,

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import style from './Overview.module.scss';
 import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
-import StatsWidget from '../../components/StatsWidget/StatsWidget';
+import StatsWidget from './components/StatsWidget/StatsWidget';
 
 export default function Overview(): JSX.Element {
 	const [user, setUser] = useState('null');
