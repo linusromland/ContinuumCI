@@ -6,6 +6,7 @@ import style from './Overview.module.scss';
 import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 import StatsWidget from './components/StatsWidget/StatsWidget';
+import ApplicationWidget from './components/ApplicationWidget/ApplicationWidget';
 
 export default function Overview(): JSX.Element {
 	const [user, setUser] = useState('null');
@@ -26,33 +27,39 @@ export default function Overview(): JSX.Element {
 			<h1 className={style.title}>
 				Welcome back, <span>{user}</span> 👋
 			</h1>
-			<div className={style.statWidgets}>
-				<StatsWidget
-					title='CPU Usage'
-					value={85}
-					footer='on 4 cores'
+			<div className={style.widgets}>
+				<ApplicationWidget
+					applicationsRunning={4}
+					applicationsTotal={4}
 				/>
-				<StatsWidget
-					title='Memory Usage'
-					value={4012}
-					maxValue={4096}
-					unit='MB'
-					footer='out of 4096 MB'
-				/>
-				<StatsWidget
-					title='Network Usage'
-					value={1.2}
-					unit='Mbps'
-					valueRange={undefined}
-					footer='Sending'
-				/>
-				<StatsWidget
-					title='Network Usage'
-					value={3.4}
-					unit='Mbps'
-					valueRange={undefined}
-					footer='Receiving'
-				/>
+				<div className={style.statWidgets}>
+					<StatsWidget
+						title='CPU Usage'
+						value={85}
+						footer='on 4 cores'
+					/>
+					<StatsWidget
+						title='Memory Usage'
+						value={4012}
+						maxValue={4096}
+						unit='MB'
+						footer='out of 4096 MB'
+					/>
+					<StatsWidget
+						title='Network Usage'
+						value={1.2}
+						unit='Mbps'
+						valueRange={undefined}
+						footer='Sending'
+					/>
+					<StatsWidget
+						title='Network Usage'
+						value={3.4}
+						unit='Mbps'
+						valueRange={undefined}
+						footer='Receiving'
+					/>
+				</div>
 			</div>
 		</div>
 	);
