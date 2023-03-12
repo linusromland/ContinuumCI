@@ -8,19 +8,20 @@ import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
 import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
+import { UserRoleEnum } from 'shared/src/enums';
 
 export default function Sidebar() {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const [user, setUser] = useState('null');
+	const [user, setUser] = useState({} as UserClass);
 
 	useEffect(() => {
 		(async () => {
 			const userResponse = await getUser();
 			const user = userResponse.data as UserClass;
 
-			if (user && user.username) {
-				setUser(user.username);
+			if (user) {
+				setUser(user);
 			}
 		})();
 	}, []);
@@ -72,29 +73,40 @@ export default function Sidebar() {
 							onClick={() => navigate('/settings')}
 							selected={location.pathname === '/settings'}
 						/>
-						<Button
-							text='Users'
-							icon='/icons/users.svg'
-							onClick={() => navigate('/settings/users')}
-							selected={location.pathname === '/settings/users'}
-						/>
-						<Button
-							text='Docker'
-							icon='/icons/docker.svg'
-							onClick={() => console.log('Docker')}
-						/>
-						<Button
-							text='Nginx'
-							icon='/icons/nginx.svg'
-							onClick={() => navigate('/settings/nginx')}
-							selected={location.pathname === '/settings/nginx'}
-						/>
+						{user.role == UserRoleEnum.ROOT && (
+							<Button
+								text='Users'
+								icon='/icons/users.svg'
+								onClick={() => navigate('/settings/users')}
+								selected={
+									location.pathname === '/settings/users'
+								}
+							/>
+						)}
+						{(user.role == UserRoleEnum.ROOT ||
+							user.role == UserRoleEnum.ADMIN) && (
+							<>
+								<Button
+									text='Docker'
+									icon='/icons/docker.svg'
+									onClick={() => console.log('Docker')}
+								/>
+								<Button
+									text='Nginx'
+									icon='/icons/nginx.svg'
+									onClick={() => navigate('/settings/nginx')}
+									selected={
+										location.pathname === '/settings/nginx'
+									}
+								/>
+							</>
+						)}
 					</>
 				</ButtonWrapper>
 			</div>
 			<div className={style.footer}>
 				<p className={style.footerText}>
-					Authenticated as: <span>{user}</span>
+					Authenticated as: <span>{user.username}</span>
 				</p>
 				<Button
 					text='Sign out'
