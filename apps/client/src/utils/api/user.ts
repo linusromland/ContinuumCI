@@ -42,4 +42,16 @@ async function updateEmail(email: string): Promise<ResponseType> {
 	return request.data;
 }
 
-export { createUser, getUser, updateUsername, updateEmail };
+async function updatePassword(
+	oldPassword: string,
+	newPassword: string
+): Promise<ResponseType> {
+	const request = await api.put('/users/edit/password', {
+		oldPassword,
+		newPassword
+	});
+
+	return request.data;
+}
+
+export { createUser, getUser, updateUsername, updateEmail, updatePassword };
