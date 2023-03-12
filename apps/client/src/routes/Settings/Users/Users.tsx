@@ -16,16 +16,18 @@ export default function Users(): JSX.Element {
 					<h2 className={style.subtitle}>Users</h2>
 					<Table
 						headers={[
-							'Username',
 							'Account Type',
+							'Username',
+							'E-mail',
 							'Last Login',
 							'Last IP',
 							'Actions'
 						]}
 						data={[
 							[
+								'Root',
 								'linusromland',
-								'Administrator',
+								'hello@linusromland.com',
 								'2021-05-01 12:00:00',
 								'208.19.23.23',
 								<Button
