@@ -12,9 +12,11 @@ import style from './General.module.scss';
 import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
 import ChangeUsernameModal from './components/ChangeUsernameModal/ChangeUsernameModal';
 import { UserRoleEnum } from 'shared/src/enums';
+import ChangeEmailModal from './components/ChangeEmailModal/ChangeEmailModal';
 
 export default function GeneralSettings(): JSX.Element {
 	const [changeUsernameModal, setChangeUsernameModal] = useState(false);
+	const [changeEmailModal, setChangeEmailModal] = useState(false);
 	const [user, setUser] = useState({} as UserClass);
 
 	useEffect(() => {
@@ -116,7 +118,7 @@ export default function GeneralSettings(): JSX.Element {
 								</p>
 								<Button
 									text='Change'
-									onClick={() => console.log('Change email')}
+									onClick={() => setChangeEmailModal(true)}
 									small
 									secondary
 									className={clsx(style.row3, style.col3)}
@@ -146,7 +148,18 @@ export default function GeneralSettings(): JSX.Element {
 						getData();
 					}
 				}}
-				currentUsername='linusromland'
+				currentUsername={user.username}
+			/>
+
+			<ChangeEmailModal
+				open={changeEmailModal}
+				onClose={(update) => {
+					setChangeEmailModal(false);
+					if (update) {
+						getData();
+					}
+				}}
+				currentEmail={user.email}
 			/>
 		</>
 	);
