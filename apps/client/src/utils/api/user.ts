@@ -26,4 +26,12 @@ async function getUser(): Promise<ResponseType> {
 	return request.data;
 }
 
-export { createUser, getUser };
+async function updateUsername(username: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/username', {
+		username
+	});
+
+	return request.data;
+}
+
+export { createUser, getUser, updateUsername };
