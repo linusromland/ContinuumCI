@@ -171,10 +171,10 @@ export class UsersService {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
-				return {
+				throw new BadRequestException({
 					success: false,
 					message: 'User not found'
-				};
+				});
 			}
 
 			updatedUser.username = newUsername;
@@ -201,6 +201,65 @@ export class UsersService {
 					success: false,
 					message: 'Missing required fields'
 				});
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
+	async updateEmail(user: JwtType, newEmail: string): Promise<ResponseType> {
+		try {
+			const updatedUser = await this.UserModel.findById(user.sub);
+			if (!updatedUser) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			updatedUser.email = newEmail;
+			updatedUser.verifiedEmail = false;
+			await updatedUser.save();
+			if (
+				await this.EmailConfigurationModel.countDocuments({
+					service: { $ne: 'skipped' }
+				})
+			) {
+				const emailVerification = new this.EmailVerificationModel({
+					user: updatedUser._id
+				});
+
+				await emailVerification.save();
+
+				// Send email verification email
+				await this.emailConfigurationService.sendVerificationEmail(
+					newEmail,
+					emailVerification._id,
+					dayjs(emailVerification.createdAt)
+						.add(30, 'minutes')
+						.toDate()
+				);
+			}
+
+			return {
+				success: true,
+				message: 'Email updated successfully'
+			};
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			//check if error is duplicate key error on username or email
+			if (error.code === 11000 && error.keyPattern['email']) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Email already in use'
+				});
+			}
+
+			if (error instanceof InternalServerErrorException) {
+				throw error;
 			}
 
 			throw new InternalServerErrorException({

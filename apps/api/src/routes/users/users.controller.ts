@@ -28,6 +28,12 @@ export class UsersController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Put('edit/email')
+	updateEmail(@Request() req) {
+		return this.usersService.updateEmail(req.user, req.body.email);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Put('edit/password')
 	updatePassword(@Request() req) {
 		return this.usersService.updatePassword(
