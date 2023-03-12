@@ -44,11 +44,19 @@ export default function Login(): JSX.Element {
 										email: values.email,
 										password: values.password
 									});
-									toast.success('Successfully created user!');
+									toast.success(
+										'Successfully created user!',
+										{
+											position: 'top-left'
+										}
+									);
 									navigate('/');
 								} else {
 									toast.error(
-										'An error occurred while creating the root user.'
+										'An error occurred while creating the root user.',
+										{
+											position: 'top-left'
+										}
 									);
 								}
 							})();

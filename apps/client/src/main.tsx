@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<ToastContainer
-			position='top-left'
 			autoClose={5000}
 			hideProgressBar={false}
 			pauseOnFocusLoss={false}
