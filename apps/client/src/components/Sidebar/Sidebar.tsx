@@ -93,7 +93,7 @@ export default function Sidebar() {
 				</ButtonWrapper>
 			</div>
 			<div className={style.footer}>
-				<p>
+				<p className={style.footerText}>
 					Authenticated as: <span>{user}</span>
 				</p>
 				<Button
