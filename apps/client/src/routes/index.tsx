@@ -17,6 +17,7 @@ import Overview from './Overview/Overview';
 // Settings Pages
 import GeneralSettings from './Settings/General/General';
 import UserSettings from './Settings/Users/Users';
+import NginxSettings from './Settings/Nginx/Nginx';
 
 export default function Router(): JSX.Element {
 	return (
@@ -36,6 +37,10 @@ export default function Router(): JSX.Element {
 							<Route
 								path='/settings/users'
 								element={<UserSettings />}
+							/>
+							<Route
+								path='/settings/nginx'
+								element={<NginxSettings />}
 							/>
 						</Route>
 					</Route>

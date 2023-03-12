@@ -86,7 +86,8 @@ export default function Sidebar() {
 						<Button
 							text='Nginx'
 							icon='/icons/nginx.svg'
-							onClick={() => console.log('Nginx')}
+							onClick={() => navigate('/settings/nginx')}
+							selected={location.pathname === '/settings/nginx'}
 						/>
 					</>
 				</ButtonWrapper>
