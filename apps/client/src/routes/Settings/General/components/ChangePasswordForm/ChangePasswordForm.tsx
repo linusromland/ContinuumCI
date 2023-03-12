@@ -1,10 +1,12 @@
 // External dependencies
 import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form } from 'formik';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 // Internal dependencies
 import Button from '../../../../../components/Button/Button';
+import { updatePassword } from '../../../../../utils/api/user';
 import style from './ChangePasswordForm.module.scss';
 
 export default function ChangePasswordForm() {
@@ -24,14 +26,10 @@ export default function ChangePasswordForm() {
 					.oneOf([Yup.ref('newPassword')], 'Passwords must match')
 					.required('Password is required')
 			})}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2));
-					setSubmitting(false);
-				}, 400);
-			}}
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			onSubmit={() => {}} // This is required for the validation to work
 		>
-			{({ isSubmitting, values }) => (
+			{({ isSubmitting, values, resetForm }) => (
 				<Form className={style.form}>
 					<div className={style.formGroup}>
 						<label
@@ -87,7 +85,19 @@ export default function ChangePasswordForm() {
 					<Button
 						text='Change password'
 						disabled={isSubmitting}
-						onClick={() => console.log(values)}
+						onClick={async () => {
+							const response = await updatePassword(
+								values.oldPassword,
+								values.newPassword
+							);
+
+							if (response.success) {
+								toast.success('Password changed successfully');
+								resetForm();
+							} else {
+								toast.error(response.message);
+							}
+						}}
 						small
 						secondary
 						className={clsx(style.row2, style.col1)}
