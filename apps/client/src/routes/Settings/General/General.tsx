@@ -7,10 +7,12 @@ import clsx from 'clsx';
 import Button from '../../../components/Button/Button';
 import Widget from '../../../components/Widget/Widget';
 import style from './General.module.scss';
+import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
 
 export default function GeneralSettings(): JSX.Element {
 	return (
 		<div className={style.main}>
+			<Breadcrumbs path={[{ name: 'Settings' }, { name: 'General' }]} />
 			<h1 className={style.title}>General Settings</h1>
 			<Widget>
 				<>
@@ -58,6 +60,7 @@ export default function GeneralSettings(): JSX.Element {
 								text='Change'
 								onClick={() => console.log('Change username')}
 								small
+								secondary
 								className={clsx(style.row2, style.col3)}
 							/>
 							<h3
@@ -82,6 +85,7 @@ export default function GeneralSettings(): JSX.Element {
 								text='Change'
 								onClick={() => console.log('Change email')}
 								small
+								secondary
 								className={clsx(style.row3, style.col3)}
 							/>
 						</div>
@@ -124,7 +128,7 @@ export default function GeneralSettings(): JSX.Element {
 									}, 400);
 								}}
 							>
-								{({ isSubmitting }) => (
+								{({ isSubmitting, values }) => (
 									<Form className={style.form}>
 										<div className={style.formGroup}>
 											<label
@@ -180,10 +184,9 @@ export default function GeneralSettings(): JSX.Element {
 										<Button
 											text='Change password'
 											disabled={isSubmitting}
-											onClick={() =>
-												console.log('Change email')
-											}
+											onClick={() => console.log(values)}
 											small
+											secondary
 											className={clsx(
 												style.row2,
 												style.col1
