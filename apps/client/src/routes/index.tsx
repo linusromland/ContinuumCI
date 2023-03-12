@@ -16,6 +16,7 @@ import Overview from './Overview/Overview';
 
 // Settings Pages
 import GeneralSettings from './Settings/General/General';
+import UserSettings from './Settings/Users/Users';
 
 export default function Router(): JSX.Element {
 	return (
@@ -31,6 +32,10 @@ export default function Router(): JSX.Element {
 							<Route
 								path='/settings'
 								element={<GeneralSettings />}
+							/>
+							<Route
+								path='/settings/users'
+								element={<UserSettings />}
 							/>
 						</Route>
 					</Route>
