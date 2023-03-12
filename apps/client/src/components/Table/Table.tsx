@@ -4,13 +4,17 @@ import style from './Table.module.scss';
 
 export default function Table({
 	headers,
-	data
+	data,
+	widget = true
 }: {
 	headers: string[];
-	data: string[][];
+	data: (string | JSX.Element)[][];
+	widget?: boolean;
 }): JSX.Element {
+	const WrapperComponent = widget ? Widget : 'div';
+
 	return (
-		<Widget>
+		<WrapperComponent>
 			<table className={style.table}>
 				<thead>
 					<tr>
@@ -29,6 +33,6 @@ export default function Table({
 					))}
 				</tbody>
 			</table>
-		</Widget>
+		</WrapperComponent>
 	);
 }
