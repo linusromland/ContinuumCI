@@ -1,0 +1,26 @@
+@use 'src/styles' as *;
+
+.breadcrumbs {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.item {
+	font-size: 1rem;
+	color: $text-primary;
+	font-weight: 500;
+	transition: color 0.2s ease-in-out;
+
+	&:hover {
+		color: darken($text-primary, 20%);
+	}
+}
+
+.separator {
+	font-size: 1rem;
+	color: $text-primary;
+	font-weight: 500;
+}
