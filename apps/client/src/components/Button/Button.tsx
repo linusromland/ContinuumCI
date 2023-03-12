@@ -9,17 +9,24 @@ export default function Button({
 	disabled = false,
 	text = 'Button',
 	small = false,
+	secondary = false,
 	className
 }: {
 	onClick: () => void;
 	disabled?: boolean;
 	text: string;
 	small?: boolean;
+	secondary?: boolean;
 	className?: string;
 }): JSX.Element {
 	return (
 		<button
-			className={clsx(style.button, className, small ? style.small : '')}
+			className={clsx(
+				style.button,
+				className,
+				small ? style.small : '',
+				secondary ? style.secondary : ''
+			)}
 			onClick={() => {
 				if (!disabled) onClick();
 			}}

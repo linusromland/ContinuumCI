@@ -26,4 +26,16 @@
 		font-size: 0.8rem;
 		padding: 0.25rem 0.5rem;
 	}
+
+	&.secondary {
+		background-color: $secondary;
+
+		&:hover {
+			background-color: darken($secondary, 20%);
+		}
+
+		&:disabled {
+			background-color: lighten($secondary, 10%);
+		}
+	}
 }
