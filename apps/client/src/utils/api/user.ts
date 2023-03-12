@@ -34,4 +34,12 @@ async function updateUsername(username: string): Promise<ResponseType> {
 	return request.data;
 }
 
-export { createUser, getUser, updateUsername };
+async function updateEmail(email: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/email', {
+		email
+	});
+
+	return request.data;
+}
+
+export { createUser, getUser, updateUsername, updateEmail };
