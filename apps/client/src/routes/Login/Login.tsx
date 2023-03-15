@@ -66,13 +66,19 @@ export default function Login(): JSX.Element {
 					<LoginForm
 						onSubmit={(values) => {
 							(async () => {
-								await setToken({
-									email: values.email,
-									password: values.password,
-									rememberMe: values.rememberMe
-								});
-								toast.success('Successfully logged in!');
-								navigate('/');
+								try {
+									await setToken({
+										email: values.email,
+										password: values.password,
+										rememberMe: values.rememberMe
+									});
+									toast.success('Successfully logged in!');
+									navigate('/');
+								} catch (e) {
+									toast.error('Invalid email or password.', {
+										position: 'top-left'
+									});
+								}
 							})();
 						}}
 					/>
