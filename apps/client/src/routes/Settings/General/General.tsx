@@ -1,18 +1,19 @@
 // External dependencies
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 // Internal dependencies
 import { UserClass } from 'shared/src/classes';
-import { getUser } from '../../../utils/api/user';
+import { getUser, updateEmail, updateUsername } from '../../../utils/api/user';
 import Button from '../../../components/Button/Button';
 import Widget from '../../../components/Widget/Widget';
 import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
 import style from './General.module.scss';
-import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
-import ChangeUsernameModal from './components/ChangeUsernameModal/ChangeUsernameModal';
-import ChangeEmailModal from './components/ChangeEmailModal/ChangeEmailModal';
+import TextEditModal from '../../../components/TextEditModal/TextEditModal';
 import formatRole from '../../../utils/formatRole';
+import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
 
 export default function GeneralSettings(): JSX.Element {
 	const [changeUsernameModal, setChangeUsernameModal] = useState(false);
@@ -130,26 +131,58 @@ export default function GeneralSettings(): JSX.Element {
 				</Widget>
 			</div>
 
-			<ChangeUsernameModal
+			<TextEditModal
+				title='Change Username'
+				fieldName='username'
 				open={changeUsernameModal}
-				onClose={(update) => {
+				onClose={() => {
 					setChangeUsernameModal(false);
-					if (update) {
+				}}
+				initialValues={{
+					username: user.username
+				}}
+				validationSchema={Yup.object().shape({
+					username: Yup.string().required('Username is required')
+				})}
+				submit={async (values) => {
+					const response = await updateUsername(values.username);
+
+					if (response.success) {
+						setChangeUsernameModal(false);
 						getData();
+						toast.success(response.message);
+					} else {
+						toast.error(response.message);
 					}
 				}}
-				currentUsername={user.username}
 			/>
 
-			<ChangeEmailModal
+			<TextEditModal
+				title='Change Email'
+				fieldName='email'
 				open={changeEmailModal}
-				onClose={(update) => {
+				onClose={() => {
 					setChangeEmailModal(false);
-					if (update) {
+				}}
+				initialValues={{
+					email: user.email
+				}}
+				validationSchema={Yup.object().shape({
+					email: Yup.string()
+						.email('Invalid email')
+						.required('Email is required')
+				})}
+				submit={async (values) => {
+					const response = await updateEmail(values.email);
+
+					if (response.success) {
+						setChangeEmailModal(false);
 						getData();
+						toast.success(response.message);
+					} else {
+						toast.error(response.message);
 					}
 				}}
-				currentEmail={user.email}
 			/>
 		</>
 	);
