@@ -8,21 +8,28 @@ import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../../components/Button/Button';
 import Widget from '../../../components/Widget/Widget';
 import style from './Nginx.module.scss';
-import { createDomain, getDomains } from '../../../utils/api/domains';
+import {
+	createDomain,
+	deleteDomain,
+	getDomains
+} from '../../../utils/api/domains';
 import { toast } from 'react-toastify';
 import { DomainsClass } from 'shared/src/classes';
 
 export default function Nginx(): JSX.Element {
-	const [domainNames, setDomainNames] = useState([] as string[]);
+	const [domainNames, setDomainNames] = useState([] as DomainsClass[]);
 	const [newDomainName, setNewDomainName] = useState('');
-	const [selectedDomainName, setSelectedDomainName] = useState('');
+	const [selectedDomainName, setSelectedDomainName] = useState(
+		{} as {
+			value: string;
+			label: string;
+		} | null
+	);
 
 	async function getDomainsData() {
 		const response = await getDomains();
 		if (response.success) {
-			setDomainNames(
-				(response.data as DomainsClass[]).map((domain) => domain.name)
-			);
+			setDomainNames(response.data as DomainsClass[]);
 		}
 	}
 
@@ -136,7 +143,7 @@ export default function Nginx(): JSX.Element {
 									style.col2
 								)}
 							>
-								{domainName}
+								{domainName.name}
 							</p>
 						))}
 
@@ -213,15 +220,12 @@ export default function Nginx(): JSX.Element {
 							styles={customStyles}
 							onChange={(option) => {
 								if (option && option.value)
-									setSelectedDomainName(option.value);
+									setSelectedDomainName(option);
 							}}
-							value={{
-								value: selectedDomainName,
-								label: selectedDomainName
-							}}
+							value={selectedDomainName}
 							options={domainNames.map((domainName) => ({
-								value: domainName,
-								label: domainName
+								value: domainName._id,
+								label: domainName.name
 							}))}
 						/>
 						<Button
@@ -229,7 +233,20 @@ export default function Nginx(): JSX.Element {
 							small
 							secondary
 							className={clsx(style.row1, style.col3)}
-							onClick={() => console.log('Add domain name')}
+							onClick={async () => {
+								if (!selectedDomainName) return;
+
+								const response = await deleteDomain(
+									selectedDomainName.value
+								);
+
+								if (response) {
+									getDomainsData();
+									setSelectedDomainName(null);
+								} else {
+									toast.error('Failed to delete domain');
+								}
+							}}
 						/>
 					</div>
 				</div>
