@@ -3,6 +3,7 @@ import { Connection } from 'mongoose';
 
 // Internal dependencies
 import {
+	DomainsSchema,
 	EmailConfigurationSchema,
 	EmailVerificationSchema,
 	ProjectSchema,
@@ -10,6 +11,12 @@ import {
 } from '../schemas';
 
 const schemaProviders = [
+	{
+		provide: 'DOMAINS_MODEL',
+		useFactory: (connection: Connection) =>
+			connection.model('domains', DomainsSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
 	{
 		provide: 'EMAIL_CONFIGURATION_MODEL',
 		useFactory: (connection: Connection) =>
