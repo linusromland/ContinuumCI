@@ -41,93 +41,89 @@ export default function GeneralSettings(): JSX.Element {
 				/>
 				<h1 className={style.title}>General Settings</h1>
 				<Widget>
-					<>
-						<div className={style.container}>
-							<h2 className={style.subtitle}>Account Settings</h2>
+					<div className={style.container}>
+						<h2 className={style.subtitle}>Account Settings</h2>
 
-							<div className={style.infoContainer}>
-								<h3
-									className={clsx(
-										style.infoContainerTitle,
-										style.row1,
-										style.col1
-									)}
-								>
-									Account Role:
-								</h3>
-								<p
-									className={clsx(
-										style.infoContainerValue,
-										style.row1,
-										style.col2
-									)}
-								>
-									{formatRole(user.role)}
-								</p>
-								<h3
-									className={clsx(
-										style.infoContainerTitle,
-										style.row2,
-										style.col1
-									)}
-								>
-									Username:
-								</h3>
-								<p
-									className={clsx(
-										style.infoContainerValue,
-										style.row2,
-										style.col2
-									)}
-								>
-									{user.username}
-								</p>
-								<Button
-									text='Change'
-									onClick={() => setChangeUsernameModal(true)}
-									small
-									secondary
-									className={clsx(style.row2, style.col3)}
-								/>
-								<h3
-									className={clsx(
-										style.infoContainerTitle,
-										style.row3,
-										style.col1
-									)}
-								>
-									Email:
-								</h3>
-								<p
-									className={clsx(
-										style.infoContainerValue,
-										style.row3,
-										style.col2
-									)}
-								>
-									{user.email}
-								</p>
-								<Button
-									text='Change'
-									onClick={() => setChangeEmailModal(true)}
-									small
-									secondary
-									className={clsx(style.row3, style.col3)}
-								/>
-							</div>
+						<div className={style.infoContainer}>
+							<h3
+								className={clsx(
+									style.infoContainerTitle,
+									style.row1,
+									style.col1
+								)}
+							>
+								Account Role:
+							</h3>
+							<p
+								className={clsx(
+									style.infoContainerValue,
+									style.row1,
+									style.col2
+								)}
+							>
+								{formatRole(user.role)}
+							</p>
+							<h3
+								className={clsx(
+									style.infoContainerTitle,
+									style.row2,
+									style.col1
+								)}
+							>
+								Username:
+							</h3>
+							<p
+								className={clsx(
+									style.infoContainerValue,
+									style.row2,
+									style.col2
+								)}
+							>
+								{user.username}
+							</p>
+							<Button
+								text='Change'
+								onClick={() => setChangeUsernameModal(true)}
+								small
+								secondary
+								className={clsx(style.row2, style.col3)}
+							/>
+							<h3
+								className={clsx(
+									style.infoContainerTitle,
+									style.row3,
+									style.col1
+								)}
+							>
+								Email:
+							</h3>
+							<p
+								className={clsx(
+									style.infoContainerValue,
+									style.row3,
+									style.col2
+								)}
+							>
+								{user.email}
+							</p>
+							<Button
+								text='Change'
+								onClick={() => setChangeEmailModal(true)}
+								small
+								secondary
+								className={clsx(style.row3, style.col3)}
+							/>
 						</div>
-					</>
+					</div>
 				</Widget>
 				<Widget>
-					<>
-						<div className={style.container}>
-							<h2 className={style.subtitle}>Change password</h2>
+					<div className={style.container}>
+						<h2 className={style.subtitle}>Change password</h2>
 
-							<div className={style.infoContainer}>
-								<ChangePasswordForm />
-							</div>
+						<div className={style.infoContainer}>
+							<ChangePasswordForm />
 						</div>
-					</>
+					</div>
 				</Widget>
 			</div>
 
