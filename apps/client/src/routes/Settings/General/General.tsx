@@ -11,8 +11,8 @@ import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
 import style from './General.module.scss';
 import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
 import ChangeUsernameModal from './components/ChangeUsernameModal/ChangeUsernameModal';
-import { UserRoleEnum } from 'shared/src/enums';
 import ChangeEmailModal from './components/ChangeEmailModal/ChangeEmailModal';
+import formatRole from '../../../utils/formatRole';
 
 export default function GeneralSettings(): JSX.Element {
 	const [changeUsernameModal, setChangeUsernameModal] = useState(false);
@@ -61,17 +61,7 @@ export default function GeneralSettings(): JSX.Element {
 										style.col2
 									)}
 								>
-									{user.role == UserRoleEnum.ROOT
-										? 'Root'
-										: ''}
-
-									{user.role == UserRoleEnum.ADMIN
-										? 'Administator'
-										: ''}
-
-									{user.role == UserRoleEnum.USER
-										? 'User'
-										: ''}
+									{formatRole(user.role)}
 								</p>
 								<h3
 									className={clsx(
