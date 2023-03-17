@@ -1,4 +1,5 @@
 // External dependencies
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Select from 'react-select';
 
@@ -7,8 +8,28 @@ import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../../components/Button/Button';
 import Widget from '../../../components/Widget/Widget';
 import style from './Nginx.module.scss';
+import { createDomain, getDomains } from '../../../utils/api/domains';
+import { toast } from 'react-toastify';
+import { DomainsClass } from 'shared/src/classes';
 
 export default function Nginx(): JSX.Element {
+	const [domainNames, setDomainNames] = useState([] as string[]);
+	const [newDomainName, setNewDomainName] = useState('');
+	const [selectedDomainName, setSelectedDomainName] = useState('');
+
+	async function getDomainsData() {
+		const response = await getDomains();
+		if (response.success) {
+			setDomainNames(
+				(response.data as DomainsClass[]).map((domain) => domain.name)
+			);
+		}
+	}
+
+	useEffect(() => {
+		getDomainsData();
+	}, []);
+
 	const customStyles = {
 		control: (provided: object) => ({
 			...provided,
@@ -106,24 +127,30 @@ export default function Nginx(): JSX.Element {
 						>
 							Available domain names:
 						</h3>
-						<p
-							className={clsx(
-								style.infoContainerValue,
-								style.row1,
-								style.col2
-							)}
-						>
-							linusromland.com
-						</p>
-						<p
-							className={clsx(
-								style.infoContainerValue,
-								style.row2,
-								style.col2
-							)}
-						>
-							linusromland.se
-						</p>
+						{/* List of all domain names */}
+						{domainNames.map((domainName, index) => (
+							<p
+								className={clsx(
+									style.infoContainerValue,
+									style[`row${index + 1}`],
+									style.col2
+								)}
+							>
+								{domainName}
+							</p>
+						))}
+
+						{domainNames.length === 0 && (
+							<p
+								className={clsx(
+									style.infoContainerValue,
+									style.row1,
+									style.col2
+								)}
+							>
+								No domain names available
+							</p>
+						)}
 					</div>
 					<div className={clsx(style.infoContainer, style.actions)}>
 						<h3
@@ -143,6 +170,10 @@ export default function Nginx(): JSX.Element {
 							)}
 							type='text'
 							placeholder='example.com'
+							value={newDomainName}
+							onChange={(e) => {
+								setNewDomainName(e.target.value);
+							}}
 						/>
 
 						<Button
@@ -150,7 +181,20 @@ export default function Nginx(): JSX.Element {
 							small
 							secondary
 							className={clsx(style.row1, style.col3)}
-							onClick={() => console.log('Add domain name')}
+							onClick={async () => {
+								if (!newDomainName) return;
+
+								const response = await createDomain(
+									newDomainName
+								);
+
+								if (response) {
+									getDomainsData();
+									setNewDomainName('');
+								} else {
+									toast.error('Failed to create domain');
+								}
+							}}
 						/>
 					</div>
 					<div className={style.infoContainer}>
@@ -168,18 +212,17 @@ export default function Nginx(): JSX.Element {
 							className={clsx(style.row1, style.col2)}
 							styles={customStyles}
 							onChange={(option) => {
-								console.log(option);
+								if (option && option.value)
+									setSelectedDomainName(option.value);
 							}}
-							options={[
-								{
-									value: 'linusromland.com',
-									label: 'linusromland.com'
-								},
-								{
-									value: 'linusromland.se',
-									label: 'linusromland.se'
-								}
-							]}
+							value={{
+								value: selectedDomainName,
+								label: selectedDomainName
+							}}
+							options={domainNames.map((domainName) => ({
+								value: domainName,
+								label: domainName
+							}))}
 						/>
 						<Button
 							text='Remove'
