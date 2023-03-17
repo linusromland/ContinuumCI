@@ -26,6 +26,12 @@ async function getUser(): Promise<ResponseType> {
 	return request.data;
 }
 
+async function getUsers(): Promise<ResponseType> {
+	const request = await api.get('/users/all');
+
+	return request.data;
+}
+
 async function updateUsername(username: string): Promise<ResponseType> {
 	const request = await api.put('/users/edit/username', {
 		username
@@ -54,4 +60,11 @@ async function updatePassword(
 	return request.data;
 }
 
-export { createUser, getUser, updateUsername, updateEmail, updatePassword };
+export {
+	createUser,
+	getUser,
+	getUsers,
+	updateUsername,
+	updateEmail,
+	updatePassword
+};
