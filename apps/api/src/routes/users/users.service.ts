@@ -182,7 +182,7 @@ export class UsersService {
 			}
 
 			const users = await this.UserModel.find(
-				{ _id: { $ne: updatedUser._id } },
+				{},
 				{
 					_id: 1,
 					username: 1,

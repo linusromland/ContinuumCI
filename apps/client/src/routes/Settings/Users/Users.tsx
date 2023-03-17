@@ -10,6 +10,7 @@ import Button from '../../../components/Button/Button';
 import formatRole from '../../../utils/formatRole';
 import { getUsers } from '../../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
+import { UserRoleEnum } from 'shared/src/enums';
 
 export default function Users(): JSX.Element {
 	const [users, setUsers] = useState([] as UserClass[]);
@@ -44,13 +45,16 @@ export default function Users(): JSX.Element {
 									formatRole(user.role),
 									user.username,
 									user.email,
-									'TODO',
-									'TODO',
+									'TO BE IMPLEMENTED',
+									'TO BE IMPLEMENTED',
 									<Button
 										text='Edit'
 										small
 										secondary
 										onClick={() => console.log('Edit user')}
+										disabled={
+											user.role === UserRoleEnum.ROOT
+										}
 									/>
 								])}
 								widget={false}
@@ -58,6 +62,12 @@ export default function Users(): JSX.Element {
 						</div>
 					</Widget>
 				</>
+			)}
+			{users && users.length === 0 && (
+				<div className={style.container}>
+					<h2 className={style.subtitle}>Users</h2>
+					<p>No users found.</p>
+				</div>
 			)}
 		</div>
 	);
