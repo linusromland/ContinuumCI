@@ -189,6 +189,8 @@ export class UsersService {
 					email: 1,
 					role: 1,
 					verifiedEmail: 1,
+					lastIp: 1,
+					lastLogin: 1,
 					createdAt: 1,
 					updatedAt: 1
 				}

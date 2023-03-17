@@ -49,8 +49,12 @@ export default function Users(): JSX.Element {
 									formatRole(user.role),
 									user.username,
 									user.email,
-									'TO BE IMPLEMENTED',
-									'TO BE IMPLEMENTED',
+									user.lastLogin
+										? new Date(
+												user.lastLogin
+										  ).toLocaleString()
+										: 'Never',
+									user.lastIp ? user.lastIp : 'Never',
 									<Button
 										text='Edit'
 										small
