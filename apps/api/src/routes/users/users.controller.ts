@@ -22,6 +22,12 @@ export class UsersController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Get('all')
+	getUsers(@Request() req) {
+		return this.usersService.getUsers(req.user);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Put('edit/username')
 	updateUsername(@Request() req) {
 		return this.usersService.updateUsername(req.user, req.body.username);

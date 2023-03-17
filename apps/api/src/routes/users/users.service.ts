@@ -164,6 +164,57 @@ export class UsersService {
 		}
 	}
 
+	async getUsers(user: JwtType) {
+		try {
+			const updatedUser = await this.UserModel.findById(user.sub);
+			if (!updatedUser) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			if (updatedUser.role !== UserRoleEnum.ROOT) {
+				throw new UnauthorizedException({
+					success: false,
+					message: 'Unauthorized'
+				});
+			}
+
+			const users = await this.UserModel.find(
+				{ _id: { $ne: updatedUser._id } },
+				{
+					_id: 1,
+					username: 1,
+					email: 1,
+					role: 1,
+					verifiedEmail: 1,
+					createdAt: 1,
+					updatedAt: 1
+				}
+			);
+
+			return {
+				success: true,
+				message: 'Users fetched successfully',
+				data: users
+			};
+			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			if (
+				error instanceof BadRequestException ||
+				error instanceof UnauthorizedException
+			) {
+				throw error;
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
 	async updateUsername(
 		user: JwtType,
 		newUsername: string
