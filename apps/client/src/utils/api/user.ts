@@ -60,11 +60,21 @@ async function updatePassword(
 	return request.data;
 }
 
+async function updateRole(userId: string, role: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/role', {
+		userId,
+		role
+	});
+
+	return request.data;
+}
+
 export {
 	createUser,
 	getUser,
 	getUsers,
 	updateUsername,
 	updateEmail,
-	updatePassword
+	updatePassword,
+	updateRole
 };

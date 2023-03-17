@@ -11,17 +11,21 @@ import formatRole from '../../../utils/formatRole';
 import { getUsers } from '../../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
+import ChangeRoleModal from './components/ChangeRoleModal/ChangeRoleModal';
 
 export default function Users(): JSX.Element {
 	const [users, setUsers] = useState([] as UserClass[]);
+	const [selectedUser, setSelectedUser] = useState(null as UserClass | null);
+	const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
 
 	useEffect(() => {
-		(async () => {
-			const response = await getUsers();
-			console.log(response.data);
-			setUsers(response.data as UserClass[]);
-		})();
+		getData();
 	}, []);
+
+	async function getData() {
+		const response = await getUsers();
+		setUsers(response.data as UserClass[]);
+	}
 
 	return (
 		<div className={style.main}>
@@ -51,7 +55,10 @@ export default function Users(): JSX.Element {
 										text='Edit'
 										small
 										secondary
-										onClick={() => console.log('Edit user')}
+										onClick={() => {
+											setSelectedUser(user);
+											setShowChangeRoleModal(true);
+										}}
 										disabled={
 											user.role === UserRoleEnum.ROOT
 										}
@@ -69,6 +76,19 @@ export default function Users(): JSX.Element {
 					<p>No users found.</p>
 				</div>
 			)}
+			<ChangeRoleModal
+				open={showChangeRoleModal}
+				onClose={(update) => {
+					setShowChangeRoleModal(false);
+
+					if (update) {
+						getData();
+					}
+				}}
+				username={selectedUser?.username || ''}
+				userId={selectedUser?._id || ''}
+				currentRole={selectedUser?.role || UserRoleEnum.USER}
+			/>
 		</div>
 	);
 }
