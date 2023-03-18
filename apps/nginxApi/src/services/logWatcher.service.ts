@@ -12,7 +12,6 @@ let logWatcherInterval: NodeJS.Timer | null = null;
 @Injectable()
 export class LogWatcherService {
 	private readonly logger = new Logger(LogWatcherService.name);
-	
 
 	constructor(
 		@Inject('NGINX_LOGS_MODEL')
@@ -30,11 +29,24 @@ export class LogWatcherService {
 			clearInterval(logWatcherInterval);
 		}
 
-		const configuration = await this.NginxConfigurationModel.findOne({});
+		let configuration = await this.NginxConfigurationModel.findOne({});
 
-		if(!configuration) {
-			this.logger.error('No configuration found');
-			return;
+		if (!configuration) {
+			this.logger.error('No configuration found, creating default');
+
+			configuration = new this.NginxConfigurationModel({
+				localIps: '192.168.1.0/24',
+				sitesEnabledLocation: '/etc/nginx/sites-enabled',
+				accessLogLocation: '/var/log/nginx/custom.log'
+			});
+			const savedConfiguration = await configuration.save();
+
+			if (!savedConfiguration) {
+				this.logger.error('Error creating default configuration');
+				return;
+			}
+
+			configuration = savedConfiguration;
 		}
 
 		this.logger.log(
