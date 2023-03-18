@@ -1,5 +1,10 @@
 // External dependencies
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+	BadRequestException,
+	Inject,
+	Injectable,
+	InternalServerErrorException
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import axios from 'axios';
 
@@ -33,7 +38,9 @@ export class ConfigurationService {
 			});
 		}
 
-		const request = await axios.get(`${NGINX_API_URL}/configuration`);
+		const request = await axios.get(`${NGINX_API_URL}/configuration`, {
+			validateStatus: () => true
+		});
 
 		return request.data;
 	}
@@ -60,8 +67,19 @@ export class ConfigurationService {
 
 		const request = await axios.put(
 			`${NGINX_API_URL}/configuration`,
-			nginxConfiguration
+			nginxConfiguration,
+			{
+				validateStatus: () => true
+			}
 		);
+
+		if (request.status == 500) {
+			throw new InternalServerErrorException(request.data);
+		}
+
+		if (!request.data.success) {
+			throw new BadRequestException(request.data);
+		}
 
 		return request.data;
 	}
