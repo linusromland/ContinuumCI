@@ -15,7 +15,6 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 // Internal dependencies
 import { DomainsService } from './domains.service';
 
-@Controller('domains')
 export class DomainsController {
 	constructor(private domainsService: DomainsService) {}
 
