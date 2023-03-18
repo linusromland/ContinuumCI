@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 
 // Modules import
 import { AuthModule } from './routes/auth/auth.module';
-import { DomainsModule } from './routes/domains/domains.module';
+import { NginxModule } from './routes/nginx/nginx.module';
 import { EmailConfigurationModule } from './routes/emailConfiguration/emailConfiguration.module';
 import { ProjectsModule } from './routes/projects/projects.module';
 import { SetupModule } from './routes/setup/setup.module';
@@ -13,7 +13,7 @@ import { WelcomeModule } from './routes/welcome/welcome.module';
 @Module({
 	imports: [
 		AuthModule,
-		DomainsModule,
+		NginxModule,
 		EmailConfigurationModule,
 		ProjectsModule,
 		SetupModule,
