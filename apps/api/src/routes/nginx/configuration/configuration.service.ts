@@ -42,6 +42,14 @@ export class ConfigurationService {
 			validateStatus: () => true
 		});
 
+		if (request.status == 500) {
+			throw new InternalServerErrorException(request.data);
+		}
+
+		if (!request.data.success) {
+			throw new BadRequestException(request.data);
+		}
+
 		return request.data;
 	}
 
