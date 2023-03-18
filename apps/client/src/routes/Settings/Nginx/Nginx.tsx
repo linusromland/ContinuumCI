@@ -6,6 +6,7 @@ import Select from 'react-select';
 
 // Internal dependencies
 import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
+import TextEditModal from '../../../components/TextEditModal/TextEditModal';
 import Button from '../../../components/Button/Button';
 import Widget from '../../../components/Widget/Widget';
 import style from './Nginx.module.scss';
@@ -16,10 +17,17 @@ import {
 } from '../../../utils/api/nginx/domains';
 import { toast } from 'react-toastify';
 import { DomainsClass } from 'shared/src/classes';
-import TextEditModal from '../../../components/TextEditModal/TextEditModal';
+import { NginxConfigurationType } from 'shared/src/types';
+import {
+	getConfiguration,
+	updateConfiguration
+} from '../../../utils/api/nginx/configuration';
 
 export default function Nginx(): JSX.Element {
 	const [domainNames, setDomainNames] = useState([] as DomainsClass[]);
+	const [nginxConfiguration, setNginxConfiguration] = useState(
+		{} as NginxConfigurationType
+	);
 	const [newDomainName, setNewDomainName] = useState('');
 	const [sitesEnabledDirectoryModal, setSitesEnabledDirectoryModal] =
 		useState(false);
@@ -39,8 +47,28 @@ export default function Nginx(): JSX.Element {
 		}
 	}
 
+	async function getConfigurationData() {
+		const response = await getConfiguration();
+		if (response.success) {
+			setNginxConfiguration(response.data as NginxConfigurationType);
+		}
+	}
+
+	async function editConfiguration(
+		configuration: NginxConfigurationType
+	): Promise<void> {
+		const response = await updateConfiguration(configuration);
+		if (response.success) {
+			getConfigurationData();
+			toast.success('Configuration updated');
+		} else {
+			toast.error(response.message);
+		}
+	}
+
 	useEffect(() => {
 		getDomainsData();
+		getConfigurationData();
 	}, []);
 
 	const customStyles = {
@@ -85,7 +113,8 @@ export default function Nginx(): JSX.Element {
 									style.col2
 								)}
 							>
-								/etc/nginx/sites-enabled
+								{nginxConfiguration.sitesEnabledLocation ||
+									'Not set'}
 							</p>
 							<Button
 								text='Change'
@@ -112,7 +141,8 @@ export default function Nginx(): JSX.Element {
 									style.col2
 								)}
 							>
-								/var/log/nginx/custom.log
+								{nginxConfiguration.accessLogLocation ||
+									'Not set'}
 							</p>
 							<Button
 								text='Change'
@@ -137,7 +167,7 @@ export default function Nginx(): JSX.Element {
 									style.col2
 								)}
 							>
-								192.168.1.0/24
+								{nginxConfiguration.localIps || 'Not set'}
 							</p>
 							<Button
 								text='Change'
@@ -287,21 +317,26 @@ export default function Nginx(): JSX.Element {
 
 			<TextEditModal
 				title='Change Sites Enabled Directory'
-				fieldName='sitesEnabledDirectory'
+				fieldName='sitesEnabledLocation'
 				open={sitesEnabledDirectoryModal}
 				onClose={() => {
 					setSitesEnabledDirectoryModal(false);
 				}}
 				initialValues={{
-					sitesEnabledDirectory: 'sitesEnabledDirectory'
+					sitesEnabledLocation:
+						nginxConfiguration.sitesEnabledLocation
 				}}
 				validationSchema={Yup.object().shape({
-					sitesEnabledDirectory: Yup.string().required(
+					sitesEnabledLocation: Yup.string().required(
 						'Sites Enabled Directory is required'
 					)
 				})}
 				submit={async (values) => {
-					console.log(values);
+					editConfiguration({
+						sitesEnabledLocation: values.sitesEnabledLocation,
+						accessLogLocation: nginxConfiguration.accessLogLocation,
+						localIps: nginxConfiguration.localIps
+					});
 				}}
 			/>
 
@@ -313,7 +348,7 @@ export default function Nginx(): JSX.Element {
 					setAccessLogLocationModal(false);
 				}}
 				initialValues={{
-					accessLogLocation: 'accessLogLocation'
+					accessLogLocation: nginxConfiguration.accessLogLocation
 				}}
 				validationSchema={Yup.object().shape({
 					accessLogLocation: Yup.string().required(
@@ -321,27 +356,37 @@ export default function Nginx(): JSX.Element {
 					)
 				})}
 				submit={async (values) => {
-					console.log(values);
+					editConfiguration({
+						sitesEnabledLocation:
+							nginxConfiguration.sitesEnabledLocation,
+						accessLogLocation: values.accessLogLocation,
+						localIps: nginxConfiguration.localIps
+					});
 				}}
 			/>
 
 			<TextEditModal
 				title='Change Local IP-Adresses'
-				fieldName='localIpAdresses'
+				fieldName='localIps'
 				open={localIpAdressesModal}
 				onClose={() => {
 					setLocalIpAdressesModal(false);
 				}}
 				initialValues={{
-					localIpAdresses: 'localIpAdresses'
+					localIps: nginxConfiguration.localIps
 				}}
 				validationSchema={Yup.object().shape({
-					localIpAdresses: Yup.string().required(
+					localIps: Yup.string().required(
 						'Local IP-Adresses is required'
 					)
 				})}
 				submit={async (values) => {
-					console.log(values);
+					editConfiguration({
+						sitesEnabledLocation:
+							nginxConfiguration.sitesEnabledLocation,
+						accessLogLocation: nginxConfiguration.accessLogLocation,
+						localIps: values.localIps
+					});
 				}}
 			/>
 		</>
