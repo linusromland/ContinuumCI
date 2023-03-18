@@ -13,7 +13,7 @@ import {
 	createDomain,
 	deleteDomain,
 	getDomains
-} from '../../../utils/api/domains';
+} from '../../../utils/api/nginx/domains';
 import { toast } from 'react-toastify';
 import { DomainsClass } from 'shared/src/classes';
 import TextEditModal from '../../../components/TextEditModal/TextEditModal';

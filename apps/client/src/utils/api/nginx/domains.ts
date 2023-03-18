@@ -1,6 +1,6 @@
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import api from './';
+import api from '..';
 
 async function getDomains(): Promise<ResponseType> {
 	const request = await api.get('/nginx/domains');
