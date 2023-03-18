@@ -38,30 +38,10 @@ export class ConfigurationController {
 						argument: 'accessLogLocation',
 						type: 'string',
 						required: true
-					},
-					{
-						argument: 'domains',
-						type: 'object',
-						required: true,
-						array: true
 					}
 				],
 				nginxConfiguration
 			);
-
-			for (const domain of nginxConfiguration.domains) {
-				argumentValidator(
-					[
-						{
-							argument: 'name',
-							type: 'string',
-							required: true
-						}
-					],
-
-					domain
-				);
-			}
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {

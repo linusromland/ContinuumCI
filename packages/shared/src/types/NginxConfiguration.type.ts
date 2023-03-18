@@ -3,9 +3,6 @@ type NginxConfigurationType = {
 	localIps: string;
 	sitesEnabledLocation: string;
 	accessLogLocation: string;
-	domains: {
-		name: string;
-	}[];
 };
 
 export { NginxConfigurationType };

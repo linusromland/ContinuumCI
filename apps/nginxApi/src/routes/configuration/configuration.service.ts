@@ -51,8 +51,7 @@ export class ConfigurationService {
 					localIps: nginxConfiguration.localIps,
 					sitesEnabledLocation:
 						nginxConfiguration.sitesEnabledLocation,
-					accessLogLocation: nginxConfiguration.accessLogLocation,
-					domains: nginxConfiguration.domains
+					accessLogLocation: nginxConfiguration.accessLogLocation
 				}
 			};
 		} catch (error) {
