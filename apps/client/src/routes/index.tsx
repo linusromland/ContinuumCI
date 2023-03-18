@@ -14,6 +14,9 @@ import Welcome from './Welcome/Welcome';
 // Analytics Pages
 import Overview from './Overview/Overview';
 
+// Deployment Pages
+import Applications from './Applications/Applications';
+
 // Settings Pages
 import GeneralSettings from './Settings/General/General';
 import UserSettings from './Settings/Users/Users';
@@ -28,6 +31,10 @@ export default function Router(): JSX.Element {
 						<Route
 							path='/'
 							element={<Overview />}
+						/>
+						<Route
+							path='/applications'
+							element={<Applications />}
 						/>
 						<Route>
 							<Route

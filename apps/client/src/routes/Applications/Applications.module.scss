@@ -1,0 +1,21 @@
+@use 'src/styles' as *;
+
+.main {
+	width: 100%;
+	background-color: darken($background, 5%);
+}
+
+.container {
+	margin: 1.5rem;
+}
+
+.topBar {
+	display: flex;
+	justify-content: space-between;
+	height: 2rem;
+}
+
+.statusBar {
+	width: 100%;
+	margin-right: 1rem;
+}
