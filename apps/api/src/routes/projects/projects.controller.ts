@@ -1,14 +1,17 @@
 // External dependencies
-import { Controller, Post, ValidationPipe } from '@nestjs/common';
 import {
+	Controller,
+	Post,
+	ValidationPipe,
 	Body,
 	Request,
 	Param,
 	Put,
 	UseGuards,
 	UsePipes,
-	Delete
-} from '@nestjs/common/decorators';
+	Delete,
+	Get
+} from '@nestjs/common';
 import { ProjectClass } from 'shared/src/classes';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
@@ -18,6 +21,12 @@ import { ProjectsService } from './projects.service';
 @Controller('projects')
 export class ProjectsController {
 	constructor(private projectsService: ProjectsService) {}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('all')
+	getAllProjects(@Request() req) {
+		return this.projectsService.getAll(req.user.sub);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
