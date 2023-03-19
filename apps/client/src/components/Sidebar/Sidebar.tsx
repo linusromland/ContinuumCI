@@ -49,10 +49,10 @@ export default function Sidebar() {
 				<ButtonWrapper text='DEPLOYMENTS'>
 					<>
 						<Button
-							text='Applications'
-							icon='/icons/applications.svg'
-							onClick={() => navigate('/applications')}
-							selected={location.pathname === '/applications'}
+							text='Projects'
+							icon='/icons/projects.svg'
+							onClick={() => navigate('/projects')}
+							selected={location.pathname === '/projects'}
 						/>
 						<Button
 							text='Containers'

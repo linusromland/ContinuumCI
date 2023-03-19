@@ -4,7 +4,7 @@ import style from './Header.module.scss';
 export default function Header() {
 	return (
 		<header className={style.header}>
-			<h1>Applications</h1>
+			<h1>Projects</h1>
 			<div className={style.lastUpdated}>
 				<p>
 					Last updated:
