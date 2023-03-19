@@ -18,11 +18,15 @@ export class OverviewService {
 	) {}
 
 	async getOverview() {
-		const cpuUsage = await si.currentLoad();
-		const cpuCores = await si.cpu();
-		const mem = await si.mem();
-		const network = await si.networkStats();
-		const networkAdapter = await si.networkInterfaceDefault();
+		const [cpuUsage, cpuCores, mem, network, networkAdapter] =
+			await Promise.all([
+				si.currentLoad(),
+				si.cpu(),
+				si.mem(),
+				si.networkStats(),
+				si.networkInterfaceDefault()
+			]);
+
 		const networkAdapterIndex = network.findIndex(
 			(adapter) => adapter.iface === networkAdapter
 		);
