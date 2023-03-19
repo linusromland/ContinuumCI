@@ -1,5 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
+import { filesize } from 'filesize';
 
 // Internal Dependencies
 import style from './Overview.module.scss';
@@ -9,12 +10,27 @@ import StatsWidget from './components/StatsWidget/StatsWidget';
 import ApplicationWidget from './components/ApplicationWidget/ApplicationWidget';
 import InfoWidget from './components/InfoWidget/InfoWidget';
 import Table from '../../components/Table/Table';
+import { OverviewType } from 'shared/src/types';
+import { getOverview } from '../../utils/api/overview';
+import { formatNumber } from '../../utils/formatNumber';
+
+type filesizeType = {
+	value: number;
+	unit: string;
+	symbol: string;
+};
 
 export default function Overview(): JSX.Element {
-	const [user, setUser] = useState('null');
+	const [user, setUser] = useState('');
+	const [data, setData] = useState({} as OverviewType);
+	const [dataInterval, setDataInterval] = useState<NodeJS.Timeout | null>(
+		null
+	);
 
 	useEffect(() => {
 		(async () => {
+			getOverviewData();
+
 			const userResponse = await getUser();
 			const user = userResponse.data as UserClass;
 
@@ -24,6 +40,20 @@ export default function Overview(): JSX.Element {
 		})();
 	}, []);
 
+	async function getOverviewData() {
+		const overviewResponse = await getOverview();
+
+		if (overviewResponse.data) {
+			setData(overviewResponse.data);
+		}
+
+		if (dataInterval) {
+			clearTimeout(dataInterval);
+		}
+
+		setDataInterval(setTimeout(getOverviewData, 1000 * 10));
+	}
+
 	return (
 		<div className={style.main}>
 			<h1 className={style.title}>
@@ -31,52 +61,103 @@ export default function Overview(): JSX.Element {
 			</h1>
 			<div className={style.widgets}>
 				<ApplicationWidget
-					applicationsRunning={4}
-					applicationsTotal={4}
+					applicationsRunning={data.runningProjects || 0}
+					applicationsTotal={data.projects || 0}
 				/>
 				<div>
 					<div className={style.smallWidgets}>
 						<StatsWidget
 							title='CPU Usage'
-							value={85}
-							footer='on 4 cores'
+							value={formatNumber(data.cpuUsage)}
+							footer={`on ${data.cpuCores || 0} cores`}
 						/>
 						<StatsWidget
 							title='Memory Usage'
-							value={4012}
-							maxValue={4096}
-							unit='MB'
-							footer='out of 4096 MB'
+							value={
+								(
+									filesize(data.memoryUsage || 0, {
+										base: 10,
+										round: 2,
+										output: 'object'
+									}) as filesizeType
+								).value
+							}
+							maxValue={data.memoryTotal}
+							unit={
+								(
+									filesize(data.memoryUsage || 0, {
+										base: 10,
+										round: 0,
+										output: 'object'
+									}) as filesizeType
+								).unit
+							}
+							footer={`of ${filesize(data.memoryTotal || 0, {
+								base: 10,
+								round: 0
+							})}`}
 						/>
 						<StatsWidget
 							title='Network Usage'
-							value={1.2}
-							unit='Mbps'
+							value={
+								(
+									filesize(data.networkSending || 0, {
+										base: 10,
+										round: 2,
+										output: 'object'
+									}) as filesizeType
+								).value
+							}
+							unit={
+								(
+									filesize(data.networkSending || 0, {
+										base: 10,
+										round: 0,
+										output: 'object'
+									}) as filesizeType
+								).symbol + '/s'
+							}
 							valueRange={undefined}
 							footer='Sending'
 						/>
 						<StatsWidget
 							title='Network Usage'
-							value={3.4}
-							unit='Mbps'
+							value={
+								(
+									filesize(data.networkReceiving || 0, {
+										base: 10,
+										round: 2,
+										output: 'object'
+									}) as filesizeType
+								).value
+							}
+							unit={
+								(
+									filesize(data.networkReceiving || 0, {
+										base: 10,
+										round: 0,
+										output: 'object'
+									}) as filesizeType
+								).symbol + '/s'
+							}
 							valueRange={undefined}
 							footer='Receiving'
 						/>
 					</div>
 					<div className={style.smallWidgets}>
 						<InfoWidget
-							icon='/icons/applications_white.svg'
-							value='9'
-							label='Applications'
+							icon='/icons/projects_white.svg'
+							value={data.projects?.toString() || '0'}
+							label='Projects'
 						/>
 						<InfoWidget
 							icon='/icons/containers_white.svg'
-							value='4'
+							value={data.containers?.toString() || '0'}
 							label='Containers'
 						/>
 						<InfoWidget
 							icon='/icons/image_white.svg'
-							value='12'
+							value={data.images?.toString() || '0'}
 							label='Images'
 						/>
 					</div>
