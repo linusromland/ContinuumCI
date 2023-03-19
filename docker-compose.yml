@@ -45,6 +45,7 @@ services:
             - '3000:3000'
         volumes:
             - projects_data:/apps/api/src/projects
+        privileged: true
 
 networks:
     default:
