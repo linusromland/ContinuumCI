@@ -19,6 +19,7 @@ export class OverviewService {
 
 	async getOverview() {
 		const cpuUsage = await si.currentLoad();
+		const cpuCores = await si.cpu();
 		const mem = await si.mem();
 		const network = await si.networkStats();
 		const networkAdapter = await si.networkInterfaceDefault();
@@ -40,7 +41,8 @@ export class OverviewService {
 			success: true,
 			message: 'Overview data fetched successfully',
 			data: {
-				cpuUsage,
+				cpuUsage: cpuUsage.currentLoad,
+				cpuCores: cpuCores.cores,
 				memoryUsage: mem.used,
 				memoryTotal: mem.total,
 				networkSending: network[networkAdapterIndex || 0].tx_sec,
