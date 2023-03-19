@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
-import style from './ApplicationCard.module.scss';
+import style from './ProjectCard.module.scss';
 
 export default function ProjectCard({
 	project,

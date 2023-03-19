@@ -8,6 +8,7 @@ import Header from './components/Header/Header';
 import StatusBar from './components/StatusBar/StatusBar';
 import { getAllProjects } from '../../utils/api/projects';
 import { ProjectClass } from 'shared/src/classes';
+import ProjectCard from './components/ProjectCard/ProjectCard';
 
 export default function Projects() {
 	const [projects, setProjects] = useState([] as ProjectClass[]);
@@ -15,7 +16,8 @@ export default function Projects() {
 	async function getProjects() {
 		const response = await getAllProjects();
 		if (response.success) {
-			setProjects(projects);
+			setProjects(response.data as ProjectClass[]);
+			console.log(response);
 		}
 	}
 
@@ -41,6 +43,15 @@ export default function Projects() {
 							console.log('clicked');
 						}}
 					/>
+				</div>
+
+				<div className={style.projects}>
+					{projects.map((project) => (
+						<ProjectCard
+							project={project}
+							onClick={() => console.log('clicked')}
+						/>
+					))}
 				</div>
 			</div>
 		</main>
