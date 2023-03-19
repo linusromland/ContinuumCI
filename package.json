@@ -42,7 +42,8 @@
 		"eslint-config-prettier": "8.5.0",
 		"eslint-config-turbo": "0.0.4",
 		"eslint-plugin-turbo": "^0.0.4",
-		"mongoose": "^6.9.1"
+		"mongoose": "^6.9.1",
+		"systeminformation": "^5.17.12"
 	},
 	"packageManager": "npm@8.19.2"
 }
