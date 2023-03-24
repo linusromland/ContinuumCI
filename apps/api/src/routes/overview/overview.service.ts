@@ -6,6 +6,7 @@ import si from 'systeminformation';
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
 import { UserClass } from 'shared/src/classes';
+import { DockerService } from 'src/services/docker/docker.service';
 
 @Injectable()
 export class OverviewService {
@@ -14,18 +15,27 @@ export class OverviewService {
 		private ProjectModel: Model<ProjectClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserClass>
+		private UserModel: Model<UserClass>,
+
+		private dockerService: DockerService
 	) {}
 
 	async getOverview() {
-		const [cpuUsage, cpuCores, mem, network, networkAdapter] =
-			await Promise.all([
-				si.currentLoad(),
-				si.cpu(),
-				si.mem(),
-				si.networkStats(),
-				si.networkInterfaceDefault()
-			]);
+		const [
+			cpuUsage,
+			cpuCores,
+			mem,
+			network,
+			networkAdapter,
+			dockerInformation
+		] = await Promise.all([
+			si.currentLoad(),
+			si.cpu(),
+			si.mem(),
+			si.networkStats(),
+			si.networkInterfaceDefault(),
+			this.dockerService.getInformation()
+		]);
 
 		const networkAdapterIndex = network.findIndex(
 			(adapter) => adapter.iface === networkAdapter
@@ -36,10 +46,10 @@ export class OverviewService {
 		const runningProjects = 4;
 
 		// TODO: Add real container count
-		const totalContainers = 10;
+		const totalContainers = dockerInformation.containerCount;
 
 		// TODO: Add real images count
-		const totalImages = 10;
+		const totalImages = dockerInformation.imageCount;
 
 		return {
 			success: true,
