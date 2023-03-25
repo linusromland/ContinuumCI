@@ -52,7 +52,7 @@ export default function Sidebar() {
 							text='Projects'
 							icon='/icons/projects.svg'
 							onClick={() => navigate('/projects')}
-							selected={location.pathname === '/projects'}
+							selected={location.pathname.includes('projects')}
 						/>
 						<Button
 							text='Containers'
