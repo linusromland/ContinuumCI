@@ -12,11 +12,11 @@ import {
 	Delete,
 	Get
 } from '@nestjs/common';
-import { ProjectClass } from 'shared/src/classes';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 // Internal dependencies
 import { ProjectsService } from './projects.service';
+import { ProjectClass } from 'shared/src/classes';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('projects')
 export class ProjectsController {
@@ -26,6 +26,12 @@ export class ProjectsController {
 	@Get('all')
 	getAllProjects(@Request() req) {
 		return this.projectsService.getAll(req.user.sub);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get(':projectId')
+	getProject(@Request() req, @Param('projectId') projectId: string) {
+		return this.projectsService.get(req.user.sub, projectId);
 	}
 
 	@UseGuards(JwtAuthGuard)

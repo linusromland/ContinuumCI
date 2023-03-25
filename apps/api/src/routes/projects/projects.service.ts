@@ -3,6 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import simpleGit from 'simple-git';
 import fs from 'fs';
+import mongoose from 'mongoose';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
@@ -49,6 +50,61 @@ export class ProjectsService {
 			success: true,
 			message: 'Projects fetched successfully',
 			data: projects
+		};
+	}
+
+	async get(userId: string, projectId: string): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		if (!mongoose.Types.ObjectId.isValid(projectId)) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		let query = {
+			_id: projectId
+		} as {
+			_id: string;
+			permissions?: {
+				$elemMatch: {
+					user: string;
+				};
+			};
+		};
+
+		if (user.role == UserRoleEnum.USER) {
+			query = {
+				...query,
+				permissions: {
+					$elemMatch: {
+						user: userId
+					}
+				}
+			};
+		}
+
+		const project = await this.ProjectModel.find(query);
+
+		if (!project.length) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		return {
+			success: true,
+			message: 'Projects fetched successfully',
+			data: project[0]
 		};
 	}
 
