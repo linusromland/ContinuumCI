@@ -21,7 +21,12 @@ export default function Breadcrumbs({
 						key={index}
 					>
 						{item.link ? (
-							<Link to={item.link}>{item.name}</Link>
+							<Link
+								to={item.link}
+								className={style.link}
+							>
+								{item.name}
+							</Link>
 						) : (
 							<span>{item.name}</span>
 						)}

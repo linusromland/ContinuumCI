@@ -19,6 +19,17 @@
 	}
 }
 
+.link {
+	font-size: 1rem;
+	color: #1a0dab;
+	font-weight: 500;
+	transition: color 0.2s ease-in-out;
+
+	&:hover {
+		color: lighten(#1a0dab, 20%);
+	}
+}
+
 .separator {
 	font-size: 1rem;
 	color: $text-primary;
