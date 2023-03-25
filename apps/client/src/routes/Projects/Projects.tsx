@@ -13,13 +13,15 @@ import ProjectCard from './components/ProjectCard/ProjectCard';
 export default function Projects() {
 	const [projects, setProjects] = useState([] as ProjectClass[]);
 	const [searchFilter, setSearchFilter] = useState('' as string);
+	const [lastUpdated, setLastUpdated] = useState('' as string);
 
 	async function getProjects() {
 		const response = await getAllProjects();
 		if (response.success) {
 			setProjects(response.data as ProjectClass[]);
-			console.log(response);
 		}
+
+		setLastUpdated(new Date().toISOString());
 	}
 
 	useEffect(() => {
@@ -28,7 +30,10 @@ export default function Projects() {
 
 	return (
 		<main className={style.main}>
-			<Header />
+			<Header
+				lastUpdated={lastUpdated}
+				onRefresh={getProjects}
+			/>
 			<div className={style.container}>
 				<div className={style.topBar}>
 					<div className={style.statusBar}>
