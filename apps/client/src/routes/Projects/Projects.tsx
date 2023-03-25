@@ -1,5 +1,6 @@
 // External dependencies
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // Internal dependencies
@@ -13,6 +14,8 @@ import { getAllProjects, createProject } from '../../utils/api/projects';
 import { ProjectClass } from 'shared/src/classes';
 
 export default function Projects() {
+	const navigate = useNavigate();
+
 	const [modalOpen, setModalOpen] = useState(false as boolean);
 	const [projects, setProjects] = useState([] as ProjectClass[]);
 	const [searchFilter, setSearchFilter] = useState('' as string);
@@ -76,7 +79,9 @@ export default function Projects() {
 							.map((project) => (
 								<ProjectCard
 									project={project}
-									onClick={() => console.log('clicked')}
+									onClick={() => {
+										navigate(`/projects/${project._id}`);
+									}}
 								/>
 							))}
 
