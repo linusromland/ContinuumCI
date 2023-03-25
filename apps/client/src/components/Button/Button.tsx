@@ -8,15 +8,17 @@ export default function Button({
 	onClick,
 	disabled = false,
 	text = 'Button',
+	theme = 'primary',
+	icon,
 	small = false,
-	secondary = false,
 	className
 }: {
 	onClick: () => void;
 	disabled?: boolean;
 	text: string;
+	theme?: string;
+	icon?: string;
 	small?: boolean;
-	secondary?: boolean;
 	className?: string;
 }): JSX.Element {
 	return (
@@ -25,13 +27,20 @@ export default function Button({
 				style.button,
 				className,
 				small ? style.small : '',
-				secondary ? style.secondary : ''
+				style[theme]
 			)}
 			onClick={() => {
 				if (!disabled) onClick();
 			}}
 			disabled={disabled}
 		>
+			{icon && (
+				<img
+					className={style.icon}
+					src={icon}
+					alt={text}
+				/>
+			)}
 			{text}
 		</button>
 	);

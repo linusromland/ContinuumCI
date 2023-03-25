@@ -101,7 +101,7 @@ export default function ChangeRoleModal({
 									onClose(false);
 								}
 							}}
-							secondary
+							theme='secondary'
 							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>

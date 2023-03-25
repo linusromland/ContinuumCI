@@ -58,7 +58,7 @@ export default function Users(): JSX.Element {
 									<Button
 										text='Edit'
 										small
-										secondary
+										theme='secondary'
 										onClick={() => {
 											setSelectedUser(user);
 											setShowChangeRoleModal(true);

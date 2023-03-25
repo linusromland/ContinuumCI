@@ -85,7 +85,7 @@ export default function GeneralSettings(): JSX.Element {
 								text='Change'
 								onClick={() => setChangeUsernameModal(true)}
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row2, style.col3)}
 							/>
 							<h3
@@ -110,7 +110,7 @@ export default function GeneralSettings(): JSX.Element {
 								text='Change'
 								onClick={() => setChangeEmailModal(true)}
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row3, style.col3)}
 							/>
 						</div>

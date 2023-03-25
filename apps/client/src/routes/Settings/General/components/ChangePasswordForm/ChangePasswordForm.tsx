@@ -99,7 +99,7 @@ export default function ChangePasswordForm() {
 							}
 						}}
 						small
-						secondary
+						theme='secondary'
 						className={clsx(style.row2, style.col1)}
 					/>
 				</Form>

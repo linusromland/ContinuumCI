@@ -122,7 +122,7 @@ export default function Nginx(): JSX.Element {
 									setSitesEnabledDirectoryModal(true)
 								}
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row1, style.col3)}
 							/>
 							<h3
@@ -148,7 +148,7 @@ export default function Nginx(): JSX.Element {
 								text='Change'
 								onClick={() => setAccessLogLocationModal(true)}
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row2, style.col3)}
 							/>
 							<h3
@@ -173,7 +173,7 @@ export default function Nginx(): JSX.Element {
 								text='Change'
 								onClick={() => setLocalIpAdressesModal(true)}
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row3, style.col3)}
 							/>
 						</div>
@@ -248,7 +248,7 @@ export default function Nginx(): JSX.Element {
 							<Button
 								text='Add'
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row1, style.col3)}
 								onClick={async () => {
 									if (!newDomainName) return;
@@ -293,7 +293,7 @@ export default function Nginx(): JSX.Element {
 							<Button
 								text='Remove'
 								small
-								secondary
+								theme='secondary'
 								className={clsx(style.row1, style.col3)}
 								onClick={async () => {
 									if (!selectedDomainName) return;
