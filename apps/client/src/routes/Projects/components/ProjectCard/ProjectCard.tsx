@@ -1,5 +1,6 @@
 // External dependencies
-import clsx from 'clsx';
+import dayjs from 'dayjs';
+import { useState, useEffect } from 'react';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
@@ -12,15 +13,29 @@ export default function ProjectCard({
 	project: ProjectClass;
 	onClick: () => void;
 }): JSX.Element {
+	const [icon, setIcon] = useState('git');
+
+	useEffect(() => {
+		if (!project || !project.gitUrl) return;
+
+		if (project.gitUrl.includes('github')) return setIcon('github');
+		if (project.gitUrl.includes('gitlab')) return setIcon('gitlab');
+	}, [project]);
+
 	return (
 		<div
 			className={style.container}
 			onClick={onClick}
 		>
 			<div className={style.topBar}>
+				<img
+					className={style.icon}
+					src={`/icons/${icon}.svg`}
+					alt={icon + ' icon'}
+				/>
 				<h1>{project.name}</h1>
 			</div>
-			<div>
+			<div className={style.content}>
 				<p>
 					Status: <span>Everything operating normally!</span>
 				</p>
@@ -28,7 +43,20 @@ export default function ProjectCard({
 					Sync status: <span>Out of sync</span>
 				</p>
 				<p>
-					Repository: <span>{project.gitUrl}</span>
+					Repository: <a>{project.gitUrl}</a>
+				</p>
+				<p>
+					URL: <a>https://romland.dev</a>
+				</p>
+				<p>
+					Last updated:{' '}
+					<span>
+						{project.updatedAt
+							? dayjs(project.updatedAt).format(
+									'YYYY-MM-DD HH:mm:ss'
+							  )
+							: 'Never'}
+					</span>
 				</p>
 			</div>
 		</div>

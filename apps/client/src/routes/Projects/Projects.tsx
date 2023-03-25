@@ -12,6 +12,7 @@ import ProjectCard from './components/ProjectCard/ProjectCard';
 
 export default function Projects() {
 	const [projects, setProjects] = useState([] as ProjectClass[]);
+	const [searchFilter, setSearchFilter] = useState('' as string);
 
 	async function getProjects() {
 		const response = await getAllProjects();
@@ -45,13 +46,39 @@ export default function Projects() {
 					/>
 				</div>
 
+				<div className={style.filters}>
+					<input
+						className={style.input}
+						type='text'
+						placeholder='Search'
+						onChange={(e) => setSearchFilter(e.target.value)}
+						value={searchFilter}
+					/>
+				</div>
+
 				<div className={style.projects}>
-					{projects.map((project) => (
-						<ProjectCard
-							project={project}
-							onClick={() => console.log('clicked')}
-						/>
-					))}
+					{projects
+						.filter((project) => {
+							if (!searchFilter) return true;
+							return project.name
+								.toLowerCase()
+								.includes(searchFilter.toLowerCase());
+						})
+						.map((project) => (
+							<ProjectCard
+								project={project}
+								onClick={() => console.log('clicked')}
+							/>
+						))}
+
+					{projects.filter((project) => {
+						if (!searchFilter) return true;
+						return project.name
+							.toLowerCase()
+							.includes(searchFilter.toLowerCase());
+					}).length === 0 && (
+						<p className={style.noProjects}>No projects found</p>
+					)}
 				</div>
 			</div>
 		</main>

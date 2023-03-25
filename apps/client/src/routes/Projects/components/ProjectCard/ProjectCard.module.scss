@@ -1,0 +1,63 @@
+@use 'src/styles' as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	width: fit-content;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	background-color: $background;
+	cursor: pointer;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+	transition: all 0.2s ease-in-out;
+
+	border-left: 1rem solid $success;
+
+	&:hover {
+		transform: translateY(-0.2rem);
+		box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+	}
+}
+
+.topBar {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+	gap: 0.5rem;
+
+	h1 {
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+}
+
+.icon {
+	width: 2rem;
+	height: 2rem;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	gap: 0.5rem;
+
+	p {
+		font-size: 1rem;
+		font-weight: 700;
+
+		span {
+			font-weight: 400;
+		}
+
+		a {
+			font-weight: 400;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
