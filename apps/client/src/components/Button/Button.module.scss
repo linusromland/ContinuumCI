@@ -1,7 +1,8 @@
 @use 'src/styles' as *;
 
 .button {
-	background-color: $primary;
+	outline: $primary solid 1px;
+	background-color: lighten($primary, 25%);
 	border: none;
 	border-radius: 0.25rem;
 	color: #000000;
@@ -32,10 +33,11 @@
 	}
 
 	&.secondary {
-		background-color: $secondary;
+		outline: $secondary solid 1px;
+		background-color: lighten($secondary, 25%);
 
 		&:hover {
-			background-color: darken($secondary, 20%);
+			background-color: $secondary;
 		}
 
 		&:disabled {
@@ -44,10 +46,11 @@
 	}
 
 	&.success {
-		background-color: $success;
+		outline: $success solid 1px;
+		background-color: lighten($success, 20%);
 
 		&:hover {
-			background-color: darken($success, 20%);
+			background-color: $success;
 		}
 
 		&:disabled {
@@ -56,10 +59,11 @@
 	}
 
 	&.error {
-		background-color: $error;
+		outline: $error solid 1px;
+		background-color: lighten($error, 20%);
 
 		&:hover {
-			background-color: darken($error, 20%);
+			background-color: $error;
 		}
 
 		&:disabled {
@@ -68,10 +72,11 @@
 	}
 
 	&.warning {
-		background-color: $warning;
+		outline: $warning solid 1px;
+		background-color: lighten($warning, 20%);
 
 		&:hover {
-			background-color: darken($warning, 20%);
+			background-color: $warning;
 		}
 
 		&:disabled {
