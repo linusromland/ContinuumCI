@@ -97,7 +97,7 @@ export default function ProjectCreateModal({
 							onClick={() => {
 								submit(values);
 							}}
-							secondary
+							theme='secondary'
 							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>
