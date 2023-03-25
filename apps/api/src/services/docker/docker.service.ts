@@ -14,6 +14,16 @@ export class DockerService {
 		containerCount: number;
 		imageCount: number;
 	}> {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return {
+				containerCount: 0,
+				imageCount: 0
+			};
+		}
+
 		const containers = await this.docker.listContainers();
 		const images = await this.docker.listImages();
 
