@@ -9,6 +9,12 @@ async function getAllProjects(): Promise<ResponseType> {
 	return request.data as ResponseType;
 }
 
+async function getProject(projectId: string): Promise<ResponseType> {
+	const request = await api.get('/projects/' + projectId);
+
+	return request.data as ResponseType;
+}
+
 async function createProject(data: ProjectClass): Promise<ResponseType> {
 	const request = await api.post('/projects/create', {
 		...data,
@@ -18,4 +24,4 @@ async function createProject(data: ProjectClass): Promise<ResponseType> {
 	return request.data as ResponseType;
 }
 
-export { getAllProjects, createProject };
+export { getAllProjects, getProject, createProject };
