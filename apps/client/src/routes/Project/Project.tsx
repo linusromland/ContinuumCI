@@ -10,6 +10,7 @@ import { ProjectClass } from 'shared/src/classes';
 import { getProject } from '../../utils/api/projects';
 import Button from '../../components/Button/Button';
 import StatusWidget from './components/StatusWidget/StatusWidget';
+import EnviromentVariablesTable from './components/EnviromentVariablesTable/EnviromentVariablesTable';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -108,6 +109,7 @@ export default function Project() {
 						text='Warning'
 					/>
 				</div>
+				<EnviromentVariablesTable projectId={project?._id || ''} />
 			</div>
 		</main>
 	);
