@@ -1,0 +1,15 @@
+.statusContainer {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+
+	p {
+		font-size: 2rem;
+		font-weight: 700;
+	}
+}
+
+.icon {
+	width: 4rem;
+	height: 4rem;
+}

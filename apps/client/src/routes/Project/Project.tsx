@@ -9,6 +9,7 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import { ProjectClass } from 'shared/src/classes';
 import { getProject } from '../../utils/api/projects';
 import Button from '../../components/Button/Button';
+import StatusWidget from './components/StatusWidget/StatusWidget';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -95,6 +96,16 @@ export default function Project() {
 							console.log('Delete');
 						}}
 						small
+					/>
+				</div>
+				<div className={style.statusContainer}>
+					<StatusWidget
+						icon='/icons/check.svg'
+						text='Running'
+					/>
+					<StatusWidget
+						icon='/icons/warning.svg'
+						text='Warning'
 					/>
 				</div>
 			</div>
