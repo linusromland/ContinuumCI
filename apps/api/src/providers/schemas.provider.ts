@@ -6,6 +6,7 @@ import {
 	DomainsSchema,
 	EmailConfigurationSchema,
 	EmailVerificationSchema,
+	EnvironmentVariablesSchema,
 	ProjectSchema,
 	UserSchema
 } from '../schemas';
@@ -27,6 +28,15 @@ const schemaProviders = [
 		provide: 'EMAIL_VERIFICATION_MODEL',
 		useFactory: (connection: Connection) =>
 			connection.model('emailVerifications', EmailVerificationSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'ENVIRONMENT_VARIABLES_MODEL',
+		useFactory: (connection: Connection) =>
+			connection.model(
+				'environmentVariables',
+				EnvironmentVariablesSchema
+			),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
