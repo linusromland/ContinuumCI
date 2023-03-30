@@ -31,6 +31,13 @@ export default function Table({
 							))}
 						</tr>
 					))}
+					{data.length === 0 && (
+						<tr>
+							<td colSpan={headers.length} className={style.empty}>
+								No data
+							</td>
+						</tr>
+					)}
 				</tbody>
 			</table>
 		</WrapperComponent>
