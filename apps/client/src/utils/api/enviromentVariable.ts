@@ -19,6 +19,14 @@ async function createVariable(
 	return request.data;
 }
 
+async function updateVariable(
+	variable: EnvironmentVariablesClass
+): Promise<ResponseType<EnvironmentVariablesClass>> {
+	const request = await api.put('/environmentVariables', variable);
+
+	return request.data;
+}
+
 async function deleteVariable(
 	variableId: string
 ): Promise<ResponseType<EnvironmentVariablesClass>> {
@@ -27,4 +35,4 @@ async function deleteVariable(
 	return request.data;
 }
 
-export { getAllVariables, createVariable, deleteVariable };
+export { getAllVariables, createVariable, updateVariable, deleteVariable };

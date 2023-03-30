@@ -193,7 +193,6 @@ export class EnvironmentVariablesService {
 
 		const environmentVariablesExists =
 			await this.EnvironmentVariablesModel.findOne({
-				userId: userId,
 				name: environmentVariables.name,
 				project: environmentVariables.project
 			});
@@ -208,7 +207,6 @@ export class EnvironmentVariablesService {
 		try {
 			await this.EnvironmentVariablesModel.findOneAndUpdate(
 				{
-					userId: userId,
 					name: environmentVariables.name,
 					project: environmentVariables.project
 				},

@@ -8,8 +8,9 @@ import Table from '../../../../components/Table/Table';
 import Widget from '../../../../components/Widget/Widget';
 import CreateVariableModal from '../CreateVariableModal/CreateVariableModal';
 import {
-	createVariable,
 	getAllVariables,
+	createVariable,
+	updateVariable,
 	deleteVariable
 } from '../../../../utils/api/enviromentVariable';
 import { EnvironmentVariablesClass } from 'shared/src/classes';
@@ -24,6 +25,7 @@ export default function EnviromentVariablesTable({
 		[] as EnvironmentVariablesClass[]
 	);
 	const [confirmDelete, setConfirmDelete] = useState('');
+	const [variableInputs, setVariableInputs] = useState([] as string[]);
 
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
@@ -31,6 +33,7 @@ export default function EnviromentVariablesTable({
 		const response = await getAllVariables(projectId);
 		if (response) {
 			setVariables(response.data || []);
+			setVariableInputs([]);
 		}
 	};
 
@@ -51,12 +54,19 @@ export default function EnviromentVariablesTable({
 						widget={false}
 						headers={['Name', 'Value', 'Actions']}
 						data={[
-							...variables.map((variable) => [
+							...variables.map((variable, index) => [
 								variable.name,
 								<input
 									className={style.input}
 									type='text'
-									value={variable.value}
+									value={
+										variableInputs[index] || variable.value
+									}
+									onChange={(e) => {
+										const vars = [...variableInputs];
+										vars[index] = e.target.value;
+										setVariableInputs(vars);
+									}}
 								/>,
 								<div className={style.buttons}>
 									<Button
@@ -98,8 +108,29 @@ export default function EnviromentVariablesTable({
 									<Button
 										text='Save'
 										theme='success'
-										onClick={() => {
-											console.log('Save', variable._id);
+										onClick={async () => {
+											if (!variableInputs[index]) return;
+
+											const variablesCopy =
+												variables[index];
+											variablesCopy.value =
+												variableInputs[index];
+
+											const response =
+												await updateVariable(
+													variablesCopy
+												);
+
+											if (response.success) {
+												toast.success(
+													`Variable ${variable.name} updated`
+												);
+												getData();
+											} else {
+												toast.error(
+													`Error updating variable ${variable.name}`
+												);
+											}
 										}}
 										small
 									/>
@@ -129,7 +160,7 @@ export default function EnviromentVariablesTable({
 						value: values.value
 					});
 
-					if (response) {
+					if (response.success) {
 						getData();
 						toast.success(`Variable ${values.name} created`);
 					} else {
