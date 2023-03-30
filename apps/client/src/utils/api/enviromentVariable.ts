@@ -19,4 +19,12 @@ async function createVariable(
 	return request.data;
 }
 
-export { getAllVariables, createVariable };
+async function deleteVariable(
+	variableId: string
+): Promise<ResponseType<EnvironmentVariablesClass>> {
+	const request = await api.delete('/environmentVariables/' + variableId);
+
+	return request.data;
+}
+
+export { getAllVariables, createVariable, deleteVariable };

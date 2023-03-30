@@ -9,7 +9,8 @@ import Widget from '../../../../components/Widget/Widget';
 import CreateVariableModal from '../CreateVariableModal/CreateVariableModal';
 import {
 	createVariable,
-	getAllVariables
+	getAllVariables,
+	deleteVariable
 } from '../../../../utils/api/enviromentVariable';
 import { EnvironmentVariablesClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
@@ -22,6 +23,8 @@ export default function EnviromentVariablesTable({
 	const [variables, setVariables] = useState(
 		[] as EnvironmentVariablesClass[]
 	);
+	const [confirmDelete, setConfirmDelete] = useState('');
+
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
 	const getData = async () => {
@@ -57,10 +60,38 @@ export default function EnviromentVariablesTable({
 								/>,
 								<div className={style.buttons}>
 									<Button
-										text='Delete'
+										text={
+											variable._id === confirmDelete
+												? 'Confirm'
+												: 'Remove'
+										}
 										theme='error'
-										onClick={() => {
-											console.log('Delete', variable._id);
+										onClick={async () => {
+											if (
+												variable._id === confirmDelete
+											) {
+												const response =
+													await deleteVariable(
+														variable._id
+													);
+
+												setConfirmDelete('');
+
+												if (response) {
+													toast.success(
+														`Variable ${variable.name} deleted`
+													);
+													getData();
+												} else {
+													toast.error(
+														`Error deleting variable ${variable.name}`
+													);
+												}
+											} else {
+												setConfirmDelete(
+													variable._id || ''
+												);
+											}
 										}}
 										small
 									/>
