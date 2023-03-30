@@ -1,7 +1,11 @@
 // External dependencies
-import { IsString, Matches } from 'class-validator';
+import { IsOptional, IsString, Matches } from 'class-validator';
 
 export class EnvironmentVariablesClass {
+	@IsOptional()
+	@IsString()
+	_id?: string;
+
 	@IsString()
 	name: string;
 
