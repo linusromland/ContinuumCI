@@ -7,7 +7,8 @@ import {
 	UseGuards,
 	Post,
 	Delete,
-	Param
+	Param,
+	Get
 } from '@nestjs/common';
 
 // Internal dependencies
@@ -21,6 +22,15 @@ export class EnvironmentVariablesController {
 	constructor(
 		private readonly environmentVariablesService: EnvironmentVariablesService
 	) {}
+
+	@UseGuards(JwtAuthGuard)
+	@Get(':projectId')
+	async get(
+		@Request() req,
+		@Param('projectId') projectId: string
+	): Promise<ResponseType> {
+		return this.environmentVariablesService.get(req.user.sub, projectId);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post()
