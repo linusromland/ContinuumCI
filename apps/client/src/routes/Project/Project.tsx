@@ -109,7 +109,7 @@ export default function Project() {
 						text='Warning'
 					/>
 				</div>
-				<EnviromentVariablesTable projectId={project?._id || ''} />
+				<EnviromentVariablesTable projectId={projectId || ''} />
 			</div>
 		</main>
 	);
