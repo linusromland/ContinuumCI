@@ -66,7 +66,6 @@ export class EnvironmentVariablesService {
 		}
 
 		const environmentVariables = await this.EnvironmentVariablesModel.find({
-			userId: userId,
 			project: projectId
 		});
 
