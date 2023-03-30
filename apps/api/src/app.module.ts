@@ -10,7 +10,6 @@ import { EnvironmentVariablesModule } from './routes/environmentVariables/enviro
 import { ProjectsModule } from './routes/projects/projects.module';
 import { SetupModule } from './routes/setup/setup.module';
 import { UsersModule } from './routes/users/users.module';
-import { WelcomeModule } from './routes/welcome/welcome.module';
 
 @Module({
 	imports: [
@@ -21,8 +20,7 @@ import { WelcomeModule } from './routes/welcome/welcome.module';
 		EnvironmentVariablesModule,
 		ProjectsModule,
 		SetupModule,
-		UsersModule,
-		WelcomeModule
+		UsersModule
 	]
 })
 export class AppModule {}
