@@ -1,0 +1,54 @@
+@use 'src/styles' as *;
+
+.main {
+	margin: 1.5rem;
+}
+
+.title {
+	font-size: 1.5em;
+	color: $text-primary;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.subtitle {
+	font-size: 1.2em;
+	color: $text-primary;
+	font-weight: 700;
+	margin-bottom: 1rem;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.infoContainer {
+	display: grid;
+	grid-template-columns: 2fr 4fr 1fr;
+	gap: 1rem;
+	grid-auto-rows: 1fr;
+}
+
+@for $i from 1 through 3 {
+	.row#{$i} {
+		grid-row: $i;
+	}
+
+	.col#{$i} {
+		grid-column: $i;
+	}
+}
+
+.infoContainerTitle {
+	font-size: 1rem;
+	color: $text-primary;
+	font-weight: 700;
+}
+
+.infoContainerValue {
+	font-size: 1rem;
+	color: $text-primary;
+	font-weight: 500;
+}

@@ -1,9 +1,9 @@
 // External Dependencies
 import { useCallback } from 'react';
-import type { Container, Engine } from 'tsparticles-engine';
 import { loadFull } from 'tsparticles';
 import { Outlet } from 'react-router-dom';
 import Particles from 'react-tsparticles';
+import type { Engine } from 'tsparticles-engine';
 
 // Internal Dependencies
 import style from './SetupLayout.module.scss';
@@ -13,19 +13,11 @@ export default function SetupLayout(): JSX.Element {
 		await loadFull(engine);
 	}, []);
 
-	const particlesLoaded = useCallback(
-		async (container: Container | undefined) => {
-			await console.log(container);
-		},
-		[]
-	);
-
 	return (
 		<div className={style.main}>
 			<Particles
 				id='tsparticles'
 				init={particlesInit}
-				loaded={particlesLoaded}
 				className={style.particles}
 				options={{
 					fpsLimit: 120,

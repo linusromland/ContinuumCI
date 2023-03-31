@@ -1,16 +1,21 @@
 @use 'src/styles' as *;
 
 .button {
-	background-color: $primary;
+	outline: $primary solid 1px;
+	background-color: lighten($primary, 25%);
 	border: none;
 	border-radius: 0.25rem;
 	color: #000000;
 	font-size: 1rem;
-	font-weight: 700;
+	font-weight: 600;
 	padding: 0.5rem 1rem;
 	cursor: pointer;
 	transition: background-color 0.2s ease-in-out;
 	margin-right: 0.5rem;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	&:hover {
 		background-color: darken($primary, 20%);
@@ -21,4 +26,67 @@
 		color: lighten($text-primary, 20%);
 		cursor: not-allowed;
 	}
+
+	&.small {
+		font-size: 0.8rem;
+		padding: 0.25rem 0.5rem;
+	}
+
+	&.secondary {
+		outline: $secondary solid 1px;
+		background-color: lighten($secondary, 25%);
+
+		&:hover {
+			background-color: $secondary;
+		}
+
+		&:disabled {
+			background-color: lighten($secondary, 10%);
+		}
+	}
+
+	&.success {
+		outline: $success solid 1px;
+		background-color: lighten($success, 20%);
+
+		&:hover {
+			background-color: $success;
+		}
+
+		&:disabled {
+			background-color: lighten($success, 10%);
+		}
+	}
+
+	&.error {
+		outline: $error solid 1px;
+		background-color: lighten($error, 20%);
+
+		&:hover {
+			background-color: $error;
+		}
+
+		&:disabled {
+			background-color: lighten($error, 10%);
+		}
+	}
+
+	&.warning {
+		outline: $warning solid 1px;
+		background-color: lighten($warning, 20%);
+
+		&:hover {
+			background-color: $warning;
+		}
+
+		&:disabled {
+			background-color: lighten($warning, 10%);
+		}
+	}
+}
+
+.icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	margin-right: 0.5rem;
 }

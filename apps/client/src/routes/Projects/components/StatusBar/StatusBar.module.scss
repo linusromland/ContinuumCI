@@ -1,0 +1,30 @@
+@use 'src/styles' as *;
+
+.statusBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 100%;
+	border-radius: $border-radius;
+	overflow: hidden;
+}
+
+.bar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 100%;
+}
+
+.succeededBar {
+	background-color: $success;
+}
+
+.warningBar {
+	background-color: $warning;
+}
+
+.failedBar {
+	background-color: $error;
+}

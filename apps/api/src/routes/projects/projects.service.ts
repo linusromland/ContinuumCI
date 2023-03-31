@@ -3,13 +3,14 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import simpleGit from 'simple-git';
 import fs from 'fs';
+import mongoose from 'mongoose';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
 import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
-import { ProjectRoleEnum } from 'shared/src/enums';
+import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
 
 @Injectable()
 export class ProjectsService {
@@ -20,6 +21,92 @@ export class ProjectsService {
 		@Inject('USER_MODEL')
 		private UserModel: Model<UserClass>
 	) {}
+
+	async getAll(userId: string): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		let query = {};
+
+		if (user.role == UserRoleEnum.USER) {
+			query = {
+				permissions: {
+					$elemMatch: {
+						user: userId
+					}
+				}
+			};
+		}
+
+		const projects = await this.ProjectModel.find(query);
+
+		return {
+			success: true,
+			message: 'Projects fetched successfully',
+			data: projects
+		};
+	}
+
+	async get(userId: string, projectId: string): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		if (!mongoose.Types.ObjectId.isValid(projectId)) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		let query = {
+			_id: projectId
+		} as {
+			_id: string;
+			permissions?: {
+				$elemMatch: {
+					user: string;
+				};
+			};
+		};
+
+		if (user.role == UserRoleEnum.USER) {
+			query = {
+				...query,
+				permissions: {
+					$elemMatch: {
+						user: userId
+					}
+				}
+			};
+		}
+
+		const project = await this.ProjectModel.find(query);
+
+		if (!project.length) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		return {
+			success: true,
+			message: 'Projects fetched successfully',
+			data: project[0]
+		};
+	}
 
 	async create(project: ProjectClass, userId: string): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);

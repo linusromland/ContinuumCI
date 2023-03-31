@@ -44,11 +44,19 @@ export default function Login(): JSX.Element {
 										email: values.email,
 										password: values.password
 									});
-									toast.success('Successfully created user!');
+									toast.success(
+										'Successfully created user!',
+										{
+											position: 'top-left'
+										}
+									);
 									navigate('/');
 								} else {
 									toast.error(
-										'An error occurred while creating the root user.'
+										'An error occurred while creating the root user.',
+										{
+											position: 'top-left'
+										}
 									);
 								}
 							})();
@@ -58,13 +66,19 @@ export default function Login(): JSX.Element {
 					<LoginForm
 						onSubmit={(values) => {
 							(async () => {
-								await setToken({
-									email: values.email,
-									password: values.password,
-									rememberMe: values.rememberMe
-								});
-								toast.success('Successfully logged in!');
-								navigate('/');
+								try {
+									await setToken({
+										email: values.email,
+										password: values.password,
+										rememberMe: values.rememberMe
+									});
+									toast.success('Successfully logged in!');
+									navigate('/');
+								} catch (e) {
+									toast.error('Invalid email or password.', {
+										position: 'top-left'
+									});
+								}
 							})();
 						}}
 					/>

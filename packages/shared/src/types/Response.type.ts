@@ -1,7 +1,7 @@
-type ResponseType = {
+interface ResponseType<T = unknown> {
 	message: string;
 	success: boolean;
-	data?: unknown;
-};
+	data?: T;
+}
 
 export { ResponseType };

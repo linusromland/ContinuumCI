@@ -26,4 +26,55 @@ async function getUser(): Promise<ResponseType> {
 	return request.data;
 }
 
-export { createUser, getUser };
+async function getUsers(): Promise<ResponseType> {
+	const request = await api.get('/users/all');
+
+	return request.data;
+}
+
+async function updateUsername(username: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/username', {
+		username
+	});
+
+	return request.data;
+}
+
+async function updateEmail(email: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/email', {
+		email
+	});
+
+	return request.data;
+}
+
+async function updatePassword(
+	oldPassword: string,
+	newPassword: string
+): Promise<ResponseType> {
+	const request = await api.put('/users/edit/password', {
+		oldPassword,
+		newPassword
+	});
+
+	return request.data;
+}
+
+async function updateRole(userId: string, role: string): Promise<ResponseType> {
+	const request = await api.put('/users/edit/role', {
+		userId,
+		role
+	});
+
+	return request.data;
+}
+
+export {
+	createUser,
+	getUser,
+	getUsers,
+	updateUsername,
+	updateEmail,
+	updatePassword,
+	updateRole
+};

@@ -29,6 +29,14 @@ export const UserSchema = new Schema(
 			enum: ['user', 'admin', 'root'],
 			required: true
 		},
+		lastLogin: {
+			type: Date,
+			default: null
+		},
+		lastIp: {
+			type: String,
+			default: null
+		},
 		verifiedEmail: {
 			type: Boolean,
 			default: false

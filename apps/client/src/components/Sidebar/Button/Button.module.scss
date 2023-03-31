@@ -1,6 +1,6 @@
 @use 'src/styles' as *;
 
-.button{
+.button {
 	// Remove default button styles
 	background-color: transparent;
 	border: none;
@@ -9,7 +9,6 @@
 	font: inherit;
 	cursor: pointer;
 	margin: 0;
-	
 
 	display: flex;
 	align-items: center;
@@ -18,17 +17,20 @@
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 
-	&:hover{
+	&:hover {
 		background-color: lighten($background-secondary, 15%);
 	}
 
+	&.selected {
+		background-color: lighten($background-secondary, 15%);
+	}
 
-	img{
+	img {
 		width: 1.5rem;
 		height: 1.5rem;
 	}
 
-	p{
+	p {
 		font-size: 0.8rem;
 		font-weight: 700;
 		color: $text-moody;

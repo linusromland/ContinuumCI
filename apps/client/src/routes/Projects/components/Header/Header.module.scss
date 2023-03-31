@@ -1,0 +1,43 @@
+@use 'src/styles' as *;
+
+.header {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	background-color: #fff;
+	padding: 1rem;
+
+	h1 {
+		font-size: 1.5em;
+		color: $text-primary;
+		font-weight: 400;
+	}
+}
+
+.lastUpdated {
+	display: flex;
+	align-items: center;
+
+	p {
+		font-size: 1rem;
+		color: $text-primary;
+		font-weight: 500;
+
+		span {
+			font-weight: 700;
+		}
+	}
+
+	button {
+		margin-left: 0.3rem;
+		outline: none;
+		border: none;
+		background: none;
+		cursor: pointer;
+
+		img {
+			width: 1.2rem;
+			height: 1.2rem;
+		}
+	}
+}

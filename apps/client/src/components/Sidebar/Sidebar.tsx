@@ -1,5 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Internal Dependencies
 import style from './Sidebar.module.scss';
@@ -7,17 +8,20 @@ import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
 import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
+import { UserRoleEnum } from 'shared/src/enums';
 
 export default function Sidebar() {
-	const [user, setUser] = useState('null');
+	const location = useLocation();
+	const navigate = useNavigate();
+	const [user, setUser] = useState({} as UserClass);
 
 	useEffect(() => {
 		(async () => {
 			const userResponse = await getUser();
 			const user = userResponse.data as UserClass;
 
-			if (user && user.username) {
-				setUser(user.username);
+			if (user) {
+				setUser(user);
 			}
 		})();
 	}, []);
@@ -37,21 +41,18 @@ export default function Sidebar() {
 						<Button
 							text='Overview'
 							icon='/icons/overview.svg'
-							onClick={() => console.log('Overview')}
-						/>
-						<Button
-							text='Logs'
-							icon='/icons/logs.svg'
-							onClick={() => console.log('Logs')}
+							onClick={() => navigate('/')}
+							selected={location.pathname === '/'}
 						/>
 					</>
 				</ButtonWrapper>
 				<ButtonWrapper text='DEPLOYMENTS'>
 					<>
 						<Button
-							text='Applications'
-							icon='/icons/applications.svg'
-							onClick={() => console.log('Applications')}
+							text='Projects'
+							icon='/icons/projects.svg'
+							onClick={() => navigate('/projects')}
+							selected={location.pathname.includes('projects')}
 						/>
 						<Button
 							text='Containers'
@@ -70,29 +71,43 @@ export default function Sidebar() {
 						<Button
 							text='General'
 							icon='/icons/settings.svg'
-							onClick={() => console.log('General')}
+							onClick={() => navigate('/settings')}
+							selected={location.pathname === '/settings'}
 						/>
-						<Button
-							text='Users'
-							icon='/icons/users.svg'
-							onClick={() => console.log('Users')}
-						/>
-						<Button
-							text='Docker'
-							icon='/icons/docker.svg'
-							onClick={() => console.log('Docker')}
-						/>
-						<Button
-							text='Nginx'
-							icon='/icons/nginx.svg'
-							onClick={() => console.log('Nginx')}
-						/>
+						{user.role == UserRoleEnum.ROOT && (
+							<Button
+								text='Users'
+								icon='/icons/users.svg'
+								onClick={() => navigate('/settings/users')}
+								selected={
+									location.pathname === '/settings/users'
+								}
+							/>
+						)}
+						{(user.role == UserRoleEnum.ROOT ||
+							user.role == UserRoleEnum.ADMIN) && (
+							<>
+								<Button
+									text='Docker'
+									icon='/icons/docker.svg'
+									onClick={() => console.log('Docker')}
+								/>
+								<Button
+									text='Nginx'
+									icon='/icons/nginx.svg'
+									onClick={() => navigate('/settings/nginx')}
+									selected={
+										location.pathname === '/settings/nginx'
+									}
+								/>
+							</>
+						)}
 					</>
 				</ButtonWrapper>
 			</div>
 			<div className={style.footer}>
-				<p>
-					Authenticated as: <span>{user}</span>
+				<p className={style.footerText}>
+					Authenticated as: <span>{user.username}</span>
 				</p>
 				<Button
 					text='Sign out'

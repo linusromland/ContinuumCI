@@ -15,7 +15,7 @@ import { ProjectRoleEnum } from '../enums';
 export class ProjectClass {
 	@IsOptional()
 	@IsString()
-	_id: string;
+	_id?: string;
 
 	@IsString()
 	name: string;
@@ -25,24 +25,24 @@ export class ProjectClass {
 	)
 	@IsOptional()
 	@IsString()
-	gitUrl: string;
+	gitUrl?: string;
 
 	@IsOptional()
 	@IsString()
-	branch: string;
+	branch?: string;
 
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => PermissionClass)
-	permissions: PermissionClass[];
+	permissions?: PermissionClass[];
 
 	@IsOptional()
 	@IsDate()
-	createdAt: Date;
+	createdAt?: Date;
 
 	@IsOptional()
 	@IsDate()
-	updatedAt: Date;
+	updatedAt?: Date;
 }
 
 class PermissionClass {

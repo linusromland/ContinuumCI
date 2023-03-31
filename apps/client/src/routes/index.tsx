@@ -1,14 +1,27 @@
 // External dependencies
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Routes imports
+// Layouts
 import RootLayout from '../components/Layouts/RootLayout/RootLayout';
 import MainLayout from '../components/Layouts/MainLayout/MainLayout';
 import SetupLayout from '../components/Layouts/SetupLayout/SetupLayout';
-import Home from './Home/Home';
+
+// Setup/Login Pages
 import Login from './Login/Login';
 import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
+
+// Analytics Pages
+import Overview from './Overview/Overview';
+
+// Deployment Pages
+import Projects from './Projects/Projects';
+import Project from './Project/Project';
+
+// Settings Pages
+import GeneralSettings from './Settings/General/General';
+import UserSettings from './Settings/Users/Users';
+import NginxSettings from './Settings/Nginx/Nginx';
 
 export default function Router(): JSX.Element {
 	return (
@@ -18,8 +31,30 @@ export default function Router(): JSX.Element {
 					<Route element={<MainLayout />}>
 						<Route
 							path='/'
-							element={<Home />}
+							element={<Overview />}
 						/>
+						<Route
+							path='/projects'
+							element={<Projects />}
+						/>
+						<Route
+							path='/projects/:projectId'
+							element={<Project />}
+						/>
+						<Route>
+							<Route
+								path='/settings'
+								element={<GeneralSettings />}
+							/>
+							<Route
+								path='/settings/users'
+								element={<UserSettings />}
+							/>
+							<Route
+								path='/settings/nginx'
+								element={<NginxSettings />}
+							/>
+						</Route>
 					</Route>
 					<Route element={<SetupLayout />}>
 						<Route

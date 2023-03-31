@@ -2,6 +2,7 @@
 import { Transform } from 'class-transformer';
 import {
 	IsBoolean,
+	IsDate,
 	IsEmail,
 	IsEnum,
 	IsOptional,
@@ -24,6 +25,14 @@ export class UserClass {
 
 	@IsString()
 	password: string;
+
+	@IsDate()
+	@IsOptional()
+	lastLogin: Date;
+
+	@IsString()
+	@IsOptional()
+	lastIp: string;
 
 	@IsEnum(UserRoleEnum)
 	role: UserRoleEnum;

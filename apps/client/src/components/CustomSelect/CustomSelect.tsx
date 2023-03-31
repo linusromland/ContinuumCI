@@ -30,7 +30,6 @@ export default function CustomSelect({
 			onChange={(option) => {
 				form.setFieldValue(field.name, option);
 			}}
-			classNamePrefix='react-select__option'
 		/>
 	);
 }
