@@ -92,7 +92,9 @@ export class ProjectsService {
 			};
 		}
 
-		const project = await this.ProjectModel.find(query);
+		const project = await this.ProjectModel.find(query).populate(
+			'permissions.user'
+		);
 
 		if (!project.length) {
 			throw new BadRequestException({

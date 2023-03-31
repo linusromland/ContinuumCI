@@ -13,6 +13,7 @@ import Button from '../../components/Button/Button';
 import StatusWidget from './components/StatusWidget/StatusWidget';
 import EnviromentVariablesTable from './components/EnviromentVariablesTable/EnviromentVariablesTable';
 import ContainersTable from './components/ContainersTable/ContainersTable';
+import AccessControlTable from './components/AccessControlTable/AccessControlTable';
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
 
 export default function Project() {
@@ -118,8 +119,11 @@ export default function Project() {
 							text='Warning'
 						/>
 					</div>
-					<EnviromentVariablesTable projectId={projectId || ''} />
-					<ContainersTable projectId={projectId || ''} />
+					<div className={style.widgetWrapper}>
+						<EnviromentVariablesTable projectId={projectId || ''} />
+						<ContainersTable projectId={projectId || ''} />
+						<AccessControlTable project={project} />
+					</div>
 				</div>
 			</main>
 			<TextEditModal

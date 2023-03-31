@@ -11,6 +11,7 @@ import { Type } from 'class-transformer';
 
 // Internal dependencies
 import { ProjectRoleEnum } from '../enums';
+import { UserClass } from './User.class';
 
 export class ProjectClass {
 	@IsOptional()
@@ -46,8 +47,7 @@ export class ProjectClass {
 }
 
 class PermissionClass {
-	@IsString()
-	user: string;
+	user: string | UserClass;
 
 	@IsString()
 	role: ProjectRoleEnum;

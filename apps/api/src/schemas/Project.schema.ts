@@ -28,7 +28,7 @@ export const ProjectSchema = new Schema(
 			{
 				user: {
 					type: Schema.Types.ObjectId,
-					ref: 'User'
+					ref: 'users'
 				},
 				role: {
 					type: String,

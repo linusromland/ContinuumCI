@@ -1,5 +1,8 @@
 .main {
-	margin: 1.5rem;
+	padding: 1.5rem;
+	min-height: 100vh;
+	width: 100%;
+	overflow-y: auto;
 }
 
 .title {
@@ -22,6 +25,10 @@
 		font-weight: 600;
 		margin-right: 0.4rem;
 	}
+}
+
+.widgetWrapper {
+	width: fit-content;
 }
 
 .editIcon {
