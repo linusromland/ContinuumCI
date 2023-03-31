@@ -45,7 +45,13 @@ export default function EnviromentVariablesTable({
 		<>
 			<Widget>
 				<div className={style.container}>
-					<h1 className={style.title}>Enviroment Variables</h1>
+					<div className={style.title}>
+						<img
+							src='/icons/containers_black.svg'
+							alt='Enviroment Variables'
+						/>
+						<h1>Enviroment Variables</h1>
+					</div>
 					<p className={style.text}>
 						These values will be used in all containers of this
 						project.

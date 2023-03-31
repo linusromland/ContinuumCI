@@ -1,9 +1,19 @@
 @use 'src/styles' as *;
 
 .title {
-	font-size: 1.5rem;
-	font-weight: 600;
-	margin-bottom: 0.5rem;
+	display: flex;
+	align-items: center;
+
+	img {
+		width: 1.5rem;
+		height: 1.5rem;
+		margin-right: 0.5rem;
+	}
+
+	h1 {
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
 }
 
 .text {
