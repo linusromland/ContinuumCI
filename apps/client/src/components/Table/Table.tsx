@@ -33,7 +33,10 @@ export default function Table({
 					))}
 					{data.length === 0 && (
 						<tr>
-							<td colSpan={headers.length} className={style.empty}>
+							<td
+								colSpan={headers.length}
+								className={style.empty}
+							>
 								No data
 							</td>
 						</tr>
