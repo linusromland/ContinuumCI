@@ -25,11 +25,11 @@ export class ProjectClass {
 	)
 	@IsOptional()
 	@IsString()
-	gitUrl: string;
+	gitUrl?: string;
 
 	@IsOptional()
 	@IsString()
-	branch: string;
+	branch?: string;
 
 	@IsArray()
 	@ValidateNested({ each: true })

@@ -4,35 +4,30 @@ import clsx from 'clsx';
 // Internal Dependencies
 import style from './Button.module.scss';
 
-export default function Button({
-	onClick,
-	disabled = false,
-	text = 'Button',
-	theme = 'primary',
-	icon,
-	small = false,
-	className
-}: {
-	onClick: () => void;
-	disabled?: boolean;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	text: string;
 	theme?: string;
 	icon?: string;
 	small?: boolean;
-	className?: string;
-}): JSX.Element {
+}
+
+export default function Button({
+	text = 'Button',
+	theme = 'primary',
+	icon,
+	small = false,
+	className,
+	...props
+}: ButtonProps): JSX.Element {
 	return (
 		<button
 			className={clsx(
-				style.button,
 				className,
+				style.button,
 				small ? style.small : '',
 				style[theme]
 			)}
-			onClick={() => {
-				if (!disabled) onClick();
-			}}
-			disabled={disabled}
+			{...props}
 		>
 			{icon && (
 				<img

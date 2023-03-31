@@ -24,4 +24,10 @@ async function createProject(data: ProjectClass): Promise<ResponseType> {
 	return request.data as ResponseType;
 }
 
-export { getAllProjects, getProject, createProject };
+async function editProject(data: ProjectClass): Promise<ResponseType> {
+	const request = await api.put('/projects/edit/' + data._id, data);
+
+	return request.data as ResponseType;
+}
+
+export { getAllProjects, getProject, createProject, editProject };
