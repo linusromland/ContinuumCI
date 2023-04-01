@@ -120,7 +120,7 @@ export default function Project() {
 							text='Warning'
 						/>
 					</div>
-					<div>
+					<div className={style.tables}>
 						<EnviromentVariablesTable projectId={projectId || ''} />
 						<ContainersTable projectId={projectId || ''} />
 						<AccessControlTable project={project} />
