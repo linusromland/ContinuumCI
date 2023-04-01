@@ -3,6 +3,10 @@ import { Schema } from 'mongoose';
 
 export const ProjectSchema = new Schema(
 	{
+		running: {
+			type: Boolean,
+			default: false
+		},
 		name: {
 			type: String,
 			required: true
