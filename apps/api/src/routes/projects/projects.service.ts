@@ -184,13 +184,6 @@ export class ProjectsService {
 			});
 		}
 
-		if (!['admin', 'root'].includes(user.role)) {
-			throw new BadRequestException({
-				success: false,
-				message: 'Not allowed to update projects'
-			});
-		}
-
 		if (project.gitUrl) {
 			throw new BadRequestException({
 				success: false,
@@ -214,7 +207,7 @@ export class ProjectsService {
 			});
 		}
 
-		if (user.role !== 'root') {
+		if (!['admin', 'root'].includes(user.role)) {
 			const user = updatedProject.permissions.find(
 				(permission) => permission.user.toString() === userId
 			);
@@ -286,14 +279,6 @@ export class ProjectsService {
 				message: 'User not found'
 			});
 		}
-
-		if (!['admin', 'root'].includes(user.role)) {
-			throw new BadRequestException({
-				success: false,
-				message: 'Not allowed to delete projects'
-			});
-		}
-
 		const updatedProject = await this.ProjectModel.findById(projectId);
 
 		if (!updatedProject) {
@@ -303,7 +288,7 @@ export class ProjectsService {
 			});
 		}
 
-		if (user.role !== 'root') {
+		if (!['admin', 'root'].includes(user.role)) {
 			const user = updatedProject.permissions.find(
 				(permission) => permission.user.toString() === userId
 			);
@@ -311,7 +296,8 @@ export class ProjectsService {
 			if (!user || user.role !== ProjectRoleEnum.OWNER) {
 				throw new BadRequestException({
 					success: false,
-					message: 'Only the owner or root can delete the project'
+					message:
+						'Only the owner, Administrators or root can delete the project'
 				});
 			}
 		}
