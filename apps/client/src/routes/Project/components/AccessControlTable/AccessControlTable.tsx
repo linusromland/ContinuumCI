@@ -1,6 +1,3 @@
-// External dependencies
-import { useState, useEffect } from 'react';
-
 // Internal dependencies
 import style from './AccessControlTable.module.scss';
 import Button from '../../../../components/Button/Button';
@@ -8,6 +5,7 @@ import Table from '../../../../components/Table/Table';
 import Widget from '../../../../components/Widget/Widget';
 import { ProjectClass, UserClass } from 'shared/src/classes';
 import { ProjectRoleEnum } from 'shared/src/enums';
+import formatProjectRole from '../../../../utils/formatProjectRole';
 
 export default function AccessControlTable({
 	project
@@ -20,20 +18,21 @@ export default function AccessControlTable({
 				<div className={style.container}>
 					<div className={style.title}>
 						<img
-							src='/icons/containers_black.svg'
+							src='/icons/users_black.svg'
 							alt='Enviroment Varisables'
 						/>
-						<h1>Enviroment Variables</h1>
+						<h1>Access Control</h1>
 					</div>
 					<p className={style.text}>
-						These values will be used in all containers of this
-						project.
+						The root user & all administrators always have access to
+						this application.
 					</p>
 					<Table
-						headers={['Username', 'E-mail', 'Added on', 'Actions']}
+						headers={['Username', 'E-mail', 'Role', 'Actions']}
 						data={(project.permissions || []).map((user) => [
 							(user.user as UserClass).username,
 							(user.user as UserClass).email,
+							formatProjectRole(user.role),
 							<Button
 								text='Remove'
 								small
