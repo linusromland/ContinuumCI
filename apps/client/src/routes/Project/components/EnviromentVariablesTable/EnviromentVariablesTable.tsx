@@ -47,7 +47,7 @@ export default function EnviromentVariablesTable({
 				<div className={style.container}>
 					<div className={style.title}>
 						<img
-							src='/icons/containers_black.svg'
+							src='/icons/env.svg'
 							alt='Enviroment Variables'
 						/>
 						<h1>Enviroment Variables</h1>
