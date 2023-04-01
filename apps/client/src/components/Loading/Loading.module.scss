@@ -1,0 +1,32 @@
+@use 'src/styles' as *;
+
+.loading {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: $background;
+	color: $primary;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+.loadingSpinner {
+	height: 100%;
+	width: 100%;
+	background-color: $background;
+	color: $primary;
+	width: 10rem;
+	height: 10rem;
+	border: 1rem solid $primary;
+	border-radius: 50%;
+	border-top-color: $secondary;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

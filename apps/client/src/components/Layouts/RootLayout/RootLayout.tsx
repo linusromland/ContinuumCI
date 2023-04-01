@@ -7,6 +7,7 @@ import { SetupType } from 'shared/src/types';
 import { getSetup } from '../../../utils/api/setup';
 import { getUser } from '../../../utils/api/user';
 import setToken from '../../../utils/setToken';
+import { Loading } from '../../Loading/Loading';
 
 export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function RootLayout(): JSX.Element {
 		})();
 	}, []);
 
-	if (loading) return <h1>Loading...</h1>;
+	if (loading) return <Loading />;
 
 	return <Outlet />;
 }

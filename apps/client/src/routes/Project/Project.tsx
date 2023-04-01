@@ -15,6 +15,7 @@ import EnviromentVariablesTable from './components/EnviromentVariablesTable/Envi
 import ContainersTable from './components/ContainersTable/ContainersTable';
 import AccessControlTable from './components/AccessControlTable/AccessControlTable';
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
+import { Loading } from '../../components/Loading/Loading';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -39,7 +40,7 @@ export default function Project() {
 		getData();
 	}, []);
 
-	if (!project) return <h1>Loading...</h1>;
+	if (!project) return <Loading />;
 
 	return (
 		<>
@@ -119,7 +120,7 @@ export default function Project() {
 							text='Warning'
 						/>
 					</div>
-					<div className={style.widgetWrapper}>
+					<div>
 						<EnviromentVariablesTable projectId={projectId || ''} />
 						<ContainersTable projectId={projectId || ''} />
 						<AccessControlTable project={project} />
