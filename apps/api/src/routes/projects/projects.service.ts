@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import simpleGit from 'simple-git';
 import fs from 'fs';
 import mongoose from 'mongoose';
+import yaml from 'js-yaml';
+import http from 'http';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
@@ -19,7 +21,12 @@ export class ProjectsService {
 		private ProjectModel: Model<ProjectClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserClass>
+		private UserModel: Model<UserClass>,
+
+		@Inject('PORTS_MODEL')
+		private PortsModel: Model<{
+			port: number;
+		}>
 	) {}
 
 	async getAll(userId: string): Promise<ResponseType> {
@@ -153,6 +160,41 @@ export class ProjectsService {
 			// Switch to the branch
 			await git.checkout(createdProject.branch);
 		}
+
+		const COMPOSE_FILE_LOCATION = `${REPOSITORIES_DIRECTORY}/${createdProject._id}/docker-compose.yml`;
+
+		// Read in the docker-compose.yml file
+		const fileContents = fs.readFileSync(COMPOSE_FILE_LOCATION, 'utf8');
+
+		// Parse the YAML into a JavaScript object
+		const dockerCompose = yaml.load(fileContents);
+
+		const services = Object.keys(dockerCompose.services);
+
+		// Loop through each service in the docker-compose file
+		for (let i = 0; i < services.length; i++) {
+			const service = dockerCompose.services[services[i]];
+
+			if (service.ports && service.ports.length) {
+				// Loop through each port mapping
+				for (let j = 0; j < service.ports.length; j++) {
+					const ports = service.ports[j].split(':');
+
+					// Update the host port
+					ports[0] = await this.generateUniquePort();
+
+					// Update the port mapping
+					dockerCompose.services[services[i]].ports[j] =
+						ports.join(':');
+				}
+			}
+		}
+
+		// Convert the JavaScript object back to YAML
+		const updatedFileContents = yaml.dump(dockerCompose);
+
+		// Write the updated YAML back out to disk
+		fs.writeFileSync(COMPOSE_FILE_LOCATION, updatedFileContents);
 
 		await createdProject.save();
 
@@ -370,5 +412,45 @@ export class ProjectsService {
 			success: true,
 			message: 'Project updated successfully'
 		};
+	}
+
+	generateUniquePort(): Promise<string> {
+		// eslint-disable-next-line no-async-promise-executor
+		return new Promise(async (resolve) => {
+			// Generate a random port number between 3000 and 10000
+			const port = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+
+			const portTaken = await this.PortsModel.findOne({ port });
+
+			if (portTaken) {
+				// If the port is already taken, generate a new one
+				this.generateUniquePort().then(resolve);
+			}
+
+			// Try to create a server on the port
+			const server = http.createServer();
+
+			server.on('error', () => {
+				// If an error occurs, the port is not available
+				// Generate a new random port and try again
+				this.generateUniquePort().then(resolve);
+			});
+
+			server.on('listening', () => {
+				// If we successfully start listening on the port, immediately close the server
+				server.close(() => {
+					// The port is available
+
+					// Save the port in the database
+					const newPort = new this.PortsModel({ port });
+					newPort.save();
+
+					// Return the port
+					resolve(String(port));
+				});
+			});
+
+			server.listen(port);
+		});
 	}
 }
