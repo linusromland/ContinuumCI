@@ -39,6 +39,7 @@
 		"@typescript-eslint/parser": "5.44.0",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.0",
+		"docker-compose": "^0.23.19",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-config-turbo": "0.0.4",
 		"eslint-plugin-turbo": "^0.0.4",
