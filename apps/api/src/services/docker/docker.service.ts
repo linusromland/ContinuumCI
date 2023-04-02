@@ -2,7 +2,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import Docker from 'dockerode';
 import Compose from 'docker-compose';
-import fs from 'fs';
 
 // Internal dependencies
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
@@ -64,6 +63,8 @@ export class DockerService {
 			});
 		}
 
+		//TODO: Add the environment variables to the docker-compose.yml file
+
 		// Deploy the project
 		const result = await Compose.upAll({
 			cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
@@ -78,16 +79,5 @@ export class DockerService {
 		);
 
 		console.log(result);
-
-		// const compose = new Compose(
-		// 	this.docker,
-		// 	`${REPOSITORIES_DIRECTORY}/${project._id}/docker-compose.yml`,
-		// 	project._id
-		// );
-		// console.log(compose);
-
-		// const tmp = await compose.up();
-
-		// console.log(tmp);
 	}
 }
