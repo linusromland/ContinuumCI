@@ -175,6 +175,12 @@ export class ProjectsService {
 		for (let i = 0; i < services.length; i++) {
 			const service = dockerCompose.services[services[i]];
 
+			// Add label to the service to identify it
+			dockerCompose.services[services[i]].labels = [
+				...(dockerCompose.services[services[i]].labels || []),
+				`continuumci.project.id=${createdProject._id}`
+			];
+
 			if (service.ports && service.ports.length) {
 				// Loop through each port mapping
 				for (let j = 0; j < service.ports.length; j++) {
