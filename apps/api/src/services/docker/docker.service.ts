@@ -1,7 +1,13 @@
 // External dependencies
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	InternalServerErrorException
+} from '@nestjs/common';
 import Docker from 'dockerode';
 import Compose from 'docker-compose';
+import fs from 'fs';
+import yaml from 'js-yaml';
 
 // Internal dependencies
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
@@ -46,7 +52,10 @@ export class DockerService {
 		try {
 			await this.docker.ping();
 		} catch (error) {
-			return;
+			throw new BadRequestException({
+				success: false,
+				message: 'Docker is not running'
+			});
 		}
 
 		// Check if the compose has already been deployed (check by the id)
@@ -63,21 +72,65 @@ export class DockerService {
 			});
 		}
 
-		//TODO: Add the environment variables to the docker-compose.yml file
+		const COMPOSE_FILE_LOCATION = `${REPOSITORIES_DIRECTORY}/${project._id}/docker-compose.yml`;
 
-		// Deploy the project
-		const result = await Compose.upAll({
-			cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
-			log: true
-		}).then(
-			(output) => {
-				console.log(output);
-			},
-			(err) => {
-				console.log(err);
+		// Read in the docker-compose.yml file
+		const fileContents = fs.readFileSync(COMPOSE_FILE_LOCATION, 'utf8');
+
+		// Parse the YAML into a JavaScript object
+		const dockerCompose = yaml.load(fileContents);
+
+		const services = Object.keys(dockerCompose.services);
+
+		// Loop through each service in the docker-compose file
+		for (let i = 0; i < services.length; i++) {
+			// Check if the service has an environment variable array
+			if (!dockerCompose.services[services[i]].environment) {
+				// If not, create one
+				dockerCompose.services[services[i]].environment = [];
 			}
-		);
 
-		console.log(result);
+			// Strucutre the environment variables for the docker-compose file
+			const variables = environmentVariables.map((variable) => {
+				return `${variable.name}=${variable.value}`;
+			});
+
+			// Concatenate the existing environment variables with the new ones and remove duplicates (own environment variables take precedence)
+			dockerCompose.services[services[i]].environment = [
+				...dockerCompose.services[services[i]].environment.filter(
+					(variable) => !variables.includes(variable)
+				),
+				...variables
+			];
+		}
+
+		// Convert the JavaScript object back to YAML
+		const updatedFileContents = yaml.dump(dockerCompose);
+
+		// Write the updated YAML back out to disk
+		fs.writeFileSync(COMPOSE_FILE_LOCATION, updatedFileContents);
+
+		try {
+			// Deploy the project
+			await Compose.upAll({
+				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
+				log: true
+			}).then(
+				// On output, do nothing
+				() => null,
+				// On error
+				() => {
+					throw new InternalServerErrorException({
+						success: false,
+						message: 'Failed to deploy the project'
+					});
+				}
+			);
+		} catch (error) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Failed to deploy the project'
+			});
+		}
 	}
 }
