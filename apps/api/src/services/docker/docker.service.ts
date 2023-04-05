@@ -60,9 +60,11 @@ export class DockerService {
 
 		// Check if the compose has already been deployed (check by the id)
 		const containers = await this.docker.listContainers();
+
 		const container = containers.find(
 			(container) =>
-				container.Labels['com.docker.compose.project'] === project._id
+				container.Labels['continuumci.project.id'] ===
+				project._id.toString()
 		);
 
 		if (container) {
