@@ -69,7 +69,7 @@ export class DeploymentsService {
 			project: projectId
 		});
 
-		this.dockerService.deployProject(project, environmentVariables);
+		await this.dockerService.deployProject(project, environmentVariables);
 
 		return {
 			success: true,
