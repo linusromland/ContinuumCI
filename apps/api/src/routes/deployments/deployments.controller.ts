@@ -22,4 +22,16 @@ export class DeploymentsController {
 			deploymentQuery.project
 		);
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('remove')
+	async removeDeployment(
+		@Request() req,
+		@Body() deploymentQuery: DeploymentQueryClass
+	): Promise<ResponseType> {
+		return this.deploymentsService.removeDeployment(
+			req.user.sub,
+			deploymentQuery.project
+		);
+	}
 }

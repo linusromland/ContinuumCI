@@ -155,4 +155,55 @@ export class DockerService {
 			});
 		}
 	}
+
+	async undeployProject(project: ProjectClass): Promise<void> {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Docker is not running'
+			});
+		}
+
+		// Check if the compose has already been deployed (check by the id)
+		const containers = await this.docker.listContainers();
+
+		const container = containers.find(
+			(container) =>
+				container.Labels['continuumci.project.id'] ===
+				project._id.toString()
+		);
+
+		if (!container) {
+			throw new BadRequestException({
+				success: false,
+				message: 'The project is not deployed'
+			});
+		}
+
+		try {
+			// Deploy the project
+			await Compose.down({
+				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
+				log: true
+			}).then(
+				// On output, do nothing
+				() => null,
+				// On error
+				() => {
+					throw new InternalServerErrorException({
+						success: false,
+						message: 'Failed to undeploy the project'
+					});
+				}
+			);
+		} catch (error) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Failed to undeploy the project'
+			});
+		}
+	}
 }

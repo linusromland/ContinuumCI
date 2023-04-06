@@ -82,4 +82,50 @@ export class DeploymentsService {
 			message: 'Deployment created'
 		};
 	}
+
+	async removeDeployment(
+		userId: string,
+		projectId: string
+	): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		const project = await this.ProjectModel.findById(projectId);
+
+		if (!project) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		if (user.role == UserRoleEnum.USER) {
+			if (
+				project.permissions.some(
+					(permission) =>
+						permission.user == userId &&
+						permission.role == ProjectRoleEnum.VIEWER
+				)
+			) {
+				throw new BadRequestException({
+					success: false,
+					message:
+						'User does not have permission to undeploy this project'
+				});
+			}
+		}
+
+		await this.dockerService.undeployProject(project);
+
+		return {
+			success: true,
+			message: 'Deployment removed'
+		};
+	}
 }
