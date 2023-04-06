@@ -27,28 +27,27 @@ export class OverviewService {
 			mem,
 			network,
 			networkAdapter,
-			dockerInformation
+			dockerInformation,
+			totalProjects
 		] = await Promise.all([
 			si.currentLoad(),
 			si.cpu(),
 			si.mem(),
 			si.networkStats(),
 			si.networkInterfaceDefault(),
-			this.dockerService.getInformation()
+			this.dockerService.getInformation(),
+			this.ProjectModel.find({ enabled: true }).select('_id')
 		]);
 
 		const networkAdapterIndex = network.findIndex(
 			(adapter) => adapter.iface === networkAdapter
 		);
 
-		const totalProjects = await this.ProjectModel.countDocuments();
-		// TODO: Add real running projects count
-		const runningProjects = 4;
+		const runningProjects = await this.dockerService.runningProjects(
+			totalProjects.map((project) => project._id.toString())
+		);
 
-		// TODO: Add real container count
 		const totalContainers = dockerInformation.containerCount;
-
-		// TODO: Add real images count
 		const totalImages = dockerInformation.imageCount;
 
 		return {
@@ -61,7 +60,7 @@ export class OverviewService {
 				memoryTotal: mem.total,
 				networkSending: network[networkAdapterIndex || 0]?.tx_sec,
 				networkReceiving: network[networkAdapterIndex || 0]?.rx_sec,
-				projects: totalProjects,
+				projects: totalProjects.length,
 				runningProjects,
 				containers: totalContainers,
 				images: totalImages
