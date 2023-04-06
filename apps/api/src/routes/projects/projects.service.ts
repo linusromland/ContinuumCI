@@ -171,6 +171,9 @@ export class ProjectsService {
 
 		const services = Object.keys(dockerCompose.services);
 
+		// Update the services in db
+		createdProject.services = services;
+
 		// Loop through each service in the docker-compose file
 		for (let i = 0; i < services.length; i++) {
 			const service = dockerCompose.services[services[i]];

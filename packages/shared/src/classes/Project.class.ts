@@ -22,8 +22,9 @@ export class ProjectClass {
 	@IsString()
 	name: string;
 
+	@IsOptional()
 	@IsBoolean()
-	enabled: boolean;
+	enabled?: boolean;
 
 	@Matches(
 		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
@@ -31,6 +32,10 @@ export class ProjectClass {
 	@IsOptional()
 	@IsString()
 	gitUrl?: string;
+
+	@IsOptional()
+	@IsArray()
+	services?: string[];
 
 	@IsOptional()
 	@IsString()
