@@ -3,6 +3,7 @@ import {
 	IsArray,
 	IsBoolean,
 	IsDate,
+	IsEnum,
 	IsOptional,
 	IsString,
 	Matches,
@@ -11,7 +12,7 @@ import {
 import { Type } from 'class-transformer';
 
 // Internal dependencies
-import { ProjectRoleEnum } from '../enums';
+import { ProjectRoleEnum, ProjectSyncStatus } from '../enums';
 import { UserClass } from './User.class';
 
 export class ProjectClass {
@@ -53,6 +54,10 @@ export class ProjectClass {
 	@IsOptional()
 	@IsDate()
 	updatedAt?: Date;
+
+	@IsOptional()
+	@IsEnum(ProjectSyncStatus)
+	syncStatus?: ProjectSyncStatus;
 }
 
 class PermissionClass {

@@ -12,7 +12,12 @@ import { ProjectClass } from 'shared/src/classes';
 import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
-import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
+import {
+	ProjectRoleEnum,
+	ProjectSyncStatus,
+	UserRoleEnum
+} from 'shared/src/enums';
+import checkSync from 'src/utils/checkSync';
 
 @Injectable()
 export class ProjectsService {
@@ -110,10 +115,18 @@ export class ProjectsService {
 			});
 		}
 
+		const projectData = {
+			...project[0].toJSON(),
+			syncStatus: ProjectSyncStatus.UNKNOWN
+		};
+		projectData.syncStatus = (await checkSync(projectId))
+			? ProjectSyncStatus.IN_SYNC // In Sync
+			: ProjectSyncStatus.OUT_OF_SYNC; // Out of Sync
+
 		return {
 			success: true,
 			message: 'Projects fetched successfully',
-			data: project[0]
+			data: projectData
 		};
 	}
 
