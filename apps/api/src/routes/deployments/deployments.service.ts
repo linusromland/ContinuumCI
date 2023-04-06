@@ -123,6 +123,12 @@ export class DeploymentsService {
 
 		await this.dockerService.undeployProject(project);
 
+		await this.ProjectModel.findByIdAndUpdate(projectId, {
+			$set: {
+				enabled: false
+			}
+		});
+
 		return {
 			success: true,
 			message: 'Deployment removed'
