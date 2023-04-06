@@ -44,6 +44,26 @@ export class DockerService {
 		};
 	}
 
+	async runningProjects(ids: string[]): Promise<number> {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return 0;
+		}
+
+		const containers = await this.docker.listContainers();
+
+		const runningProjects = containers.filter((container) => {
+			return (
+				ids.includes(container.Labels['continuumci.project.id']) &&
+				container.State == 'running'
+			);
+		});
+
+		return runningProjects.length;
+	}
+
 	async deployProject(
 		project: ProjectClass,
 		environmentVariables: EnvironmentVariablesClass[]
