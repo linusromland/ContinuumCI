@@ -113,9 +113,13 @@ export class DockerService {
 			}
 
 			// Strucutre the environment variables for the docker-compose file
-			const variables = environmentVariables.map((variable) => {
-				return `${variable.name}=${variable.value}`;
-			});
+			const variables = environmentVariables
+				.filter((variable) => {
+					return variable.services.includes(services[i]);
+				})
+				.map((variable) => {
+					return `${variable.name}=${variable.value}`;
+				});
 
 			// Concatenate the existing environment variables with the new ones and remove duplicates (own environment variables take precedence)
 			dockerCompose.services[services[i]].environment = [
