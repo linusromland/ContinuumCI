@@ -64,7 +64,7 @@ export default function Overview(): JSX.Element {
 					applicationsRunning={data.runningProjects || 0}
 					applicationsTotal={data.projects || 0}
 				/>
-				<div>
+				<div className={style.widgetsRight}>
 					<div className={style.smallWidgets}>
 						<StatsWidget
 							title='CPU Usage'
