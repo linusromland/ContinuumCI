@@ -1,5 +1,5 @@
 // External dependencies
-import { IsOptional, IsString, Matches } from 'class-validator';
+import { IsOptional, IsString, IsArray, Matches } from 'class-validator';
 
 export class EnvironmentVariablesClass {
 	@IsOptional()
@@ -14,4 +14,7 @@ export class EnvironmentVariablesClass {
 
 	@Matches(/^[0-9a-fA-F]{24}$/)
 	project: string;
+
+	@IsArray()
+	services: string[];
 }

@@ -121,7 +121,7 @@ export default function Project() {
 						/>
 					</div>
 					<div className={style.tables}>
-						<EnviromentVariablesTable projectId={projectId || ''} />
+						<EnviromentVariablesTable project={project} />
 						<ContainersTable projectId={projectId || ''} />
 						<AccessControlTable project={project} />
 					</div>

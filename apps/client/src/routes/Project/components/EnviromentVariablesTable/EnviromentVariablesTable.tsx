@@ -13,13 +13,13 @@ import {
 	updateVariable,
 	deleteVariable
 } from '../../../../utils/api/enviromentVariable';
-import { EnvironmentVariablesClass } from 'shared/src/classes';
+import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
 
 export default function EnviromentVariablesTable({
-	projectId
+	project
 }: {
-	projectId: string;
+	project: ProjectClass;
 }): JSX.Element {
 	const [variables, setVariables] = useState(
 		[] as EnvironmentVariablesClass[]
@@ -30,7 +30,9 @@ export default function EnviromentVariablesTable({
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
 	const getData = async () => {
-		const response = await getAllVariables(projectId);
+		if (!project._id) return;
+
+		const response = await getAllVariables(project._id);
 		if (response) {
 			setVariables(response.data || []);
 			setVariableInputs([]);
@@ -155,15 +157,19 @@ export default function EnviromentVariablesTable({
 				</div>
 			</Widget>
 			<CreateVariableModal
+				serviceList={project.services || []}
 				open={createModalOpen}
 				onClose={() => {
 					setCreateModalOpen(false);
 				}}
 				submit={async (values) => {
+					if (!project._id) return;
+
 					const response = await createVariable({
-						project: projectId,
+						project: project._id,
 						name: values.name,
-						value: values.value
+						value: values.value,
+						services: values.services
 					});
 
 					if (response.success) {

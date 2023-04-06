@@ -129,11 +129,19 @@ export class EnvironmentVariablesService {
 			});
 		}
 
+		if (environmentVariables.services.length == 0) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Please select at least one service'
+			});
+		}
+
 		const newEnvironmentVariables = new this.EnvironmentVariablesModel({
 			userId: userId,
 			name: environmentVariables.name,
 			value: environmentVariables.value,
-			project: environmentVariables.project
+			project: environmentVariables.project,
+			services: environmentVariables.services
 		});
 
 		try {

@@ -15,7 +15,12 @@ export const EnvironmentVariablesSchema = new Schema(
 		value: {
 			type: String,
 			required: true
-		}
+		},
+		services: [
+			{
+				type: String
+			}
+		]
 	},
 	{
 		timestamps: true

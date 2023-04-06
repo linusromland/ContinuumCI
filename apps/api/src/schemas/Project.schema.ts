@@ -40,6 +40,11 @@ export const ProjectSchema = new Schema(
 					default: 'viewer'
 				}
 			}
+		],
+		services: [
+			{
+				type: String
+			}
 		]
 	},
 	{
