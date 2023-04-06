@@ -16,6 +16,7 @@ import ContainersTable from './components/ContainersTable/ContainersTable';
 import AccessControlTable from './components/AccessControlTable/AccessControlTable';
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
+import { ProjectSyncStatus } from 'shared/src/enums';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -112,12 +113,26 @@ export default function Project() {
 					</div>
 					<div className={style.statusContainer}>
 						<StatusWidget
-							icon='/icons/check.svg'
-							text='Running'
+							icon={
+								project.enabled
+									? '/icons/check.svg'
+									: '/icons/paused.svg'
+							}
+							text={
+								project.enabled
+									? 'TODO: ADD REAL STATUS'
+									: 'Manual stop'
+							}
 						/>
 						<StatusWidget
-							icon='/icons/warning.svg'
-							text='Warning'
+							icon={
+								project.syncStatus === ProjectSyncStatus.IN_SYNC
+									? '/icons/check.svg'
+									: '/icons/warning.svg'
+							}
+							text={
+								project.syncStatus || ProjectSyncStatus.UNKNOWN
+							}
 						/>
 					</div>
 					<div className={style.tables}>
