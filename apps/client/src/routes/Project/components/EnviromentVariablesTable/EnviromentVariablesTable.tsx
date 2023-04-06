@@ -60,7 +60,7 @@ export default function EnviromentVariablesTable({
 					</p>
 					<Table
 						widget={false}
-						headers={['Name', 'Value', 'Actions']}
+						headers={['Name', 'Value', 'Services', 'Actions']}
 						data={[
 							...variables.map((variable, index) => [
 								variable.name,
@@ -76,6 +76,13 @@ export default function EnviromentVariablesTable({
 										setVariableInputs(vars);
 									}}
 								/>,
+								<p>
+									{variable.services.length ===
+									(project.services || []).length
+										? 'All'
+										: variable.services.join(', ')}
+								</p>,
+
 								<div className={style.buttons}>
 									<Button
 										text={
