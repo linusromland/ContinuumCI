@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 export const ProjectSchema = new Schema(
 	{
-		running: {
+		enabled: {
 			type: Boolean,
 			default: false
 		},

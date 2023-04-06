@@ -1,6 +1,7 @@
 // External dependencies
 import {
 	IsArray,
+	IsBoolean,
 	IsDate,
 	IsOptional,
 	IsString,
@@ -20,6 +21,9 @@ export class ProjectClass {
 
 	@IsString()
 	name: string;
+
+	@IsBoolean()
+	enabled: boolean;
 
 	@Matches(
 		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/

@@ -71,6 +71,12 @@ export class DeploymentsService {
 
 		await this.dockerService.deployProject(project, environmentVariables);
 
+		await this.ProjectModel.findByIdAndUpdate(projectId, {
+			$set: {
+				enabled: true
+			}
+		});
+
 		return {
 			success: true,
 			message: 'Deployment created'
