@@ -140,6 +140,10 @@ export class DockerService {
 			// Deploy the project
 			await Compose.upAll({
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
+				composeOptions: [
+					`-p=${project.name.replace(/ /g, '_').toLowerCase()}`
+				],
+
 				log: true
 			}).then(
 				// On output, do nothing
