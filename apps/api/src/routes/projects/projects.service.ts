@@ -26,12 +26,7 @@ export class ProjectsService {
 		private ProjectModel: Model<ProjectClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserClass>,
-
-		@Inject('PORTS_MODEL')
-		private PortsModel: Model<{
-			port: number;
-		}>
+		private UserModel: Model<UserClass>
 	) {}
 
 	async getAll(userId: string): Promise<ResponseType<ProjectClass[]>> {
@@ -211,8 +206,16 @@ export class ProjectsService {
 				for (let j = 0; j < service.ports.length; j++) {
 					const ports = service.ports[j].split(':');
 
-					// Update the host port
-					ports[0] = await this.generateUniquePort();
+					if (project.services[i].ports[j]) {
+						ports[0] = project.services[i].ports[j];
+					} else {
+						// Generate a unique port
+						ports[0] = await this.generateUniquePort(
+							createdProject,
+							i,
+							j
+						);
+					}
 
 					// Update the port mapping
 					dockerCompose.services[services[i]].ports[j] =
@@ -445,17 +448,82 @@ export class ProjectsService {
 		};
 	}
 
-	generateUniquePort(): Promise<string> {
+	generateUniquePort(
+		project: ProjectClass,
+		serviceIndex: number,
+		portIndex: number
+	): Promise<string> {
 		// eslint-disable-next-line no-async-promise-executor
 		return new Promise(async (resolve) => {
 			// Generate a random port number between 3000 and 10000
 			const port = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
 
-			const portTaken = await this.PortsModel.findOne({ port });
+			const portTaken = await this.ProjectModel.aggregate([
+				{
+					$lookup: {
+						from: 'ports',
+						localField: 'services.ports',
+						foreignField: 'port',
+						as: 'usedPorts'
+					}
+				},
+				{
+					$project: {
+						_id: 0,
+						usedPorts: '$usedPorts.port'
+					}
+				},
+				{
+					$group: {
+						_id: null,
+						usedPorts: {
+							$push: '$usedPorts'
+						}
+					}
+				},
+				{
+					$lookup: {
+						from: 'ports',
+						let: { usedPorts: '$usedPorts' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$or: [
+											{ $in: [port, '$$usedPorts'] },
+											{ $eq: ['$port', port] }
+										]
+									}
+								}
+							},
+							{
+								$project: {
+									_id: 0,
+									port: 1
+								}
+							}
+						],
+						as: 'ports'
+					}
+				},
+				{
+					$project: {
+						result: {
+							$cond: {
+								if: { $gt: [{ $size: '$ports' }, 0] },
+								then: true,
+								else: false
+							}
+						}
+					}
+				}
+			]);
 
 			if (portTaken) {
 				// If the port is already taken, generate a new one
-				this.generateUniquePort().then(resolve);
+				this.generateUniquePort(project, serviceIndex, portIndex).then(
+					resolve
+				);
 			}
 
 			// Try to create a server on the port
@@ -464,17 +532,20 @@ export class ProjectsService {
 			server.on('error', () => {
 				// If an error occurs, the port is not available
 				// Generate a new random port and try again
-				this.generateUniquePort().then(resolve);
+				this.generateUniquePort(project, serviceIndex, portIndex).then(
+					resolve
+				);
 			});
 
 			server.on('listening', () => {
 				// If we successfully start listening on the port, immediately close the server
-				server.close(() => {
-					// The port is available
-
-					// Save the port in the database
-					const newPort = new this.PortsModel({ port });
-					newPort.save();
+				server.close(async () => {
+					// The port is available, save it to the database
+					project.services[serviceIndex].ports[portIndex] = port;
+					await this.ProjectModel.findByIdAndUpdate(
+						project._id,
+						project
+					);
 
 					// Return the port
 					resolve(String(port));
