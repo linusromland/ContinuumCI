@@ -21,7 +21,7 @@ export class SetupService {
 		private UserModel: Model<UserClass>
 	) {}
 
-	async getSetup(): Promise<ResponseType> {
+	async getSetup(): Promise<ResponseType<unknown>> {
 		const emailConfiguration = await this.EmailConfigurationModel.findOne();
 		const verifiedEmailConfiguration =
 			emailConfiguration?.service ===

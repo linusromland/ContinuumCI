@@ -329,7 +329,7 @@ export class UsersService {
 	): Promise<ResponseType> {
 		try {
 			if (!oldPassword || !newPassword) {
-				throw neResponseType
+				throw new BadRequestException({
 					success: false,
 					message: 'Missing required fields'
 				});
@@ -385,7 +385,7 @@ export class UsersService {
 	): Promise<ResponseType> {
 		try {
 			if (isValidObjectId(userId) === false) {
-				throw neResponseType
+				throw new BadRequestException({
 					success: false,
 					message: 'Invalid user id'
 				});
