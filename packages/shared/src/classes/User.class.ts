@@ -11,6 +11,7 @@ import {
 
 // Internal dependencies
 import { UserRoleEnum } from '../enums';
+import { MongoBaseClass } from './MongoBase.class';
 
 export class UserQueryClass {
 	@IsString()
