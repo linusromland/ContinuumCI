@@ -3,6 +3,7 @@ import { IsString, ValidateNested } from 'class-validator';
 
 // Internal dependencies
 import { EmailConfigurationServiceEnum } from '../enums';
+import { MongoBaseClass } from './MongoBase.class';
 
 class EmailAuthClass {
 	@IsString()
@@ -12,10 +13,15 @@ class EmailAuthClass {
 	pass: string;
 }
 
-export class EmailConfigurationClass {
+export class EmailConfigurationQueryClass {
 	@IsString()
 	service: EmailConfigurationServiceEnum;
 
 	@ValidateNested()
+	auth: EmailAuthClass;
+}
+
+export class EmailConfigurationClass extends MongoBaseClass {
+	service: EmailConfigurationServiceEnum;
 	auth: EmailAuthClass;
 }

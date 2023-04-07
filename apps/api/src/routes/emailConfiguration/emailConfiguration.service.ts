@@ -11,7 +11,10 @@ import dayjs from 'dayjs';
 
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import { EmailConfigurationClass } from 'shared/src/classes';
+import {
+	EmailConfigurationClass,
+	EmailConfigurationQueryClass
+} from 'shared/src/classes';
 import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
 import { EmailConfigurationServiceEnum } from 'shared/src/enums';
@@ -24,7 +27,7 @@ export class EmailConfigurationService {
 	) {}
 
 	async create(
-		emailConfiguration: EmailConfigurationClass
+		emailConfiguration: EmailConfigurationQueryClass
 	): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
