@@ -206,8 +206,8 @@ export class ProjectsService {
 				for (let j = 0; j < service.ports.length; j++) {
 					const ports = service.ports[j].split(':');
 
-					if (project.services[i].ports[j]) {
-						ports[0] = project.services[i].ports[j];
+					if (createdProject.services[i].ports[j]) {
+						ports[0] = createdProject.services[i].ports[j];
 					} else {
 						// Generate a unique port
 						ports[0] = await this.generateUniquePort(
@@ -519,7 +519,7 @@ export class ProjectsService {
 				}
 			]);
 
-			if (portTaken) {
+			if (portTaken[0].result) {
 				// If the port is already taken, generate a new one
 				this.generateUniquePort(project, serviceIndex, portIndex).then(
 					resolve
@@ -542,6 +542,7 @@ export class ProjectsService {
 				server.close(async () => {
 					// The port is available, save it to the database
 					project.services[serviceIndex].ports[portIndex] = port;
+
 					await this.ProjectModel.findByIdAndUpdate(
 						project._id,
 						project
