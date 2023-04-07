@@ -9,7 +9,11 @@ import {
 import { Type } from 'class-transformer';
 
 // Internal dependencies
-import { ProjectRoleEnum, ProjectSyncStatus } from '../enums';
+import {
+	ProjectDeploymentStatus,
+	ProjectRoleEnum,
+	ProjectSyncStatus
+} from '../enums';
 import { UserClass } from './User.class';
 import { MongoBaseClass } from './MongoBase.class';
 
@@ -46,6 +50,7 @@ export class ProjectClass extends MongoBaseClass {
 	branch: string;
 	permissions: PermissionClass[];
 	syncStatus: ProjectSyncStatus;
+	deploymemtStatus: ProjectDeploymentStatus;
 }
 
 class PermissionClass {
