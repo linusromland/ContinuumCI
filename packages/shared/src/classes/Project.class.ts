@@ -50,7 +50,7 @@ export class ProjectClass extends MongoBaseClass {
 	branch: string;
 	permissions: PermissionClass[];
 	syncStatus: ProjectSyncStatus;
-	deploymemtStatus: ProjectDeploymentStatus;
+	deploymentStatus: ProjectDeploymentStatus;
 }
 
 class PermissionClass {
