@@ -69,7 +69,7 @@ export class ProjectsService {
 			const projectData = {
 				...project,
 				syncStatus: ProjectSyncStatus.UNKNOWN,
-				deployStatus:
+				deploymentStatus:
 					deployStatuses[i] || ProjectDeploymentStatus.UNKNOWN
 			};
 
@@ -146,7 +146,7 @@ export class ProjectsService {
 		const projectData = {
 			...project[0].toJSON(),
 			syncStatus: ProjectSyncStatus.UNKNOWN,
-			deployStatus: deployStatus[0] ?? ProjectDeploymentStatus.UNKNOWN
+			deploymentStatus: deployStatus[0] ?? ProjectDeploymentStatus.UNKNOWN
 		};
 		projectData.syncStatus = (await checkSync(projectId))
 			? ProjectSyncStatus.IN_SYNC // In Sync
