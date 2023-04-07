@@ -13,7 +13,7 @@ import {
 
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import { EnvironmentVariablesClass } from 'shared/src/classes';
+import { EnvironmentVariablesQueryClass } from 'shared/src/classes';
 import { EnvironmentVariablesService } from './environmentVariables.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
@@ -36,7 +36,7 @@ export class EnvironmentVariablesController {
 	@Post()
 	async create(
 		@Request() req,
-		@Body() environmentVariables: EnvironmentVariablesClass
+		@Body() environmentVariables: EnvironmentVariablesQueryClass
 	): Promise<ResponseType> {
 		return this.environmentVariablesService.create(
 			req.user.sub,
@@ -48,7 +48,7 @@ export class EnvironmentVariablesController {
 	@Put()
 	async update(
 		@Request() req,
-		@Body() environmentVariables: EnvironmentVariablesClass
+		@Body() environmentVariables: EnvironmentVariablesQueryClass
 	): Promise<ResponseType> {
 		return this.environmentVariablesService.update(
 			req.user.sub,

@@ -1,11 +1,10 @@
 // External dependencies
-import { IsOptional, IsString, IsArray, Matches } from 'class-validator';
+import { IsString, IsArray, Matches } from 'class-validator';
 
-export class EnvironmentVariablesClass {
-	@IsOptional()
-	@IsString()
-	_id?: string;
+// Internal dependencies
+import { MongoBaseClass } from './MongoBase.class';
 
+export class EnvironmentVariablesQueryClass {
 	@IsString()
 	name: string;
 
@@ -16,5 +15,12 @@ export class EnvironmentVariablesClass {
 	project: string;
 
 	@IsArray()
+	services: string[];
+}
+
+export class EnvironmentVariablesClass extends MongoBaseClass {
+	name: string;
+	value: string;
+	project: string;
 	services: string[];
 }

@@ -12,6 +12,7 @@ import { ResponseType } from 'shared/src/types';
 import {
 	UserClass,
 	EnvironmentVariablesClass,
+	EnvironmentVariablesQueryClass,
 	ProjectClass
 } from 'shared/src/classes';
 import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
@@ -78,7 +79,7 @@ export class EnvironmentVariablesService {
 
 	async create(
 		userId: string,
-		environmentVariables: EnvironmentVariablesClass
+		environmentVariables: EnvironmentVariablesQueryClass
 	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 		if (!user) {
@@ -161,7 +162,7 @@ export class EnvironmentVariablesService {
 
 	async update(
 		userId: string,
-		environmentVariables: EnvironmentVariablesClass
+		environmentVariables: EnvironmentVariablesQueryClass
 	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 

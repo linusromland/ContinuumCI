@@ -1,7 +1,10 @@
 // Internal dependencies
 import api from '.';
 import { ResponseType } from 'shared/src/types';
-import { EnvironmentVariablesClass } from 'shared/src/classes';
+import {
+	EnvironmentVariablesClass,
+	EnvironmentVariablesQueryClass
+} from 'shared/src/classes';
 
 async function getAllVariables(
 	projectId: string
@@ -12,7 +15,7 @@ async function getAllVariables(
 }
 
 async function createVariable(
-	variable: EnvironmentVariablesClass
+	variable: EnvironmentVariablesQueryClass
 ): Promise<ResponseType<EnvironmentVariablesClass>> {
 	const request = await api.post('/environmentVariables', variable);
 
