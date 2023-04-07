@@ -51,7 +51,25 @@ export class ProjectsService {
 			};
 		}
 
-		const projects = await this.ProjectModel.find(query);
+		const retrievedProjects = await this.ProjectModel.find(query);
+
+		const projects = [];
+
+		for (let i = 0; i < retrievedProjects.length; i++) {
+			const project = retrievedProjects[i].toJSON();
+
+			const projectData = {
+				...project,
+				syncStatus: ProjectSyncStatus.UNKNOWN
+			};
+
+			const inSync = await checkSync(project._id.toString());
+			projectData.syncStatus = inSync
+				? ProjectSyncStatus.IN_SYNC // In Sync
+				: ProjectSyncStatus.OUT_OF_SYNC; // Out of Sync
+
+			projects.push(projectData);
+		}
 
 		return {
 			success: true,
@@ -123,7 +141,7 @@ export class ProjectsService {
 
 		return {
 			success: true,
-			message: 'Projects fetched successfully',
+			message: 'Project fetched successfully',
 			data: projectData
 		};
 	}

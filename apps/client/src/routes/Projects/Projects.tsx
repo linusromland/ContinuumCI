@@ -23,8 +23,8 @@ export default function Projects() {
 
 	async function getProjects() {
 		const response = await getAllProjects();
-		if (response.success) {
-			setProjects(response.data as ProjectClass[]);
+		if (response.success && response.data) {
+			setProjects(response.data);
 		}
 
 		setLastUpdated(new Date().toISOString());

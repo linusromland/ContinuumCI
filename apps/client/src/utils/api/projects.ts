@@ -3,7 +3,7 @@ import api from '.';
 import { ResponseType } from 'shared/src/types';
 import { ProjectClass, ProjectQueryClass } from 'shared/src/classes';
 
-async function getAllProjects(): Promise<ResponseType> {
+async function getAllProjects(): Promise<ResponseType<ProjectClass[]>> {
 	const request = await api.get('/projects/all');
 
 	return request.data as ResponseType;

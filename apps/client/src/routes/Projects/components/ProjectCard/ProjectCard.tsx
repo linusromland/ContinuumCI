@@ -37,10 +37,10 @@ export default function ProjectCard({
 			</div>
 			<div className={style.content}>
 				<p>
-					Status: <span>Everything operating normally!</span>
+					Status: <span>FAKE DATA</span>
 				</p>
 				<p>
-					Sync status: <span>Out of sync</span>
+					Sync status: <span>{project.syncStatus}</span>
 				</p>
 				<p>
 					Repository: <a>{project.gitUrl}</a>
