@@ -31,7 +31,7 @@ export class UsersService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
-	async create(user: UserQueryClass): Promise<ResponseType> {
+	async create(user: UserQueryClass): Promise<ResponseType<undefined>> {
 		try {
 			const role =
 				(await this.UserModel.countDocuments()) === 0
@@ -220,7 +220,7 @@ export class UsersService {
 	async updateUsername(
 		user: JwtType,
 		newUsername: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
@@ -263,7 +263,10 @@ export class UsersService {
 		}
 	}
 
-	async updateEmail(user: JwtType, newEmail: string): Promise<ResponseType> {
+	async updateEmail(
+		user: JwtType,
+		newEmail: string
+	): Promise<ResponseType<undefined>> {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
@@ -326,7 +329,7 @@ export class UsersService {
 		user: JwtType,
 		oldPassword: string,
 		newPassword: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		try {
 			if (!oldPassword || !newPassword) {
 				throw new BadRequestException({
@@ -382,7 +385,7 @@ export class UsersService {
 		jwtUser: JwtType,
 		userId: string,
 		newRole: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		try {
 			if (isValidObjectId(userId) === false) {
 				throw new BadRequestException({

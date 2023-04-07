@@ -9,7 +9,7 @@ import {
 import fs from 'fs';
 
 // Internal dependencies
-import { NginxConfigurationType, ResponseType } from 'shared/src/types';
+import { NginxConfigurationType } from 'shared/src/types';
 import { ConfigurationService } from './configuration.service';
 import argumentValidator from 'src/utils/argumentValidator';
 
@@ -18,9 +18,7 @@ export class ConfigurationController {
 	constructor(private readonly configurationService: ConfigurationService) {}
 
 	@Put()
-	async edit(
-		@Body() nginxConfiguration: NginxConfigurationType
-	): Promise<ResponseType> {
+	async edit(@Body() nginxConfiguration: NginxConfigurationType) {
 		try {
 			argumentValidator(
 				[
@@ -100,7 +98,7 @@ export class ConfigurationController {
 	}
 
 	@Get()
-	async get(): Promise<ResponseType> {
+	async get() {
 		return this.configurationService.get();
 	}
 }

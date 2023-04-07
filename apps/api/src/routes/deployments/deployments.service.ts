@@ -30,7 +30,7 @@ export class DeploymentsService {
 	async createDeployment(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -86,7 +86,7 @@ export class DeploymentsService {
 	async removeDeployment(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

@@ -15,7 +15,7 @@ export class AuthService {
 		private UserModel: Model<UserClass>
 	) {}
 
-	async getUser(id: string): Promise<ResponseType> {
+	async getUser(id: string): Promise<ResponseType<UserClass>> {
 		const user: UserClass = await this.UserModel.findById(id).select(
 			'-password'
 		);
@@ -24,13 +24,7 @@ export class AuthService {
 			return {
 				success: true,
 				message: 'User found',
-				data: {
-					_id: user._id,
-					username: user.username,
-					email: user.email,
-					verifiedEmail: user.verifiedEmail,
-					role: user.role
-				}
+				data: user
 			};
 		}
 
@@ -50,7 +44,11 @@ export class AuthService {
 		return null;
 	}
 
-	async login(user: UserClass): Promise<ResponseType> {
+	async login(user: UserClass): Promise<
+		ResponseType<{
+			access_token: string;
+		}>
+	> {
 		const payload = {
 			username: user.username,
 			email: user.email,

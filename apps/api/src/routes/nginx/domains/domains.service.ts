@@ -17,7 +17,7 @@ export class DomainsService {
 		private UserModel: Model<UserClass>
 	) {}
 
-	async get(userId: string): Promise<ResponseType> {
+	async get(userId: string): Promise<ResponseType<DomainsClass[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -46,7 +46,7 @@ export class DomainsService {
 	async create(
 		userId: string,
 		domain: DomainsQueryClass
-	): Promise<ResponseType> {
+	): Promise<ResponseType<DomainsClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -73,7 +73,10 @@ export class DomainsService {
 		};
 	}
 
-	async delete(userId: string, domainId: string): Promise<ResponseType> {
+	async delete(
+		userId: string,
+		domainId: string
+	): Promise<ResponseType<undefined>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

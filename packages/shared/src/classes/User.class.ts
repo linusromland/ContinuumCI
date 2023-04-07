@@ -42,7 +42,7 @@ export class UserQueryClass {
 export class UserClass extends MongoBaseClass {
 	username: string;
 	email: string;
-	password: string;
+	password?: string;
 	lastLogin: Date;
 	lastIp: string;
 	role: UserRoleEnum;

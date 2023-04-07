@@ -34,7 +34,7 @@ export class ProjectsService {
 		}>
 	) {}
 
-	async getAll(userId: string): Promise<ResponseType> {
+	async getAll(userId: string): Promise<ResponseType<ProjectClass[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -65,7 +65,10 @@ export class ProjectsService {
 		};
 	}
 
-	async get(userId: string, projectId: string): Promise<ResponseType> {
+	async get(
+		userId: string,
+		projectId: string
+	): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -133,7 +136,7 @@ export class ProjectsService {
 	async create(
 		project: ProjectQueryClass,
 		userId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -241,7 +244,7 @@ export class ProjectsService {
 		userId: string,
 		projectId: string,
 		project: ProjectQueryClass
-	): Promise<ResponseType> {
+	): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -337,7 +340,10 @@ export class ProjectsService {
 		};
 	}
 
-	async delete(userId: string, projectId: string): Promise<ResponseType> {
+	async delete(
+		userId: string,
+		projectId: string
+	): Promise<ResponseType<undefined>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -388,7 +394,7 @@ export class ProjectsService {
 	async updateRepository(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

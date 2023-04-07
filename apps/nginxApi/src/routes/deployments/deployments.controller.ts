@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 // Internal dependencies
-import { NginxDeploymentType, ResponseType } from 'shared/src/types';
+import { NginxDeploymentType } from 'shared/src/types';
 import argumentValidator from 'src/utils/argumentValidator';
 import { DeploymentsService } from './deployments.service';
 
@@ -18,9 +18,7 @@ export class DeploymentsController {
 	constructor(private readonly deploymentsService: DeploymentsService) {}
 
 	@Post()
-	async create(
-		@Body() deploymentConfiguration: NginxDeploymentType
-	): Promise<ResponseType> {
+	async create(@Body() deploymentConfiguration: NginxDeploymentType) {
 		try {
 			argumentValidator(
 				[
@@ -84,7 +82,7 @@ export class DeploymentsController {
 	}
 
 	@Get()
-	async get(@Query('id') id: string): Promise<ResponseType> {
+	async get(@Query('id') id: string) {
 		if (!id)
 			throw new BadRequestException({
 				success: false,
@@ -96,7 +94,7 @@ export class DeploymentsController {
 	}
 
 	@Delete()
-	async delete(@Query('id') id: string): Promise<ResponseType> {
+	async delete(@Query('id') id: string) {
 		return this.deploymentsService.delete(id);
 	}
 }

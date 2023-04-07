@@ -42,8 +42,8 @@ export default function Nginx(): JSX.Element {
 
 	async function getDomainsData() {
 		const response = await getDomains();
-		if (response.success) {
-			setDomainNames(response.data as DomainsClass[]);
+		if (response.success && response.data) {
+			setDomainNames(response.data);
 		}
 	}
 

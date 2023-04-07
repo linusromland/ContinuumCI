@@ -17,7 +17,7 @@ export class ConfigurationService {
 
 	async edit(
 		nginxConfiguration: NginxConfigurationType
-	): Promise<ResponseType> {
+	): Promise<ResponseType<undefined>> {
 		try {
 			await this.NginxConfigurationModel.updateOne(
 				{},
@@ -39,7 +39,7 @@ export class ConfigurationService {
 		}
 	}
 
-	async get(): Promise<ResponseType> {
+	async get(): Promise<ResponseType<NginxConfigurationType>> {
 		try {
 			const nginxConfiguration =
 				await this.NginxConfigurationModel.findOne({});

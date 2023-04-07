@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 
 // Internal dependencies
-import { ResponseType } from 'shared/src/types';
 import { EnvironmentVariablesQueryClass } from 'shared/src/classes';
 import { EnvironmentVariablesService } from './environmentVariables.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
@@ -25,10 +24,7 @@ export class EnvironmentVariablesController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get(':projectId')
-	async get(
-		@Request() req,
-		@Param('projectId') projectId: string
-	): Promise<ResponseType> {
+	async get(@Request() req, @Param('projectId') projectId: string) {
 		return this.environmentVariablesService.get(req.user.sub, projectId);
 	}
 
@@ -37,7 +33,7 @@ export class EnvironmentVariablesController {
 	async create(
 		@Request() req,
 		@Body() environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType> {
+	) {
 		return this.environmentVariablesService.create(
 			req.user.sub,
 			environmentVariables
@@ -49,7 +45,7 @@ export class EnvironmentVariablesController {
 	async update(
 		@Request() req,
 		@Body() environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType> {
+	) {
 		return this.environmentVariablesService.update(
 			req.user.sub,
 			environmentVariables
@@ -61,7 +57,7 @@ export class EnvironmentVariablesController {
 	async delete(
 		@Request() req,
 		@Param('environmentVariableId') environmentVariableId: string
-	): Promise<ResponseType> {
+	) {
 		return this.environmentVariablesService.delete(
 			req.user.sub,
 			environmentVariableId
