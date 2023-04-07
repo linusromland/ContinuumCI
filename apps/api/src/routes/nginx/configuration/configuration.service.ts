@@ -21,7 +21,7 @@ export class ConfigurationService {
 		private UserModel: Model<UserClass>
 	) {}
 
-	async get(userId: string): Promise<ResponseType> {
+	async get(userId: string): Promise<ResponseType<NginxConfigurationType>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
