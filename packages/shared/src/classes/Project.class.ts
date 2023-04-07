@@ -42,7 +42,7 @@ export class ProjectClass extends MongoBaseClass {
 	name: string;
 	enabled: boolean;
 	gitUrl: string;
-	services: string[];
+	services: ServicesClass[];
 	branch: string;
 	permissions: PermissionClass[];
 	syncStatus: ProjectSyncStatus;
@@ -53,4 +53,9 @@ class PermissionClass {
 
 	@IsString()
 	role: ProjectRoleEnum;
+}
+
+class ServicesClass {
+	name: string;
+	ports: number[];
 }

@@ -164,7 +164,9 @@ export default function EnviromentVariablesTable({
 				</div>
 			</Widget>
 			<CreateVariableModal
-				serviceList={project.services || []}
+				serviceList={
+					project.services.map((service) => service.name) || []
+				}
 				open={createModalOpen}
 				onClose={() => {
 					setCreateModalOpen(false);

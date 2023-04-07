@@ -43,7 +43,15 @@ export const ProjectSchema = new Schema(
 		],
 		services: [
 			{
-				type: String
+				name: {
+					type: String,
+					required: true
+				},
+				ports: [
+					{
+						type: Number
+					}
+				]
 			}
 		]
 	},
