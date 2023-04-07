@@ -519,7 +519,7 @@ export class ProjectsService {
 				}
 			]);
 
-			if (portTaken[0].result) {
+			if (portTaken.length && portTaken[0].result) {
 				// If the port is already taken, generate a new one
 				this.generateUniquePort(project, serviceIndex, portIndex).then(
 					resolve
