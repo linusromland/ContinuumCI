@@ -394,7 +394,7 @@ export class ProjectsService {
 	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
-		if (!user)ResponseType
+		if (!user) {
 			throw new BadRequestException({
 				success: false,
 				message: 'User not found'
