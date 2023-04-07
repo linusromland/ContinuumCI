@@ -13,7 +13,19 @@
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 	transition: all 0.2s ease-in-out;
 
-	border-left: 1rem solid $success;
+	border-left: 1rem solid $background;
+
+	&.success {
+		border-left-color: $success;
+	}
+
+	&.warning {
+		border-left-color: $warning;
+	}
+
+	&.error {
+		border-left-color: $error;
+	}
 
 	&:hover {
 		transform: translateY(-0.2rem);

@@ -1,10 +1,12 @@
 // External dependencies
 import dayjs from 'dayjs';
+import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 
 // Internal dependencies
 import { ProjectClass } from 'shared/src/classes';
 import style from './ProjectCard.module.scss';
+import { ProjectDeploymentStatus } from 'shared/src/enums';
 
 export default function ProjectCard({
 	project,
@@ -14,9 +16,19 @@ export default function ProjectCard({
 	onClick: () => void;
 }): JSX.Element {
 	const [icon, setIcon] = useState('git');
+	const [status, setStatus] = useState('success');
 
 	useEffect(() => {
 		if (!project || !project.gitUrl) return;
+
+		if (project.deploymentStatus === ProjectDeploymentStatus.RUNNING)
+			setStatus('success');
+		else if (
+			project.deploymentStatus ===
+			ProjectDeploymentStatus.PARTIALLY_RUNNING
+		)
+			setStatus('warning');
+		else setStatus('error');
 
 		if (project.gitUrl.includes('github')) return setIcon('github');
 		if (project.gitUrl.includes('gitlab')) return setIcon('gitlab');
@@ -24,7 +36,7 @@ export default function ProjectCard({
 
 	return (
 		<div
-			className={style.container}
+			className={clsx(style.container, style[status])}
 			onClick={onClick}
 		>
 			<div className={style.topBar}>
@@ -37,7 +49,7 @@ export default function ProjectCard({
 			</div>
 			<div className={style.content}>
 				<p>
-					Status: <span>FAKE DATA</span>
+					Status: <span>{project.deploymentStatus}</span>
 				</p>
 				<p>
 					Sync status: <span>{project.syncStatus}</span>
