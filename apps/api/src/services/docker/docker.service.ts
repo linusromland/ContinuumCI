@@ -12,6 +12,7 @@ import yaml from 'js-yaml';
 // Internal dependencies
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
+import { ProjectDeploymentStatus } from 'shared/src/enums';
 
 @Injectable()
 export class DockerService {
@@ -213,5 +214,79 @@ export class DockerService {
 				message: 'Failed to undeploy the project'
 			});
 		}
+	}
+
+	async getStatus(projectIds: string[]): Promise<ProjectDeploymentStatus[]> {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return Array(projectIds.length).fill(
+				ProjectDeploymentStatus.UNKNOWN
+			);
+		}
+
+		const result: ProjectDeploymentStatus[] = [];
+
+		for (let i = 0; i < projectIds.length; i++) {
+			const projectId = projectIds[i];
+
+			// Check if the compose is deployed (check by the id)
+			const containers = await this.docker.listContainers();
+
+			const projectContainers = containers.filter(
+				(container) =>
+					container.Labels['continuumci.project.id'] === projectId
+			);
+
+			if (projectContainers.length === 0) {
+				result.push(ProjectDeploymentStatus.NOT_RUNNING);
+				continue;
+			}
+
+			// Check if all the containers are running
+			if (
+				projectContainers.every(
+					(container) => container.State === 'running'
+				)
+			) {
+				result.push(ProjectDeploymentStatus.RUNNING);
+				continue;
+			}
+
+			// Check if any of the containers are running
+			if (
+				projectContainers.some(
+					(container) => container.State === 'running'
+				)
+			) {
+				result.push(ProjectDeploymentStatus.PARTIALLY_RUNNING);
+				continue;
+			}
+
+			// Check if any of the containers are crashed
+			if (
+				projectContainers.some(
+					(container) => container.State === 'exited'
+				)
+			) {
+				result.push(ProjectDeploymentStatus.CRASHED);
+				continue;
+			}
+
+			// Check if any of the containers are restarting
+			if (
+				projectContainers.some(
+					(container) => container.State === 'restarting'
+				)
+			) {
+				result.push(ProjectDeploymentStatus.RESTARTING);
+				continue;
+			}
+
+			result.push(ProjectDeploymentStatus.UNKNOWN);
+		}
+
+		return result;
 	}
 }

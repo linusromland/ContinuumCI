@@ -13,11 +13,13 @@ import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
 import {
+	ProjectDeploymentStatus,
 	ProjectRoleEnum,
 	ProjectSyncStatus,
 	UserRoleEnum
 } from 'shared/src/enums';
 import checkSync from 'src/utils/checkSync';
+import { DockerService } from 'src/services/docker/docker.service';
 
 @Injectable()
 export class ProjectsService {
@@ -26,7 +28,9 @@ export class ProjectsService {
 		private ProjectModel: Model<ProjectClass>,
 
 		@Inject('USER_MODEL')
-		private UserModel: Model<UserClass>
+		private UserModel: Model<UserClass>,
+
+		private dockerService: DockerService
 	) {}
 
 	async getAll(userId: string): Promise<ResponseType<ProjectClass[]>> {
@@ -55,12 +59,18 @@ export class ProjectsService {
 
 		const projects = [];
 
+		const deployStatuses = await this.dockerService.getStatus(
+			retrievedProjects.map((project) => project._id.toString())
+		);
+
 		for (let i = 0; i < retrievedProjects.length; i++) {
 			const project = retrievedProjects[i].toJSON();
 
 			const projectData = {
 				...project,
-				syncStatus: ProjectSyncStatus.UNKNOWN
+				syncStatus: ProjectSyncStatus.UNKNOWN,
+				deployStatus:
+					deployStatuses[i] || ProjectDeploymentStatus.UNKNOWN
 			};
 
 			const inSync = await checkSync(project._id.toString());
@@ -131,9 +141,12 @@ export class ProjectsService {
 			});
 		}
 
+		const deployStatus = await this.dockerService.getStatus([projectId]);
+
 		const projectData = {
 			...project[0].toJSON(),
-			syncStatus: ProjectSyncStatus.UNKNOWN
+			syncStatus: ProjectSyncStatus.UNKNOWN,
+			deployStatus: deployStatus[0] ?? ProjectDeploymentStatus.UNKNOWN
 		};
 		projectData.syncStatus = (await checkSync(projectId))
 			? ProjectSyncStatus.IN_SYNC // In Sync
