@@ -29,7 +29,7 @@ async function createProject(data: ProjectQueryClass): Promise<ResponseType> {
 async function editProject(
 	data: ProjectQueryClass,
 	id: string
-): Promise<ResponseType> {
+): Promise<ResponseType<ProjectClass>> {
 	const request = await api.put('/projects/edit/' + id, data);
 
 	return request.data as ResponseType;
