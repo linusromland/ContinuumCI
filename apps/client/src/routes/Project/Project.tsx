@@ -16,7 +16,7 @@ import ContainersTable from './components/ContainersTable/ContainersTable';
 import AccessControlTable from './components/AccessControlTable/AccessControlTable';
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
-import { ProjectSyncStatus } from 'shared/src/enums';
+import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -24,6 +24,7 @@ export default function Project() {
 
 	const [project, setProject] = useState({} as ProjectClass);
 	const [editNameModalOpen, setEditNameModalOpen] = useState(false);
+	const [deploymentIcon, setDeploymentIcon] = useState('/icons/paused.svg');
 
 	async function getData() {
 		if (!projectId) return console.error('No projectId provided');
@@ -31,6 +32,16 @@ export default function Project() {
 		const response = await getProject(projectId);
 		if (response.success) {
 			setProject(response.data as ProjectClass);
+
+			const proj = response.data as ProjectClass;
+			if (proj.deploymentStatus === ProjectDeploymentStatus.RUNNING)
+				setDeploymentIcon('/icons/check.svg');
+			else if (
+				project.deploymentStatus ===
+				ProjectDeploymentStatus.PARTIALLY_RUNNING
+			)
+				setDeploymentIcon('/icons/warning.svg');
+			else setDeploymentIcon('/icons/cross.svg');
 		} else {
 			navigate('/projects');
 			toast.error(response.message);
@@ -113,14 +124,10 @@ export default function Project() {
 					</div>
 					<div className={style.statusContainer}>
 						<StatusWidget
-							icon={
-								project.enabled
-									? '/icons/check.svg'
-									: '/icons/paused.svg'
-							}
+							icon={deploymentIcon}
 							text={
 								project.enabled
-									? 'TODO: ADD REAL STATUS'
+									? project.deploymentStatus
 									: 'Manual stop'
 							}
 						/>
