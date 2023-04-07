@@ -72,7 +72,7 @@ export class EmailConfigurationService {
 	}
 
 	async verifyEmailConfiguration(
-		emailConfiguration: EmailConfigurationClass
+		emailConfiguration: EmailConfigurationQueryClass
 	): Promise<boolean> {
 		//Test the email configuration
 		const transporter = nodemailer.createTransport({
