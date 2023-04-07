@@ -12,6 +12,7 @@ import ProjectCard from './components/ProjectCard/ProjectCard';
 import ProjectCreateModal from './components/ProjectCreateModal/ProjectCreateModal';
 import { getAllProjects, createProject } from '../../utils/api/projects';
 import { ProjectClass } from 'shared/src/classes';
+import { ProjectDeploymentStatus } from 'shared/src/enums';
 
 export default function Projects() {
 	const navigate = useNavigate();
@@ -45,9 +46,35 @@ export default function Projects() {
 					<div className={style.topBar}>
 						<div className={style.statusBar}>
 							<StatusBar
-								succeeded={50}
-								warning={25}
-								failed={25}
+								succeeded={
+									(projects.filter(
+										(project) =>
+											project.deploymentStatus ===
+											ProjectDeploymentStatus.RUNNING
+									).length /
+										projects.length) *
+									100
+								}
+								warning={
+									(projects.filter(
+										(project) =>
+											project.deploymentStatus ===
+											ProjectDeploymentStatus.PARTIALLY_RUNNING
+									).length /
+										projects.length) *
+									100
+								}
+								failed={
+									(projects.filter(
+										(project) =>
+											project.deploymentStatus !==
+												ProjectDeploymentStatus.RUNNING &&
+											project.deploymentStatus !==
+												ProjectDeploymentStatus.PARTIALLY_RUNNING
+									).length /
+										projects.length) *
+									100
+								}
 							/>
 						</div>
 						<Button
