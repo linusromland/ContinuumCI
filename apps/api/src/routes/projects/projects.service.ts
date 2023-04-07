@@ -8,7 +8,7 @@ import yaml from 'js-yaml';
 import http from 'http';
 
 // Internal dependencies
-import { ProjectClass } from 'shared/src/classes';
+import { ProjectClass, ProjectQueryClass } from 'shared/src/classes';
 import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
@@ -130,7 +130,10 @@ export class ProjectsService {
 		};
 	}
 
-	async create(project: ProjectClass, userId: string): Promise<ResponseType> {
+	async create(
+		project: ProjectQueryClass,
+		userId: string
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -237,7 +240,7 @@ export class ProjectsService {
 	async update(
 		userId: string,
 		projectId: string,
-		project: ProjectClass
+		project: ProjectQueryClass
 	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 

@@ -15,7 +15,7 @@ import {
 
 // Internal dependencies
 import { ProjectsService } from './projects.service';
-import { ProjectClass } from 'shared/src/classes';
+import { ProjectQueryClass } from 'shared/src/classes';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('projects')
@@ -37,7 +37,7 @@ export class ProjectsController {
 	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('create')
-	createProject(@Request() req, @Body() project: ProjectClass) {
+	createProject(@Request() req, @Body() project: ProjectQueryClass) {
 		return this.projectsService.create(project, req.user.sub);
 	}
 
@@ -47,7 +47,7 @@ export class ProjectsController {
 	updateProject(
 		@Request() req,
 		@Param('projectId') projectId: string,
-		@Body() project: ProjectClass
+		@Body() project: ProjectQueryClass
 	) {
 		return this.projectsService.update(req.user.sub, projectId, project);
 	}

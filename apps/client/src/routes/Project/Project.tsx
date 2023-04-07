@@ -154,11 +154,13 @@ export default function Project() {
 					name: yup.string().required('Required')
 				})}
 				submit={async (values) => {
-					const response = await editProject({
-						_id: project._id as string,
-						name: values.name,
-						permissions: project.permissions
-					});
+					const response = await editProject(
+						{
+							name: values.name,
+							permissions: project.permissions
+						},
+						project._id as string
+					);
 
 					if (response.success) {
 						setProject(response.data as ProjectClass);

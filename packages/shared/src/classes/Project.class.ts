@@ -1,9 +1,6 @@
 // External dependencies
 import {
 	IsArray,
-	IsBoolean,
-	IsDate,
-	IsEnum,
 	IsOptional,
 	IsString,
 	Matches,
@@ -14,18 +11,11 @@ import { Type } from 'class-transformer';
 // Internal dependencies
 import { ProjectRoleEnum, ProjectSyncStatus } from '../enums';
 import { UserClass } from './User.class';
+import { MongoBaseClass } from './MongoBase.class';
 
-export class ProjectClass {
-	@IsOptional()
-	@IsString()
-	_id?: string;
-
+export class ProjectQueryClass {
 	@IsString()
 	name: string;
-
-	@IsOptional()
-	@IsBoolean()
-	enabled?: boolean;
 
 	@Matches(
 		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
@@ -46,18 +36,16 @@ export class ProjectClass {
 	@ValidateNested({ each: true })
 	@Type(() => PermissionClass)
 	permissions?: PermissionClass[];
+}
 
-	@IsOptional()
-	@IsDate()
-	createdAt?: Date;
-
-	@IsOptional()
-	@IsDate()
-	updatedAt?: Date;
-
-	@IsOptional()
-	@IsEnum(ProjectSyncStatus)
-	syncStatus?: ProjectSyncStatus;
+export class ProjectClass extends MongoBaseClass {
+	name: string;
+	enabled: boolean;
+	gitUrl: string;
+	services: string[];
+	branch: string;
+	permissions: PermissionClass[];
+	syncStatus: ProjectSyncStatus;
 }
 
 class PermissionClass {
