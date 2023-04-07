@@ -3,7 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
-import { DomainsClass, UserClass } from 'shared/src/classes';
+import { DomainsClass, DomainsQueryClass, UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import { ResponseType } from 'shared/src/types';
 
@@ -43,7 +43,10 @@ export class DomainsService {
 		};
 	}
 
-	async create(userId: string, domain: DomainsClass): Promise<ResponseType> {
+	async create(
+		userId: string,
+		domain: DomainsQueryClass
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

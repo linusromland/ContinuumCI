@@ -1,11 +1,14 @@
 // External dependencies
-import { IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
-export class DomainsClass {
-	@IsString()
-	@IsOptional()
-	_id: string;
+// Internal dependencies
+import { MongoBaseClass } from './MongoBase.class';
 
+export class DomainsQueryClass {
 	@IsString()
+	name: string;
+}
+
+export class DomainsClass extends MongoBaseClass {
 	name: string;
 }

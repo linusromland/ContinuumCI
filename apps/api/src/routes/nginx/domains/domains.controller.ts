@@ -9,7 +9,7 @@ import {
 	UsePipes,
 	Delete
 } from '@nestjs/common/decorators';
-import { DomainsClass } from 'shared/src/classes';
+import { DomainsQueryClass } from 'shared/src/classes';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 // Internal dependencies
@@ -28,7 +28,7 @@ export class DomainsController {
 	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('create')
-	createDomain(@Request() req, @Body() project: DomainsClass) {
+	createDomain(@Request() req, @Body() project: DomainsQueryClass) {
 		return this.domainsService.create(req.user.sub, project);
 	}
 
