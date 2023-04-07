@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 // Internal dependencies
 import { JwtType, ResponseType, EmailVerificationType } from 'shared/src/types';
-import { UserClass } from 'shared/src/classes';
+import { UserClass, UserQueryClass } from 'shared/src/classes';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 import { UserRoleEnum } from 'shared/src/enums';
@@ -31,7 +31,7 @@ export class UsersService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
-	async create(user: UserClass): Promise<ResponseType> {
+	async create(user: UserQueryClass): Promise<ResponseType> {
 		try {
 			const role =
 				(await this.UserModel.countDocuments()) === 0

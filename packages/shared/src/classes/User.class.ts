@@ -12,11 +12,7 @@ import {
 // Internal dependencies
 import { UserRoleEnum } from '../enums';
 
-export class UserClass {
-	@IsString()
-	@IsOptional()
-	_id: string;
-
+export class UserQueryClass {
 	@IsString()
 	username: string;
 
@@ -39,5 +35,15 @@ export class UserClass {
 
 	@IsBoolean()
 	@Transform(({ value }) => value === 'true')
+	verifiedEmail: boolean;
+}
+
+export class UserClass extends MongoBaseClass {
+	username: string;
+	email: string;
+	password: string;
+	lastLogin: Date;
+	lastIp: string;
+	role: UserRoleEnum;
 	verifiedEmail: boolean;
 }

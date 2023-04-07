@@ -5,14 +5,14 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 // Internal dependencies
 import { UsersService } from './users.service';
-import { UserClass } from 'shared/src/classes';
+import { UserQueryClass } from 'shared/src/classes';
 
 @Controller('users')
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@Post('create')
-	createUser(@Body() user: UserClass) {
+	createUser(@Body() user: UserQueryClass) {
 		return this.usersService.create(user);
 	}
 
