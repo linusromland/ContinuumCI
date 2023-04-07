@@ -83,7 +83,7 @@ export class EnvironmentVariablesService {
 	async create(
 		userId: string,
 		environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 		if (!user) {
 			throw new BadRequestException({
@@ -166,7 +166,7 @@ export class EnvironmentVariablesService {
 	async update(
 		userId: string,
 		environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -244,7 +244,7 @@ export class EnvironmentVariablesService {
 	async delete(
 		userId: string,
 		environmentVariableId: string
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

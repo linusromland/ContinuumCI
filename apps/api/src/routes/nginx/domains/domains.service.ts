@@ -73,10 +73,7 @@ export class DomainsService {
 		};
 	}
 
-	async delete(
-		userId: string,
-		domainId: string
-	): Promise<ResponseType<undefined>> {
+	async delete(userId: string, domainId: string): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {

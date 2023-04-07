@@ -340,10 +340,7 @@ export class ProjectsService {
 		};
 	}
 
-	async delete(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType<undefined>> {
+	async delete(userId: string, projectId: string): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -394,10 +391,10 @@ export class ProjectsService {
 	async updateRepository(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
-		if (!user) {
+		if (!user)ResponseType
 			throw new BadRequestException({
 				success: false,
 				message: 'User not found'

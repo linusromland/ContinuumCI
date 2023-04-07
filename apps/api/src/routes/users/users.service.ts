@@ -31,7 +31,7 @@ export class UsersService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
-	async create(user: UserQueryClass): Promise<ResponseType<undefined>> {
+	async create(user: UserQueryClass): Promise<ResponseType> {
 		try {
 			const role =
 				(await this.UserModel.countDocuments()) === 0
@@ -220,7 +220,7 @@ export class UsersService {
 	async updateUsername(
 		user: JwtType,
 		newUsername: string
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
@@ -263,10 +263,7 @@ export class UsersService {
 		}
 	}
 
-	async updateEmail(
-		user: JwtType,
-		newEmail: string
-	): Promise<ResponseType<undefined>> {
+	async updateEmail(user: JwtType, newEmail: string): Promise<ResponseType> {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
@@ -329,10 +326,10 @@ export class UsersService {
 		user: JwtType,
 		oldPassword: string,
 		newPassword: string
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			if (!oldPassword || !newPassword) {
-				throw new BadRequestException({
+				throw neResponseType
 					success: false,
 					message: 'Missing required fields'
 				});
@@ -385,10 +382,10 @@ export class UsersService {
 		jwtUser: JwtType,
 		userId: string,
 		newRole: string
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			if (isValidObjectId(userId) === false) {
-				throw new BadRequestException({
+				throw neResponseType
 					success: false,
 					message: 'Invalid user id'
 				});

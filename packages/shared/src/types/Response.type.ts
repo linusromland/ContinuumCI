@@ -1,4 +1,4 @@
-interface ResponseType<T = unknown> {
+interface ResponseType<T = undefined> {
 	message: string;
 	success: boolean;
 	data?: T;

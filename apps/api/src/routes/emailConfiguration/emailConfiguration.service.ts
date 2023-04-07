@@ -28,7 +28,7 @@ export class EmailConfigurationService {
 
 	async create(
 		emailConfiguration: EmailConfigurationQueryClass
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
 			if (
@@ -101,7 +101,7 @@ export class EmailConfigurationService {
 		email: string,
 		verificationToken: string,
 		expires: Date
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			const emailConfiguration =
 				await this.EmailConfigurationModel.findOne().lean();

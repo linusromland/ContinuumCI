@@ -17,7 +17,7 @@ export class ConfigurationService {
 
 	async edit(
 		nginxConfiguration: NginxConfigurationType
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			await this.NginxConfigurationModel.updateOne(
 				{},

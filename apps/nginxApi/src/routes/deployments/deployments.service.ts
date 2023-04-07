@@ -28,7 +28,7 @@ export class DeploymentsService {
 
 	async create(
 		deploymentConfiguration: NginxDeploymentType
-	): Promise<ResponseType<undefined>> {
+	): Promise<ResponseType> {
 		try {
 			const configuration = await this.NginxConfigurationModel.findOne();
 			if (!configuration) {
@@ -119,7 +119,7 @@ export class DeploymentsService {
 		}
 	}
 
-	async delete(id: string): Promise<ResponseType<undefined>> {
+	async delete(id: string): Promise<ResponseType> {
 		if (!id) {
 			throw new BadRequestException({
 				success: false,
