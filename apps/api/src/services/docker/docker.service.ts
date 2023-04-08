@@ -1,5 +1,5 @@
 // External dependencies
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import Docker from 'dockerode';
 import Compose, { IDockerComposeResult } from 'docker-compose';
 import fs from 'fs';
@@ -9,12 +9,16 @@ import yaml from 'js-yaml';
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class DockerService {
 	private docker: Docker;
 
-	constructor() {
+	constructor(
+		@Inject('PROJECT_MODEL')
+		private ProjectModel: Model<ProjectClass>
+	) {
 		this.docker = new Docker();
 	}
 
@@ -82,6 +86,10 @@ export class DockerService {
 		);
 
 		if (container) {
+			await this.ProjectModel.findByIdAndUpdate(project._id, {
+				enabled: true
+			});
+
 			throw new BadRequestException({
 				success: false,
 				message: 'The project is already deployed'
@@ -133,7 +141,6 @@ export class DockerService {
 			await Compose.upAll({
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
 				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
-
 				log: true
 			}).then(
 				// On output, save the output
@@ -191,6 +198,7 @@ export class DockerService {
 			// Deploy the project
 			await Compose.down({
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
+				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
 				log: true
 			}).then(
 				// On output, save the output
