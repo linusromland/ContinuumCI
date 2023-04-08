@@ -35,6 +35,12 @@ export class ProjectsController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Post(':projectId/sync')
+	syncProject(@Request() req, @Param('projectId') projectId: string) {
+		return this.projectsService.sync(req.user.sub, projectId);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('create')
 	createProject(@Request() req, @Body() project: ProjectQueryClass) {

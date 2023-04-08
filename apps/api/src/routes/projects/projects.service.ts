@@ -4,8 +4,6 @@ import { Model } from 'mongoose';
 import simpleGit from 'simple-git';
 import fs from 'fs';
 import mongoose from 'mongoose';
-import yaml from 'js-yaml';
-import http from 'http';
 
 // Internal dependencies
 import { ProjectClass, ProjectQueryClass } from 'shared/src/classes';
@@ -20,6 +18,7 @@ import {
 } from 'shared/src/enums';
 import checkSync from 'src/utils/checkSync';
 import { DockerService } from 'src/services/docker/docker.service';
+import updateCompose from 'src/utils/updateCompose';
 
 @Injectable()
 export class ProjectsService {
@@ -159,6 +158,66 @@ export class ProjectsService {
 		};
 	}
 
+	async sync(userId: string, projectId: string): Promise<ResponseType> {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+		const project = await this.ProjectModel.findById(projectId);
+
+		if (!project) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		if (!['admin', 'root'].includes(user.role)) {
+			const user = project.permissions.find(
+				(permission) => permission.user.toString() === userId
+			);
+
+			if (!user || user.role == ProjectRoleEnum.VIEWER) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Not allowed to sync this project'
+				});
+			}
+		}
+		try {
+			const git = simpleGit({
+				baseDir: `${REPOSITORIES_DIRECTORY}/${projectId}`
+			});
+
+			// Discard all changes
+			await git.reset(['--hard']);
+
+			// Pull the latest changes
+			await git.pull();
+
+			if (!(await updateCompose(project, this.ProjectModel))) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Project sync failed'
+				});
+			}
+
+			return {
+				success: true,
+				message: 'Project synced successfully'
+			};
+		} catch (e) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project sync failed'
+			});
+		}
+	}
+
 	async create(
 		project: ProjectQueryClass,
 		userId: string
@@ -206,60 +265,12 @@ export class ProjectsService {
 			await git.checkout(createdProject.branch);
 		}
 
-		const COMPOSE_FILE_LOCATION = `${REPOSITORIES_DIRECTORY}/${createdProject._id}/docker-compose.yml`;
-
-		// Read in the docker-compose.yml file
-		const fileContents = fs.readFileSync(COMPOSE_FILE_LOCATION, 'utf8');
-
-		// Parse the YAML into a JavaScript object
-		const dockerCompose = yaml.load(fileContents);
-
-		const services = Object.keys(dockerCompose.services);
-
-		// Update the services in db
-		createdProject.services = services.map((service) => ({
-			name: service,
-			ports: []
-		}));
-
-		// Loop through each service in the docker-compose file
-		for (let i = 0; i < services.length; i++) {
-			const service = dockerCompose.services[services[i]];
-
-			// Add label to the service to identify it
-			dockerCompose.services[services[i]].labels = [
-				...(dockerCompose.services[services[i]].labels || []),
-				`continuumci.project.id=${createdProject._id}`
-			];
-
-			if (service.ports && service.ports.length) {
-				// Loop through each port mapping
-				for (let j = 0; j < service.ports.length; j++) {
-					const ports = service.ports[j].split(':');
-
-					if (createdProject.services[i].ports[j]) {
-						ports[0] = createdProject.services[i].ports[j];
-					} else {
-						// Generate a unique port
-						ports[0] = await this.generateUniquePort(
-							createdProject,
-							i,
-							j
-						);
-					}
-
-					// Update the port mapping
-					dockerCompose.services[services[i]].ports[j] =
-						ports.join(':');
-				}
-			}
+		if (!(await updateCompose(createdProject, this.ProjectModel))) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not created'
+			});
 		}
-
-		// Convert the JavaScript object back to YAML
-		const updatedFileContents = yaml.dump(dockerCompose);
-
-		// Write the updated YAML back out to disk
-		fs.writeFileSync(COMPOSE_FILE_LOCATION, updatedFileContents);
 
 		await createdProject.save();
 
@@ -477,114 +488,5 @@ export class ProjectsService {
 			success: true,
 			message: 'Project updated successfully'
 		};
-	}
-
-	generateUniquePort(
-		project: ProjectClass,
-		serviceIndex: number,
-		portIndex: number
-	): Promise<string> {
-		// eslint-disable-next-line no-async-promise-executor
-		return new Promise(async (resolve) => {
-			// Generate a random port number between 3000 and 10000
-			const port = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
-
-			const portTaken = await this.ProjectModel.aggregate([
-				{
-					$lookup: {
-						from: 'ports',
-						localField: 'services.ports',
-						foreignField: 'port',
-						as: 'usedPorts'
-					}
-				},
-				{
-					$project: {
-						_id: 0,
-						usedPorts: '$usedPorts.port'
-					}
-				},
-				{
-					$group: {
-						_id: null,
-						usedPorts: {
-							$push: '$usedPorts'
-						}
-					}
-				},
-				{
-					$lookup: {
-						from: 'ports',
-						let: { usedPorts: '$usedPorts' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$or: [
-											{ $in: [port, '$$usedPorts'] },
-											{ $eq: ['$port', port] }
-										]
-									}
-								}
-							},
-							{
-								$project: {
-									_id: 0,
-									port: 1
-								}
-							}
-						],
-						as: 'ports'
-					}
-				},
-				{
-					$project: {
-						result: {
-							$cond: {
-								if: { $gt: [{ $size: '$ports' }, 0] },
-								then: true,
-								else: false
-							}
-						}
-					}
-				}
-			]);
-
-			if (portTaken.length && portTaken[0].result) {
-				// If the port is already taken, generate a new one
-				this.generateUniquePort(project, serviceIndex, portIndex).then(
-					resolve
-				);
-			}
-
-			// Try to create a server on the port
-			const server = http.createServer();
-
-			server.on('error', () => {
-				// If an error occurs, the port is not available
-				// Generate a new random port and try again
-				this.generateUniquePort(project, serviceIndex, portIndex).then(
-					resolve
-				);
-			});
-
-			server.on('listening', () => {
-				// If we successfully start listening on the port, immediately close the server
-				server.close(async () => {
-					// The port is available, save it to the database
-					project.services[serviceIndex].ports[portIndex] = port;
-
-					await this.ProjectModel.findByIdAndUpdate(
-						project._id,
-						project
-					);
-
-					// Return the port
-					resolve(String(port));
-				});
-			});
-
-			server.listen(port);
-		});
 	}
 }
