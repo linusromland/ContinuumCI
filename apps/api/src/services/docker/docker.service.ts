@@ -5,7 +5,7 @@ import {
 	InternalServerErrorException
 } from '@nestjs/common';
 import Docker from 'dockerode';
-import Compose from 'docker-compose';
+import Compose, { IDockerComposeResult } from 'docker-compose';
 import fs from 'fs';
 import yaml from 'js-yaml';
 
@@ -68,7 +68,9 @@ export class DockerService {
 	async deployProject(
 		project: ProjectClass,
 		environmentVariables: EnvironmentVariablesClass[]
-	): Promise<void> {
+	): Promise<IDockerComposeResult[]> {
+		const result: IDockerComposeResult[] = [];
+
 		// Check if docker is running
 		try {
 			await this.docker.ping();
@@ -147,25 +149,35 @@ export class DockerService {
 
 				log: true
 			}).then(
-				// On output, do nothing
-				() => null,
+				// On output, save the output
+				(output) => {
+					result.push(output);
+				},
 				// On error
 				() => {
 					throw new InternalServerErrorException({
 						success: false,
-						message: 'Failed to deploy the project'
+						message: 'Failed to deploy the project',
+						data: result
 					});
 				}
 			);
+
+			return result;
 		} catch (error) {
 			throw new BadRequestException({
 				success: false,
-				message: 'Failed to deploy the project'
+				message: 'Failed to deploy the project',
+				data: result
 			});
 		}
 	}
 
-	async undeployProject(project: ProjectClass): Promise<void> {
+	async undeployProject(
+		project: ProjectClass
+	): Promise<IDockerComposeResult[]> {
+		const result: IDockerComposeResult[] = [];
+
 		// Check if docker is running
 		try {
 			await this.docker.ping();
@@ -198,20 +210,26 @@ export class DockerService {
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
 				log: true
 			}).then(
-				// On output, do nothing
-				() => null,
+				// On output, save the output
+				(output) => {
+					result.push(output);
+				},
 				// On error
 				() => {
 					throw new InternalServerErrorException({
 						success: false,
-						message: 'Failed to undeploy the project'
+						message: 'Failed to undeploy the project',
+						data: result
 					});
 				}
 			);
+
+			return result;
 		} catch (error) {
 			throw new BadRequestException({
 				success: false,
-				message: 'Failed to undeploy the project'
+				message: 'Failed to undeploy the project',
+				data: result
 			});
 		}
 	}

@@ -11,6 +11,7 @@ import {
 } from 'shared/src/classes';
 import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
 import { DockerService } from 'src/services/docker/docker.service';
+import { IDockerComposeResult } from 'docker-compose';
 
 @Injectable()
 export class DeploymentsService {
@@ -30,7 +31,7 @@ export class DeploymentsService {
 	async createDeployment(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<IDockerComposeResult[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -69,7 +70,10 @@ export class DeploymentsService {
 			project: projectId
 		});
 
-		await this.dockerService.deployProject(project, environmentVariables);
+		const result = await this.dockerService.deployProject(
+			project,
+			environmentVariables
+		);
 
 		await this.ProjectModel.findByIdAndUpdate(projectId, {
 			$set: {
@@ -79,14 +83,15 @@ export class DeploymentsService {
 
 		return {
 			success: true,
-			message: 'Deployment created'
+			message: 'Deployment created',
+			data: result
 		};
 	}
 
 	async removeDeployment(
 		userId: string,
 		projectId: string
-	): Promise<ResponseType> {
+	): Promise<ResponseType<IDockerComposeResult[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -121,7 +126,7 @@ export class DeploymentsService {
 			}
 		}
 
-		await this.dockerService.undeployProject(project);
+		const result = await this.dockerService.undeployProject(project);
 
 		await this.ProjectModel.findByIdAndUpdate(projectId, {
 			$set: {
@@ -131,7 +136,8 @@ export class DeploymentsService {
 
 		return {
 			success: true,
-			message: 'Deployment removed'
+			message: 'Deployment removed',
+			data: result
 		};
 	}
 }
