@@ -6,7 +6,7 @@ import { ProjectClass, ProjectQueryClass } from 'shared/src/classes';
 async function getAllProjects(): Promise<ResponseType<ProjectClass[]>> {
 	const request = await api.get('/projects/all');
 
-	return request.data as ResponseType;
+	return request.data as ResponseType<ProjectClass[]>;
 }
 
 async function getProject(
@@ -32,7 +32,7 @@ async function editProject(
 ): Promise<ResponseType<ProjectClass>> {
 	const request = await api.put('/projects/edit/' + id, data);
 
-	return request.data as ResponseType;
+	return request.data as ResponseType<ProjectClass>;
 }
 
-export { getAllProjects, getProject, createProject, editProject };
+export { getAllProjects, getProject, syncProject, createProject, editProject };
