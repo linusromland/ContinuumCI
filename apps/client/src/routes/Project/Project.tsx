@@ -17,6 +17,7 @@ import { Loading } from '../../components/Loading/Loading';
 import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
 import { ProjectClass } from 'shared/src/classes';
 import { syncProject, editProject, getProject } from '../../utils/api/projects';
+import { createDeployment, removeDeployment } from '../../utils/api/deployment';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -26,6 +27,7 @@ export default function Project() {
 	const [editNameModalOpen, setEditNameModalOpen] = useState(false);
 	const [deploymentIcon, setDeploymentIcon] = useState('');
 	const [syncLoading, setSyncLoading] = useState(false);
+	const [deploymentLoading, setDeploymentLoading] = useState(false);
 
 	async function getData() {
 		if (!projectId) return console.error('No projectId provided');
@@ -107,16 +109,31 @@ export default function Project() {
 								} else toast.error(response.message);
 								setSyncLoading(false);
 							}}
-							small
 							loading={syncLoading}
+							small
 						/>
 						<Button
 							text={project.enabled ? 'Stop' : 'Start'}
 							theme={project.enabled ? 'warning' : 'success'}
-							icon={project.enabled ? '/icons/stop.svg' : '/icons/play.svg'}
-							onClick={() => {
-								console.log('Stop');
+							icon={
+								deploymentLoading
+									? '/icons/sync.svg'
+									: project.enabled
+									? '/icons/stop.svg'
+									: '/icons/play.svg'
+							}
+							onClick={async () => {
+								setDeploymentLoading(true);
+								const response = project.enabled
+									? await removeDeployment(project._id)
+									: await createDeployment(project._id);
+								if (response.success) {
+									toast.success('Deployment ' + (project.enabled ? 'stopped' : 'started'));
+									getData();
+								} else toast.error(response.message);
+								setDeploymentLoading(false);
 							}}
+							loading={deploymentLoading}
 							small
 						/>
 						<Button
