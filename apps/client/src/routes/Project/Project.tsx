@@ -24,7 +24,7 @@ export default function Project() {
 
 	const [project, setProject] = useState({} as ProjectClass);
 	const [editNameModalOpen, setEditNameModalOpen] = useState(false);
-	const [deploymentIcon, setDeploymentIcon] = useState('/icons/paused.svg');
+	const [deploymentIcon, setDeploymentIcon] = useState('');
 
 	async function getData() {
 		if (!projectId) return console.error('No projectId provided');
@@ -34,14 +34,17 @@ export default function Project() {
 			setProject(response.data as ProjectClass);
 
 			const proj = response.data as ProjectClass;
-			if (proj.deploymentStatus === ProjectDeploymentStatus.RUNNING)
-				setDeploymentIcon('/icons/check.svg');
-			else if (
-				project.deploymentStatus ===
-				ProjectDeploymentStatus.PARTIALLY_RUNNING
-			)
-				setDeploymentIcon('/icons/warning.svg');
-			else setDeploymentIcon('/icons/cross.svg');
+			if (!proj.enabled) setDeploymentIcon('/icons/paused.svg');
+			else {
+				if (proj.deploymentStatus === ProjectDeploymentStatus.RUNNING)
+					setDeploymentIcon('/icons/check.svg');
+				else if (
+					project.deploymentStatus ===
+					ProjectDeploymentStatus.PARTIALLY_RUNNING
+				)
+					setDeploymentIcon('/icons/warning.svg');
+				else setDeploymentIcon('/icons/cross.svg');
+			}
 		} else {
 			navigate('/projects');
 			toast.error(response.message);
@@ -52,7 +55,7 @@ export default function Project() {
 		getData();
 	}, []);
 
-	if (!project) return <Loading />;
+	if (!project || !deploymentIcon) return <Loading />;
 
 	return (
 		<>
