@@ -37,13 +37,15 @@ export default function Modal({
 				className={style.modalContent}
 				ref={ref}
 			>
-				<img
-					src='/icons/cross.svg'
-					alt='Close modal'
-					className={style.close}
-					onClick={onClose}
-				/>
-				<h2 className={style.title}>{title}</h2>
+				<div className={style.header}>
+					<h2 className={style.title}>{title}</h2>
+					<img
+						src='/icons/close.svg'
+						alt='Close modal'
+						className={style.close}
+						onClick={onClose}
+					/>
+				</div>
 				{children}
 			</div>
 		</div>
