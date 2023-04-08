@@ -60,12 +60,11 @@ export default function Setup(): JSX.Element {
 								<RegistrationForm
 									onSubmit={(values) => {
 										(async () => {
-											const userCreated =
-												await createUser({
-													username: values.username,
-													email: values.email,
-													password: values.password
-												});
+											const userCreated = await createUser({
+												username: values.username,
+												email: values.email,
+												password: values.password
+											});
 
 											if (userCreated) {
 												await setToken({
@@ -75,12 +74,9 @@ export default function Setup(): JSX.Element {
 
 												setStage(1);
 											} else {
-												toast.error(
-													'An error occurred while creating the root user.',
-													{
-														position: 'top-left'
-													}
-												);
+												toast.error('An error occurred while creating the root user.', {
+													position: 'top-left'
+												});
 											}
 										})();
 									}}
@@ -90,21 +86,13 @@ export default function Setup(): JSX.Element {
 								<EmailConfigurationInput
 									onSubmit={(skip, values) => {
 										(async () => {
-											const emailConfiguration =
-												await updateEmailConfiguration({
-													service: skip
-														? 'skipped'
-														: values?.service
-																?.value || '',
-													auth: {
-														user:
-															values?.gmail
-																?.email || '',
-														pass:
-															values?.gmail
-																?.password || ''
-													}
-												});
+											const emailConfiguration = await updateEmailConfiguration({
+												service: skip ? 'skipped' : values?.service?.value || '',
+												auth: {
+													user: values?.gmail?.email || '',
+													pass: values?.gmail?.password || ''
+												}
+											});
 
 											if (emailConfiguration.success) {
 												navigate('/');

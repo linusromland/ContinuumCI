@@ -1,10 +1,5 @@
 // External dependencies
-import {
-	ExecutionContext,
-	Inject,
-	Injectable,
-	UnauthorizedException
-} from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import * as jwt from 'jsonwebtoken';
 import { Model } from 'mongoose';
@@ -25,9 +20,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 	canActivate(context: ExecutionContext) {
 		const request = context.switchToHttp().getRequest();
 
-		const ip =
-			request.headers['x-forwarded-for'] ||
-			request.connection.remoteAddress;
+		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 		const token = request.headers['authorization'];
 		const splitToken = token.split(' ');
 
@@ -36,9 +29,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
 			if (decodedToken) {
 				(async () => {
-					const user = await this.UserModel.findById(
-						decodedToken.sub
-					);
+					const user = await this.UserModel.findById(decodedToken.sub);
 
 					if (user) {
 						user.lastLogin = new Date();

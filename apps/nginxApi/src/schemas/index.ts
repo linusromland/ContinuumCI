@@ -5,10 +5,4 @@ import { NginxLogsSchema } from './NginxLogs.schema';
 import { NginxReloadLogsSchema } from './NginxReloadLogs.schema';
 import { NginxResumeSchema } from './NginxResume.schema';
 
-export {
-	NginxConfigurationSchema,
-	NginxDeploymentsSchema,
-	NginxLogsSchema,
-	NginxReloadLogsSchema,
-	NginxResumeSchema
-};
+export { NginxConfigurationSchema, NginxDeploymentsSchema, NginxLogsSchema, NginxReloadLogsSchema, NginxResumeSchema };

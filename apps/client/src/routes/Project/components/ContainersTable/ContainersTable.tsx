@@ -6,11 +6,7 @@ import style from './ContainersTable.module.scss';
 import Table from '../../../../components/Table/Table';
 import Widget from '../../../../components/Widget/Widget';
 
-export default function ContainersTable({
-	projectId
-}: {
-	projectId: string;
-}): JSX.Element {
+export default function ContainersTable({ projectId }: { projectId: string }): JSX.Element {
 	return (
 		<Widget>
 			<div className={style.container}>
@@ -21,20 +17,11 @@ export default function ContainersTable({
 					/>
 					<h1>Containers</h1>
 				</div>
-				<p className={style.text}>
-					Here you can see all the containers that are running in this
-					project.
-				</p>
+				<p className={style.text}>Here you can see all the containers that are running in this project.</p>
 				<Table
 					widget={false}
 					headers={['Name', 'State', 'Created']}
-					data={[
-						[
-							<Link to=''>velody_1-api:latest</Link>,
-							'Running',
-							'2021-05-01 12:00:00'
-						]
-					]}
+					data={[[<Link to=''>velody_1-api:latest</Link>, 'Running', '2021-05-01 12:00:00']]}
 				/>
 			</div>
 		</Widget>

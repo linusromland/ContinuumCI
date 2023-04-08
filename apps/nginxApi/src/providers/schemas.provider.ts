@@ -14,32 +14,27 @@ import {
 const schemaProviders = [
 	{
 		provide: 'NGINX_CONFIGURATION_MODEL',
-		useFactory: (connection: Connection) =>
-			connection.model('nginxconfiguration', NginxConfigurationSchema),
+		useFactory: (connection: Connection) => connection.model('nginxconfiguration', NginxConfigurationSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
 		provide: 'NGINX_DEPLOYMENTS_MODEL',
-		useFactory: (connection: Connection) =>
-			connection.model('nginxdeployments', NginxDeploymentsSchema),
+		useFactory: (connection: Connection) => connection.model('nginxdeployments', NginxDeploymentsSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
 		provide: 'NGINX_LOGS_MODEL',
-		useFactory: (connection: Connection) =>
-			connection.model('nginxlogs', NginxLogsSchema),
+		useFactory: (connection: Connection) => connection.model('nginxlogs', NginxLogsSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
 		provide: 'NGINX_RELOAD_LOGS_MODEL',
-		useFactory: (connection: Connection) =>
-			connection.model('nginxreloadlogs', NginxReloadLogsSchema),
+		useFactory: (connection: Connection) => connection.model('nginxreloadlogs', NginxReloadLogsSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
 		provide: 'NGINX_RESUME_MODEL',
-		useFactory: (connection: Connection) =>
-			connection.model('nginxresume', NginxResumeSchema),
+		useFactory: (connection: Connection) => connection.model('nginxresume', NginxResumeSchema),
 		inject: ['DATABASE_CONNECTION']
 	}
 ];

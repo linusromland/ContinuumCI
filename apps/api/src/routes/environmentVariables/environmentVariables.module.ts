@@ -8,15 +8,7 @@ import { databaseProviders, schemaProviders } from '../../providers';
 
 @Module({
 	controllers: [EnvironmentVariablesController],
-	providers: [
-		EnvironmentVariablesService,
-		...databaseProviders,
-		...schemaProviders
-	],
-	exports: [
-		EnvironmentVariablesService,
-		...databaseProviders,
-		...schemaProviders
-	]
+	providers: [EnvironmentVariablesService, ...databaseProviders, ...schemaProviders],
+	exports: [EnvironmentVariablesService, ...databaseProviders, ...schemaProviders]
 })
 export class EnvironmentVariablesModule {}

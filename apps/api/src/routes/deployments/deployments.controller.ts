@@ -12,25 +12,13 @@ export class DeploymentsController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
-	async createDeployment(
-		@Request() req,
-		@Body() deploymentQuery: DeploymentQueryClass
-	) {
-		return this.deploymentsService.createDeployment(
-			req.user.sub,
-			deploymentQuery.project
-		);
+	async createDeployment(@Request() req, @Body() deploymentQuery: DeploymentQueryClass) {
+		return this.deploymentsService.createDeployment(req.user.sub, deploymentQuery.project);
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post('remove')
-	async removeDeployment(
-		@Request() req,
-		@Body() deploymentQuery: DeploymentQueryClass
-	) {
-		return this.deploymentsService.removeDeployment(
-			req.user.sub,
-			deploymentQuery.project
-		);
+	async removeDeployment(@Request() req, @Body() deploymentQuery: DeploymentQueryClass) {
+		return this.deploymentsService.removeDeployment(req.user.sub, deploymentQuery.project);
 	}
 }

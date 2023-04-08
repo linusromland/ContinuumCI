@@ -1,14 +1,6 @@
 // External dependencies
 import { Controller, Post, ValidationPipe } from '@nestjs/common';
-import {
-	Body,
-	Request,
-	Param,
-	Get,
-	UseGuards,
-	UsePipes,
-	Delete
-} from '@nestjs/common/decorators';
+import { Body, Request, Param, Get, UseGuards, UsePipes, Delete } from '@nestjs/common/decorators';
 import { DomainsQueryClass } from 'shared/src/classes';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 

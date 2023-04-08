@@ -16,14 +16,8 @@ import {
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
 
-export default function EnviromentVariablesTable({
-	project
-}: {
-	project: ProjectClass;
-}): JSX.Element {
-	const [variables, setVariables] = useState(
-		[] as EnvironmentVariablesClass[]
-	);
+export default function EnviromentVariablesTable({ project }: { project: ProjectClass }): JSX.Element {
+	const [variables, setVariables] = useState([] as EnvironmentVariablesClass[]);
 	const [confirmDelete, setConfirmDelete] = useState('');
 	const [variableInputs, setVariableInputs] = useState([] as string[]);
 
@@ -54,10 +48,7 @@ export default function EnviromentVariablesTable({
 						/>
 						<h1>Enviroment Variables</h1>
 					</div>
-					<p className={style.text}>
-						These values will be used in all containers of this
-						project.
-					</p>
+					<p className={style.text}>These values will be used in all containers of this project.</p>
 					<Table
 						widget={false}
 						headers={['Name', 'Value', 'Services', 'Actions']}
@@ -67,9 +58,7 @@ export default function EnviromentVariablesTable({
 								<input
 									className={style.input}
 									type='text'
-									value={
-										variableInputs[index] || variable.value
-									}
+									value={variableInputs[index] || variable.value}
 									onChange={(e) => {
 										const vars = [...variableInputs];
 										vars[index] = e.target.value;
@@ -77,45 +66,29 @@ export default function EnviromentVariablesTable({
 									}}
 								/>,
 								<p>
-									{variable.services.length ===
-									(project.services || []).length
+									{variable.services.length === (project.services || []).length
 										? 'All'
 										: variable.services.join(', ')}
 								</p>,
 
 								<div className={style.buttons}>
 									<Button
-										text={
-											variable._id === confirmDelete
-												? 'Confirm'
-												: 'Remove'
-										}
+										text={variable._id === confirmDelete ? 'Confirm' : 'Remove'}
 										theme='error'
 										onClick={async () => {
-											if (
-												variable._id === confirmDelete
-											) {
-												const response =
-													await deleteVariable(
-														variable._id
-													);
+											if (variable._id === confirmDelete) {
+												const response = await deleteVariable(variable._id);
 
 												setConfirmDelete('');
 
 												if (response) {
-													toast.success(
-														`Variable ${variable.name} deleted`
-													);
+													toast.success(`Variable ${variable.name} deleted`);
 													getData();
 												} else {
-													toast.error(
-														`Error deleting variable ${variable.name}`
-													);
+													toast.error(`Error deleting variable ${variable.name}`);
 												}
 											} else {
-												setConfirmDelete(
-													variable._id || ''
-												);
+												setConfirmDelete(variable._id || '');
 											}
 										}}
 										small
@@ -126,25 +99,16 @@ export default function EnviromentVariablesTable({
 										onClick={async () => {
 											if (!variableInputs[index]) return;
 
-											const variablesCopy =
-												variables[index];
-											variablesCopy.value =
-												variableInputs[index];
+											const variablesCopy = variables[index];
+											variablesCopy.value = variableInputs[index];
 
-											const response =
-												await updateVariable(
-													variablesCopy
-												);
+											const response = await updateVariable(variablesCopy);
 
 											if (response.success) {
-												toast.success(
-													`Variable ${variable.name} updated`
-												);
+												toast.success(`Variable ${variable.name} updated`);
 												getData();
 											} else {
-												toast.error(
-													`Error updating variable ${variable.name}`
-												);
+												toast.error(`Error updating variable ${variable.name}`);
 											}
 										}}
 										small
@@ -164,11 +128,7 @@ export default function EnviromentVariablesTable({
 				</div>
 			</Widget>
 			<CreateVariableModal
-				serviceList={
-					project.services
-						? project.services.map((service) => service.name)
-						: []
-				}
+				serviceList={project.services ? project.services.map((service) => service.name) : []}
 				open={createModalOpen}
 				onClose={() => {
 					setCreateModalOpen(false);

@@ -50,11 +50,7 @@ export class ProjectsController {
 	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Put('edit/:projectId')
-	updateProject(
-		@Request() req,
-		@Param('projectId') projectId: string,
-		@Body() project: ProjectQueryClass
-	) {
+	updateProject(@Request() req, @Param('projectId') projectId: string, @Body() project: ProjectQueryClass) {
 		return this.projectsService.update(req.user.sub, projectId, project);
 	}
 

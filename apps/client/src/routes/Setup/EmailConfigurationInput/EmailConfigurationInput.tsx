@@ -13,9 +13,7 @@ const EmailConfigurationSchema = Yup.object().shape({
 		label: Yup.string().required('Service is required')
 	}),
 	gmail: Yup.object().shape({
-		email: Yup.string()
-			.email('Invalid email')
-			.required('Email is required'),
+		email: Yup.string().email('Invalid email').required('Email is required'),
 		password: Yup.string().required('Password is required')
 	})
 });

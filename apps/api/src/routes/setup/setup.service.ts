@@ -24,12 +24,9 @@ export class SetupService {
 	async getSetup(): Promise<ResponseType<unknown>> {
 		const emailConfiguration = await this.EmailConfigurationModel.findOne();
 		const verifiedEmailConfiguration =
-			emailConfiguration?.service ===
-				EmailConfigurationServiceEnum.SKIPPED ||
+			emailConfiguration?.service === EmailConfigurationServiceEnum.SKIPPED ||
 			(emailConfiguration &&
-				(await this.emailConfigurationService.verifyEmailConfiguration(
-					emailConfiguration
-				))) ||
+				(await this.emailConfigurationService.verifyEmailConfiguration(emailConfiguration))) ||
 			false;
 
 		const user = await this.UserModel.findOne({ role: 'root' }).lean();
@@ -38,10 +35,7 @@ export class SetupService {
 			success: true,
 			message: 'Setup status fetched successfully',
 			data: {
-				status:
-					verifiedEmailConfiguration && user
-						? 'complete'
-						: 'incomplete',
+				status: verifiedEmailConfiguration && user ? 'complete' : 'incomplete',
 				emailConfiguration: verifiedEmailConfiguration,
 				rootUser: !!user
 			}

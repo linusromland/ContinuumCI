@@ -1,19 +1,9 @@
 // External dependencies
-import {
-	IsArray,
-	IsOptional,
-	IsString,
-	Matches,
-	ValidateNested
-} from 'class-validator';
+import { IsArray, IsOptional, IsString, Matches, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 // Internal dependencies
-import {
-	ProjectDeploymentStatus,
-	ProjectRoleEnum,
-	ProjectSyncStatus
-} from '../enums';
+import { ProjectDeploymentStatus, ProjectRoleEnum, ProjectSyncStatus } from '../enums';
 import { UserClass } from './User.class';
 import { MongoBaseClass } from './MongoBase.class';
 
@@ -21,9 +11,7 @@ export class ProjectQueryClass {
 	@IsString()
 	name: string;
 
-	@Matches(
-		/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
-	)
+	@Matches(/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/)
 	@IsOptional()
 	@IsString()
 	gitUrl?: string;

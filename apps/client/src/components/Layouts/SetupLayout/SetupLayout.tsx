@@ -109,12 +109,8 @@ export default function SetupLayout(): JSX.Element {
 				</div>
 				<div className={style.footer}>
 					<p>
-						ContinuumCI is a project by Linus Romland. The source
-						code is available on{' '}
-						<a href='https://github.com/linusromland/ContinuumCI'>
-							GitHub
-						</a>
-						.
+						ContinuumCI is a project by Linus Romland. The source code is available on{' '}
+						<a href='https://github.com/linusromland/ContinuumCI'>GitHub</a>.
 					</p>
 				</div>
 			</div>

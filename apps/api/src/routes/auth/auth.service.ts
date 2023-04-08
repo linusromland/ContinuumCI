@@ -16,9 +16,7 @@ export class AuthService {
 	) {}
 
 	async getUser(id: string): Promise<ResponseType<UserClass>> {
-		const user: UserClass = await this.UserModel.findById(id).select(
-			'-password'
-		);
+		const user: UserClass = await this.UserModel.findById(id).select('-password');
 
 		if (user) {
 			return {

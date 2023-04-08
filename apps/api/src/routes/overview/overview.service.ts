@@ -21,15 +21,7 @@ export class OverviewService {
 	) {}
 
 	async getOverview() {
-		const [
-			cpuUsage,
-			cpuCores,
-			mem,
-			network,
-			networkAdapter,
-			dockerInformation,
-			totalProjects
-		] = await Promise.all([
+		const [cpuUsage, cpuCores, mem, network, networkAdapter, dockerInformation, totalProjects] = await Promise.all([
 			si.currentLoad(),
 			si.cpu(),
 			si.mem(),
@@ -39,9 +31,7 @@ export class OverviewService {
 			this.ProjectModel.find({ enabled: true }).select('_id')
 		]);
 
-		const networkAdapterIndex = network.findIndex(
-			(adapter) => adapter.iface === networkAdapter
-		);
+		const networkAdapterIndex = network.findIndex((adapter) => adapter.iface === networkAdapter);
 
 		const runningProjects = await this.dockerService.runningProjects(
 			totalProjects.map((project) => project._id.toString())

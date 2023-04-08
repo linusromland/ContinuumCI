@@ -1,14 +1,9 @@
 // Internal dependencies
 import api from '.';
 import { ResponseType } from 'shared/src/types';
-import {
-	EnvironmentVariablesClass,
-	EnvironmentVariablesQueryClass
-} from 'shared/src/classes';
+import { EnvironmentVariablesClass, EnvironmentVariablesQueryClass } from 'shared/src/classes';
 
-async function getAllVariables(
-	projectId: string
-): Promise<ResponseType<EnvironmentVariablesClass[]>> {
+async function getAllVariables(projectId: string): Promise<ResponseType<EnvironmentVariablesClass[]>> {
 	const request = await api.get('/environmentVariables/' + projectId);
 
 	return request.data;
@@ -22,17 +17,13 @@ async function createVariable(
 	return request.data;
 }
 
-async function updateVariable(
-	variable: EnvironmentVariablesClass
-): Promise<ResponseType<EnvironmentVariablesClass>> {
+async function updateVariable(variable: EnvironmentVariablesClass): Promise<ResponseType<EnvironmentVariablesClass>> {
 	const request = await api.put('/environmentVariables', variable);
 
 	return request.data;
 }
 
-async function deleteVariable(
-	variableId: string
-): Promise<ResponseType<EnvironmentVariablesClass>> {
+async function deleteVariable(variableId: string): Promise<ResponseType<EnvironmentVariablesClass>> {
 	const request = await api.delete('/environmentVariables/' + variableId);
 
 	return request.data;

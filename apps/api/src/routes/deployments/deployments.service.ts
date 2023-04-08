@@ -4,11 +4,7 @@ import { Model } from 'mongoose';
 
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import {
-	UserClass,
-	EnvironmentVariablesClass,
-	ProjectClass
-} from 'shared/src/classes';
+import { UserClass, EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
 import { DockerService } from 'src/services/docker/docker.service';
 import { IDockerComposeResult } from 'docker-compose';
@@ -28,10 +24,7 @@ export class DeploymentsService {
 		private ProjectModel: Model<ProjectClass>
 	) {}
 
-	async createDeployment(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType<IDockerComposeResult[]>> {
+	async createDeployment(userId: string, projectId: string): Promise<ResponseType<IDockerComposeResult[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -53,15 +46,12 @@ export class DeploymentsService {
 		if (user.role == UserRoleEnum.USER) {
 			if (
 				project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.VIEWER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.VIEWER
 				)
 			) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'User does not have permission to deploy this project'
+					message: 'User does not have permission to deploy this project'
 				});
 			}
 		}
@@ -70,10 +60,7 @@ export class DeploymentsService {
 			project: projectId
 		});
 
-		const result = await this.dockerService.deployProject(
-			project,
-			environmentVariables
-		);
+		const result = await this.dockerService.deployProject(project, environmentVariables);
 
 		await this.ProjectModel.findByIdAndUpdate(projectId, {
 			$set: {
@@ -88,10 +75,7 @@ export class DeploymentsService {
 		};
 	}
 
-	async removeDeployment(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType<IDockerComposeResult[]>> {
+	async removeDeployment(userId: string, projectId: string): Promise<ResponseType<IDockerComposeResult[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -113,15 +97,12 @@ export class DeploymentsService {
 		if (user.role == UserRoleEnum.USER) {
 			if (
 				project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.VIEWER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.VIEWER
 				)
 			) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'User does not have permission to undeploy this project'
+					message: 'User does not have permission to undeploy this project'
 				});
 			}
 		}

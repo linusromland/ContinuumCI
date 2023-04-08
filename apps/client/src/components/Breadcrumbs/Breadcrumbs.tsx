@@ -31,9 +31,7 @@ export default function Breadcrumbs({
 							<span>{item.name}</span>
 						)}
 
-						{index !== path.length - 1 && (
-							<span className={style.separator}>{' >'}</span>
-						)}
+						{index !== path.length - 1 && <span className={style.separator}>{' >'}</span>}
 					</div>
 				);
 			})}

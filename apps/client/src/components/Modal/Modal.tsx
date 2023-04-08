@@ -23,10 +23,7 @@ export default function Modal({
 		<div
 			className={style.modal}
 			onClick={() => {
-				if (
-					ref.current &&
-					ref.current.contains(event?.target as Node)
-				) {
+				if (ref.current && ref.current.contains(event?.target as Node)) {
 					return;
 				}
 

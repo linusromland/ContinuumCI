@@ -1,13 +1,6 @@
 // External dependencies
 import { Transform } from 'class-transformer';
-import {
-	IsBoolean,
-	IsDate,
-	IsEmail,
-	IsEnum,
-	IsOptional,
-	IsString
-} from 'class-validator';
+import { IsBoolean, IsDate, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 
 // Internal dependencies
 import { UserRoleEnum } from '../enums';

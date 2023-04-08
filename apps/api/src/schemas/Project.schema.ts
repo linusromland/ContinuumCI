@@ -18,9 +18,7 @@ export const ProjectSchema = new Schema(
 				{
 					validator: (value: string) => {
 						// Check if the URL is a valid git URL
-						return value.match(
-							/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/
-						);
+						return value.match(/^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|#[-\d\w._]+?)$/);
 					}
 				}
 			]

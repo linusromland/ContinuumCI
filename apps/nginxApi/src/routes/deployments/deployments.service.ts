@@ -6,12 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Internal dependencies
-import {
-	ResponseType,
-	NginxDeploymentType,
-	NginxConfigurationType,
-	NginxReloadLogsType
-} from 'shared/src/types';
+import { ResponseType, NginxDeploymentType, NginxConfigurationType, NginxReloadLogsType } from 'shared/src/types';
 import template from 'src/utils/template';
 
 @Injectable()
@@ -26,9 +21,7 @@ export class DeploymentsService {
 		private NginxReloadLogsModel: Model<NginxReloadLogsType>
 	) {}
 
-	async create(
-		deploymentConfiguration: NginxDeploymentType
-	): Promise<ResponseType> {
+	async create(deploymentConfiguration: NginxDeploymentType): Promise<ResponseType> {
 		try {
 			const configuration = await this.NginxConfigurationModel.findOne();
 			if (!configuration) {
@@ -38,31 +31,19 @@ export class DeploymentsService {
 				});
 			}
 
-			const deployment = new this.NginxDeploymentsModel(
-				deploymentConfiguration
-			);
+			const deployment = new this.NginxDeploymentsModel(deploymentConfiguration);
 			await deployment.save();
 
-			const nginxTemplate = template(
-				deploymentConfiguration,
-				configuration.localIps
-			);
+			const nginxTemplate = template(deploymentConfiguration, configuration.localIps);
 
-			fs.writeFileSync(
-				path.join(
-					configuration.sitesEnabledLocation,
-					`${deployment._id}.conf`
-				),
-				nginxTemplate
-			);
+			fs.writeFileSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`), nginxTemplate);
 
 			const reloadCommand = new Promise((resolve, reject) => {
 				exec('nginx -s reload', (error, stdout, stderr) => {
 					if (error) {
 						reject({
 							success: false,
-							message:
-								'Deployment created, nginx failed to reload',
+							message: 'Deployment created, nginx failed to reload',
 							logs: error
 						});
 					}
@@ -145,12 +126,7 @@ export class DeploymentsService {
 			}
 
 			try {
-				fs.unlinkSync(
-					path.join(
-						configuration.sitesEnabledLocation,
-						`${deployment._id}.conf`
-					)
-				);
+				fs.unlinkSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`));
 			} catch (error) {
 				console.log(error);
 			}
@@ -162,8 +138,7 @@ export class DeploymentsService {
 					if (error) {
 						reject({
 							success: false,
-							message:
-								'Deployment deleted, nginx failed to reload',
+							message: 'Deployment deleted, nginx failed to reload',
 							logs: error
 						});
 					}

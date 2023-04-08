@@ -44,20 +44,14 @@ export default function Login(): JSX.Element {
 										email: values.email,
 										password: values.password
 									});
-									toast.success(
-										'Successfully created user!',
-										{
-											position: 'top-left'
-										}
-									);
+									toast.success('Successfully created user!', {
+										position: 'top-left'
+									});
 									navigate('/');
 								} else {
-									toast.error(
-										'An error occurred while creating the root user.',
-										{
-											position: 'top-left'
-										}
-									);
+									toast.error('An error occurred while creating the root user.', {
+										position: 'top-left'
+									});
 								}
 							})();
 						}}
@@ -85,9 +79,7 @@ export default function Login(): JSX.Element {
 				)}
 
 				<p className={style.footerText}>
-					{registered
-						? 'Already have an account?'
-						: "Don't have an account?"}{' '}
+					{registered ? 'Already have an account?' : "Don't have an account?"}{' '}
 					<a
 						onClick={() => setRegistered(!registered)}
 						className={style.link}

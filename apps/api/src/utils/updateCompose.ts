@@ -8,10 +8,7 @@ import http from 'http';
 import { REPOSITORIES_DIRECTORY } from './env';
 import { ProjectClass } from 'shared/src/classes';
 
-async function updateCompose(
-	project: ProjectClass,
-	ProjectModel: Model<ProjectClass>
-): Promise<boolean> {
+async function updateCompose(project: ProjectClass, ProjectModel: Model<ProjectClass>): Promise<boolean> {
 	try {
 		const COMPOSE_FILE_LOCATION = `${REPOSITORIES_DIRECTORY}/${project._id}/docker-compose.yml`;
 
@@ -48,17 +45,11 @@ async function updateCompose(
 						ports[0] = project.services[i].ports[j];
 					} else {
 						// Generate a unique port
-						ports[0] = await generateUniquePort(
-							project,
-							i,
-							j,
-							ProjectModel
-						);
+						ports[0] = await generateUniquePort(project, i, j, ProjectModel);
 					}
 
 					// Update the port mapping
-					dockerCompose.services[services[i]].ports[j] =
-						ports.join(':');
+					dockerCompose.services[services[i]].ports[j] = ports.join(':');
 				}
 			}
 		}
@@ -118,10 +109,7 @@ function generateUniquePort(
 						{
 							$match: {
 								$expr: {
-									$or: [
-										{ $in: [port, '$$usedPorts'] },
-										{ $eq: ['$port', port] }
-									]
+									$or: [{ $in: [port, '$$usedPorts'] }, { $eq: ['$port', port] }]
 								}
 							}
 						},
@@ -150,12 +138,7 @@ function generateUniquePort(
 
 		if (portTaken.length && portTaken[0].result) {
 			// If the port is already taken, generate a new one
-			generateUniquePort(
-				project,
-				serviceIndex,
-				portIndex,
-				ProjectModel
-			).then(resolve);
+			generateUniquePort(project, serviceIndex, portIndex, ProjectModel).then(resolve);
 		}
 
 		// Try to create a server on the port
@@ -164,12 +147,7 @@ function generateUniquePort(
 		server.on('error', () => {
 			// If an error occurs, the port is not available
 			// Generate a new random port and try again
-			generateUniquePort(
-				project,
-				serviceIndex,
-				portIndex,
-				ProjectModel
-			).then(resolve);
+			generateUniquePort(project, serviceIndex, portIndex, ProjectModel).then(resolve);
 		});
 
 		server.on('listening', () => {

@@ -9,9 +9,7 @@ import CustomSelect from './CustomSelect';
 type OptionType = { value: string; label: string };
 type CustomSelectProps = FieldProps & SelectProps<OptionType>;
 
-export default function CustomMultiSelect({
-	...props
-}: CustomSelectProps): JSX.Element {
+export default function CustomMultiSelect({ ...props }: CustomSelectProps): JSX.Element {
 	return (
 		<CustomSelect
 			{...props}

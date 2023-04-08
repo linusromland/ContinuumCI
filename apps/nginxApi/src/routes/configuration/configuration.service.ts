@@ -15,15 +15,9 @@ export class ConfigurationService {
 		private readonly logWatcherService: LogWatcherService
 	) {}
 
-	async edit(
-		nginxConfiguration: NginxConfigurationType
-	): Promise<ResponseType> {
+	async edit(nginxConfiguration: NginxConfigurationType): Promise<ResponseType> {
 		try {
-			await this.NginxConfigurationModel.updateOne(
-				{},
-				nginxConfiguration,
-				{ upsert: true }
-			);
+			await this.NginxConfigurationModel.updateOne({}, nginxConfiguration, { upsert: true });
 
 			await this.logWatcherService.startLogWatcher();
 
@@ -41,16 +35,14 @@ export class ConfigurationService {
 
 	async get(): Promise<ResponseType<NginxConfigurationType>> {
 		try {
-			const nginxConfiguration =
-				await this.NginxConfigurationModel.findOne({});
+			const nginxConfiguration = await this.NginxConfigurationModel.findOne({});
 
 			return {
 				success: true,
 				message: 'Nginx configuration',
 				data: {
 					localIps: nginxConfiguration.localIps,
-					sitesEnabledLocation:
-						nginxConfiguration.sitesEnabledLocation,
+					sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
 					accessLogLocation: nginxConfiguration.accessLogLocation
 				}
 			};

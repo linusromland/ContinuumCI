@@ -37,12 +37,8 @@ export default function Project() {
 			const proj = response.data as ProjectClass;
 			if (!proj.enabled) setDeploymentIcon('/icons/paused.svg');
 			else {
-				if (proj.deploymentStatus === ProjectDeploymentStatus.RUNNING)
-					setDeploymentIcon('/icons/check.svg');
-				else if (
-					project.deploymentStatus ===
-					ProjectDeploymentStatus.PARTIALLY_RUNNING
-				)
+				if (proj.deploymentStatus === ProjectDeploymentStatus.RUNNING) setDeploymentIcon('/icons/check.svg');
+				else if (project.deploymentStatus === ProjectDeploymentStatus.PARTIALLY_RUNNING)
 					setDeploymentIcon('/icons/warning.svg');
 				else setDeploymentIcon('/icons/cross.svg');
 			}
@@ -117,11 +113,7 @@ export default function Project() {
 						<Button
 							text={project.enabled ? 'Stop' : 'Start'}
 							theme={project.enabled ? 'warning' : 'success'}
-							icon={
-								project.enabled
-									? '/icons/stop.svg'
-									: '/icons/play.svg'
-							}
+							icon={project.enabled ? '/icons/stop.svg' : '/icons/play.svg'}
 							onClick={() => {
 								console.log('Stop');
 							}}
@@ -140,11 +132,7 @@ export default function Project() {
 					<div className={style.statusContainer}>
 						<StatusWidget
 							icon={deploymentIcon}
-							text={
-								project.enabled
-									? project.deploymentStatus
-									: 'Manual stop'
-							}
+							text={project.enabled ? project.deploymentStatus : 'Manual stop'}
 						/>
 						<StatusWidget
 							icon={
@@ -152,9 +140,7 @@ export default function Project() {
 									? '/icons/check.svg'
 									: '/icons/warning.svg'
 							}
-							text={
-								project.syncStatus || ProjectSyncStatus.UNKNOWN
-							}
+							text={project.syncStatus || ProjectSyncStatus.UNKNOWN}
 						/>
 					</div>
 					<div className={style.tables}>

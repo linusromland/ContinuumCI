@@ -8,9 +8,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('emailConfiguration')
 export class EmailConfigurationController {
-	constructor(
-		private readonly emailConfigurationService: EmailConfigurationService
-	) {}
+	constructor(private readonly emailConfigurationService: EmailConfigurationService) {}
 
 	@UseGuards(JwtAuthGuard)
 	@Put()

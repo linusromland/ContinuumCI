@@ -86,10 +86,7 @@ export default function ChangePasswordForm() {
 						text='Change password'
 						disabled={isSubmitting}
 						onClick={async () => {
-							const response = await updatePassword(
-								values.oldPassword,
-								values.newPassword
-							);
+							const response = await updatePassword(values.oldPassword, values.newPassword);
 
 							if (response.success) {
 								toast.success('Password changed successfully');

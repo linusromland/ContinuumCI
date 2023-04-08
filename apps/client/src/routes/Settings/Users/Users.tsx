@@ -37,23 +37,12 @@ export default function Users(): JSX.Element {
 						<div className={style.container}>
 							<h2 className={style.subtitle}>Users</h2>
 							<Table
-								headers={[
-									'Account Type',
-									'Username',
-									'E-mail',
-									'Last Login',
-									'Last IP',
-									'Actions'
-								]}
+								headers={['Account Type', 'Username', 'E-mail', 'Last Login', 'Last IP', 'Actions']}
 								data={users.map((user) => [
 									formatRole(user.role),
 									user.username,
 									user.email,
-									user.lastLogin
-										? new Date(
-												user.lastLogin
-										  ).toLocaleString()
-										: 'Never',
+									user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never',
 									user.lastIp ? user.lastIp : 'Never',
 									<Button
 										text='Edit'
@@ -63,9 +52,7 @@ export default function Users(): JSX.Element {
 											setSelectedUser(user);
 											setShowChangeRoleModal(true);
 										}}
-										disabled={
-											user.role === UserRoleEnum.ROOT
-										}
+										disabled={user.role === UserRoleEnum.ROOT}
 									/>
 								])}
 								widget={false}

@@ -48,9 +48,7 @@ export default function Projects() {
 							<StatusBar
 								succeeded={
 									(projects.filter(
-										(project) =>
-											project.deploymentStatus ===
-											ProjectDeploymentStatus.RUNNING
+										(project) => project.deploymentStatus === ProjectDeploymentStatus.RUNNING
 									).length /
 										projects.length) *
 									100
@@ -58,8 +56,7 @@ export default function Projects() {
 								warning={
 									(projects.filter(
 										(project) =>
-											project.deploymentStatus ===
-											ProjectDeploymentStatus.PARTIALLY_RUNNING
+											project.deploymentStatus === ProjectDeploymentStatus.PARTIALLY_RUNNING
 									).length /
 										projects.length) *
 									100
@@ -67,10 +64,8 @@ export default function Projects() {
 								failed={
 									(projects.filter(
 										(project) =>
-											project.deploymentStatus !==
-												ProjectDeploymentStatus.RUNNING &&
-											project.deploymentStatus !==
-												ProjectDeploymentStatus.PARTIALLY_RUNNING
+											project.deploymentStatus !== ProjectDeploymentStatus.RUNNING &&
+											project.deploymentStatus !== ProjectDeploymentStatus.PARTIALLY_RUNNING
 									).length /
 										projects.length) *
 									100
@@ -99,9 +94,7 @@ export default function Projects() {
 						{projects
 							.filter((project) => {
 								if (!searchFilter) return true;
-								return project.name
-									.toLowerCase()
-									.includes(searchFilter.toLowerCase());
+								return project.name.toLowerCase().includes(searchFilter.toLowerCase());
 							})
 							.map((project) => (
 								<ProjectCard
@@ -114,14 +107,8 @@ export default function Projects() {
 
 						{projects.filter((project) => {
 							if (!searchFilter) return true;
-							return project.name
-								.toLowerCase()
-								.includes(searchFilter.toLowerCase());
-						}).length === 0 && (
-							<p className={style.noProjects}>
-								No projects found
-							</p>
-						)}
+							return project.name.toLowerCase().includes(searchFilter.toLowerCase());
+						}).length === 0 && <p className={style.noProjects}>No projects found</p>}
 					</div>
 				</div>
 			</main>

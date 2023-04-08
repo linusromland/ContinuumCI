@@ -1,12 +1,4 @@
-import {
-	BadRequestException,
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Post,
-	Query
-} from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 
 // Internal dependencies
 import { NginxDeploymentType } from 'shared/src/types';

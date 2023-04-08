@@ -13,9 +13,7 @@ const databaseProviders = [
 
 			mongoose.set('strictQuery', false);
 			const connection = await mongoose.connect(MONGODB_URI);
-			logger.log(
-				`Connected to MongoDB Database at ${connection.connection.host}:${connection.connection.port}`
-			);
+			logger.log(`Connected to MongoDB Database at ${connection.connection.host}:${connection.connection.port}`);
 			return connection;
 		}
 	}

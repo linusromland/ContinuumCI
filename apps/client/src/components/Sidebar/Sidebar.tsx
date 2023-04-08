@@ -79,13 +79,10 @@ export default function Sidebar() {
 								text='Users'
 								icon='/icons/users.svg'
 								onClick={() => navigate('/settings/users')}
-								selected={
-									location.pathname === '/settings/users'
-								}
+								selected={location.pathname === '/settings/users'}
 							/>
 						)}
-						{(user.role == UserRoleEnum.ROOT ||
-							user.role == UserRoleEnum.ADMIN) && (
+						{(user.role == UserRoleEnum.ROOT || user.role == UserRoleEnum.ADMIN) && (
 							<>
 								<Button
 									text='Docker'
@@ -96,9 +93,7 @@ export default function Sidebar() {
 									text='Nginx'
 									icon='/icons/nginx.svg'
 									onClick={() => navigate('/settings/nginx')}
-									selected={
-										location.pathname === '/settings/nginx'
-									}
+									selected={location.pathname === '/settings/nginx'}
 								/>
 							</>
 						)}

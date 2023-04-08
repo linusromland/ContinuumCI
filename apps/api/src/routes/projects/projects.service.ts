@@ -10,12 +10,7 @@ import { ProjectClass, ProjectQueryClass } from 'shared/src/classes';
 import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
-import {
-	ProjectDeploymentStatus,
-	ProjectRoleEnum,
-	ProjectSyncStatus,
-	UserRoleEnum
-} from 'shared/src/enums';
+import { ProjectDeploymentStatus, ProjectRoleEnum, ProjectSyncStatus, UserRoleEnum } from 'shared/src/enums';
 import checkSync from 'src/utils/checkSync';
 import { DockerService } from 'src/services/docker/docker.service';
 import updateCompose from 'src/utils/updateCompose';
@@ -68,8 +63,7 @@ export class ProjectsService {
 			const projectData = {
 				...project,
 				syncStatus: ProjectSyncStatus.UNKNOWN,
-				deploymentStatus:
-					deployStatuses[i] || ProjectDeploymentStatus.UNKNOWN
+				deploymentStatus: deployStatuses[i] || ProjectDeploymentStatus.UNKNOWN
 			};
 
 			const inSync = await checkSync(project._id.toString());
@@ -87,10 +81,7 @@ export class ProjectsService {
 		};
 	}
 
-	async get(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType<ProjectClass>> {
+	async get(userId: string, projectId: string): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -129,9 +120,7 @@ export class ProjectsService {
 			};
 		}
 
-		const project = await this.ProjectModel.find(query).populate(
-			'permissions.user'
-		);
+		const project = await this.ProjectModel.find(query).populate('permissions.user');
 
 		if (!project.length) {
 			throw new BadRequestException({
@@ -177,9 +166,7 @@ export class ProjectsService {
 		}
 
 		if (!['admin', 'root'].includes(user.role)) {
-			const user = project.permissions.find(
-				(permission) => permission.user.toString() === userId
-			);
+			const user = project.permissions.find((permission) => permission.user.toString() === userId);
 
 			if (!user || user.role == ProjectRoleEnum.VIEWER) {
 				throw new BadRequestException({
@@ -218,10 +205,7 @@ export class ProjectsService {
 		}
 	}
 
-	async create(
-		project: ProjectQueryClass,
-		userId: string
-	): Promise<ResponseType<ProjectClass>> {
+	async create(project: ProjectQueryClass, userId: string): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -247,14 +231,9 @@ export class ProjectsService {
 
 		// Clone the Git repository
 		const cloneGit = simpleGit();
-		await cloneGit.clone(
-			createdProject.gitUrl,
-			`${REPOSITORIES_DIRECTORY}/${createdProject._id}`
-		);
+		await cloneGit.clone(createdProject.gitUrl, `${REPOSITORIES_DIRECTORY}/${createdProject._id}`);
 
-		const git = simpleGit(
-			`${REPOSITORIES_DIRECTORY}/${createdProject._id}`
-		);
+		const git = simpleGit(`${REPOSITORIES_DIRECTORY}/${createdProject._id}`);
 
 		// Get the default branch
 		if (!createdProject.branch) {
@@ -288,11 +267,7 @@ export class ProjectsService {
 		};
 	}
 
-	async update(
-		userId: string,
-		projectId: string,
-		project: ProjectQueryClass
-	): Promise<ResponseType<ProjectClass>> {
+	async update(userId: string, projectId: string, project: ProjectQueryClass): Promise<ResponseType<ProjectClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -326,9 +301,7 @@ export class ProjectsService {
 		}
 
 		if (!['admin', 'root'].includes(user.role)) {
-			const user = updatedProject.permissions.find(
-				(permission) => permission.user.toString() === userId
-			);
+			const user = updatedProject.permissions.find((permission) => permission.user.toString() === userId);
 
 			if (!user || user.role == ProjectRoleEnum.VIEWER) {
 				throw new BadRequestException({
@@ -338,30 +311,18 @@ export class ProjectsService {
 			}
 		}
 
-		const currentOwner = updatedProject.permissions.find(
-			(permission) => permission.role === ProjectRoleEnum.OWNER
-		);
+		const currentOwner = updatedProject.permissions.find((permission) => permission.role === ProjectRoleEnum.OWNER);
 
-		const newOwner = project.permissions.find(
-			(permission) => permission.role === ProjectRoleEnum.OWNER
-		);
+		const newOwner = project.permissions.find((permission) => permission.role === ProjectRoleEnum.OWNER);
 
-		if (
-			!currentOwner ||
-			!newOwner ||
-			currentOwner.user.toString() !== newOwner.user.toString()
-		) {
+		if (!currentOwner || !newOwner || currentOwner.user.toString() !== newOwner.user.toString()) {
 			throw new BadRequestException({
 				success: false,
 				message: 'Not allowed to change the project owner'
 			});
 		}
 
-		if (
-			project.permissions.filter(
-				(permission) => permission.role === ProjectRoleEnum.OWNER
-			).length > 1
-		) {
+		if (project.permissions.filter((permission) => permission.role === ProjectRoleEnum.OWNER).length > 1) {
 			throw new BadRequestException({
 				success: false,
 				message: 'Only one owner is allowed'
@@ -407,15 +368,12 @@ export class ProjectsService {
 		}
 
 		if (!['admin', 'root'].includes(user.role)) {
-			const user = updatedProject.permissions.find(
-				(permission) => permission.user.toString() === userId
-			);
+			const user = updatedProject.permissions.find((permission) => permission.user.toString() === userId);
 
 			if (!user || user.role !== ProjectRoleEnum.OWNER) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'Only the owner, Administrators or root can delete the project'
+					message: 'Only the owner, Administrators or root can delete the project'
 				});
 			}
 		}
@@ -436,10 +394,7 @@ export class ProjectsService {
 		};
 	}
 
-	async updateRepository(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType> {
+	async updateRepository(userId: string, projectId: string): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -466,9 +421,7 @@ export class ProjectsService {
 		}
 
 		if (user.role !== 'root') {
-			const user = project.permissions.find(
-				(permission) => permission.user.toString() === userId
-			);
+			const user = project.permissions.find((permission) => permission.user.toString() === userId);
 
 			if (!user || user.role == ProjectRoleEnum.VIEWER) {
 				throw new BadRequestException({

@@ -1,10 +1,5 @@
 // External dependencies
-import {
-	BadRequestException,
-	Inject,
-	Injectable,
-	InternalServerErrorException
-} from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import axios from 'axios';
 
@@ -53,10 +48,7 @@ export class ConfigurationService {
 		return request.data;
 	}
 
-	async edit(
-		userId: string,
-		nginxConfiguration: NginxConfigurationType
-	): Promise<ResponseType> {
+	async edit(userId: string, nginxConfiguration: NginxConfigurationType): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -73,13 +65,9 @@ export class ConfigurationService {
 			});
 		}
 
-		const request = await axios.put(
-			`${NGINX_API_URL}/configuration`,
-			nginxConfiguration,
-			{
-				validateStatus: () => true
-			}
-		);
+		const request = await axios.put(`${NGINX_API_URL}/configuration`, nginxConfiguration, {
+			validateStatus: () => true
+		});
 
 		if (request.status == 500) {
 			throw new InternalServerErrorException(request.data);

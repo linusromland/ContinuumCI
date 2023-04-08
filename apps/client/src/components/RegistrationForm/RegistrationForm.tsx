@@ -12,9 +12,7 @@ const UserSchema = Yup.object().shape({
 		.max(20, 'Username must be less than 20 characters')
 		.required('Username is required'),
 	email: Yup.string().email('Invalid email').required('Email is required'),
-	password: Yup.string()
-		.min(8, 'Password must be at least 8 characters')
-		.required('Password is required'),
+	password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
 	confirmPassword: Yup.string()
 		.oneOf([Yup.ref('password'), ''], 'Passwords must match')
 		.min(8, 'Password must be at least 8 characters')
@@ -24,12 +22,7 @@ const UserSchema = Yup.object().shape({
 export default function RegistrationForm({
 	onSubmit
 }: {
-	onSubmit: (values: {
-		username: string;
-		email: string;
-		password: string;
-		confirmPassword: string;
-	}) => void;
+	onSubmit: (values: { username: string; email: string; password: string; confirmPassword: string }) => void;
 }): JSX.Element {
 	return (
 		<Formik

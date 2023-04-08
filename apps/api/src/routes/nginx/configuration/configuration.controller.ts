@@ -18,10 +18,7 @@ export class ConfigurationController {
 
 	@UseGuards(JwtAuthGuard)
 	@Put()
-	async edit(
-		@Request() req,
-		@Body() nginxConfiguration: NginxConfigurationType
-	) {
+	async edit(@Request() req, @Body() nginxConfiguration: NginxConfigurationType) {
 		return this.configurationService.edit(req.user.sub, nginxConfiguration);
 	}
 }

@@ -9,12 +9,7 @@ import { EmailConfigurationService } from '../emailConfiguration/emailConfigurat
 
 @Module({
 	controllers: [SetupController],
-	providers: [
-		SetupService,
-		EmailConfigurationService,
-		...databaseProviders,
-		...schemaProviders
-	],
+	providers: [SetupService, EmailConfigurationService, ...databaseProviders, ...schemaProviders],
 	exports: [SetupService, ...databaseProviders, ...schemaProviders]
 })
 export class SetupModule {}

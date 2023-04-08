@@ -37,18 +37,9 @@ export default function StatsWidget({
 
 		if (unit !== '%' && maxValue) {
 			range = {
-				ok: [
-					maxValue * (valueRange.ok[0] / 100),
-					maxValue * (valueRange.ok[1] / 100)
-				],
-				warning: [
-					maxValue * (valueRange.warning[0] / 100),
-					maxValue * (valueRange.warning[1] / 100)
-				],
-				danger: [
-					maxValue * (valueRange.danger[0] / 100),
-					maxValue * (valueRange.danger[1] / 100)
-				]
+				ok: [maxValue * (valueRange.ok[0] / 100), maxValue * (valueRange.ok[1] / 100)],
+				warning: [maxValue * (valueRange.warning[0] / 100), maxValue * (valueRange.warning[1] / 100)],
+				danger: [maxValue * (valueRange.danger[0] / 100), maxValue * (valueRange.danger[1] / 100)]
 			};
 		} else if (unit !== '%' && !maxValue) {
 			return '';

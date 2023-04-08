@@ -1,15 +1,5 @@
 // External dependencies
-import {
-	Body,
-	Controller,
-	Request,
-	Put,
-	UseGuards,
-	Post,
-	Delete,
-	Param,
-	Get
-} from '@nestjs/common';
+import { Body, Controller, Request, Put, UseGuards, Post, Delete, Param, Get } from '@nestjs/common';
 
 // Internal dependencies
 import { EnvironmentVariablesQueryClass } from 'shared/src/classes';
@@ -18,9 +8,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('environmentVariables')
 export class EnvironmentVariablesController {
-	constructor(
-		private readonly environmentVariablesService: EnvironmentVariablesService
-	) {}
+	constructor(private readonly environmentVariablesService: EnvironmentVariablesService) {}
 
 	@UseGuards(JwtAuthGuard)
 	@Get(':projectId')
@@ -30,37 +18,19 @@ export class EnvironmentVariablesController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post()
-	async create(
-		@Request() req,
-		@Body() environmentVariables: EnvironmentVariablesQueryClass
-	) {
-		return this.environmentVariablesService.create(
-			req.user.sub,
-			environmentVariables
-		);
+	async create(@Request() req, @Body() environmentVariables: EnvironmentVariablesQueryClass) {
+		return this.environmentVariablesService.create(req.user.sub, environmentVariables);
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Put()
-	async update(
-		@Request() req,
-		@Body() environmentVariables: EnvironmentVariablesQueryClass
-	) {
-		return this.environmentVariablesService.update(
-			req.user.sub,
-			environmentVariables
-		);
+	async update(@Request() req, @Body() environmentVariables: EnvironmentVariablesQueryClass) {
+		return this.environmentVariablesService.update(req.user.sub, environmentVariables);
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Delete(':environmentVariableId')
-	async delete(
-		@Request() req,
-		@Param('environmentVariableId') environmentVariableId: string
-	) {
-		return this.environmentVariablesService.delete(
-			req.user.sub,
-			environmentVariableId
-		);
+	async delete(@Request() req, @Param('environmentVariableId') environmentVariableId: string) {
+		return this.environmentVariablesService.delete(req.user.sub, environmentVariableId);
 	}
 }

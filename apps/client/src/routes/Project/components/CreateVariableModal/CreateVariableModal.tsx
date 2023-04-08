@@ -36,15 +36,10 @@ export default function CreateVariableModal({
 				validationSchema={Yup.object({
 					name: Yup.string()
 						.required('Required')
-						.matches(
-							/^[a-zA-Z0-9_]+$/,
-							'Only alphanumeric characters and underscores are allowed'
-						),
+						.matches(/^[a-zA-Z0-9_]+$/, 'Only alphanumeric characters and underscores are allowed'),
 					value: Yup.string().required('Required'),
 					// String array with at least one element
-					services: Yup.array()
-						.of(Yup.string())
-						.min(1, 'At least one service is required')
+					services: Yup.array().of(Yup.string()).min(1, 'At least one service is required')
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				onSubmit={() => {}} // This is required for the validation to work
@@ -112,10 +107,7 @@ export default function CreateVariableModal({
 								submit({
 									...values,
 									services: values.services.map(
-										(service: {
-											value: string;
-											label: string;
-										}) => service.value
+										(service: { value: string; label: string }) => service.value
 									)
 								});
 							}}

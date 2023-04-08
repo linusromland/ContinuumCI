@@ -36,51 +36,19 @@ export default function GeneralSettings(): JSX.Element {
 	return (
 		<>
 			<div className={style.main}>
-				<Breadcrumbs
-					path={[{ name: 'Settings' }, { name: 'General' }]}
-				/>
+				<Breadcrumbs path={[{ name: 'Settings' }, { name: 'General' }]} />
 				<h1 className={style.title}>General Settings</h1>
 				<Widget>
 					<div className={style.container}>
 						<h2 className={style.subtitle}>Account Settings</h2>
 
 						<div className={style.infoContainer}>
-							<h3
-								className={clsx(
-									style.infoContainerTitle,
-									style.row1,
-									style.col1
-								)}
-							>
-								Account Role:
-							</h3>
-							<p
-								className={clsx(
-									style.infoContainerValue,
-									style.row1,
-									style.col2
-								)}
-							>
+							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>Account Role:</h3>
+							<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
 								{formatRole(user.role)}
 							</p>
-							<h3
-								className={clsx(
-									style.infoContainerTitle,
-									style.row2,
-									style.col1
-								)}
-							>
-								Username:
-							</h3>
-							<p
-								className={clsx(
-									style.infoContainerValue,
-									style.row2,
-									style.col2
-								)}
-							>
-								{user.username}
-							</p>
+							<h3 className={clsx(style.infoContainerTitle, style.row2, style.col1)}>Username:</h3>
+							<p className={clsx(style.infoContainerValue, style.row2, style.col2)}>{user.username}</p>
 							<Button
 								text='Change'
 								onClick={() => setChangeUsernameModal(true)}
@@ -88,24 +56,8 @@ export default function GeneralSettings(): JSX.Element {
 								theme='secondary'
 								className={clsx(style.row2, style.col3)}
 							/>
-							<h3
-								className={clsx(
-									style.infoContainerTitle,
-									style.row3,
-									style.col1
-								)}
-							>
-								Email:
-							</h3>
-							<p
-								className={clsx(
-									style.infoContainerValue,
-									style.row3,
-									style.col2
-								)}
-							>
-								{user.email}
-							</p>
+							<h3 className={clsx(style.infoContainerTitle, style.row3, style.col1)}>Email:</h3>
+							<p className={clsx(style.infoContainerValue, style.row3, style.col2)}>{user.email}</p>
 							<Button
 								text='Change'
 								onClick={() => setChangeEmailModal(true)}
@@ -164,9 +116,7 @@ export default function GeneralSettings(): JSX.Element {
 					email: user.email
 				}}
 				validationSchema={Yup.object().shape({
-					email: Yup.string()
-						.email('Invalid email')
-						.required('Email is required')
+					email: Yup.string().email('Invalid email').required('Email is required')
 				})}
 				submit={async (values) => {
 					const response = await updateEmail(values.email);

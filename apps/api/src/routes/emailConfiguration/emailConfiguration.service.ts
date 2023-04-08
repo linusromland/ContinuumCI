@@ -1,20 +1,12 @@
 // External dependencies
-import {
-	BadRequestException,
-	Inject,
-	Injectable,
-	InternalServerErrorException
-} from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import nodemailer from 'nodemailer';
 import dayjs from 'dayjs';
 
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import {
-	EmailConfigurationClass,
-	EmailConfigurationQueryClass
-} from 'shared/src/classes';
+import { EmailConfigurationClass, EmailConfigurationQueryClass } from 'shared/src/classes';
 import { API_HOST } from '../../utils/env';
 import emailTemplate from '../../utils/emailTemplate';
 import { EmailConfigurationServiceEnum } from 'shared/src/enums';
@@ -26,14 +18,11 @@ export class EmailConfigurationService {
 		private EmailConfigurationModel: Model<EmailConfigurationClass>
 	) {}
 
-	async create(
-		emailConfiguration: EmailConfigurationQueryClass
-	): Promise<ResponseType> {
+	async create(emailConfiguration: EmailConfigurationQueryClass): Promise<ResponseType> {
 		try {
 			//Verify the email configuration
 			if (
-				emailConfiguration.service !==
-					EmailConfigurationServiceEnum.SKIPPED &&
+				emailConfiguration.service !== EmailConfigurationServiceEnum.SKIPPED &&
 				!(await this.verifyEmailConfiguration(emailConfiguration))
 			) {
 				throw new BadRequestException({
@@ -44,11 +33,7 @@ export class EmailConfigurationService {
 
 			//Save the email configuration
 			try {
-				await this.EmailConfigurationModel.updateOne(
-					{},
-					emailConfiguration,
-					{ upsert: true }
-				);
+				await this.EmailConfigurationModel.updateOne({}, emailConfiguration, { upsert: true });
 				return {
 					success: true,
 					message: 'Email configuration saved successfully'
@@ -71,9 +56,7 @@ export class EmailConfigurationService {
 		}
 	}
 
-	async verifyEmailConfiguration(
-		emailConfiguration: EmailConfigurationQueryClass
-	): Promise<boolean> {
+	async verifyEmailConfiguration(emailConfiguration: EmailConfigurationQueryClass): Promise<boolean> {
 		//Test the email configuration
 		const transporter = nodemailer.createTransport({
 			service: emailConfiguration.service,
@@ -92,19 +75,12 @@ export class EmailConfigurationService {
 	}
 
 	async get(): Promise<ResponseType<EmailConfigurationClass>> {
-		return await this.EmailConfigurationModel.findOne()
-			.select('-_id -__v -auth.pass')
-			.lean();
+		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
 	}
 
-	async sendVerificationEmail(
-		email: string,
-		verificationToken: string,
-		expires: Date
-	): Promise<ResponseType> {
+	async sendVerificationEmail(email: string, verificationToken: string, expires: Date): Promise<ResponseType> {
 		try {
-			const emailConfiguration =
-				await this.EmailConfigurationModel.findOne().lean();
+			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();
 
 			if (!emailConfiguration) {
 				throw new InternalServerErrorException({

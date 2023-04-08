@@ -22,9 +22,7 @@ type filesizeType = {
 export default function Overview(): JSX.Element {
 	const [user, setUser] = useState('');
 	const [data, setData] = useState({} as OverviewType);
-	const [dataInterval, setDataInterval] = useState<NodeJS.Timeout | null>(
-		null
-	);
+	const [dataInterval, setDataInterval] = useState<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
 		(async () => {
@@ -166,14 +164,7 @@ export default function Overview(): JSX.Element {
 			<div className={style.table}>
 				<h2 className={style.subtitle}>10 latests requests</h2>
 				<Table
-					headers={[
-						'Time',
-						'Method',
-						'Status',
-						'URL',
-						'IP',
-						'Project'
-					]}
+					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Project']}
 					data={[
 						[
 							'2021-03-01 12:00:00',

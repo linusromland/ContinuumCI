@@ -33,10 +33,7 @@ export class UsersService {
 
 	async create(user: UserQueryClass): Promise<ResponseType> {
 		try {
-			const role =
-				(await this.UserModel.countDocuments()) === 0
-					? UserRoleEnum.ROOT
-					: UserRoleEnum.USER;
+			const role = (await this.UserModel.countDocuments()) === 0 ? UserRoleEnum.ROOT : UserRoleEnum.USER;
 			const createdUser = new this.UserModel({
 				...user,
 				role,
@@ -61,9 +58,7 @@ export class UsersService {
 					await this.emailConfigurationService.sendVerificationEmail(
 						createdUser.email,
 						emailVerification._id,
-						dayjs(emailVerification.createdAt)
-							.add(30, 'minutes')
-							.toDate()
+						dayjs(emailVerification.createdAt).add(30, 'minutes').toDate()
 					);
 				}
 			}
@@ -76,15 +71,10 @@ export class UsersService {
 			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 		} catch (error: any) {
 			//check if error is duplicate key error on username or email
-			if (
-				error.code === 11000 &&
-				(error.keyPattern['username'] || error.keyPattern['email'])
-			) {
+			if (error.code === 11000 && (error.keyPattern['username'] || error.keyPattern['email'])) {
 				throw new BadRequestException({
 					success: false,
-					message: `${
-						error.keyPattern['username'] ? 'Username' : 'Email'
-					} already in use`
+					message: `${error.keyPattern['username'] ? 'Username' : 'Email'} already in use`
 				});
 			}
 
@@ -105,8 +95,7 @@ export class UsersService {
 
 	async verifyUser(verificationId: string) {
 		try {
-			const emailVerification =
-				await this.EmailVerificationModel.findById(verificationId);
+			const emailVerification = await this.EmailVerificationModel.findById(verificationId);
 			if (!emailVerification) {
 				throw new BadRequestException({
 					success: false,
@@ -125,11 +114,7 @@ export class UsersService {
 			await emailVerification.remove();
 
 			// Check if verification link is expired (30 minutes old or more)
-			if (
-				dayjs(emailVerification.createdAt)
-					.add(30, 'minutes')
-					.isBefore(dayjs())
-			) {
+			if (dayjs(emailVerification.createdAt).add(30, 'minutes').isBefore(dayjs())) {
 				throw new UnauthorizedException({
 					success: false,
 					message: 'Verification link expired'
@@ -203,10 +188,7 @@ export class UsersService {
 			};
 			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 		} catch (error: any) {
-			if (
-				error instanceof BadRequestException ||
-				error instanceof UnauthorizedException
-			) {
+			if (error instanceof BadRequestException || error instanceof UnauthorizedException) {
 				throw error;
 			}
 
@@ -217,10 +199,7 @@ export class UsersService {
 		}
 	}
 
-	async updateUsername(
-		user: JwtType,
-		newUsername: string
-	): Promise<ResponseType> {
+	async updateUsername(user: JwtType, newUsername: string): Promise<ResponseType> {
 		try {
 			const updatedUser = await this.UserModel.findById(user.sub);
 			if (!updatedUser) {
@@ -291,9 +270,7 @@ export class UsersService {
 				await this.emailConfigurationService.sendVerificationEmail(
 					newEmail,
 					emailVerification._id,
-					dayjs(emailVerification.createdAt)
-						.add(30, 'minutes')
-						.toDate()
+					dayjs(emailVerification.createdAt).add(30, 'minutes').toDate()
 				);
 			}
 
@@ -322,11 +299,7 @@ export class UsersService {
 		}
 	}
 
-	async updatePassword(
-		user: JwtType,
-		oldPassword: string,
-		newPassword: string
-	): Promise<ResponseType> {
+	async updatePassword(user: JwtType, oldPassword: string, newPassword: string): Promise<ResponseType> {
 		try {
 			if (!oldPassword || !newPassword) {
 				throw new BadRequestException({
@@ -378,11 +351,7 @@ export class UsersService {
 		}
 	}
 
-	async updateRole(
-		jwtUser: JwtType,
-		userId: string,
-		newRole: string
-	): Promise<ResponseType> {
+	async updateRole(jwtUser: JwtType, userId: string, newRole: string): Promise<ResponseType> {
 		try {
 			if (isValidObjectId(userId) === false) {
 				throw new BadRequestException({
@@ -400,10 +369,7 @@ export class UsersService {
 				});
 			}
 
-			if (
-				newRole !== UserRoleEnum.USER &&
-				newRole !== UserRoleEnum.ADMIN
-			) {
+			if (newRole !== UserRoleEnum.USER && newRole !== UserRoleEnum.ADMIN) {
 				throw new BadRequestException({
 					success: false,
 					message: 'Invalid role'

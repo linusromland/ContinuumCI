@@ -9,17 +9,7 @@ import { databaseProviders, schemaProviders } from '../../providers';
 
 @Module({
 	controllers: [DeploymentsController],
-	providers: [
-		DeploymentsService,
-		DockerService,
-		...databaseProviders,
-		...schemaProviders
-	],
-	exports: [
-		DeploymentsService,
-		DockerService,
-		...databaseProviders,
-		...schemaProviders
-	]
+	providers: [DeploymentsService, DockerService, ...databaseProviders, ...schemaProviders],
+	exports: [DeploymentsService, DockerService, ...databaseProviders, ...schemaProviders]
 })
 export class DeploymentsModule {}

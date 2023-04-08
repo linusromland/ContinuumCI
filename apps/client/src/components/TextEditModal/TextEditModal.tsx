@@ -47,10 +47,7 @@ export default function TextEditModal({
 							<Field
 								name={fieldName}
 								type='text'
-								placeholder={
-									fieldName.charAt(0).toUpperCase() +
-									fieldName.slice(1)
-								}
+								placeholder={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
 								className={style.formInput}
 							/>
 							<ErrorMessage
@@ -60,10 +57,7 @@ export default function TextEditModal({
 							/>
 						</div>
 						<Button
-							text={`Update ${
-								fieldName.charAt(0).toUpperCase() +
-								fieldName.slice(1)
-							}`}
+							text={`Update ${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`}
 							disabled={isSubmitting}
 							onClick={() => {
 								submit(values);

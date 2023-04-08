@@ -23,12 +23,7 @@ export default function Button({
 }: ButtonProps): JSX.Element {
 	return (
 		<button
-			className={clsx(
-				className,
-				style.button,
-				small ? style.small : '',
-				style[theme]
-			)}
+			className={clsx(className, style.button, small ? style.small : '', style[theme])}
 			{...props}
 		>
 			{icon && (

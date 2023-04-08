@@ -15,11 +15,7 @@ export default function ApplicationWidget({
 				<h2 className={style.title}>Applications status</h2>
 				<img
 					className={style.icon}
-					src={
-						applicationsRunning === applicationsTotal
-							? '/icons/check.svg'
-							: '/icons/cross.svg'
-					}
+					src={applicationsRunning === applicationsTotal ? '/icons/check.svg' : '/icons/cross.svg'}
 					alt={
 						applicationsRunning === applicationsTotal
 							? 'Nothing to report.'
@@ -32,8 +28,7 @@ export default function ApplicationWidget({
 						: 'Some applications are not running.'}
 				</p>
 				<p className={style.text}>
-					{applicationsRunning}/{applicationsTotal} applications
-					active
+					{applicationsRunning}/{applicationsTotal} applications active
 				</p>
 			</div>
 		</Widget>

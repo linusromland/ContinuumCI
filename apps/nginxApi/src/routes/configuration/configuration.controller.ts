@@ -1,11 +1,5 @@
 // External dependencies
-import {
-	BadRequestException,
-	Body,
-	Controller,
-	Get,
-	Put
-} from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Put } from '@nestjs/common';
 import fs from 'fs';
 
 // Internal dependencies
@@ -51,14 +45,10 @@ export class ConfigurationController {
 
 		const sitesEnabledLocation = nginxConfiguration.sitesEnabledLocation;
 		// Check if the sites-enabled location exists, is a directory and is writable
-		if (
-			!fs.existsSync(sitesEnabledLocation) ||
-			!fs.lstatSync(sitesEnabledLocation).isDirectory()
-		) {
+		if (!fs.existsSync(sitesEnabledLocation) || !fs.lstatSync(sitesEnabledLocation).isDirectory()) {
 			throw new BadRequestException({
 				success: false,
-				message:
-					'The sites-enabled location does not exist or is not a directory'
+				message: 'The sites-enabled location does not exist or is not a directory'
 			});
 		}
 
@@ -74,14 +64,10 @@ export class ConfigurationController {
 		const accessLogLocation = nginxConfiguration.accessLogLocation;
 
 		// Check if the access log location exists, is a file and is writable
-		if (
-			!fs.existsSync(accessLogLocation) ||
-			!fs.lstatSync(accessLogLocation).isFile()
-		) {
+		if (!fs.existsSync(accessLogLocation) || !fs.lstatSync(accessLogLocation).isFile()) {
 			throw new BadRequestException({
 				success: false,
-				message:
-					'The access log location does not exist or is not a file'
+				message: 'The access log location does not exist or is not a file'
 			});
 		}
 

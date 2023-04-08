@@ -31,12 +31,8 @@ export default function ProjectCreateModal({
 				}}
 				enableReinitialize
 				validationSchema={Yup.object({
-					name: Yup.string()
-						.min(3, 'Must be 3 characters or more')
-						.required('Required'),
-					gitUrl: Yup.string()
-						.url('Must be a valid URL')
-						.required('Required'),
+					name: Yup.string().min(3, 'Must be 3 characters or more').required('Required'),
+					gitUrl: Yup.string().url('Must be a valid URL').required('Required'),
 					branch: Yup.string().required('Required')
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function

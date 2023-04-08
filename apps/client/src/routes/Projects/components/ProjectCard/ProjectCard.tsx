@@ -8,26 +8,15 @@ import { ProjectClass } from 'shared/src/classes';
 import style from './ProjectCard.module.scss';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
 
-export default function ProjectCard({
-	project,
-	onClick
-}: {
-	project: ProjectClass;
-	onClick: () => void;
-}): JSX.Element {
+export default function ProjectCard({ project, onClick }: { project: ProjectClass; onClick: () => void }): JSX.Element {
 	const [icon, setIcon] = useState('git');
 	const [status, setStatus] = useState('success');
 
 	useEffect(() => {
 		if (!project || !project.gitUrl) return;
 
-		if (project.deploymentStatus === ProjectDeploymentStatus.RUNNING)
-			setStatus('success');
-		else if (
-			project.deploymentStatus ===
-			ProjectDeploymentStatus.PARTIALLY_RUNNING
-		)
-			setStatus('warning');
+		if (project.deploymentStatus === ProjectDeploymentStatus.RUNNING) setStatus('success');
+		else if (project.deploymentStatus === ProjectDeploymentStatus.PARTIALLY_RUNNING) setStatus('warning');
 		else setStatus('error');
 
 		if (project.gitUrl.includes('github')) return setIcon('github');
@@ -62,13 +51,7 @@ export default function ProjectCard({
 				</p>
 				<p>
 					Last updated:{' '}
-					<span>
-						{project.updatedAt
-							? dayjs(project.updatedAt).format(
-									'YYYY-MM-DD HH:mm:ss'
-							  )
-							: 'Never'}
-					</span>
+					<span>{project.updatedAt ? dayjs(project.updatedAt).format('YYYY-MM-DD HH:mm:ss') : 'Never'}</span>
 				</p>
 			</div>
 		</div>

@@ -8,9 +8,7 @@ async function getConfiguration(): Promise<ResponseType> {
 	return request.data;
 }
 
-async function updateConfiguration(
-	nginxConfiguration: NginxConfigurationType
-): Promise<ResponseType> {
+async function updateConfiguration(nginxConfiguration: NginxConfigurationType): Promise<ResponseType> {
 	const request = await api.put('/nginx/configuration', nginxConfiguration);
 
 	return request.data;

@@ -49,10 +49,7 @@ async function updateEmail(email: string): Promise<ResponseType> {
 	return request.data;
 }
 
-async function updatePassword(
-	oldPassword: string,
-	newPassword: string
-): Promise<ResponseType> {
+async function updatePassword(oldPassword: string, newPassword: string): Promise<ResponseType> {
 	const request = await api.put('/users/edit/password', {
 		oldPassword,
 		newPassword
@@ -70,12 +67,4 @@ async function updateRole(userId: string, role: string): Promise<ResponseType> {
 	return request.data;
 }
 
-export {
-	createUser,
-	getUser,
-	getUsers,
-	updateUsername,
-	updateEmail,
-	updatePassword,
-	updateRole
-};
+export { createUser, getUser, getUsers, updateUsername, updateEmail, updatePassword, updateRole };

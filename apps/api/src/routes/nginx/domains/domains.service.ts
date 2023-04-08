@@ -43,10 +43,7 @@ export class DomainsService {
 		};
 	}
 
-	async create(
-		userId: string,
-		domain: DomainsQueryClass
-	): Promise<ResponseType<DomainsClass>> {
+	async create(userId: string, domain: DomainsQueryClass): Promise<ResponseType<DomainsClass>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -90,9 +87,7 @@ export class DomainsService {
 			});
 		}
 		try {
-			const deletedDomain = await this.DomainsModel.findByIdAndDelete(
-				domainId
-			);
+			const deletedDomain = await this.DomainsModel.findByIdAndDelete(domainId);
 
 			if (!deletedDomain) {
 				throw new BadRequestException({

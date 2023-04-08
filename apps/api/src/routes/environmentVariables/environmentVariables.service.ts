@@ -1,20 +1,10 @@
 // External dependencies
-import {
-	BadRequestException,
-	Inject,
-	Injectable,
-	InternalServerErrorException
-} from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
-import {
-	UserClass,
-	EnvironmentVariablesClass,
-	EnvironmentVariablesQueryClass,
-	ProjectClass
-} from 'shared/src/classes';
+import { UserClass, EnvironmentVariablesClass, EnvironmentVariablesQueryClass, ProjectClass } from 'shared/src/classes';
 import { ProjectRoleEnum, UserRoleEnum } from 'shared/src/enums';
 
 @Injectable()
@@ -30,10 +20,7 @@ export class EnvironmentVariablesService {
 		private ProjectModel: Model<ProjectClass>
 	) {}
 
-	async get(
-		userId: string,
-		projectId: string
-	): Promise<ResponseType<EnvironmentVariablesClass[]>> {
+	async get(userId: string, projectId: string): Promise<ResponseType<EnvironmentVariablesClass[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -57,9 +44,7 @@ export class EnvironmentVariablesService {
 
 			if (
 				!project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.DEVELOPER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.DEVELOPER
 				)
 			) {
 				throw new BadRequestException({
@@ -80,10 +65,7 @@ export class EnvironmentVariablesService {
 		};
 	}
 
-	async create(
-		userId: string,
-		environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType> {
+	async create(userId: string, environmentVariables: EnvironmentVariablesQueryClass): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 		if (!user) {
 			throw new BadRequestException({
@@ -106,25 +88,21 @@ export class EnvironmentVariablesService {
 
 			if (
 				!project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.DEVELOPER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.DEVELOPER
 				)
 			) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'You do not have permission to create environment variables for this project'
+					message: 'You do not have permission to create environment variables for this project'
 				});
 			}
 		}
 
-		const environmentVariablesExists =
-			await this.EnvironmentVariablesModel.findOne({
-				userId: userId,
-				name: environmentVariables.name,
-				project: environmentVariables.project
-			});
+		const environmentVariablesExists = await this.EnvironmentVariablesModel.findOne({
+			userId: userId,
+			name: environmentVariables.name,
+			project: environmentVariables.project
+		});
 
 		if (environmentVariablesExists) {
 			throw new BadRequestException({
@@ -163,10 +141,7 @@ export class EnvironmentVariablesService {
 		};
 	}
 
-	async update(
-		userId: string,
-		environmentVariables: EnvironmentVariablesQueryClass
-	): Promise<ResponseType> {
+	async update(userId: string, environmentVariables: EnvironmentVariablesQueryClass): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -190,24 +165,20 @@ export class EnvironmentVariablesService {
 
 			if (
 				!project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.DEVELOPER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.DEVELOPER
 				)
 			) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'You do not have permission to update environment variables for this project'
+					message: 'You do not have permission to update environment variables for this project'
 				});
 			}
 		}
 
-		const environmentVariablesExists =
-			await this.EnvironmentVariablesModel.findOne({
-				name: environmentVariables.name,
-				project: environmentVariables.project
-			});
+		const environmentVariablesExists = await this.EnvironmentVariablesModel.findOne({
+			name: environmentVariables.name,
+			project: environmentVariables.project
+		});
 
 		if (!environmentVariablesExists) {
 			throw new BadRequestException({
@@ -241,10 +212,7 @@ export class EnvironmentVariablesService {
 		};
 	}
 
-	async delete(
-		userId: string,
-		environmentVariableId: string
-	): Promise<ResponseType> {
+	async delete(userId: string, environmentVariableId: string): Promise<ResponseType> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -254,10 +222,7 @@ export class EnvironmentVariablesService {
 			});
 		}
 
-		const environmentVariablesExists =
-			await this.EnvironmentVariablesModel.findById(
-				environmentVariableId
-			);
+		const environmentVariablesExists = await this.EnvironmentVariablesModel.findById(environmentVariableId);
 
 		if (!environmentVariablesExists) {
 			throw new BadRequestException({
@@ -280,23 +245,18 @@ export class EnvironmentVariablesService {
 
 			if (
 				!project.permissions.some(
-					(permission) =>
-						permission.user == userId &&
-						permission.role == ProjectRoleEnum.DEVELOPER
+					(permission) => permission.user == userId && permission.role == ProjectRoleEnum.DEVELOPER
 				)
 			) {
 				throw new BadRequestException({
 					success: false,
-					message:
-						'You do not have permission to delete environment variables for this project'
+					message: 'You do not have permission to delete environment variables for this project'
 				});
 			}
 		}
 
 		try {
-			await this.EnvironmentVariablesModel.findByIdAndDelete(
-				environmentVariableId
-			);
+			await this.EnvironmentVariablesModel.findByIdAndDelete(environmentVariableId);
 		} catch (error) {
 			throw new InternalServerErrorException({
 				success: false,

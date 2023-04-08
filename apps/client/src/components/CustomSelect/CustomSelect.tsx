@@ -17,11 +17,7 @@ const customStyles = {
 	})
 };
 
-export default function CustomSelect({
-	field,
-	form,
-	...props
-}: CustomSelectProps): JSX.Element {
+export default function CustomSelect({ field, form, ...props }: CustomSelectProps): JSX.Element {
 	return (
 		<Select
 			{...field}

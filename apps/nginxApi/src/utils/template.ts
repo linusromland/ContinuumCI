@@ -7,22 +7,13 @@ import { NginxDeploymentType } from 'shared/src/types';
 
 const templateDir = `../templates`;
 
-const baseTemplate = fs.readFileSync(
-	path.resolve(__dirname, `${templateDir}/base`),
-	'utf8'
-);
-const externalLocationTemplate = fs.readFileSync(
-	path.resolve(__dirname, `${templateDir}/externalLocation`),
-	'utf8'
-);
+const baseTemplate = fs.readFileSync(path.resolve(__dirname, `${templateDir}/base`), 'utf8');
+const externalLocationTemplate = fs.readFileSync(path.resolve(__dirname, `${templateDir}/externalLocation`), 'utf8');
 const externalWebsocketLocationTemplate = fs.readFileSync(
 	path.resolve(__dirname, `${templateDir}/externalWebsocketLocation`),
 	'utf8'
 );
-const internalLocationTemplate = fs.readFileSync(
-	path.resolve(__dirname, `${templateDir}/internalLocation`),
-	'utf8'
-);
+const internalLocationTemplate = fs.readFileSync(path.resolve(__dirname, `${templateDir}/internalLocation`), 'utf8');
 const internalWebsocketLocationTemplate = fs.readFileSync(
 	path.resolve(__dirname, `${templateDir}/internalWebsocketLocation`),
 	'utf8'
@@ -49,20 +40,11 @@ const template = (deployment: NginxDeploymentType, localIps): string => {
 			? externalWebsocketLocationTemplate
 			: externalLocationTemplate;
 
-		locationTemplate = locationTemplate.replace(
-			'{{location}}',
-			location.location
-		);
-		locationTemplate = locationTemplate.replace(
-			'{{proxy_pass}}',
-			location.proxy_pass
-		);
+		locationTemplate = locationTemplate.replace('{{location}}', location.location);
+		locationTemplate = locationTemplate.replace('{{proxy_pass}}', location.proxy_pass);
 
 		if (location.internal) {
-			locationTemplate = locationTemplate.replace(
-				'{{internal_ips}}',
-				localIps
-			);
+			locationTemplate = locationTemplate.replace('{{internal_ips}}', localIps);
 		}
 
 		locationContent += locationTemplate;

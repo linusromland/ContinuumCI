@@ -7,11 +7,7 @@ import { ProjectClass, UserClass } from 'shared/src/classes';
 import { ProjectRoleEnum } from 'shared/src/enums';
 import formatProjectRole from '../../../../utils/formatProjectRole';
 
-export default function AccessControlTable({
-	project
-}: {
-	project: ProjectClass;
-}): JSX.Element {
+export default function AccessControlTable({ project }: { project: ProjectClass }): JSX.Element {
 	return (
 		<>
 			<Widget>
@@ -24,8 +20,7 @@ export default function AccessControlTable({
 						<h1>Access Control</h1>
 					</div>
 					<p className={style.text}>
-						The root user & all administrators always have access to
-						this application.
+						The root user & all administrators always have access to this application.
 					</p>
 					<Table
 						headers={['Username', 'E-mail', 'Role', 'Actions']}

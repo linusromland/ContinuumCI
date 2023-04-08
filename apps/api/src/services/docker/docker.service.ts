@@ -1,9 +1,5 @@
 // External dependencies
-import {
-	BadRequestException,
-	Injectable,
-	InternalServerErrorException
-} from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import Docker from 'dockerode';
 import Compose, { IDockerComposeResult } from 'docker-compose';
 import fs from 'fs';
@@ -56,10 +52,7 @@ export class DockerService {
 		const containers = await this.docker.listContainers();
 
 		const runningProjects = containers.filter((container) => {
-			return (
-				ids.includes(container.Labels['continuumci.project.id']) &&
-				container.State == 'running'
-			);
+			return ids.includes(container.Labels['continuumci.project.id']) && container.State == 'running';
 		});
 
 		return runningProjects.length;
@@ -85,9 +78,7 @@ export class DockerService {
 		const containers = await this.docker.listContainers();
 
 		const container = containers.find(
-			(container) =>
-				container.Labels['continuumci.project.id'] ===
-				project._id.toString()
+			(container) => container.Labels['continuumci.project.id'] === project._id.toString()
 		);
 
 		if (container) {
@@ -126,9 +117,7 @@ export class DockerService {
 
 			// Concatenate the existing environment variables with the new ones and remove duplicates (own environment variables take precedence)
 			dockerCompose.services[services[i]].environment = [
-				...dockerCompose.services[services[i]].environment.filter(
-					(variable) => !variables.includes(variable)
-				),
+				...dockerCompose.services[services[i]].environment.filter((variable) => !variables.includes(variable)),
 				...variables
 			];
 		}
@@ -143,9 +132,7 @@ export class DockerService {
 			// Deploy the project
 			await Compose.upAll({
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
-				composeOptions: [
-					`-p=${project.name.replace(/ /g, '_').toLowerCase()}`
-				],
+				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
 
 				log: true
 			}).then(
@@ -173,9 +160,7 @@ export class DockerService {
 		}
 	}
 
-	async undeployProject(
-		project: ProjectClass
-	): Promise<IDockerComposeResult[]> {
+	async undeployProject(project: ProjectClass): Promise<IDockerComposeResult[]> {
 		const result: IDockerComposeResult[] = [];
 
 		// Check if docker is running
@@ -192,9 +177,7 @@ export class DockerService {
 		const containers = await this.docker.listContainers();
 
 		const container = containers.find(
-			(container) =>
-				container.Labels['continuumci.project.id'] ===
-				project._id.toString()
+			(container) => container.Labels['continuumci.project.id'] === project._id.toString()
 		);
 
 		if (!container) {
@@ -239,9 +222,7 @@ export class DockerService {
 		try {
 			await this.docker.ping();
 		} catch (error) {
-			return Array(projectIds.length).fill(
-				ProjectDeploymentStatus.UNKNOWN
-			);
+			return Array(projectIds.length).fill(ProjectDeploymentStatus.UNKNOWN);
 		}
 
 		const result: ProjectDeploymentStatus[] = [];
@@ -253,8 +234,7 @@ export class DockerService {
 			const containers = await this.docker.listContainers();
 
 			const projectContainers = containers.filter(
-				(container) =>
-					container.Labels['continuumci.project.id'] === projectId
+				(container) => container.Labels['continuumci.project.id'] === projectId
 			);
 
 			if (projectContainers.length === 0) {
@@ -263,41 +243,25 @@ export class DockerService {
 			}
 
 			// Check if all the containers are running
-			if (
-				projectContainers.every(
-					(container) => container.State === 'running'
-				)
-			) {
+			if (projectContainers.every((container) => container.State === 'running')) {
 				result.push(ProjectDeploymentStatus.RUNNING);
 				continue;
 			}
 
 			// Check if any of the containers are running
-			if (
-				projectContainers.some(
-					(container) => container.State === 'running'
-				)
-			) {
+			if (projectContainers.some((container) => container.State === 'running')) {
 				result.push(ProjectDeploymentStatus.PARTIALLY_RUNNING);
 				continue;
 			}
 
 			// Check if any of the containers are crashed
-			if (
-				projectContainers.some(
-					(container) => container.State === 'exited'
-				)
-			) {
+			if (projectContainers.some((container) => container.State === 'exited')) {
 				result.push(ProjectDeploymentStatus.CRASHED);
 				continue;
 			}
 
 			// Check if any of the containers are restarting
-			if (
-				projectContainers.some(
-					(container) => container.State === 'restarting'
-				)
-			) {
+			if (projectContainers.some((container) => container.State === 'restarting')) {
 				result.push(ProjectDeploymentStatus.RESTARTING);
 				continue;
 			}

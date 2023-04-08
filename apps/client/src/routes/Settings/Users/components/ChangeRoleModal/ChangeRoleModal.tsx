@@ -32,9 +32,7 @@ export default function ChangeRoleModal({
 			onClose={() => onClose(false)}
 			open={open}
 		>
-			<p className={style.description}>
-				This will change the role of {username}.
-			</p>
+			<p className={style.description}>This will change the role of {username}.</p>
 			<Formik
 				initialValues={{
 					role: {
@@ -84,20 +82,13 @@ export default function ChangeRoleModal({
 							text='Change role'
 							disabled={isSubmitting}
 							onClick={async () => {
-								const response = await updateRole(
-									userId,
-									values.role.value
-								);
+								const response = await updateRole(userId, values.role.value);
 
 								if (response.success) {
-									toast.success(
-										`Successfully changed role of ${username}`
-									);
+									toast.success(`Successfully changed role of ${username}`);
 									onClose(true);
 								} else {
-									toast.error(
-										`Failed to change role of ${username}`
-									);
+									toast.error(`Failed to change role of ${username}`);
 									onClose(false);
 								}
 							}}

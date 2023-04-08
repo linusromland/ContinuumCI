@@ -10,5 +10,4 @@ type NginxDeploymentType = {
 	ssl: boolean;
 };
 
-
 export { NginxDeploymentType };

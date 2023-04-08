@@ -8,15 +8,7 @@ import { databaseProviders, schemaProviders } from '../../providers';
 
 @Module({
 	controllers: [EmailConfigurationController],
-	providers: [
-		EmailConfigurationService,
-		...databaseProviders,
-		...schemaProviders
-	],
-	exports: [
-		EmailConfigurationService,
-		...databaseProviders,
-		...schemaProviders
-	]
+	providers: [EmailConfigurationService, ...databaseProviders, ...schemaProviders],
+	exports: [EmailConfigurationService, ...databaseProviders, ...schemaProviders]
 })
 export class EmailConfigurationModule {}

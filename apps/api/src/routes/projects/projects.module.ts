@@ -9,17 +9,7 @@ import { databaseProviders, schemaProviders } from '../../providers';
 
 @Module({
 	controllers: [ProjectsController],
-	providers: [
-		ProjectsService,
-		DockerService,
-		...databaseProviders,
-		...schemaProviders
-	],
-	exports: [
-		ProjectsService,
-		DockerService,
-		...databaseProviders,
-		...schemaProviders
-	]
+	providers: [ProjectsService, DockerService, ...databaseProviders, ...schemaProviders],
+	exports: [ProjectsService, DockerService, ...databaseProviders, ...schemaProviders]
 })
 export class ProjectsModule {}

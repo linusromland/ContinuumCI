@@ -2,10 +2,7 @@
 import api from './';
 import { ResponseType } from 'shared/src/types';
 
-async function getToken(
-	email: string,
-	password: string
-): Promise<ResponseType> {
+async function getToken(email: string, password: string): Promise<ResponseType> {
 	const request = await api.post('/auth/login', {
 		email,
 		password
