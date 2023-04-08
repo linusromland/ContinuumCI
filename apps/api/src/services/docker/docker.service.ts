@@ -279,4 +279,21 @@ export class DockerService {
 
 		return result;
 	}
+
+	async getContainers(projectIds?: string[]) {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return [];
+		}
+
+		const containers = await this.docker.listContainers();
+
+		if (projectIds) {
+			return containers.filter((container) => projectIds.includes(container.Labels['continuumci.project.id']));
+		} else {
+			return containers.filter((container) => container.Labels['continuumci.project.id']);
+		}
+	}
 }

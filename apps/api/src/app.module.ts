@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 
 // Modules import
 import { AuthModule } from './routes/auth/auth.module';
+import { ContainersModule } from './routes/containers/containers.module';
 import { DeploymentsModule } from './routes/deployments/deployments.module';
 import { NginxModule } from './routes/nginx/nginx.module';
 import { OverviewModule } from './routes/overview/overview.module';
@@ -15,6 +16,7 @@ import { UsersModule } from './routes/users/users.module';
 @Module({
 	imports: [
 		AuthModule,
+		ContainersModule,
 		DeploymentsModule,
 		NginxModule,
 		OverviewModule,
