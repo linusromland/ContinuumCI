@@ -11,9 +11,10 @@ import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
 import { ProjectDeploymentStatus, ProjectRoleEnum, ProjectSyncStatus, UserRoleEnum } from 'shared/src/enums';
-import checkSync from 'src/utils/checkSync';
 import { DockerService } from 'src/services/docker/docker.service';
+import { DeploymentsService } from '../deployments/deployments.service';
 import updateCompose from 'src/utils/updateCompose';
+import checkSync from 'src/utils/checkSync';
 
 @Injectable()
 export class ProjectsService {
@@ -24,7 +25,8 @@ export class ProjectsService {
 		@Inject('USER_MODEL')
 		private UserModel: Model<UserClass>,
 
-		private dockerService: DockerService
+		private dockerService: DockerService,
+		private deploymentService: DeploymentsService
 	) {}
 
 	async getAll(userId: string): Promise<ResponseType<ProjectClass[]>> {
@@ -378,7 +380,7 @@ export class ProjectsService {
 			}
 		}
 
-		//TODO: Add remove deployment
+		await this.deploymentService.removeDeployment(userId, projectId);
 
 		//Remove from the repository directory
 		fs.rmSync(`${REPOSITORIES_DIRECTORY}/${updatedProject._id}`, {
