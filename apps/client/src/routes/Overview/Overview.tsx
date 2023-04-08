@@ -5,7 +5,6 @@ import { filesize } from 'filesize';
 // Internal Dependencies
 import style from './Overview.module.scss';
 import { getUser } from '../../utils/api/user';
-import { UserClass } from 'shared/src/classes';
 import StatsWidget from './components/StatsWidget/StatsWidget';
 import ApplicationWidget from './components/ApplicationWidget/ApplicationWidget';
 import InfoWidget from './components/InfoWidget/InfoWidget';
@@ -32,10 +31,11 @@ export default function Overview(): JSX.Element {
 			getOverviewData();
 
 			const userResponse = await getUser();
-			const user = userResponse.data as UserClass;
-
-			if (user && user.username) {
-				setUser(user.username);
+			if (userResponse.success && userResponse.data) {
+				const user = userResponse.data;
+				if (user && user.username) {
+					setUser(user.username);
+				}
 			}
 		})();
 	}, []);

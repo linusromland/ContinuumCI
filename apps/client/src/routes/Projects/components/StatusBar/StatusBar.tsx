@@ -18,14 +18,17 @@ export default function StatusBar({
 			<div
 				className={clsx(style.succeededBar, style.bar)}
 				style={{ width: `${succeeded}%` }}
+				title={`Succeeded: ${succeeded}%`}
 			/>
 			<div
 				className={clsx(style.warningBar, style.bar)}
 				style={{ width: `${warning}%` }}
+				title={`Warning: ${warning}%`}
 			/>
 			<div
 				className={clsx(style.failedBar, style.bar)}
 				style={{ width: `${failed}%` }}
+				title={`Failed: ${failed}%`}
 			/>
 		</div>
 	);

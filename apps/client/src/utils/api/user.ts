@@ -1,4 +1,5 @@
 // Internal dependencies
+import { UserClass } from 'shared/src/classes';
 import { ResponseType } from 'shared/src/types';
 import api from './';
 
@@ -20,7 +21,7 @@ async function createUser({
 	return request.data.success;
 }
 
-async function getUser(): Promise<ResponseType> {
+async function getUser(): Promise<ResponseType<UserClass>> {
 	const request = await api.get('/profile');
 
 	return request.data;
