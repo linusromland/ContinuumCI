@@ -1,6 +1,6 @@
 type ContainerType = {
 	id: string;
-	names: string[];
+	name: string;
 	state: string;
 	created: number;
 };
