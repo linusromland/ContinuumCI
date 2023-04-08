@@ -9,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	theme?: string;
 	icon?: string;
 	small?: boolean;
+	loading?: boolean;
 }
 
 export default function Button({
@@ -16,6 +17,7 @@ export default function Button({
 	theme = 'primary',
 	icon,
 	small = false,
+	loading,
 	className,
 	...props
 }: ButtonProps): JSX.Element {
@@ -31,7 +33,7 @@ export default function Button({
 		>
 			{icon && (
 				<img
-					className={style.icon}
+					className={clsx(style.icon, loading && style.loading)}
 					src={icon}
 					alt={text}
 				/>
