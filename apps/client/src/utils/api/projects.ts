@@ -17,6 +17,12 @@ async function getProject(
 	return request.data as ResponseType<ProjectClass>;
 }
 
+async function syncProject(projectId: string): Promise<ResponseType> {
+	const request = await api.post(`/projects/${projectId}/sync`);
+
+	return request.data as ResponseType;
+}
+
 async function createProject(data: ProjectQueryClass): Promise<ResponseType> {
 	const request = await api.post('/projects/create', {
 		...data,

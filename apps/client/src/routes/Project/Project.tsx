@@ -7,8 +7,6 @@ import * as yup from 'yup';
 // Internal dependencies
 import style from './Project.module.scss';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import { ProjectClass } from 'shared/src/classes';
-import { editProject, getProject } from '../../utils/api/projects';
 import Button from '../../components/Button/Button';
 import StatusWidget from './components/StatusWidget/StatusWidget';
 import EnviromentVariablesTable from './components/EnviromentVariablesTable/EnviromentVariablesTable';
@@ -17,6 +15,8 @@ import AccessControlTable from './components/AccessControlTable/AccessControlTab
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
 import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
+import { ProjectClass } from 'shared/src/classes';
+import { syncProject, editProject, getProject } from '../../utils/api/projects';
 
 export default function Project() {
 	const { projectId } = useParams();
@@ -25,6 +25,7 @@ export default function Project() {
 	const [project, setProject] = useState({} as ProjectClass);
 	const [editNameModalOpen, setEditNameModalOpen] = useState(false);
 	const [deploymentIcon, setDeploymentIcon] = useState('');
+	const [syncLoading, setSyncLoading] = useState(false);
 
 	async function getData() {
 		if (!projectId) return console.error('No projectId provided');
@@ -101,15 +102,26 @@ export default function Project() {
 							text='Sync'
 							theme='success'
 							icon='/icons/sync.svg'
-							onClick={() => {
-								console.log('Sync');
+							onClick={async () => {
+								setSyncLoading(true);
+								const response = await syncProject(project._id);
+								if (response.success) {
+									toast.success('Project synced');
+									getData();
+								} else toast.error(response.message);
+								setSyncLoading(false);
 							}}
 							small
+							loading={syncLoading}
 						/>
 						<Button
-							text='Stop'
-							theme='warning'
-							icon='/icons/stop.svg'
+							text={project.enabled ? 'Stop' : 'Start'}
+							theme={project.enabled ? 'warning' : 'success'}
+							icon={
+								project.enabled
+									? '/icons/stop.svg'
+									: '/icons/play.svg'
+							}
 							onClick={() => {
 								console.log('Stop');
 							}}
