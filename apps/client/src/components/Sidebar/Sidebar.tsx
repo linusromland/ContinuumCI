@@ -57,7 +57,8 @@ export default function Sidebar() {
 						<Button
 							text='Containers'
 							icon='/icons/containers.svg'
-							onClick={() => console.log('Containers')}
+							onClick={() => navigate('/containers')}
+							selected={location.pathname === '/containers'}
 						/>
 						<Button
 							text='Domains'

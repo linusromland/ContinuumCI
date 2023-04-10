@@ -2,6 +2,10 @@
 import Widget from '../Widget/Widget';
 import style from './Table.module.scss';
 
+function Wrapper({ children }: { children: JSX.Element }): JSX.Element {
+	return <div className={style.wrapper}>{children}</div>;
+}
+
 export default function Table({
 	headers,
 	data,
@@ -11,7 +15,7 @@ export default function Table({
 	data: (string | JSX.Element)[][];
 	widget?: boolean;
 }): JSX.Element {
-	const WrapperComponent = widget ? Widget : 'div';
+	const WrapperComponent = widget ? Widget : Wrapper;
 
 	return (
 		<WrapperComponent>
