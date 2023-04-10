@@ -10,6 +10,7 @@ import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
 import { Model } from 'mongoose';
+import { ContainerType } from 'shared/src/types';
 
 @Injectable()
 export class DockerService {
@@ -295,5 +296,51 @@ export class DockerService {
 		} else {
 			return containers.filter((container) => container.Labels['continuumci.project.id']);
 		}
+	}
+
+	async getContainer(containerId: string): Promise<ContainerType> {
+		// Check if docker is running
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return null;
+		}
+
+		const container = await this.docker.getContainer(containerId);
+
+		const information = await container.inspect();
+
+		const project = await this.ProjectModel.findById(information.Config.Labels['continuumci.project.id']);
+
+		if (!project) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Not a ContinuumCI Container'
+			});
+		}
+
+		return {
+			id: information.Id,
+			name: project.name,
+			state: information.State.Status,
+			created: information.Created
+		};
+	}
+
+	async getContainerLogs(containerId: string): Promise<string> {
+		try {
+			await this.docker.ping();
+		} catch (error) {
+			return 'The docker daemon is not running';
+		}
+
+		const container = await this.docker.getContainer(containerId);
+		const logs = await container.logs({
+			follow: false,
+			stdout: true,
+			stderr: true
+		});
+
+		return logs.toString();
 	}
 }

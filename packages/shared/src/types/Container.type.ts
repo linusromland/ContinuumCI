@@ -5,4 +5,8 @@ type ContainerType = {
 	created: number;
 };
 
-export { ContainerType };
+type ContainerTypeWithLogs = ContainerType & {
+	logs: string;
+};
+
+export { ContainerType, ContainerTypeWithLogs };

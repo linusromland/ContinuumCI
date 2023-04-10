@@ -2,14 +2,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 // Internal dependencies
-import { ContainerType, ResponseType } from 'shared/src/types';
+import { ContainerType, ContainerTypeWithLogs, ResponseType } from 'shared/src/types';
 import { DockerService } from 'src/services/docker/docker.service';
 
 @Injectable()
 export class ContainersService {
 	constructor(private dockerService: DockerService) {}
 
-	async getContainers(ids: string[]): Promise<ResponseType<ContainerType>> {
+	async getContainers(ids: string[]): Promise<ResponseType<ContainerType[]>> {
 		try {
 			const containers = await this.dockerService.getContainers(ids);
 
@@ -27,6 +27,28 @@ export class ContainersService {
 			throw new BadRequestException({
 				success: false,
 				message: 'Failed to fetch containers'
+			});
+		}
+	}
+
+	async getContainer(id: string): Promise<ResponseType<ContainerTypeWithLogs>> {
+		try {
+			const container = await this.dockerService.getContainer(id);
+			const logs = await this.dockerService.getContainerLogs(id);
+
+			return {
+				success: true,
+				message: 'Container fetched successfully',
+				data: {
+					...container,
+					logs
+				}
+			};
+		} catch (error) {
+			console.log(error);
+			throw new BadRequestException({
+				success: false,
+				message: 'Failed to fetch container'
 			});
 		}
 	}
