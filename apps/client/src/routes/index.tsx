@@ -18,6 +18,7 @@ import Overview from './Overview/Overview';
 import Projects from './Projects/Projects';
 import Project from './Project/Project';
 import Containers from './Containers/Containers';
+import Container from './Container/Container';
 
 // Settings Pages
 import GeneralSettings from './Settings/General/General';
@@ -45,6 +46,10 @@ export default function Router(): JSX.Element {
 						<Route
 							path='/containers'
 							element={<Containers />}
+						/>
+						<Route
+							path='/containers/:containerId'
+							element={<Container />}
 						/>
 						<Route>
 							<Route

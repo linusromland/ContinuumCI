@@ -1,6 +1,6 @@
 // Internal dependencies
 import api from '.';
-import { ContainerType, ResponseType } from 'shared/src/types';
+import { ContainerType, ContainerTypeWithLogs, ResponseType } from 'shared/src/types';
 
 async function getContainers(projectIds?: string[]): Promise<ResponseType<ContainerType[]>> {
 	let params = {};
@@ -18,4 +18,10 @@ async function getContainers(projectIds?: string[]): Promise<ResponseType<Contai
 	return request.data as ResponseType<ContainerType[]>;
 }
 
-export { getContainers };
+async function getContainerWithLogs(projectId: string): Promise<ResponseType<ContainerTypeWithLogs>> {
+	const request = await api.get(`/containers/${projectId}`);
+
+	return request.data as ResponseType<ContainerTypeWithLogs>;
+}
+
+export { getContainers, getContainerWithLogs };
