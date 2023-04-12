@@ -16,7 +16,7 @@ export default function Table({ headers, data, widget = true }: TableProps): JSX
 	const WrapperComponent = widget ? Widget : Wrapper;
 
 	return (
-		<WrapperComponent>
+		<WrapperComponent minSize>
 			<table className={style.table}>
 				<thead>
 					<tr>

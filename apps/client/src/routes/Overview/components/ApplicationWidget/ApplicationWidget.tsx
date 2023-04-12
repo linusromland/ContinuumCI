@@ -10,7 +10,7 @@ export default function ApplicationWidget({
 	applicationsTotal: number;
 }): JSX.Element {
 	return (
-		<Widget>
+		<Widget minSize>
 			<div className={style.main}>
 				<h2 className={style.title}>Applications status</h2>
 				<img
