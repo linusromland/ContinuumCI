@@ -19,11 +19,11 @@ const UserSchema = Yup.object().shape({
 		.required('Confirm Password is required')
 });
 
-export default function RegistrationForm({
-	onSubmit
-}: {
+interface RegistrationFormProps {
 	onSubmit: (values: { username: string; email: string; password: string; confirmPassword: string }) => void;
-}): JSX.Element {
+}
+
+export default function RegistrationForm({ onSubmit }: RegistrationFormProps): JSX.Element {
 	return (
 		<Formik
 			initialValues={{

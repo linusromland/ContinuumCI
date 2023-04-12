@@ -2,7 +2,12 @@
 import style from './StatusWidget.module.scss';
 import Widget from '../../../../components/Widget/Widget';
 
-export default function StatusWidget({ icon, text }: { icon: string; text: string }) {
+interface StatusWidgetProps {
+	icon: string;
+	text: string;
+}
+
+export default function StatusWidget({ icon, text }: StatusWidgetProps) {
 	return (
 		<Widget>
 			<div className={style.statusContainer}>

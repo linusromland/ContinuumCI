@@ -9,17 +9,14 @@ import Modal from '../../../../components/Modal/Modal';
 import Button from '../../../../components/Button/Button';
 import CustomMultiSelect from '../../../../components/CustomSelect/CustomMultiSelect';
 
-export default function CreateVariableModal({
-	serviceList,
-	onClose,
-	submit,
-	open
-}: {
+interface CreateVariableModalProps {
 	serviceList: string[];
 	onClose: (update: boolean) => void;
 	submit: (values: FormikValues) => void;
 	open: boolean;
-}) {
+}
+
+export default function CreateVariableModal({ serviceList, onClose, submit, open }: CreateVariableModalProps) {
 	return (
 		<Modal
 			title='Create environment variable'

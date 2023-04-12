@@ -5,7 +5,12 @@ import { useState } from 'react';
 // Internal dependencies
 import style from './Header.module.scss';
 
-export default function Header({ lastUpdated, onRefresh }: { lastUpdated: string; onRefresh: () => void }) {
+interface HeaderProps {
+	lastUpdated: string;
+	onRefresh: () => void;
+}
+
+export default function Header({ lastUpdated, onRefresh }: HeaderProps) {
 	const [refreshing, setRefreshing] = useState(false as boolean);
 
 	return (

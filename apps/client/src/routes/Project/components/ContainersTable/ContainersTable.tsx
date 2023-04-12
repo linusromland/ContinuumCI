@@ -10,7 +10,11 @@ import Widget from '../../../../components/Widget/Widget';
 import { ContainerType } from 'shared/src/types';
 import { getContainers } from '../../../../utils/api/containers';
 
-export default function ContainersTable({ projectId }: { projectId: string }): JSX.Element {
+interface ContainersTableProps {
+	projectId: string;
+}
+
+export default function ContainersTable({ projectId }: ContainersTableProps): JSX.Element {
 	const [containers, setContainers] = useState([] as ContainerType[]);
 
 	async function getData() {

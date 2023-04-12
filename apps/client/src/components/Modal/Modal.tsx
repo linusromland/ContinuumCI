@@ -4,17 +4,14 @@ import { useRef } from 'react';
 // Internal dependencies
 import style from './Modal.module.scss';
 
-export default function Modal({
-	children,
-	onClose,
-	open,
-	title
-}: {
+interface ModalProps {
 	children: React.ReactNode;
 	onClose: () => void;
 	open: boolean;
 	title: string;
-}) {
+}
+
+export default function Modal({ children, onClose, open, title }: ModalProps) {
 	const ref = useRef<HTMLDivElement>(null);
 
 	if (!open) return null;

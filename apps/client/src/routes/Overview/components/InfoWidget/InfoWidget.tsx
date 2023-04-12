@@ -2,7 +2,13 @@
 import Widget from '../../../../components/Widget/Widget';
 import style from './InfoWidget.module.scss';
 
-export default function InfoWidget({ icon, value, label }: { icon: string; value: string; label: string }) {
+interface InfoWidgetProps {
+	icon: string;
+	value: string;
+	label: string;
+}
+
+export default function InfoWidget({ icon, value, label }: InfoWidgetProps) {
 	return (
 		<Widget>
 			<div className={style.container}>

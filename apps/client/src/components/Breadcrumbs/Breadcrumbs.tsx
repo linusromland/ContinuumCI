@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 // Internal Dependencies
 import style from './Breadcrumbs.module.scss';
 
-export default function Breadcrumbs({
-	path
-}: {
+interface BreadcrumbsProps {
 	path: {
 		name: string;
 		link?: string;
 	}[];
-}): JSX.Element {
+}
+
+export default function Breadcrumbs({ path }: BreadcrumbsProps): JSX.Element {
 	return (
 		<div className={style.breadcrumbs}>
 			{path.map((item, index) => {

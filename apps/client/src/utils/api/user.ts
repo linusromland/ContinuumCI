@@ -27,7 +27,7 @@ async function getUser(): Promise<ResponseType<UserClass>> {
 	return request.data;
 }
 
-async function getUsers(): Promise<ResponseType> {
+async function getUsers(): Promise<ResponseType<UserClass[]>> {
 	const request = await api.get('/users/all');
 
 	return request.data;

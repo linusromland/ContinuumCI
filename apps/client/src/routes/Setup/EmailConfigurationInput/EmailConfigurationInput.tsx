@@ -18,9 +18,7 @@ const EmailConfigurationSchema = Yup.object().shape({
 	})
 });
 
-export default function EmailConfigurationInput({
-	onSubmit
-}: {
+interface EmailConfigurationInputProps {
 	onSubmit: (
 		skip?: boolean,
 		values?: {
@@ -34,7 +32,9 @@ export default function EmailConfigurationInput({
 			};
 		}
 	) => void;
-}): JSX.Element {
+}
+
+export default function EmailConfigurationInput({ onSubmit }: EmailConfigurationInputProps): JSX.Element {
 	return (
 		<Formik
 			initialValues={{

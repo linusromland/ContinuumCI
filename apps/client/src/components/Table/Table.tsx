@@ -6,15 +6,13 @@ function Wrapper({ children }: { children: JSX.Element }): JSX.Element {
 	return <div className={style.wrapper}>{children}</div>;
 }
 
-export default function Table({
-	headers,
-	data,
-	widget = true
-}: {
+interface TableProps {
 	headers: string[];
 	data: (string | JSX.Element)[][];
 	widget?: boolean;
-}): JSX.Element {
+}
+
+export default function Table({ headers, data, widget = true }: TableProps): JSX.Element {
 	const WrapperComponent = widget ? Widget : Wrapper;
 
 	return (

@@ -4,15 +4,13 @@ import clsx from 'clsx';
 // Internal dependencies
 import style from './StatusBar.module.scss';
 
-export default function StatusBar({
-	succeeded,
-	warning,
-	failed
-}: {
+interface StatusBarProps {
 	succeeded: number;
 	warning: number;
 	failed: number;
-}): JSX.Element {
+}
+
+export default function StatusBar({ succeeded, warning, failed }: StatusBarProps): JSX.Element {
 	return (
 		<div className={style.statusBar}>
 			<div

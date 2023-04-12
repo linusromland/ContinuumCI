@@ -16,7 +16,11 @@ import {
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
 
-export default function EnviromentVariablesTable({ project }: { project: ProjectClass }): JSX.Element {
+interface EnviromentVariablesTableProps {
+	project: ProjectClass;
+}
+
+export default function EnviromentVariablesTable({ project }: EnviromentVariablesTableProps): JSX.Element {
 	const [variables, setVariables] = useState([] as EnvironmentVariablesClass[]);
 	const [confirmDelete, setConfirmDelete] = useState('');
 	const [variableInputs, setVariableInputs] = useState([] as string[]);

@@ -11,11 +11,11 @@ const UserSchema = Yup.object().shape({
 	password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required')
 });
 
-export default function LoginForm({
-	onSubmit
-}: {
+interface LoginFormProps {
 	onSubmit: (values: { email: string; password: string; rememberMe: boolean }) => void;
-}): JSX.Element {
+}
+
+export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 	return (
 		<Formik
 			initialValues={{

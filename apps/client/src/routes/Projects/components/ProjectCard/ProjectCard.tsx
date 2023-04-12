@@ -8,7 +8,12 @@ import { ProjectClass } from 'shared/src/classes';
 import style from './ProjectCard.module.scss';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
 
-export default function ProjectCard({ project, onClick }: { project: ProjectClass; onClick: () => void }): JSX.Element {
+interface ProjectCardProps {
+	project: ProjectClass;
+	onClick: () => void;
+}
+
+export default function ProjectCard({ project, onClick }: ProjectCardProps): JSX.Element {
 	const [icon, setIcon] = useState('git');
 	const [status, setStatus] = useState('success');
 

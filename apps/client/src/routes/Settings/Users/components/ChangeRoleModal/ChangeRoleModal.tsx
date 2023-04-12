@@ -13,19 +13,15 @@ import CustomSelect from '../../../../../components/CustomSelect/CustomSelect';
 import formatRole from '../../../../../utils/formatRole';
 import { updateRole } from '../../../../../utils/api/user';
 
-export default function ChangeRoleModal({
-	onClose,
-	open,
-	currentRole,
-	username,
-	userId
-}: {
+interface ChangeRoleModalProps {
 	onClose: (update: boolean) => void;
 	open: boolean;
 	currentRole: UserRoleEnum;
 	username: string;
 	userId: string;
-}) {
+}
+
+export default function ChangeRoleModal({ onClose, open, currentRole, username, userId }: ChangeRoleModalProps) {
 	return (
 		<Modal
 			title='Change Role'

@@ -1,7 +1,12 @@
 // Internal Dependencies
 import style from './ButtonWrapper.module.scss';
 
-export default function ButtonWrapper({ children, text }: { children: JSX.Element; text: string }): JSX.Element {
+interface ButtonWrapperProps {
+	children: JSX.Element;
+	text: string;
+}
+
+export default function ButtonWrapper({ children, text }: ButtonWrapperProps): JSX.Element {
 	return (
 		<div className={style.buttonWrapper}>
 			<p className={style.text}>{text.toUpperCase()}</p>

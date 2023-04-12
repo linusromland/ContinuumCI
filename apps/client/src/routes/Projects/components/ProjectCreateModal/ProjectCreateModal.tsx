@@ -8,15 +8,13 @@ import style from './ProjectCreateModal.module.scss';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
 
-export default function ProjectCreateModal({
-	onClose,
-	submit,
-	open
-}: {
+interface ProjectCreateModalProps {
 	onClose: (update: boolean) => void;
 	submit: (values: FormikValues) => void;
 	open: boolean;
-}) {
+}
+
+export default function ProjectCreateModal({ onClose, submit, open }: ProjectCreateModalProps) {
 	return (
 		<Modal
 			title='Create new project'

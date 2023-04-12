@@ -7,6 +7,16 @@ import style from './TextEditModal.module.scss';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 
+interface TextEditModalProps {
+	onClose: (update: boolean) => void;
+	submit: (values: FormikValues) => void;
+	open: boolean;
+	initialValues: FormikValues;
+	validationSchema: unknown;
+	title?: string;
+	fieldName?: string;
+}
+
 export default function TextEditModal({
 	onClose,
 	submit,
@@ -15,15 +25,7 @@ export default function TextEditModal({
 	validationSchema,
 	title = 'Edit',
 	fieldName = 'inputName'
-}: {
-	onClose: (update: boolean) => void;
-	submit: (values: FormikValues) => void;
-	open: boolean;
-	initialValues: FormikValues;
-	validationSchema: unknown;
-	title?: string;
-	fieldName?: string;
-}) {
+}: TextEditModalProps) {
 	return (
 		<Modal
 			title={title}

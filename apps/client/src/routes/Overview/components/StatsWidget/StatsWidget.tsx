@@ -5,18 +5,7 @@ import clsx from 'clsx';
 import style from './StatsWidget.module.scss';
 import Widget from '../../../../components/Widget/Widget';
 
-export default function StatsWidget({
-	title,
-	value,
-	maxValue,
-	valueRange = {
-		ok: [0, 75],
-		warning: [75, 90],
-		danger: [90, 100]
-	},
-	unit = '%',
-	footer
-}: {
+interface StatsWidgetProps {
 	title: string;
 	value: number | string;
 	maxValue?: number;
@@ -29,7 +18,20 @@ export default function StatsWidget({
 		| undefined;
 	unit?: string;
 	footer?: string;
-}): JSX.Element {
+}
+
+export default function StatsWidget({
+	title,
+	value,
+	maxValue,
+	valueRange = {
+		ok: [0, 75],
+		warning: [75, 90],
+		danger: [90, 100]
+	},
+	unit = '%',
+	footer
+}: StatsWidgetProps): JSX.Element {
 	function getStatusClass() {
 		if (!valueRange || typeof value !== 'number') return '';
 

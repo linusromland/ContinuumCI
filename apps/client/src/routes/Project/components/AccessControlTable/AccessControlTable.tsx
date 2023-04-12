@@ -7,7 +7,11 @@ import { ProjectClass, UserClass } from 'shared/src/classes';
 import { ProjectRoleEnum } from 'shared/src/enums';
 import formatProjectRole from '../../../../utils/formatProjectRole';
 
-export default function AccessControlTable({ project }: { project: ProjectClass }): JSX.Element {
+interface AccessControlTableProps {
+	project: ProjectClass;
+}
+
+export default function AccessControlTable({ project }: AccessControlTableProps): JSX.Element {
 	return (
 		<>
 			<Widget>
