@@ -1,0 +1,18 @@
+$breakpointSmall: 768px;
+$breakpointMedium: 1440px;
+
+@mixin mediaQuery($query) {
+	@if ($query == 'small') {
+		@media (max-width: $breakpointSmall) {
+			@content;
+		}
+	} @else if ($query == 'medium') {
+		@media (max-width: $breakpointMedium) {
+			@content;
+		}
+	} @else if ($query == 'large') {
+		@media (min-width: $breakpointMedium) {
+			@content;
+		}
+	}
+}

@@ -9,11 +9,13 @@ import Button from './Button/Button';
 import { getUser } from '../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
+import clsx from 'clsx';
 
 export default function Sidebar() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [user, setUser] = useState({} as UserClass);
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -27,8 +29,8 @@ export default function Sidebar() {
 	}, []);
 
 	return (
-		<div className={style.sidebar}>
-			<div className={style.contentWrapper}>
+		<div className={clsx(style.sidebar, open ? style.openSidebar : style.closedSidebar)}>
+			<div className={style.header}>
 				<div className={style.logo}>
 					<img
 						src='/logo_light.svg'
@@ -36,80 +38,86 @@ export default function Sidebar() {
 					/>
 					<h1>ContinuumCI</h1>
 				</div>
-				<ButtonWrapper text='ANALYTICS'>
-					<>
-						<Button
-							text='Overview'
-							icon='/icons/overview.svg'
-							onClick={() => navigate('/')}
-							selected={location.pathname === '/'}
-						/>
-					</>
-				</ButtonWrapper>
-				<ButtonWrapper text='DEPLOYMENTS'>
-					<>
-						<Button
-							text='Projects'
-							icon='/icons/projects.svg'
-							onClick={() => navigate('/projects')}
-							selected={location.pathname.includes('projects')}
-						/>
-						<Button
-							text='Containers'
-							icon='/icons/containers.svg'
-							onClick={() => navigate('/containers')}
-							selected={location.pathname === '/containers'}
-						/>
-						<Button
-							text='Domains'
-							icon='/icons/nginx.svg'
-							onClick={() => console.log('Domains')}
-						/>
-					</>
-				</ButtonWrapper>
-				<ButtonWrapper text='SETTINGS'>
-					<>
-						<Button
-							text='General'
-							icon='/icons/settings.svg'
-							onClick={() => navigate('/settings')}
-							selected={location.pathname === '/settings'}
-						/>
-						{user.role == UserRoleEnum.ROOT && (
+				<button
+					className={style.toggleSidebar}
+					onClick={() => setOpen(!open)}
+				>
+					<img
+						src={open ? '/icons/close_white.svg' : '/icons/menu.svg'}
+						alt='Toggle sidebar'
+					/>
+				</button>
+			</div>
+			<div className={clsx(style.content, open ? style.open : style.closed)}>
+				<div className={style.buttons}>
+					<ButtonWrapper text='ANALYTICS'>
+						<>
 							<Button
-								text='Users'
-								icon='/icons/users.svg'
-								onClick={() => navigate('/settings/users')}
-								selected={location.pathname === '/settings/users'}
+								text='Overview'
+								icon='/icons/overview.svg'
+								onClick={() => navigate('/')}
+								selected={location.pathname === '/'}
 							/>
-						)}
-						{(user.role == UserRoleEnum.ROOT || user.role == UserRoleEnum.ADMIN) && (
-							<>
+						</>
+					</ButtonWrapper>
+					<ButtonWrapper text='DEPLOYMENTS'>
+						<>
+							<Button
+								text='Projects'
+								icon='/icons/projects.svg'
+								onClick={() => navigate('/projects')}
+								selected={location.pathname.includes('projects')}
+							/>
+							<Button
+								text='Containers'
+								icon='/icons/containers.svg'
+								onClick={() => navigate('/containers')}
+								selected={location.pathname === '/containers'}
+							/>
+							<Button
+								text='Domains'
+								icon='/icons/nginx.svg'
+								onClick={() => console.log('Domains')}
+							/>
+						</>
+					</ButtonWrapper>
+					<ButtonWrapper text='SETTINGS'>
+						<>
+							<Button
+								text='General'
+								icon='/icons/settings.svg'
+								onClick={() => navigate('/settings')}
+								selected={location.pathname === '/settings'}
+							/>
+							{user.role == UserRoleEnum.ROOT && (
 								<Button
-									text='Docker'
-									icon='/icons/docker.svg'
-									onClick={() => console.log('Docker')}
+									text='Users'
+									icon='/icons/users.svg'
+									onClick={() => navigate('/settings/users')}
+									selected={location.pathname === '/settings/users'}
 								/>
+							)}
+							{(user.role == UserRoleEnum.ROOT || user.role == UserRoleEnum.ADMIN) && (
 								<Button
 									text='Nginx'
 									icon='/icons/nginx.svg'
 									onClick={() => navigate('/settings/nginx')}
 									selected={location.pathname === '/settings/nginx'}
 								/>
-							</>
-						)}
-					</>
-				</ButtonWrapper>
-			</div>
-			<div className={style.footer}>
-				<p className={style.footerText}>
-					Authenticated as: <span>{user.username}</span>
-				</p>
-				<Button
-					text='Sign out'
-					icon='/icons/signout.svg'
-					onClick={() => console.log('Sign out')}
-				/>
+							)}
+						</>
+					</ButtonWrapper>
+				</div>
+				<div className={style.footer}>
+					<p className={style.footerText}>
+						Authenticated as: <span>{user.username}</span>
+					</p>
+					<Button
+						text='Sign out'
+						icon='/icons/signout.svg'
+						onClick={() => console.log('Sign out')}
+					/>
+				</div>
 			</div>
 		</div>
 	);

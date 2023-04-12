@@ -2,7 +2,7 @@
 import { NginxConfigurationType, ResponseType } from 'shared/src/types';
 import api from '..';
 
-async function getConfiguration(): Promise<ResponseType> {
+async function getConfiguration(): Promise<ResponseType<NginxConfigurationType>> {
 	const request = await api.get('/nginx/configuration');
 
 	return request.data;

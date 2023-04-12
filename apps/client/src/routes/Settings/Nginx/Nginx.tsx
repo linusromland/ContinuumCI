@@ -39,8 +39,8 @@ export default function Nginx(): JSX.Element {
 
 	async function getConfigurationData() {
 		const response = await getConfiguration();
-		if (response.success) {
-			setNginxConfiguration(response.data as NginxConfigurationType);
+		if (response.success && response.data) {
+			setNginxConfiguration(response.data);
 		}
 	}
 
