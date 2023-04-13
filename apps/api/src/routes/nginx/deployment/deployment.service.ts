@@ -1,10 +1,10 @@
 // External dependencies
 import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import axios from 'axios';
 
 // Internal dependencies
-import { NginxDeploymentClass, NginxDeploymentQueryClass, ProjectClass, UserClass } from 'shared/src/classes';
+import { NginxDeploymentClass, NginxDeploymentQueryClass, UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import { NGINX_API_URL } from 'src/utils/env';
 
@@ -14,12 +14,50 @@ export class DeploymentService {
 		@Inject('NGINX_DEPLOYMENTS_MODEL')
 		private NginxDeploymentModel: Model<NginxDeploymentClass>,
 
-		@Inject('PROJECT_MODEL')
-		private ProjectModel: Model<ProjectClass>,
-
 		@Inject('USER_MODEL')
 		private UserModel: Model<UserClass>
 	) {}
+
+	async get(userId: string, id: string) {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		let query = {};
+
+		if (id) {
+			if (!isValidObjectId(id)) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Invalid id'
+				});
+			}
+
+			query = {
+				_id: id.toString()
+			};
+		}
+
+		const deployments = await this.NginxDeploymentModel.find(query);
+
+		if (id && !deployments.length) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Deployment not found'
+			});
+		}
+
+		return {
+			success: true,
+			message: 'Successfully fetched deployment(s)',
+			data: deployments
+		};
+	}
 
 	async create(userId: string, body: NginxDeploymentQueryClass) {
 		const user = await this.UserModel.findById(userId);
@@ -90,7 +128,7 @@ export class DeploymentService {
 		if (user.role == UserRoleEnum.USER) {
 			throw new BadRequestException({
 				success: false,
-				message: 'User does not have permission to add a nginx deployment'
+				message: 'User does not have permission to delete a nginx deployment'
 			});
 		}
 

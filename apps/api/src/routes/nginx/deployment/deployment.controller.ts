@@ -1,5 +1,5 @@
 // External dependencies
-import { Body, Controller, Post, UseGuards, Request, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, ValidationPipe, UsePipes, Get, Query } from '@nestjs/common';
 
 // Internal dependencies
 import { DeploymentService } from './deployment.service';
@@ -9,6 +9,12 @@ import { NginxDeploymentQueryClass } from 'shared/src/classes';
 @Controller('nginx/deployments')
 export class DeploymentController {
 	constructor(private deploymentService: DeploymentService) {}
+
+	@UseGuards(JwtAuthGuard)
+	@Get()
+	async get(@Request() req, @Query('id') id: string) {
+		return await this.deploymentService.get(req.user.sub, id);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
