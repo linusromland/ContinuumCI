@@ -9,9 +9,10 @@ import StatsWidget from './components/StatsWidget/StatsWidget';
 import ApplicationWidget from './components/ApplicationWidget/ApplicationWidget';
 import InfoWidget from './components/InfoWidget/InfoWidget';
 import Table from '../../components/Table/Table';
-import { OverviewType } from 'shared/src/types';
+import { NginxLogsType, OverviewType } from 'shared/src/types';
 import { getOverview } from '../../utils/api/overview';
 import { formatNumber } from '../../utils/formatNumber';
+import { getLogs } from '../../utils/api/nginx/logs';
 
 type filesizeType = {
 	value: number;
@@ -22,11 +23,13 @@ type filesizeType = {
 export default function Overview(): JSX.Element {
 	const [user, setUser] = useState('');
 	const [data, setData] = useState({} as OverviewType);
+	const [logs, setLogs] = useState([] as NginxLogsType[]);
 	const [dataInterval, setDataInterval] = useState<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
 		(async () => {
 			getOverviewData();
+			getLogsData();
 
 			const userResponse = await getUser();
 			if (userResponse.success && userResponse.data) {
@@ -50,6 +53,14 @@ export default function Overview(): JSX.Element {
 		}
 
 		setDataInterval(setTimeout(getOverviewData, 1000 * 10));
+	}
+
+	async function getLogsData() {
+		const logsResponse = await getLogs();
+
+		if (logsResponse.success && logsResponse.data) {
+			setLogs(logsResponse.data);
+		}
 	}
 
 	return (
@@ -164,89 +175,15 @@ export default function Overview(): JSX.Element {
 			<div className={style.table}>
 				<h2 className={style.subtitle}>10 latests requests</h2>
 				<Table
-					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Project']}
-					data={[
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							'200 OK',
-							'https://romland.dev/api/user',
-							'192.168.1.1',
-							'Romland.dev'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							'404 Not Found',
-							'https://romland.dev/api/setup',
-							'192.168.1.1',
-							'Romland.dev'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							'200 OK',
-							'https://romland.dev/api/user',
-							'192.168.1.1',
-							'Romland.dev'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							'404 Not Found',
-							'https://romland.dev/api/setup',
-							'192.168.1.1',
-							'Romland.dev'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						],
-						[
-							'2021-03-01 12:00:00',
-							'GET',
-							"418 I'm a teapot",
-							'https://linusromland.com/api/projects',
-							'192.168.1.1',
-							'linusromland.com'
-						]
-					]}
+					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Size']}
+					data={logs.map((log) => [
+						log.time_local,
+						log.request_method,
+						log.status.toString(),
+						log.request_url,
+						log.remote_address,
+						log.body_bytes_sent.toString()
+					])}
 				/>
 			</div>
 		</div>
