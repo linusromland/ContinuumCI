@@ -6,35 +6,49 @@ import fs from 'fs';
 import path from 'path';
 
 // Internal dependencies
-import { ResponseType, NginxDeploymentType, NginxConfigurationType, NginxReloadLogsType } from 'shared/src/types';
+import { ResponseType, NginxConfigurationType, NginxReloadLogsType } from 'shared/src/types';
+import { NginxDeploymentClass } from 'shared/src/classes';
 import template from 'src/utils/template';
 
 @Injectable()
 export class DeploymentsService {
 	constructor(
 		@Inject('NGINX_DEPLOYMENTS_MODEL')
-		private NginxDeploymentsModel: Model<NginxDeploymentType>,
+		private NginxDeploymentsModel: Model<NginxDeploymentClass>,
 
 		@Inject('NGINX_CONFIGURATION_MODEL')
 		private NginxConfigurationModel: Model<NginxConfigurationType>,
+
 		@Inject('NGINX_RELOAD_LOGS_MODEL')
 		private NginxReloadLogsModel: Model<NginxReloadLogsType>
 	) {}
 
-	async create(deploymentConfiguration: NginxDeploymentType): Promise<ResponseType> {
+	async create(id: string): Promise<ResponseType> {
+		if (!id) {
+			throw new BadRequestException({
+				success: false,
+				message: 'No id provided'
+			});
+		}
+		const configuration = await this.NginxConfigurationModel.findOne();
+		if (!configuration) {
+			throw new BadRequestException({
+				success: false,
+				message: 'No configuration found'
+			});
+		}
+
 		try {
-			const configuration = await this.NginxConfigurationModel.findOne();
-			if (!configuration) {
+			const deployment = await this.NginxDeploymentsModel.findById(id);
+
+			if (!deployment) {
 				throw new BadRequestException({
 					success: false,
-					message: 'No configuration found'
+					message: "Couldn't find deployment"
 				});
 			}
 
-			const deployment = new this.NginxDeploymentsModel(deploymentConfiguration);
-			await deployment.save();
-
-			const nginxTemplate = template(deploymentConfiguration, configuration.localIps);
+			const nginxTemplate = template(deployment, configuration.localIps);
 
 			fs.writeFileSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`), nginxTemplate);
 
@@ -43,7 +57,7 @@ export class DeploymentsService {
 					if (error) {
 						reject({
 							success: false,
-							message: 'Deployment created, nginx failed to reload',
+							message: 'Nginx failed to reload',
 							logs: error
 						});
 					}
@@ -82,24 +96,6 @@ export class DeploymentsService {
 		}
 	}
 
-	async get(ids: string[]): Promise<ResponseType<NginxDeploymentType[]>> {
-		try {
-			const deployments = await this.NginxDeploymentsModel.find({
-				_id: { $in: ids }
-			});
-			return {
-				success: true,
-				message: 'Deployments found',
-				data: deployments
-			};
-		} catch (error) {
-			throw new BadRequestException({
-				success: false,
-				message: "Couldn't find deployments"
-			});
-		}
-	}
-
 	async delete(id: string): Promise<ResponseType> {
 		if (!id) {
 			throw new BadRequestException({
@@ -130,8 +126,6 @@ export class DeploymentsService {
 			} catch (error) {
 				console.log(error);
 			}
-
-			await deployment.remove();
 
 			const reloadCommand = new Promise((resolve, reject) => {
 				exec('nginx -s reload', (error, stdout, stderr) => {

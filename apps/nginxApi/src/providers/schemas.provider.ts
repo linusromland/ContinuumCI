@@ -3,13 +3,8 @@
 import { Connection } from 'mongoose';
 
 // Internal dependencies
-import {
-	NginxConfigurationSchema,
-	NginxDeploymentsSchema,
-	NginxLogsSchema,
-	NginxReloadLogsSchema,
-	NginxResumeSchema
-} from '../schemas';
+import { NginxConfigurationSchema, NginxReloadLogsSchema, NginxResumeSchema, NginxLogsSchema } from '../schemas';
+import { NginxDeploymentsSchema } from 'shared/src/schemas';
 
 const schemaProviders = [
 	{

@@ -11,6 +11,7 @@ import {
 	ProjectSchema,
 	UserSchema
 } from '../schemas';
+import { NginxDeploymentsSchema } from 'shared/src/schemas';
 
 const schemaProviders = [
 	{
@@ -46,6 +47,11 @@ const schemaProviders = [
 	{
 		provide: 'USER_MODEL',
 		useFactory: (connection: Connection) => connection.model('users', UserSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'NGINX_DEPLOYMENTS_MODEL',
+		useFactory: (connection: Connection) => connection.model('nginxdeployments', NginxDeploymentsSchema),
 		inject: ['DATABASE_CONNECTION']
 	}
 ];

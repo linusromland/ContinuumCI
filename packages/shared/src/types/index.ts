@@ -4,7 +4,6 @@ import { EmailVerificationType } from './EmailVerification.type';
 import { JwtType } from './Jwt.type';
 import { LoginType } from './Login.type';
 import { NginxConfigurationType } from './NginxConfiguration.type';
-import { NginxDeploymentType } from './NginxDeployment.type';
 import { NginxLogsType } from './NginxLogs.type';
 import { NginxReloadLogsType } from './NginxReloadLogs.type';
 import { OverviewType } from './Overview.type';
@@ -19,7 +18,6 @@ export type {
 	NginxLogsType,
 	LoginType,
 	NginxConfigurationType,
-	NginxDeploymentType,
 	NginxReloadLogsType,
 	OverviewType,
 	ResponseType,

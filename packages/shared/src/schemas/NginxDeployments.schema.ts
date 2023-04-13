@@ -4,7 +4,8 @@ import { Schema } from 'mongoose';
 export const NginxDeploymentsSchema = new Schema({
 	server_name: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 	locations: [
 		{
@@ -15,6 +16,14 @@ export const NginxDeploymentsSchema = new Schema({
 			proxy_pass: {
 				type: String,
 				required: true
+			},
+			project: {
+				id: {
+					type: String
+				},
+				service: {
+					type: String
+				}
 			},
 			websocket: {
 				type: Boolean,

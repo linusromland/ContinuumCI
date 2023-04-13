@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Internal dependencies
-import { NginxDeploymentType } from 'shared/src/types';
+import { NginxDeploymentClass } from 'shared/src/classes';
 
 const templateDir = `../templates`;
 
@@ -19,7 +19,7 @@ const internalWebsocketLocationTemplate = fs.readFileSync(
 	'utf8'
 );
 
-const template = (deployment: NginxDeploymentType, localIps): string => {
+const template = (deployment: NginxDeploymentClass, localIps): string => {
 	const { server_name, locations, ssl } = deployment;
 
 	if (ssl) console.log('SSL is not implemented yet');
