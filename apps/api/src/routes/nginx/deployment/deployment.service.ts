@@ -76,4 +76,63 @@ export class DeploymentService {
 			data: createdDeployment
 		};
 	}
+
+	async delete(userId: string, id: string) {
+		const user = await this.UserModel.findById(userId);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		if (user.role == UserRoleEnum.USER) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User does not have permission to add a nginx deployment'
+			});
+		}
+
+		const deployment = await this.NginxDeploymentModel.findById(id);
+
+		if (!deployment) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Nginx deployment not found'
+			});
+		}
+
+		const request = await axios.post(
+			`${NGINX_API_URL}/deployments/delete`,
+			{
+				id: deployment._id.toString()
+			},
+			{
+				validateStatus: () => true
+			}
+		);
+
+		if (request.status == 500) {
+			throw new InternalServerErrorException({
+				success: false,
+				message: 'Internal server error',
+				data: request.data.message
+			});
+		}
+
+		if (!request.data.success) {
+			throw new BadRequestException({
+				success: false,
+				message: request.data.message
+			});
+		}
+
+		await this.NginxDeploymentModel.findByIdAndDelete(deployment._id);
+
+		return {
+			success: true,
+			message: 'Successfully removed nginx deployment'
+		};
+	}
 }

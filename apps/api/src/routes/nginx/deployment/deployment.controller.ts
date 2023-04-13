@@ -16,4 +16,10 @@ export class DeploymentController {
 	async create(@Request() req, @Body() body: NginxDeploymentQueryClass) {
 		return await this.deploymentService.create(req.user.sub, body);
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('delete')
+	async delete(@Request() req, @Body() body: { id: string }) {
+		return await this.deploymentService.delete(req.user.sub, body.id);
+	}
 }
