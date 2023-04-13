@@ -27,7 +27,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 		if (splitToken && splitToken.length === 2) {
 			const decodedToken = jwt.verify(splitToken[1], JWT_SECRET);
 
-			if (decodedToken) {
+			if (decodedToken && decodedToken.sub) {
 				(async () => {
 					const user = await this.UserModel.findById(decodedToken.sub);
 
