@@ -1,15 +1,17 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 // Internal Dependencies
 import style from './Sidebar.module.scss';
 import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
 import { getUser } from '../../utils/api/user';
+import api from '../../utils/api';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
-import clsx from 'clsx';
+import { toast } from 'react-toastify';
 
 export default function Sidebar() {
 	const location = useLocation();
@@ -115,7 +117,21 @@ export default function Sidebar() {
 					<Button
 						text='Sign out'
 						icon='/icons/signout.svg'
-						onClick={() => console.log('Sign out')}
+						onClick={() => {
+							try {
+								if (!localStorage || !sessionStorage) return;
+								localStorage.removeItem('token');
+								sessionStorage.removeItem('token');
+								api.defaults.headers.common['Authorization'] = '';
+								toast.success('Successfully signed out', {
+									position: 'top-left'
+								});
+								navigate('/login');
+							} catch (e) {
+								console.log(e);
+								toast.error('Failed to sign out');
+							}
+						}}
 					/>
 				</div>
 			</div>
