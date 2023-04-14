@@ -18,28 +18,32 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 	}
 
 	canActivate(context: ExecutionContext) {
-		const request = context.switchToHttp().getRequest();
+		try {
+			const request = context.switchToHttp().getRequest();
 
-		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
-		const token = request.headers['authorization'];
-		const splitToken = token.split(' ');
+			const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+			const token = request.headers['authorization'];
+			const splitToken = token.split(' ');
 
-		if (splitToken && splitToken.length === 2) {
-			const decodedToken = jwt.verify(splitToken[1], JWT_SECRET);
+			if (splitToken && splitToken.length === 2) {
+				const decodedToken = jwt.verify(splitToken[1], JWT_SECRET);
 
-			if (decodedToken && decodedToken.sub) {
-				(async () => {
-					const user = await this.UserModel.findById(decodedToken.sub);
+				if (decodedToken && decodedToken.sub) {
+					(async () => {
+						const user = await this.UserModel.findById(decodedToken.sub);
 
-					if (user) {
-						user.lastLogin = new Date();
-						user.lastIp = ip;
-						await user.save();
-					}
-				})();
+						if (user) {
+							user.lastLogin = new Date();
+							user.lastIp = ip;
+							await user.save();
+						}
+					})();
+				}
 			}
+			return super.canActivate(context);
+		} catch (err) {
+			return super.canActivate(context);
 		}
-		return super.canActivate(context);
 	}
 
 	handleRequest(err, user) {
