@@ -13,6 +13,7 @@ import ProjectCreateModal from './components/ProjectCreateModal/ProjectCreateMod
 import { getAllProjects, createProject } from '../../utils/api/projects';
 import { ProjectClass } from 'shared/src/classes';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
+import { Loading } from '../../components/Loading/Loading';
 
 export default function Projects() {
 	const navigate = useNavigate();
@@ -21,19 +22,23 @@ export default function Projects() {
 	const [projects, setProjects] = useState([] as ProjectClass[]);
 	const [searchFilter, setSearchFilter] = useState('' as string);
 	const [lastUpdated, setLastUpdated] = useState('' as string);
+	const [dataReady, setDataReady] = useState(false);
 
 	async function getProjects() {
+		setDataReady(false);
 		const response = await getAllProjects();
 		if (response.success && response.data) {
 			setProjects(response.data);
 		}
-
+		setDataReady(true);
 		setLastUpdated(new Date().toISOString());
 	}
 
 	useEffect(() => {
 		getProjects();
 	}, []);
+
+	if (!dataReady) return <Loading />;
 
 	return (
 		<>
