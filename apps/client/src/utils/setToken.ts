@@ -27,20 +27,19 @@ async function setToken({
 	}
 
 	const tokenRequest = await getToken(email, password);
-	const tokenData = tokenRequest.data as { access_token: string };
 
-	if (!tokenRequest.success) {
+	if (!tokenRequest.success || !tokenRequest.data) {
 		throw new Error('Invalid credentials');
 	}
 
 	if (rememberMe) {
-		localStorage.setItem('token', tokenData.access_token as string);
+		localStorage.setItem('token', tokenRequest.data.access_token);
 	} else {
-		sessionStorage.setItem('token', tokenData.access_token as string);
+		sessionStorage.setItem('token', tokenRequest.data.access_token);
 	}
 
 	if (tokenRequest.success) {
-		updateHeader(tokenData.access_token as string);
+		updateHeader(tokenRequest.data.access_token as string);
 		return;
 	}
 }

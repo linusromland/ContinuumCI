@@ -22,16 +22,13 @@ services:
             - MONGODB_URI=mongodb://mongo:27017/ContinuumCI
         networks:
             - default
-        ports:
-            - '80:80'
-            - '443:443'
-            - '3001:3001'
         volumes:
             - nginx_sites_enabled:/etc/nginx/sites-enabled
             - nginx_logs:/var/log/nginx
     api:
         depends_on:
             - mongo
+            - nginx-api
         restart: unless-stopped
         build:
             context: ./
@@ -41,12 +38,20 @@ services:
             - NGINX_API_URL=http://nginx-api:3001
         networks:
             - default
-        ports:
-            - '3000:3000'
         volumes:
             - projects_data:/apps/api/src/projects
         privileged: true
-
+    client:
+        depends_on:
+            - api
+        restart: unless-stopped
+        build:
+            context: ./
+            dockerfile: apps/client/Dockerfile
+        networks:
+            - default
+        ports:
+            - '80:80'
 networks:
     default:
 volumes:
