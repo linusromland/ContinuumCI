@@ -10,9 +10,10 @@ interface TableProps {
 	headers: string[];
 	data: (string | JSX.Element)[][];
 	widget?: boolean;
+	onRowClick?: (row: (string | JSX.Element)[]) => void;
 }
 
-export default function Table({ headers, data, widget = true }: TableProps): JSX.Element {
+export default function Table({ headers, data, widget = true, onRowClick }: TableProps): JSX.Element {
 	const WrapperComponent = widget ? Widget : Wrapper;
 
 	return (
@@ -27,7 +28,10 @@ export default function Table({ headers, data, widget = true }: TableProps): JSX
 				</thead>
 				<tbody>
 					{data.map((row, index) => (
-						<tr key={index}>
+						<tr
+							key={index}
+							onClick={() => onRowClick && onRowClick(row)}
+						>
 							{row.map((cell, index) => (
 								<td key={index}>{cell}</td>
 							))}
