@@ -175,7 +175,7 @@ export default function Overview(): JSX.Element {
 			<div className={style.table}>
 				<h2 className={style.subtitle}>10 latests requests</h2>
 				<Table
-					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Size']}
+					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Size (bytes)']}
 					data={logs.map((log) => [
 						log.time_local,
 						log.request_method,
