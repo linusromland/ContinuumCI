@@ -25,6 +25,8 @@ services:
         volumes:
             - nginx_sites_enabled:/etc/nginx/sites-enabled
             - nginx_logs:/var/log/nginx
+        ports:
+            - '80:80'
     api:
         depends_on:
             - mongo
@@ -51,7 +53,7 @@ services:
         networks:
             - default
         ports:
-            - '80:80'
+            - '8080:8080'
 networks:
     default:
 volumes:
