@@ -41,7 +41,10 @@ const template = (deployment: NginxDeploymentClass, localIps): string => {
 			: externalLocationTemplate;
 
 		locationTemplate = locationTemplate.replace('{{location}}', location.location);
-		locationTemplate = locationTemplate.replace('{{proxy_pass}}', location.proxy_pass);
+		locationTemplate = locationTemplate.replace(
+			'{{proxy_pass}}',
+			location.proxy_pass.includes('http') ? location.proxy_pass : `http://${location.proxy_pass}`
+		);
 
 		if (location.internal) {
 			locationTemplate = locationTemplate.replace('{{internal_ips}}', localIps);

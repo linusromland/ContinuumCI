@@ -47,7 +47,7 @@ export default function Domains() {
 							<div className={style.container}>
 								<Table
 									widget={false}
-									headers={['Server Name', 'Locations', 'SSL Configured', 'Created']}
+									headers={['Server Name', 'Locations', 'SSL Configured']}
 									data={domains.map((domain) => [
 										domain.server_name,
 										`${domain.locations.length} locations`,
