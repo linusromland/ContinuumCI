@@ -40,7 +40,7 @@ export default function Modal({ children, onClose, open, title }: ModalProps) {
 						onClick={onClose}
 					/>
 				</div>
-				{children}
+				<div className={style.body}>{children}</div>
 			</div>
 		</div>
 	);
