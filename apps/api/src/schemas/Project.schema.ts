@@ -45,6 +45,11 @@ export const ProjectSchema = new Schema(
 					type: String,
 					required: true
 				},
+				containerPorts: [
+					{
+						type: Number
+					}
+				],
 				ports: [
 					{
 						type: Number

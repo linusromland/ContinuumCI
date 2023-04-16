@@ -50,5 +50,6 @@ class PermissionClass {
 
 class ServicesClass {
 	name: string;
+	containerPorts: number[];
 	ports: number[];
 }

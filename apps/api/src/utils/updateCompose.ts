@@ -21,10 +21,13 @@ async function updateCompose(project: ProjectClass, ProjectModel: Model<ProjectC
 		const services = Object.keys(dockerCompose.services);
 
 		// Update the services in db
-		project.services = services.map((service) => ({
+		const updatedServices = services.map((service) => ({
 			name: service,
-			ports: []
+			containerPorts: dockerCompose.services[service].ports.map((port) => port.split(':')[1]) || [],
+			ports: project.services.find((s) => s.name === service)?.ports || []
 		}));
+
+		project.services = updatedServices;
 
 		// Loop through each service in the docker-compose file
 		for (let i = 0; i < services.length; i++) {
