@@ -9,4 +9,10 @@ async function getDeployments(): Promise<ResponseType<NginxDeploymentClass[]>> {
 	return request.data;
 }
 
-export { getDeployments };
+async function removeDeployment(id: string): Promise<ResponseType> {
+	const request = await api.post('/nginx/deployments/delete', { id });
+
+	return request.data;
+}
+
+export { getDeployments, removeDeployment };

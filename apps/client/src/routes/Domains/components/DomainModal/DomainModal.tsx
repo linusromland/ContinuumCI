@@ -1,7 +1,13 @@
+// External dependencies
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 // Internal dependencies
 import style from './DomainModal.module.scss';
 import Modal from '../../../../components/Modal/Modal';
 import { NginxDeploymentClass } from 'shared/src/classes';
+import Button from '../../../../components/Button/Button';
+import { removeDeployment } from '../../../../utils/api/nginx/deployment';
 
 interface DomainModalProps {
 	onClose: (update: boolean) => void;
@@ -10,6 +16,8 @@ interface DomainModalProps {
 }
 
 export default function DomainModal({ open, onClose, domain }: DomainModalProps) {
+	const [confirmDelete, setConfirmDelete] = useState(false);
+
 	if (!domain) return null;
 
 	return (
@@ -53,6 +61,29 @@ export default function DomainModal({ open, onClose, domain }: DomainModalProps)
 								</div>
 							</div>
 						))}
+				</div>
+				<div className={style.actions}>
+					<Button
+						text={confirmDelete ? 'Confirm Delete' : 'Delete Domain'}
+						theme='error'
+						small
+						onClick={async () => {
+							if (!confirmDelete) {
+								setConfirmDelete(true);
+								return;
+							}
+
+							const response = await removeDeployment(domain._id);
+
+							if (response.success) {
+								toast.success('Domain deleted successfully');
+								onClose(true);
+								return;
+							}
+
+							toast.error('Failed to delete domain');
+						}}
+					/>
 				</div>
 			</div>
 		</Modal>

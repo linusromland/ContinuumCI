@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 
 // Internal dependencies
 import { DeploymentsService } from './deployments.service';
@@ -22,7 +22,7 @@ export class DeploymentsController {
 	}
 
 	@Post('delete')
-	async delete(@Query('id') id: string) {
-		return this.deploymentsService.delete(id);
+	async delete(@Body() body: { id: string }) {
+		return this.deploymentsService.delete(body.id);
 	}
 }
