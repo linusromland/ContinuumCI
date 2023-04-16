@@ -31,6 +31,7 @@ export default function Table({ headers, data, widget = true, onRowClick }: Tabl
 						<tr
 							key={index}
 							onClick={() => onRowClick && onRowClick(row)}
+							className={onRowClick ? style.rowClickable : ''}
 						>
 							{row.map((cell, index) => (
 								<td key={index}>{cell}</td>
