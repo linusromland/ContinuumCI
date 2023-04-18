@@ -6,14 +6,28 @@ import { FieldProps } from 'formik';
 type OptionType = { value: string; label: string };
 type CustomSelectProps = FieldProps & SelectProps<OptionType>;
 
+const SELECT_HEIGHT = '2rem';
+
 const customStyles = {
 	control: (provided: object) => ({
 		...provided,
 		border: '2px solid #dadada',
-		borderRadius: '0.25rem',
-		fontSize: '1rem',
+		borderRadius: '0.5rem',
 		fontWeight: 700,
-		margin: '0.5rem 0'
+		backgroundColor: '#f3f3f3',
+		display: 'flex',
+		alignItems: 'center',
+		minHeight: SELECT_HEIGHT,
+		maxHeight: SELECT_HEIGHT
+	}),
+	selectContainer: (provided: object) => ({
+		...provided,
+		minHeight: SELECT_HEIGHT,
+		maxHeight: SELECT_HEIGHT
+	}),
+	singleValue: (provided: object) => ({
+		...provided,
+		fontSize: '0.9rem'
 	})
 };
 
