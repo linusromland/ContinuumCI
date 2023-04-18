@@ -10,11 +10,14 @@ import Table from '../../components/Table/Table';
 import { Loading } from '../../components/Loading/Loading';
 import { getDeployments } from '../../utils/api/nginx/deployment';
 import DomainModal from './components/DomainModal/DomainModal';
+import CreateDomainModal from './components/CreateDomainModal/CreateDomainModal';
+import Button from '../../components/Button/Button';
 
 export default function Domains() {
 	const [domains, setDomains] = useState([] as NginxDeploymentClass[]);
 	const [selectedDomain, setSelectedDomain] = useState({} as NginxDeploymentClass);
-	const [modalOpen, setModalOpen] = useState(false);
+	const [viewModalOpen, setViewModalOpen] = useState(false);
+	const [createModalOpen, setCreateModalOpen] = useState(false);
 	const [dataReady, setDataReady] = useState(false);
 
 	useEffect(() => {
@@ -43,10 +46,16 @@ export default function Domains() {
 						}
 					]}
 				/>
+				<h1 className={style.title}>Domains</h1>
+				<Button
+					text='Create Domain'
+					theme='success'
+					small
+					onClick={() => setCreateModalOpen(true)}
+				/>
 				<div className={style.content}>
 					{domains && domains.length > 0 && (
 						<>
-							<h1 className={style.title}>Domains</h1>
 							<Widget contentClass={style.contentClass}>
 								<div className={style.container}>
 									<Table
@@ -66,7 +75,7 @@ export default function Domains() {
 
 											if (clickedDomain) {
 												setSelectedDomain(clickedDomain);
-												setModalOpen(true);
+												setViewModalOpen(true);
 											}
 										}}
 									/>
@@ -76,19 +85,25 @@ export default function Domains() {
 					)}
 					{domains && domains.length === 0 && (
 						<>
-							<h2 className={style.title}>Domains</h2>
 							<p>No domains found.</p>
 						</>
 					)}
 				</div>
 			</main>
 			<DomainModal
-				open={modalOpen}
+				open={viewModalOpen}
 				onClose={(update) => {
-					setModalOpen(false);
+					setViewModalOpen(false);
 					if (update) getData();
 				}}
 				domain={selectedDomain}
+			/>
+			<CreateDomainModal
+				open={createModalOpen}
+				onClose={(update) => {
+					setCreateModalOpen(false);
+					if (update) getData();
+				}}
 			/>
 		</>
 	);
