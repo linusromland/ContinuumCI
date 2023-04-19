@@ -246,7 +246,11 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 															)
 															?.services.map((service) => ({
 																value: service.name,
-																label: service.name
+																label:
+																	service.name +
+																	(service.ports.length === 1
+																		? ` (Port ${service.ports[0]})`
+																		: '')
 															})) || []
 													}
 													placeholder='Service'
