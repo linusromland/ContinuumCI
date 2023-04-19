@@ -51,7 +51,9 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 							<label
 								htmlFor='role'
 								className={formStyle.formLabel}
-							/>
+							>
+								Role
+							</label>
 							<Field
 								name='role'
 								component={CustomSelect}

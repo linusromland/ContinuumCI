@@ -44,7 +44,9 @@ export default function TextEditModal({
 							<label
 								htmlFor={fieldName}
 								className={formStyle.formLabel}
-							/>
+							>
+								{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
+							</label>
 							<Field
 								name={fieldName}
 								type='text'

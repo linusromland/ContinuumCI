@@ -34,7 +34,9 @@ export default function ChangePasswordForm() {
 						<label
 							htmlFor='oldPassword'
 							className={formStyle.formLabel}
-						/>
+						>
+							Old password
+						</label>
 						<Field
 							name='oldPassword'
 							type='password'
@@ -51,7 +53,9 @@ export default function ChangePasswordForm() {
 						<label
 							htmlFor='newPassword'
 							className={formStyle.formLabel}
-						/>
+						>
+							New password
+						</label>
 						<Field
 							name='newPassword'
 							type='password'
@@ -68,7 +72,9 @@ export default function ChangePasswordForm() {
 						<label
 							htmlFor='confirmPassword'
 							className={formStyle.formLabel}
-						/>
+						>
+							Confirm password
+						</label>
 						<Field
 							name='confirmPassword'
 							type='password'

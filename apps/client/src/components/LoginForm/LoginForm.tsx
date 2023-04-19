@@ -30,28 +30,44 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 		>
 			{({ values }) => (
 				<Form className={formStyle.form}>
-					<Field
-						name='email'
-						placeholder='Email'
-						className={formStyle.formInput}
-					/>
-					<ErrorMessage
-						name='email'
-						component='div'
-						className={formStyle.formError}
-					/>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='email'
+							className={formStyle.formLabel}
+						>
+							Email
+						</label>
+						<Field
+							name='email'
+							placeholder='Email'
+							className={formStyle.formInput}
+						/>
+						<ErrorMessage
+							name='email'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
 
-					<Field
-						name='password'
-						placeholder='Password'
-						className={formStyle.formInput}
-						type='password'
-					/>
-					<ErrorMessage
-						name='password'
-						component='div'
-						className={formStyle.formError}
-					/>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='password'
+							className={formStyle.formLabel}
+						>
+							Password
+						</label>
+						<Field
+							name='password'
+							placeholder='Password'
+							className={formStyle.formInput}
+							type='password'
+						/>
+						<ErrorMessage
+							name='password'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
 					<div className={formStyle.formCheckGroup}>
 						<label
 							htmlFor='rememberMe'

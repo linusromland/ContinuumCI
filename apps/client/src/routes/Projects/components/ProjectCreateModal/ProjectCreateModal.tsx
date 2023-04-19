@@ -41,7 +41,9 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 							<label
 								htmlFor='name'
 								className={formStyle.formLabel}
-							/>
+							>
+								Project name
+							</label>
 							<Field
 								name='name'
 								type='text'
@@ -53,10 +55,14 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								component='div'
 								className={formStyle.formError}
 							/>
+						</div>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='gitUrl'
 								className={formStyle.formLabel}
-							/>
+							>
+								Git URL
+							</label>
 							<Field
 								name='gitUrl'
 								type='text'
@@ -68,10 +74,14 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								component='div'
 								className={formStyle.formError}
 							/>
+						</div>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='branch'
 								className={formStyle.formLabel}
-							/>
+							>
+								Branch
+							</label>
 							<Field
 								name='branch'
 								type='text'

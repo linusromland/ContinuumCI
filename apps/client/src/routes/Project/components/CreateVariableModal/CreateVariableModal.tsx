@@ -46,7 +46,9 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							<label
 								htmlFor='name'
 								className={formStyle.formLabel}
-							/>
+							>
+								Name
+							</label>
 							<Field
 								name='name'
 								type='text'
@@ -63,7 +65,9 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							<label
 								htmlFor='value'
 								className={formStyle.formLabel}
-							/>
+							>
+								Value
+							</label>
 							<Field
 								name='value'
 								type='text'
@@ -80,7 +84,9 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							<label
 								htmlFor='services'
 								className={formStyle.formLabel}
-							/>
+							>
+								Services
+							</label>
 							<Field
 								name='services'
 								component={CustomMultiSelect}
