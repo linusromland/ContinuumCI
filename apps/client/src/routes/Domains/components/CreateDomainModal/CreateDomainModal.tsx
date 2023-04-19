@@ -14,6 +14,7 @@ import { getDomains as getNginxDomains } from '../../../../utils/api/nginx/domai
 import { Loading } from '../../../../components/Loading/Loading';
 import { createDeployment } from '../../../../utils/api/nginx/deployment';
 import { toast } from 'react-toastify';
+import defaultProject from '../../../../utils/getdefaultProject';
 
 interface DomainModalProps {
 	onClose: (update: boolean) => void;
@@ -34,7 +35,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 		const response = await getAllProjects();
 
 		if (response.success && response.data) {
-			setProjects(response.data);
+			setProjects([defaultProject, ...response.data]);
 		}
 	}
 
