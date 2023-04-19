@@ -75,7 +75,11 @@ export class DeploymentsService {
 		};
 	}
 
-	async removeDeployment(userId: string, projectId: string): Promise<ResponseType<IDockerComposeResult[]>> {
+	async removeDeployment(
+		userId: string,
+		projectId: string,
+		force = false
+	): Promise<ResponseType<IDockerComposeResult[]>> {
 		const user = await this.UserModel.findById(userId);
 
 		if (!user) {
@@ -107,7 +111,7 @@ export class DeploymentsService {
 			}
 		}
 
-		const result = await this.dockerService.undeployProject(project);
+		const result = await this.dockerService.undeployProject(project, force);
 
 		await this.ProjectModel.findByIdAndUpdate(projectId, {
 			$set: {

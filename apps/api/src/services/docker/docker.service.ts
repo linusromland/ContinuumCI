@@ -168,13 +168,15 @@ export class DockerService {
 		}
 	}
 
-	async undeployProject(project: ProjectClass): Promise<IDockerComposeResult[]> {
+	async undeployProject(project: ProjectClass, force: boolean): Promise<IDockerComposeResult[]> {
 		const result: IDockerComposeResult[] = [];
 
 		// Check if docker is running
 		try {
 			await this.docker.ping();
 		} catch (error) {
+			if (force) return;
+
 			throw new BadRequestException({
 				success: false,
 				message: 'Docker is not running'
@@ -189,6 +191,8 @@ export class DockerService {
 		);
 
 		if (!container) {
+			if (force) return;
+
 			throw new BadRequestException({
 				success: false,
 				message: 'The project is not deployed'
