@@ -120,9 +120,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 				}}
 				enableReinitialize
 				validationSchema={Yup.object({
-					server_name: Yup.string()
-						.required('Required')
-						.matches(/^[a-z]+$/, 'Only small letters a-z allowed'),
+					server_name: Yup.string().matches(/^[a-z]+$/, 'Only small letters a-z allowed'),
 					domain: Yup.string().required('Required'),
 					locations: Yup.array()
 						.of(
@@ -156,7 +154,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								<Field
 									name='server_name'
 									type='text'
-									placeholder='Server Name'
+									placeholder='(leave empty for root)'
 									className={formStyle.formInput}
 								/>
 								<Field
@@ -350,7 +348,9 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								small
 								onClick={async () => {
 									const deploymentValues = {
-										server_name: values.server_name + values.domain.value,
+										server_name: values.server_name
+											? values.server_name + values.domain.value
+											: values.domain.value.substring(1),
 										ssl: values.ssl,
 										locations: values.locations.map((location) => ({
 											location: location.location,
