@@ -64,7 +64,7 @@ docker-compose up -d
 
 **Note:** -d is optional, and will run the server in the background. If you don't use it, you will need to keep the terminal open.
 
-This will start the ContinuumCI server and all its dependencies. You can then access the user interface at http://localhost:3000.
+This will start the ContinuumCI server and all its dependencies. You can then access the user interface at http://localhost:8080.
 
 ## License
 
