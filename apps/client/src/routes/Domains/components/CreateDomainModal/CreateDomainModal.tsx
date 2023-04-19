@@ -112,6 +112,10 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								label: string;
 								value: string;
 							};
+							port?: {
+								label: string;
+								value: string;
+							};
 						};
 						websocket?: boolean;
 						internal?: boolean;
@@ -253,6 +257,51 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 													className={formStyle.formError}
 												/>
 											</div>
+											{location.project?.service?.value &&
+												(projects
+													.find(
+														(project) =>
+															project._id.toString() === location.project?.id.value
+													)
+													?.services.find(
+														(service) => service.name === location.project?.service.value
+													)?.containerPorts?.length || 0) > 1 && (
+													<div className={formStyle.formGroup}>
+														<label
+															htmlFor={`locations[${index}].project.port`}
+															className={formStyle.formLabel}
+														>
+															Port
+														</label>
+														<Field
+															name={`locations[${index}].project.port`}
+															component={CustomSelect}
+															options={
+																projects
+																	.find(
+																		(project) =>
+																			project._id.toString() ===
+																			location.project?.id.value
+																	)
+																	?.services.find(
+																		(service) =>
+																			service.name ===
+																			location.project?.service.value
+																	)
+																	?.containerPorts.map((port) => ({
+																		value: port,
+																		label: port
+																	})) || []
+															}
+															placeholder='Port'
+														/>
+														<ErrorMessage
+															name={`locations[${index}].project.port`}
+															component='div'
+															className={formStyle.formError}
+														/>
+													</div>
+												)}
 										</>
 									)}
 									{location.type.value === 'custom' && (
@@ -347,27 +396,38 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								theme='success'
 								small
 								onClick={async () => {
+									const proxy_passes: string[] = [];
+
+									for (const location of values.locations) {
+										if (location.type.value === 'project') {
+											let port = location.project?.port?.value;
+
+											if (!port) {
+												const project = projects.find(
+													(project) => project._id.toString() === location.project?.id.value
+												);
+
+												const service = project?.services.find(
+													(service) => service.name === location.project?.service.value
+												);
+
+												port = service?.containerPorts[0].toString();
+											}
+
+											proxy_passes.push(`http://host.docker.internal:${port}`);
+										} else {
+											proxy_passes.push(location.proxy_pass);
+										}
+									}
+
 									const deploymentValues = {
 										server_name: values.server_name
 											? values.server_name + values.domain.value
 											: values.domain.value.substring(1),
 										ssl: values.ssl,
-										locations: values.locations.map((location) => ({
+										locations: values.locations.map((location, index) => ({
 											location: location.location,
-											proxy_pass:
-												location.type.value === 'project'
-													? 'http://host.docker.internal:' +
-													  projects
-															.find(
-																(project) =>
-																	project._id.toString() ===
-																	location.project?.id.value
-															)
-															?.services.find(
-																(service) =>
-																	service.name === location.project?.service.value
-															)?.containerPorts[0]
-													: location.proxy_pass,
+											proxy_pass: proxy_passes[index],
 											websocket: location.websocket ? true : false,
 											internal: location.internal ? true : false
 										}))
