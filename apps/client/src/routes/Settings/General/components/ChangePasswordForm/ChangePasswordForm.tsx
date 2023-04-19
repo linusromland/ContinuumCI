@@ -1,13 +1,12 @@
 // External dependencies
-import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 // Internal dependencies
+import formStyle from '../../../../../styles/formStyle.module.scss';
 import Button from '../../../../../components/Button/Button';
 import { updatePassword } from '../../../../../utils/api/user';
-import style from './ChangePasswordForm.module.scss';
 
 export default function ChangePasswordForm() {
 	return (
@@ -30,56 +29,56 @@ export default function ChangePasswordForm() {
 			onSubmit={() => {}} // This is required for the validation to work
 		>
 			{({ isSubmitting, values, resetForm }) => (
-				<Form className={style.form}>
-					<div className={style.formGroup}>
+				<Form className={formStyle.form}>
+					<div className={formStyle.formGroup}>
 						<label
 							htmlFor='oldPassword'
-							className={style.formLabel}
+							className={formStyle.formLabel}
 						/>
 						<Field
 							name='oldPassword'
 							type='password'
 							placeholder='Old password'
-							className={style.formInput}
+							className={formStyle.formInput}
 						/>
 						<ErrorMessage
 							name='oldPassword'
 							component='div'
-							className={style.formError}
+							className={formStyle.formError}
 						/>
 					</div>
-					<div className={style.formGroup}>
+					<div className={formStyle.formGroup}>
 						<label
 							htmlFor='newPassword'
-							className={style.formLabel}
+							className={formStyle.formLabel}
 						/>
 						<Field
 							name='newPassword'
 							type='password'
 							placeholder='New password'
-							className={style.formInput}
+							className={formStyle.formInput}
 						/>
 						<ErrorMessage
 							name='newPassword'
 							component='div'
-							className={style.formError}
+							className={formStyle.formError}
 						/>
 					</div>
-					<div className={style.formGroup}>
+					<div className={formStyle.formGroup}>
 						<label
 							htmlFor='confirmPassword'
-							className={style.formLabel}
+							className={formStyle.formLabel}
 						/>
 						<Field
 							name='confirmPassword'
 							type='password'
 							placeholder='Confirm password'
-							className={style.formInput}
+							className={formStyle.formInput}
 						/>
 						<ErrorMessage
 							name='confirmPassword'
 							component='div'
-							className={style.formError}
+							className={formStyle.formError}
 						/>
 					</div>
 					<Button
@@ -97,7 +96,6 @@ export default function ChangePasswordForm() {
 						}}
 						small
 						theme='secondary'
-						className={clsx(style.row2, style.col1)}
 					/>
 				</Form>
 			)}

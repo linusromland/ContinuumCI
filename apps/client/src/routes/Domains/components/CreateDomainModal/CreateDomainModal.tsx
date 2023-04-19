@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 
 // Internal dependencies
 import style from './CreateDomainModal.module.scss';
+import formStyle from '../../../../styles/formStyle.module.scss';
 import Modal from '../../../../components/Modal/Modal';
 import Button from '../../../../components/Button/Button';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
@@ -143,11 +144,11 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 				onSubmit={() => {}} // This is required for the validation to work
 			>
 				{({ values }) => (
-					<Form className={style.form}>
-						<div className={style.formGroup}>
+					<Form className={formStyle.form}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='server_name'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							>
 								Server Name
 							</label>
@@ -156,7 +157,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 									name='server_name'
 									type='text'
 									placeholder='Server Name'
-									className={style.formInput}
+									className={formStyle.formInput}
 								/>
 								<Field
 									name='domain'
@@ -168,7 +169,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 							<ErrorMessage
 								name='server_name'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
 						<div className={style.locationsList}>
@@ -177,10 +178,10 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 									className={style.location}
 									key={index}
 								>
-									<div className={style.formGroup}>
+									<div className={formStyle.formGroup}>
 										<label
 											htmlFor={`locations[${index}].type`}
-											className={style.formLabel}
+											className={formStyle.formLabel}
 										>
 											Type
 										</label>
@@ -196,16 +197,16 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 										<ErrorMessage
 											name={`locations[${index}].type`}
 											component='div'
-											className={style.formError}
+											className={formStyle.formError}
 										/>
 									</div>
 
 									{location.type.value === 'project' && (
 										<>
-											<div className={style.formGroup}>
+											<div className={formStyle.formGroup}>
 												<label
 													htmlFor={`locations[${index}].project.id`}
-													className={style.formLabel}
+													className={formStyle.formLabel}
 												>
 													Project
 												</label>
@@ -221,13 +222,13 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 												<ErrorMessage
 													name={`locations[${index}].project.id`}
 													component='div'
-													className={style.formError}
+													className={formStyle.formError}
 												/>
 											</div>
-											<div className={style.formGroup}>
+											<div className={formStyle.formGroup}>
 												<label
 													htmlFor={`locations[${index}].project.service`}
-													className={style.formLabel}
+													className={formStyle.formLabel}
 												>
 													Service
 												</label>
@@ -251,16 +252,16 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 												<ErrorMessage
 													name={`locations[${index}].project.service`}
 													component='div'
-													className={style.formError}
+													className={formStyle.formError}
 												/>
 											</div>
 										</>
 									)}
 									{location.type.value === 'custom' && (
-										<div className={style.formGroup}>
+										<div className={formStyle.formGroup}>
 											<label
 												htmlFor={`locations[${index}].proxy_pass`}
-												className={style.formLabel}
+												className={formStyle.formLabel}
 											>
 												Proxy Pass
 											</label>
@@ -268,81 +269,81 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 												name={`locations[${index}].proxy_pass`}
 												type='text'
 												placeholder='Proxy Pass'
-												className={style.formInput}
+												className={formStyle.formInput}
 											/>
 											<ErrorMessage
 												name={`locations[${index}].proxy_pass`}
 												component='div'
-												className={style.formError}
+												className={formStyle.formError}
 											/>
 										</div>
 									)}
-									<div className={style.formGroup}>
-										<div className={style.formCheckGroup}>
+									<div className={formStyle.formGroup}>
+										<div className={formStyle.formCheckGroup}>
 											<label
 												htmlFor={`locations[${index}].websocket`}
-												className={style.formLabel}
+												className={formStyle.formLabel}
 											>
 												Support for Websocket
 											</label>
 											<Field
 												name={`locations[${index}].websocket`}
 												type='checkbox'
-												className={style.formInput}
+												className={formStyle.formInput}
 											/>
 										</div>
 										<ErrorMessage
 											name={`locations[${index}].websocket`}
 											component='div'
-											className={style.formError}
+											className={formStyle.formError}
 										/>
 									</div>
 
-									<div className={style.formGroup}>
-										<div className={style.formCheckGroup}>
+									<div className={formStyle.formGroup}>
+										<div className={formStyle.formCheckGroup}>
 											<label
 												htmlFor={`locations[${index}].internal`}
-												className={style.formLabel}
+												className={formStyle.formLabel}
 											>
 												Prohibit external access
 											</label>
 											<Field
 												name={`locations[${index}].internal`}
 												type='checkbox'
-												className={style.formInput}
+												className={formStyle.formInput}
 											/>
 										</div>
 										<ErrorMessage
 											name={`locations[${index}].websocket`}
 											component='div'
-											className={style.formError}
+											className={formStyle.formError}
 										/>
 									</div>
 								</div>
 							))}
-							<div className={style.formGroup}>
-								<div className={style.formCheckGroup}>
+							<div className={formStyle.formGroup}>
+								<div className={formStyle.formCheckGroup}>
 									<label
 										htmlFor='ssl'
-										className={style.formLabel}
+										className={formStyle.formLabel}
 									>
 										Configure SSL
 									</label>
 									<Field
 										name='ssl'
 										type='checkbox'
-										className={style.formInput}
+										className={formStyle.formInput}
 									/>
 								</div>
 								<ErrorMessage
 									name='ssl'
 									component='div'
-									className={style.formError}
+									className={formStyle.formError}
 								/>
 							</div>
 						</div>
 
-						<div className={style.actions}>
+						<div className={formStyle.actions}>
 							<Button
 								text='Create Domain'
 								theme='success'

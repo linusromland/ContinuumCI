@@ -18,6 +18,12 @@
 	font-weight: 700;
 }
 
+.formCheckGroup {
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
 .formInput {
 	background-color: $background;
 	/* slightly darker outline */

@@ -1,10 +1,9 @@
 // External dependencies
-import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 
 // Internal dependencies
-import style from './CreateVariableModal.module.scss';
+import formStyle from '../../../../styles/formStyle.module.scss';
 import Modal from '../../../../components/Modal/Modal';
 import Button from '../../../../components/Button/Button';
 import CustomMultiSelect from '../../../../components/CustomSelect/CustomMultiSelect';
@@ -42,45 +41,45 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 				onSubmit={() => {}} // This is required for the validation to work
 			>
 				{({ isSubmitting, values }) => (
-					<Form className={style.form}>
-						<div className={style.formGroup}>
+					<Form className={formStyle.form}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='name'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='name'
 								type='text'
 								placeholder='Name'
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='name'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
-						<div className={style.formGroup}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='value'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='value'
 								type='text'
 								placeholder='Value'
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='value'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
-						<div className={style.formGroup}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='services'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='services'
@@ -94,7 +93,7 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							<ErrorMessage
 								name='services'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
 						<Button
@@ -109,7 +108,6 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 								});
 							}}
 							theme='secondary'
-							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>
 				)}

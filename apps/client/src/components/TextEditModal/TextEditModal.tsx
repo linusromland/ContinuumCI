@@ -1,9 +1,8 @@
 // External dependencies
-import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form, FormikValues } from 'formik';
 
 // Internal dependencies
-import style from './TextEditModal.module.scss';
+import formStyle from '../../styles/formStyle.module.scss';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 
@@ -40,22 +39,22 @@ export default function TextEditModal({
 				onSubmit={() => {}} // This is required for the validation to work
 			>
 				{({ isSubmitting, values }) => (
-					<Form className={style.form}>
-						<div className={style.formGroup}>
+					<Form className={formStyle.form}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor={fieldName}
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name={fieldName}
 								type='text'
 								placeholder={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name={fieldName}
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
 						<Button
@@ -65,7 +64,6 @@ export default function TextEditModal({
 								submit(values);
 							}}
 							theme='secondary'
-							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>
 				)}

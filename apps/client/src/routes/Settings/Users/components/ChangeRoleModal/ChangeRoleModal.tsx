@@ -1,13 +1,12 @@
 // External dependencies
-import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 // Internal dependencies
+import formStyle from '../../../../../styles/formStyle.module.scss';
 import Modal from '../../../../../components/Modal/Modal';
 import Button from '../../../../../components/Button/Button';
-import style from './ChangeRoleModal.module.scss';
 import { UserRoleEnum } from 'shared/src/enums';
 import CustomSelect from '../../../../../components/CustomSelect/CustomSelect';
 import formatRole from '../../../../../utils/formatRole';
@@ -28,7 +27,7 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 			onClose={() => onClose(false)}
 			open={open}
 		>
-			<p className={style.description}>This will change the role of {username}.</p>
+			<p>This will change the role of {username}.</p>
 			<Formik
 				initialValues={{
 					role: {
@@ -47,11 +46,11 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 				onSubmit={() => {}} // This is required for the validation to work
 			>
 				{({ isSubmitting, values }) => (
-					<Form className={style.form}>
-						<div className={style.formGroup}>
+					<Form className={formStyle.form}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='role'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='role'
@@ -71,7 +70,7 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 							<ErrorMessage
 								name='role'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
 						<Button
@@ -89,7 +88,6 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 								}
 							}}
 							theme='secondary'
-							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>
 				)}

@@ -1,10 +1,9 @@
 // External dependencies
-import clsx from 'clsx';
 import { Formik, Field, ErrorMessage, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 
 // Internal dependencies
-import style from './ProjectCreateModal.module.scss';
+import formStyle from '../../../../styles/formStyle.module.scss';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
 
@@ -37,52 +36,52 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 				onSubmit={() => {}} // This is required for the validation to work
 			>
 				{({ isSubmitting, values }) => (
-					<Form className={style.form}>
-						<div className={style.formGroup}>
+					<Form className={formStyle.form}>
+						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='name'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='name'
 								type='text'
 								placeholder='Project name'
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='name'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 							<label
 								htmlFor='gitUrl'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='gitUrl'
 								type='text'
 								placeholder='Git URL'
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='gitUrl'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 							<label
 								htmlFor='branch'
-								className={style.formLabel}
+								className={formStyle.formLabel}
 							/>
 							<Field
 								name='branch'
 								type='text'
 								placeholder='Branch'
-								className={style.formInput}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='branch'
 								component='div'
-								className={style.formError}
+								className={formStyle.formError}
 							/>
 						</div>
 						<Button
@@ -92,7 +91,6 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								submit(values);
 							}}
 							theme='secondary'
-							className={clsx(style.row2, style.col1)}
 						/>
 					</Form>
 				)}
