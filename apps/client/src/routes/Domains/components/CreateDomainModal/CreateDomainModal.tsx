@@ -174,224 +174,219 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								className={formStyle.formError}
 							/>
 						</div>
-						<div className={style.locationsList}>
-							{values.locations.map((location, index) => (
-								<div
-									className={style.location}
-									key={index}
-								>
-									<div className={formStyle.formGroup}>
-										<label
-											htmlFor={`locations[${index}].type`}
-											className={formStyle.formLabel}
-										>
-											Type
-										</label>
-										<Field
-											name={`locations[${index}].type`}
-											component={CustomSelect}
-											options={[
-												{ value: 'project', label: 'Project service' },
-												{ value: 'custom', label: 'Custom' }
-											]}
-											placeholder='Type'
-										/>
-										<ErrorMessage
-											name={`locations[${index}].type`}
-											component='div'
-											className={formStyle.formError}
-										/>
-									</div>
+						{values.locations.map((location, index) => (
+							<div
+								className={style.location}
+								key={index}
+							>
+								<div className={formStyle.formGroup}>
+									<label
+										htmlFor={`locations[${index}].type`}
+										className={formStyle.formLabel}
+									>
+										Type
+									</label>
+									<Field
+										name={`locations[${index}].type`}
+										component={CustomSelect}
+										options={[
+											{ value: 'project', label: 'Project service' },
+											{ value: 'custom', label: 'Custom' }
+										]}
+										placeholder='Type'
+									/>
+									<ErrorMessage
+										name={`locations[${index}].type`}
+										component='div'
+										className={formStyle.formError}
+									/>
+								</div>
 
-									{location.type.value === 'project' && (
-										<>
-											<div className={formStyle.formGroup}>
-												<label
-													htmlFor={`locations[${index}].project.id`}
-													className={formStyle.formLabel}
-												>
-													Project
-												</label>
-												<Field
-													name={`locations[${index}].project.id`}
-													component={CustomSelect}
-													options={projects.map((project) => ({
-														value: project._id,
-														label: project.name
-													}))}
-													placeholder='Project'
-												/>
-												<ErrorMessage
-													name={`locations[${index}].project.id`}
-													component='div'
-													className={formStyle.formError}
-												/>
-											</div>
-											<div className={formStyle.formGroup}>
-												<label
-													htmlFor={`locations[${index}].project.service`}
-													className={formStyle.formLabel}
-												>
-													Service
-												</label>
-												<Field
-													name={`locations[${index}].project.service`}
-													component={CustomSelect}
-													options={
-														projects
-															.find(
-																(project) =>
-																	project._id.toString() ===
-																	location.project?.id.value
-															)
-															?.services.map((service) => ({
-																value: service.name,
-																label:
-																	service.name +
-																	(service.ports.length === 1
-																		? ` (Port ${service.ports[0]})`
-																		: '')
-															})) || []
-													}
-													placeholder='Service'
-												/>
-												<ErrorMessage
-													name={`locations[${index}].project.service`}
-													component='div'
-													className={formStyle.formError}
-												/>
-											</div>
-											{location.project?.service?.value &&
-												(projects
-													.find(
-														(project) =>
-															project._id.toString() === location.project?.id.value
-													)
-													?.services.find(
-														(service) => service.name === location.project?.service.value
-													)?.containerPorts?.length || 0) > 1 && (
-													<div className={formStyle.formGroup}>
-														<label
-															htmlFor={`locations[${index}].project.port`}
-															className={formStyle.formLabel}
-														>
-															Port
-														</label>
-														<Field
-															name={`locations[${index}].project.port`}
-															component={CustomSelect}
-															options={
-																projects
-																	.find(
-																		(project) =>
-																			project._id.toString() ===
-																			location.project?.id.value
-																	)
-																	?.services.find(
-																		(service) =>
-																			service.name ===
-																			location.project?.service.value
-																	)
-																	?.containerPorts.map((port) => ({
-																		value: port,
-																		label: port
-																	})) || []
-															}
-															placeholder='Port'
-														/>
-														<ErrorMessage
-															name={`locations[${index}].project.port`}
-															component='div'
-															className={formStyle.formError}
-														/>
-													</div>
-												)}
-										</>
-									)}
-									{location.type.value === 'custom' && (
+								{location.type.value === 'project' && (
+									<>
 										<div className={formStyle.formGroup}>
 											<label
-												htmlFor={`locations[${index}].proxy_pass`}
+												htmlFor={`locations[${index}].project.id`}
 												className={formStyle.formLabel}
 											>
-												Proxy Pass
+												Project
 											</label>
 											<Field
-												name={`locations[${index}].proxy_pass`}
-												type='text'
-												placeholder='Proxy Pass'
-												className={formStyle.formInput}
+												name={`locations[${index}].project.id`}
+												component={CustomSelect}
+												options={projects.map((project) => ({
+													value: project._id,
+													label: project.name
+												}))}
+												placeholder='Project'
 											/>
 											<ErrorMessage
-												name={`locations[${index}].proxy_pass`}
+												name={`locations[${index}].project.id`}
 												component='div'
 												className={formStyle.formError}
 											/>
 										</div>
-									)}
-									<div className={formStyle.formGroup}>
-										<div className={formStyle.formCheckGroup}>
+										<div className={formStyle.formGroup}>
 											<label
-												htmlFor={`locations[${index}].websocket`}
+												htmlFor={`locations[${index}].project.service`}
 												className={formStyle.formLabel}
 											>
-												Support for Websocket
+												Service
 											</label>
 											<Field
-												name={`locations[${index}].websocket`}
-												type='checkbox'
-												className={formStyle.formInput}
+												name={`locations[${index}].project.service`}
+												component={CustomSelect}
+												options={
+													projects
+														.find(
+															(project) =>
+																project._id.toString() === location.project?.id.value
+														)
+														?.services.map((service) => ({
+															value: service.name,
+															label:
+																service.name +
+																(service.ports.length === 1
+																	? ` (Port ${service.ports[0]})`
+																	: '')
+														})) || []
+												}
+												placeholder='Service'
+											/>
+											<ErrorMessage
+												name={`locations[${index}].project.service`}
+												component='div'
+												className={formStyle.formError}
 											/>
 										</div>
+										{location.project?.service?.value &&
+											(projects
+												.find(
+													(project) => project._id.toString() === location.project?.id.value
+												)
+												?.services.find(
+													(service) => service.name === location.project?.service.value
+												)?.containerPorts?.length || 0) > 1 && (
+												<div className={formStyle.formGroup}>
+													<label
+														htmlFor={`locations[${index}].project.port`}
+														className={formStyle.formLabel}
+													>
+														Port
+													</label>
+													<Field
+														name={`locations[${index}].project.port`}
+														component={CustomSelect}
+														options={
+															projects
+																.find(
+																	(project) =>
+																		project._id.toString() ===
+																		location.project?.id.value
+																)
+																?.services.find(
+																	(service) =>
+																		service.name === location.project?.service.value
+																)
+																?.containerPorts.map((port) => ({
+																	value: port,
+																	label: port
+																})) || []
+														}
+														placeholder='Port'
+													/>
+													<ErrorMessage
+														name={`locations[${index}].project.port`}
+														component='div'
+														className={formStyle.formError}
+													/>
+												</div>
+											)}
+									</>
+								)}
+								{location.type.value === 'custom' && (
+									<div className={formStyle.formGroup}>
+										<label
+											htmlFor={`locations[${index}].proxy_pass`}
+											className={formStyle.formLabel}
+										>
+											Proxy Pass
+										</label>
+										<Field
+											name={`locations[${index}].proxy_pass`}
+											type='text'
+											placeholder='Proxy Pass'
+											className={formStyle.formInput}
+										/>
 										<ErrorMessage
-											name={`locations[${index}].websocket`}
+											name={`locations[${index}].proxy_pass`}
 											component='div'
 											className={formStyle.formError}
 										/>
 									</div>
-
-									<div className={formStyle.formGroup}>
-										<div className={formStyle.formCheckGroup}>
-											<label
-												htmlFor={`locations[${index}].internal`}
-												className={formStyle.formLabel}
-											>
-												Prohibit external access
-											</label>
-											<Field
-												name={`locations[${index}].internal`}
-												type='checkbox'
-												className={formStyle.formInput}
-											/>
-										</div>
-										<ErrorMessage
+								)}
+								<div className={formStyle.formGroup}>
+									<div className={formStyle.formCheckGroup}>
+										<label
+											htmlFor={`locations[${index}].websocket`}
+											className={formStyle.formLabel}
+										>
+											Support for Websocket
+										</label>
+										<Field
 											name={`locations[${index}].websocket`}
-											component='div'
-											className={formStyle.formError}
+											type='checkbox'
+											className={formStyle.formInput}
 										/>
 									</div>
-								</div>
-							))}
-							<div className={formStyle.formGroup}>
-								<div className={formStyle.formCheckGroup}>
-									<label
-										htmlFor='ssl'
-										className={formStyle.formLabel}
-									>
-										Configure SSL
-									</label>
-									<Field
-										name='ssl'
-										type='checkbox'
-										className={formStyle.formInput}
+									<ErrorMessage
+										name={`locations[${index}].websocket`}
+										component='div'
+										className={formStyle.formError}
 									/>
 								</div>
-								<ErrorMessage
+
+								<div className={formStyle.formGroup}>
+									<div className={formStyle.formCheckGroup}>
+										<label
+											htmlFor={`locations[${index}].internal`}
+											className={formStyle.formLabel}
+										>
+											Prohibit external access
+										</label>
+										<Field
+											name={`locations[${index}].internal`}
+											type='checkbox'
+											className={formStyle.formInput}
+										/>
+									</div>
+									<ErrorMessage
+										name={`locations[${index}].websocket`}
+										component='div'
+										className={formStyle.formError}
+									/>
+								</div>
+							</div>
+						))}
+						<div className={formStyle.formGroup}>
+							<div className={formStyle.formCheckGroup}>
+								<label
+									htmlFor='ssl'
+									className={formStyle.formLabel}
+								>
+									Configure SSL
+								</label>
+								<Field
 									name='ssl'
-									component='div'
-									className={formStyle.formError}
+									type='checkbox'
+									className={formStyle.formInput}
 								/>
 							</div>
+							<ErrorMessage
+								name='ssl'
+								component='div'
+								className={formStyle.formError}
+							/>
 						</div>
 
 						<div className={formStyle.actions}>
