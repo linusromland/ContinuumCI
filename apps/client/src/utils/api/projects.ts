@@ -36,4 +36,10 @@ async function editProject(data: ProjectQueryClass, id: string): Promise<Respons
 	return request.data as ResponseType<ProjectClass>;
 }
 
-export { getAllProjects, getProject, syncProject, createProject, editProject };
+async function deleteProject(projectId: string): Promise<ResponseType> {
+	const request = await api.delete(`/projects/delete/${projectId}`);
+
+	return request.data as ResponseType;
+}
+
+export { getAllProjects, getProject, syncProject, createProject, editProject, deleteProject };

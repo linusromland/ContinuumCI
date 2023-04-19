@@ -16,7 +16,7 @@ import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
 import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
 import { ProjectClass } from 'shared/src/classes';
-import { syncProject, editProject, getProject } from '../../utils/api/projects';
+import { syncProject, editProject, getProject, deleteProject } from '../../utils/api/projects';
 import { createDeployment, removeDeployment } from '../../utils/api/deployment';
 
 export default function Project() {
@@ -28,6 +28,7 @@ export default function Project() {
 	const [deploymentIcon, setDeploymentIcon] = useState('');
 	const [syncLoading, setSyncLoading] = useState(false);
 	const [deploymentLoading, setDeploymentLoading] = useState(false);
+	const [confirmDelete, setConfirmDelete] = useState(false);
 
 	async function getData() {
 		if (!projectId) return console.error('No projectId provided');
@@ -137,11 +138,18 @@ export default function Project() {
 							small
 						/>
 						<Button
-							text='Delete'
+							text={confirmDelete ? 'Confirm delete' : 'Delete project'}
 							theme='error'
 							icon='/icons/delete.svg'
-							onClick={() => {
-								console.log('Delete');
+							onClick={async () => {
+								if (!confirmDelete) return setConfirmDelete(true);
+
+								const response = await deleteProject(project._id);
+
+								if (response.success) {
+									toast.success('Project deleted');
+									navigate('/projects');
+								} else toast.error(response.message);
 							}}
 							small
 						/>
