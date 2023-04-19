@@ -64,8 +64,8 @@ async function updateCompose(project: ProjectClass, ProjectModel: Model<ProjectC
 		fs.writeFileSync(COMPOSE_FILE_LOCATION, updatedFileContents);
 
 		return true;
-	} catch (err) {
-		console.log(err);
+	} catch (error) {
+		console.log(error);
 		return false;
 	}
 }

@@ -128,8 +128,8 @@ export default function Sidebar() {
 									position: 'top-left'
 								});
 								navigate('/login');
-							} catch (e) {
-								console.log(e);
+							} catch (error) {
+								console.log(error);
 								toast.error('Failed to sign out');
 							}
 						}}
