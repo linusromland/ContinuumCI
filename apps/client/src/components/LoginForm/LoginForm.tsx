@@ -3,8 +3,9 @@ import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
 
 // Internal Dependencies
-import Button from '../Button/Button';
 import style from './LoginForm.module.scss';
+import formStyle from '../../styles/formStyle.module.scss';
+import Button from '../Button/Button';
 
 const UserSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid email').required('Email is required'),
@@ -28,41 +29,40 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 			onSubmit={() => {}} // This is required for the validation to work
 		>
 			{({ values }) => (
-				<Form className={style.form}>
+				<Form className={formStyle.form}>
 					<Field
 						name='email'
 						placeholder='Email'
-						className={style.input}
+						className={formStyle.formInput}
 					/>
 					<ErrorMessage
 						name='email'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 
 					<Field
 						name='password'
 						placeholder='Password'
-						className={style.input}
+						className={formStyle.formInput}
 						type='password'
 					/>
 					<ErrorMessage
 						name='password'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
-					<div className={style.checkboxContainer}>
-						<Field
-							name='rememberMe'
-							type='checkbox'
-							className={style.checkbox}
-						/>
+					<div className={formStyle.formCheckGroup}>
 						<label
 							htmlFor='rememberMe'
-							className={style.label}
+							className={formStyle.label}
 						>
 							Remember Me
 						</label>
+						<Field
+							name='rememberMe'
+							type='checkbox'
+						/>
 					</div>
 
 					<div className={style.buttons}>

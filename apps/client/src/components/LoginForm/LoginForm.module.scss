@@ -1,43 +1,4 @@
-@use 'src/styles' as *;
-
-.input {
-	background-color: $background;
-	/* slightly darker outline */
-	border: 2px solid darken($background, 10%);
-	border-radius: $border-radius;
-	color: $text-primary;
-	font-size: 1rem;
-	font-weight: 700;
-	padding: 0.5rem 1rem;
-	transition: background-color 0.2s ease-in-out;
-	margin: 0.5rem 0;
-
-	&:focus {
-		background-color: $background;
-	}
-}
-
-.form {
-	display: flex;
-	flex-direction: column;
-}
-
 .buttons {
 	display: flex;
 	justify-content: flex-end;
-}
-
-.error {
-	color: $error;
-	font-size: 0.8rem;
-}
-
-.checkboxContainer {
-	display: flex;
-	align-items: center;
-	margin-left: 0.1rem;
-
-	.checkbox {
-		margin-right: 0.5rem;
-	}
 }
