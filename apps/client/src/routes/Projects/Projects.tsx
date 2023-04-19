@@ -52,28 +52,37 @@ export default function Projects() {
 						<div className={style.statusBar}>
 							<StatusBar
 								succeeded={
-									(projects.filter(
-										(project) => project.deploymentStatus === ProjectDeploymentStatus.RUNNING
-									).length /
-										projects.length) *
-									100
+									projects.length
+										? (projects.filter(
+												(project) =>
+													project.deploymentStatus === ProjectDeploymentStatus.RUNNING
+										  ).length /
+												projects.length) *
+										  100
+										: 100
 								}
 								warning={
-									(projects.filter(
-										(project) =>
-											project.deploymentStatus === ProjectDeploymentStatus.PARTIALLY_RUNNING
-									).length /
-										projects.length) *
-									100
+									projects.length
+										? (projects.filter(
+												(project) =>
+													project.deploymentStatus ===
+													ProjectDeploymentStatus.PARTIALLY_RUNNING
+										  ).length /
+												projects.length) *
+										  100
+										: 0
 								}
 								failed={
-									(projects.filter(
-										(project) =>
-											project.deploymentStatus !== ProjectDeploymentStatus.RUNNING &&
-											project.deploymentStatus !== ProjectDeploymentStatus.PARTIALLY_RUNNING
-									).length /
-										projects.length) *
-									100
+									projects.length
+										? (projects.filter(
+												(project) =>
+													project.deploymentStatus !== ProjectDeploymentStatus.RUNNING &&
+													project.deploymentStatus !==
+														ProjectDeploymentStatus.PARTIALLY_RUNNING
+										  ).length /
+												projects.length) *
+										  100
+										: 0
 								}
 							/>
 						</div>
