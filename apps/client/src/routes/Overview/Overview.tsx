@@ -42,14 +42,16 @@ export default function Overview(): JSX.Element {
 	}, []);
 
 	async function getOverviewData() {
+		if (dataInterval) {
+			clearTimeout(dataInterval);
+		}
+
+		if (window && window.location.pathname !== '/') return;
+
 		const overviewResponse = await getOverview();
 
 		if (overviewResponse.data) {
 			setData(overviewResponse.data);
-		}
-
-		if (dataInterval) {
-			clearTimeout(dataInterval);
 		}
 
 		setDataInterval(setTimeout(getOverviewData, 1000 * 10));
