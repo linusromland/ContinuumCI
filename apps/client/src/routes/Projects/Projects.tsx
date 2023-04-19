@@ -103,6 +103,7 @@ export default function Projects() {
 							})
 							.map((project) => (
 								<ProjectCard
+									key={project._id}
 									project={project}
 									onClick={() => {
 										navigate(`/projects/${project._id}`);
