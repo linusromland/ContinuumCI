@@ -380,7 +380,7 @@ export class ProjectsService {
 			}
 		}
 
-		await this.deploymentService.removeDeployment(userId, projectId);
+		await this.deploymentService.removeDeployment(userId, projectId, true);
 
 		//Remove from the repository directory
 		fs.rmSync(`${REPOSITORIES_DIRECTORY}/${updatedProject._id}`, {
