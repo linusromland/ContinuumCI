@@ -355,7 +355,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 											location: location.location,
 											proxy_pass:
 												location.type.value === 'project'
-													? 'http://localhost:' +
+													? 'http://host.docker.internal:' +
 													  projects
 															.find(
 																(project) =>
