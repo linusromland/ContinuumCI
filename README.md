@@ -1,9 +1,3 @@
-<div align="center" style="margin-bottom: 50px">
-
-### **_ContinuumCI is in development and not ready for production_**
-
-</div>
-
 <div align="center">
 	<div>
 		<picture>
