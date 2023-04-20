@@ -60,6 +60,30 @@ docker-compose up -d
 
 This will start the ContinuumCI server and all its dependencies. You can then access the user interface at http://localhost:8080.
 
+### Configure ContinuumCI with domain
+
+If you want to make ContinuumCI accessible from the internet, you can set this up in Web UI.
+
+1. Finish the setup process by following the first time setup instructions in the Web UI.
+
+2. Navigate to the Nginx configuration page that you can find in the sidebar.
+
+3. Add your domain name.
+
+4. Navigate to the domains page that you can find in the sidebar.
+
+5. Click the "Add domain" button.
+
+6. Choose your domain name, subdomain if you want to use one and select Project service as type.
+
+7. Select ContinuumCI as the project & service.
+
+8. Select "Prohibit external access" if you don't want to allow external access to your project and select "SSL" if you want to configure SSL for your domain.
+
+9. Click the "Add domain" button.
+
+10. Now you can access your project at your domain name.
+
 ## License
 
 ContinuumCI is open source and is released under the MIT license. You can find the full license text [here](LICENSE).
