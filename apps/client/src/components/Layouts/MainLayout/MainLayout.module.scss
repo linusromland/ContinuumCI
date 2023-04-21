@@ -1,8 +1,14 @@
 @use 'src/styles' as *;
 
-.mainLayout {
+.mainLayoutWrapper {
 	display: flex;
+	flex-direction: column;
 	height: 100vh;
+}
+
+.mainLayout {
+	flex: 1;
+	display: flex;
 	background-color: $background;
 
 	@include mediaQuery('small') {

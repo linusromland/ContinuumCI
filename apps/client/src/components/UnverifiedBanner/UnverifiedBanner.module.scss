@@ -1,0 +1,14 @@
+@use 'src/styles' as *;
+
+.unverifiedBanner {
+	background-color: $background-secondary;
+	display: flex;
+	padding: 0.5rem;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		margin-left: 1rem;
+		color: $text-secondary;
+	}
+}

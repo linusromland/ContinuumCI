@@ -1,5 +1,5 @@
 // External Dependencies
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -7,28 +7,19 @@ import clsx from 'clsx';
 import style from './Sidebar.module.scss';
 import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 import Button from './Button/Button';
-import { getUser } from '../../utils/api/user';
 import api from '../../utils/api';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import { toast } from 'react-toastify';
 
-export default function Sidebar() {
+interface SidebarProps {
+	user: UserClass;
+}
+
+export default function Sidebar({ user }: SidebarProps) {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const [user, setUser] = useState({} as UserClass);
 	const [open, setOpen] = useState(false);
-
-	useEffect(() => {
-		(async () => {
-			const userResponse = await getUser();
-			const user = userResponse.data as UserClass;
-
-			if (user) {
-				setUser(user);
-			}
-		})();
-	}, []);
 
 	return (
 		<div className={clsx(style.sidebar, open ? style.openSidebar : style.closedSidebar)}>
