@@ -49,7 +49,7 @@ export default function Login(): JSX.Element {
 									});
 									navigate('/');
 								} else {
-									toast.error('An error occurred while creating the root user.', {
+									toast.error('An error occurred while creating the user.', {
 										position: 'top-left'
 									});
 								}
