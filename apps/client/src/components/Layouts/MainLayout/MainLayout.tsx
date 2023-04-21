@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom';
 // Internal Dependencies
 import style from './MainLayout.module.scss';
 import Sidebar from '../../Sidebar/Sidebar';
+import UnverifiedBanner from '../../UnverifiedBanner/UnverifiedBanner';
 import { getUser } from '../../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
-import UnverifiedBanner from '../../UnverifiedBanner/UnverifiedBanner';
 import { toast } from 'react-toastify';
 
 export default function MainLayout(): JSX.Element {
