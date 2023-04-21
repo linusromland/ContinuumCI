@@ -16,6 +16,12 @@ export class UsersController {
 		return this.usersService.create(user);
 	}
 
+	@UseGuards(JwtAuthGuard)
+	@Get('verify/resend')
+	resendVerificationEmail(@Request() req) {
+		return this.usersService.resendVerificationEmail(req.user.sub);
+	}
+
 	@Get('verify/:verificationId')
 	verifyUser(@Param('verificationId') verificationId: string) {
 		return this.usersService.verifyUser(verificationId);

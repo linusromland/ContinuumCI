@@ -1,4 +1,6 @@
 // Internal Dependencies
+import { toast } from 'react-toastify';
+import { resendVerificationEmail } from '../../utils/api/user';
 import Button from '../Button/Button';
 import style from './UnverifiedBanner.module.scss';
 
@@ -18,8 +20,14 @@ export default function UnverifiedBanner({ recheckStatus }: UnverifiedBannerProp
 				<Button
 					text='Resend email'
 					theme='secondary'
-					onClick={() => {
-						console.log('Resend email');
+					onClick={async () => {
+						const response = await resendVerificationEmail();
+
+						if (response.success) {
+							toast.success('Verification email sent');
+						} else {
+							toast.error('Failed to send verification email');
+						}
 					}}
 					small
 				/>

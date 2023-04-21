@@ -27,6 +27,12 @@ async function getUser(): Promise<ResponseType<UserClass>> {
 	return request.data;
 }
 
+async function resendVerificationEmail(): Promise<ResponseType<UserClass>> {
+	const request = await api.get('/users/verify/resend');
+
+	return request.data;
+}
+
 async function getUsers(): Promise<ResponseType<UserClass[]>> {
 	const request = await api.get('/users/all');
 
@@ -67,4 +73,13 @@ async function updateRole(userId: string, role: string): Promise<ResponseType> {
 	return request.data;
 }
 
-export { createUser, getUser, getUsers, updateUsername, updateEmail, updatePassword, updateRole };
+export {
+	createUser,
+	getUser,
+	getUsers,
+	resendVerificationEmail,
+	updateUsername,
+	updateEmail,
+	updatePassword,
+	updateRole
+};

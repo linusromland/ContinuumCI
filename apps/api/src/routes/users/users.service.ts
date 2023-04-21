@@ -93,6 +93,79 @@ export class UsersService {
 		}
 	}
 
+	async resendVerificationEmail(userId: string) {
+		try {
+			if (!userId) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Missing required fields'
+				});
+			}
+
+			if (!isValidObjectId(userId)) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Invalid user id'
+				});
+			}
+
+			const user = await this.UserModel.findById(userId);
+			if (!user) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			if (user.verifiedEmail) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User already verified'
+				});
+			}
+
+			// Delete any existing email verification
+			await this.EmailVerificationModel.deleteMany({ user: user._id });
+
+			const emailVerification = new this.EmailVerificationModel({
+				user: user._id
+			});
+
+			await emailVerification.save();
+
+			// Send email verification email
+			await this.emailConfigurationService.sendVerificationEmail(
+				user.email,
+				emailVerification._id,
+				dayjs(emailVerification.createdAt).add(30, 'minutes').toDate()
+			);
+
+			return {
+				success: true,
+				message: 'Email verification resent successfully'
+			};
+
+			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+		} catch (error: any) {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
+			//check if error is validation error for missing required fields
+			if (error.name === 'ValidationError') {
+				throw new BadRequestException({
+					success: false,
+					message: 'Missing required fields'
+				});
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
 	async verifyUser(verificationId: string) {
 		try {
 			const emailVerification = await this.EmailVerificationModel.findById(verificationId);
