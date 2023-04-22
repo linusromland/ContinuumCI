@@ -13,6 +13,8 @@ export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 
+	const setupRoutes = ['welcome', 'setup', 'resetPassword', 'newPassword', 'login'];
+
 	useEffect(() => {
 		setLoading(true);
 
@@ -38,6 +40,8 @@ export default function RootLayout(): JSX.Element {
 						token: sessionToken
 					});
 			}
+
+			if (setupRoutes.some((route) => window.location.pathname.includes(route))) return setLoading(false);
 
 			const response = await getUser();
 			if (!response.success) navigate('/login');
