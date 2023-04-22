@@ -56,4 +56,9 @@ export class UsersController {
 	updateRole(@Request() req) {
 		return this.usersService.updateRole(req.user, req.body.userId, req.body.role);
 	}
+
+	@Post('forgotPassword')
+	forgotPassword(@Body() body: { email: string }) {
+		return this.usersService.forgotPassword(body.email);
+	}
 }

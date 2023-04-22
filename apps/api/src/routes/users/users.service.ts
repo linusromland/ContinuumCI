@@ -10,7 +10,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import dayjs from 'dayjs';
 
 // Internal dependencies
-import { JwtType, ResponseType, EmailVerificationType } from 'shared/src/types';
+import { JwtType, ResponseType, EmailVerificationType, ForgotPasswordType } from 'shared/src/types';
 import { UserClass, UserQueryClass } from 'shared/src/classes';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
@@ -28,7 +28,10 @@ export class UsersService {
 		private EmailVerificationModel: Model<EmailVerificationType>,
 
 		@Inject('EMAIL_CONFIGURATION_MODEL')
-		private EmailConfigurationModel: Model<EmailConfigurationClass>
+		private EmailConfigurationModel: Model<EmailConfigurationClass>,
+
+		@Inject('FORGOT_PASSWORD_MODEL')
+		private ForgotPasswordModel: Model<ForgotPasswordType>
 	) {}
 
 	async create(user: UserQueryClass): Promise<ResponseType> {
@@ -492,4 +495,29 @@ export class UsersService {
 			});
 		}
 	}
+
+	async forgotPassword(email: string): Promise<ResponseType> {
+		const user = await this.UserModel.findOne({ email });
+
+		if (user) {
+			const forgotPassword = new this.ForgotPasswordModel({
+				user: user._id
+			});
+
+			await forgotPassword.save();
+
+			// Send reset password email
+			await this.emailConfigurationService.sendResetPasswordEmail(
+				user.email,
+				forgotPassword._id,
+				dayjs(forgotPassword.createdAt).add(30, 'minutes').toDate()
+			);
+		}
+
+		return {
+			success: true,
+			message: 'Reset password email sent'
+		};
+	}
+
 }
