@@ -9,6 +9,7 @@ import style from './NewPassword.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
 import Button from '../../components/Button/Button';
 import { toast } from 'react-toastify';
+import { updatePasswordWithResetToken, validateResetToken } from '../../utils/api/user';
 
 export default function NewPassword(): JSX.Element {
 	const navigate = useNavigate();
@@ -22,7 +23,11 @@ export default function NewPassword(): JSX.Element {
 	});
 
 	async function validateToken() {
-		if (!token) {
+		if (!token) return;
+
+		const response = await validateResetToken(token);
+
+		if (!response.success) {
 			toast.error('Invalid token');
 			navigate('/login');
 		}
@@ -92,7 +97,21 @@ export default function NewPassword(): JSX.Element {
 									text='Reset password'
 									small
 									onClick={async () => {
-										console.log(values);
+										if (!token || !values.password || values.password !== values.confirmPassword)
+											return;
+
+										const response = await updatePasswordWithResetToken(token, values.password);
+
+										if (response.success) {
+											toast.success('Successfully updated password!', {
+												position: 'top-left'
+											});
+										} else {
+											toast.error('An error occurred while updating the password.', {
+												position: 'top-left'
+											});
+										}
+
 										navigate('/login');
 									}}
 								/>

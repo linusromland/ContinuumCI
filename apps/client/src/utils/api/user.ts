@@ -81,6 +81,21 @@ async function resetPassword(email: string): Promise<ResponseType> {
 	return request.data;
 }
 
+async function updatePasswordWithResetToken(token: string, password: string): Promise<ResponseType> {
+	const request = await api.post('/users/resetPassword', {
+		token,
+		password
+	});
+
+	return request.data;
+}
+
+async function validateResetToken(token: string): Promise<ResponseType> {
+	const request = await api.get('/users/validateResetToken/' + token);
+
+	return request.data;
+}
+
 export {
 	createUser,
 	getUser,
@@ -91,4 +106,6 @@ export {
 	updatePassword,
 	updateRole,
 	resetPassword,
+	updatePasswordWithResetToken,
+	validateResetToken
 };
