@@ -1,7 +1,7 @@
 // External Dependencies
 import { useCallback } from 'react';
 import { loadFull } from 'tsparticles';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 import type { Engine } from 'tsparticles-engine';
 
@@ -9,6 +9,8 @@ import type { Engine } from 'tsparticles-engine';
 import style from './SetupLayout.module.scss';
 
 export default function SetupLayout(): JSX.Element {
+	const navigate = useNavigate();
+
 	const particlesInit = useCallback(async (engine: Engine) => {
 		await loadFull(engine);
 	}, []);
@@ -97,7 +99,12 @@ export default function SetupLayout(): JSX.Element {
 
 			<div className={style.content}>
 				<div>
-					<div className={style.logoWrapper}>
+					<div
+						className={style.logoWrapper}
+						onClick={() => {
+							navigate('/login');
+						}}
+					>
 						<img
 							src='/logo.svg'
 							alt='ContinuumCI Logo'
