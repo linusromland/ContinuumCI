@@ -1,6 +1,7 @@
 // Internal dependencies
 import { ContainerType, ContainerTypeWithLogs } from './Container.type';
 import { EmailVerificationType } from './EmailVerification.type';
+import { ForgotPasswordType } from './ForgotPassword.type';
 import { JwtType } from './Jwt.type';
 import { LoginType } from './Login.type';
 import { NginxConfigurationType } from './NginxConfiguration.type';
@@ -14,6 +15,7 @@ export type {
 	ContainerType,
 	ContainerTypeWithLogs,
 	EmailVerificationType,
+	ForgotPasswordType,
 	JwtType,
 	NginxLogsType,
 	LoginType,

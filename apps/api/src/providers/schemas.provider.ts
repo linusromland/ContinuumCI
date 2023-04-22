@@ -7,6 +7,7 @@ import {
 	EmailConfigurationSchema,
 	EmailVerificationSchema,
 	EnvironmentVariablesSchema,
+	ForgotPasswordSchema,
 	PortsSchema,
 	ProjectSchema,
 	UserSchema
@@ -32,6 +33,11 @@ const schemaProviders = [
 	{
 		provide: 'ENVIRONMENT_VARIABLES_MODEL',
 		useFactory: (connection: Connection) => connection.model('environmentVariables', EnvironmentVariablesSchema),
+		inject: ['DATABASE_CONNECTION']
+	},
+	{
+		provide: 'FORGOT_PASSWORD_MODEL',
+		useFactory: (connection: Connection) => connection.model('forgotPasswords', ForgotPasswordSchema),
 		inject: ['DATABASE_CONNECTION']
 	},
 	{
