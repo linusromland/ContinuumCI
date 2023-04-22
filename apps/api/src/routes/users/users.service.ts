@@ -560,4 +560,29 @@ export class UsersService {
 		};
 	}
 
+	async validateResetToken(token: string): Promise<ResponseType> {
+		const forgotPassword = await this.ForgotPasswordModel.findById(token);
+
+		if (!forgotPassword) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Invalid token'
+			});
+		}
+
+		// Check if token is expired (30 minutes after creation)
+		if (dayjs(forgotPassword.createdAt).add(30, 'minutes').isBefore(dayjs())) {
+			await forgotPassword.remove();
+
+			throw new BadRequestException({
+				success: false,
+				message: 'Token expired'
+			});
+		}
+
+		return {
+			success: true,
+			message: 'Valid token'
+		};
+	}
 }

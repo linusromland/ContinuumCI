@@ -67,4 +67,8 @@ export class UsersController {
 		return this.usersService.updatePasswordWithToken(body.token, body.password);
 	}
 
+	@Get('validateResetToken/:token')
+	validateResetToken(@Param('token') token: string) {
+		return this.usersService.validateResetToken(token);
+	}
 }
