@@ -73,6 +73,14 @@ async function updateRole(userId: string, role: string): Promise<ResponseType> {
 	return request.data;
 }
 
+async function resetPassword(email: string): Promise<ResponseType> {
+	const request = await api.post('/users/forgotPassword', {
+		email
+	});
+
+	return request.data;
+}
+
 export {
 	createUser,
 	getUser,
@@ -81,5 +89,6 @@ export {
 	updateUsername,
 	updateEmail,
 	updatePassword,
-	updateRole
+	updateRole,
+	resetPassword,
 };

@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import style from './ResetPassword.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
 import Button from '../../components/Button/Button';
+import { resetPassword } from '../../utils/api/user';
+import { toast } from 'react-toastify';
 
 export default function ResetPassword(): JSX.Element {
 	const navigate = useNavigate();
@@ -53,7 +55,22 @@ export default function ResetPassword(): JSX.Element {
 									text='Reset password'
 									small
 									onClick={async () => {
-										console.log(values);
+										if (!values.email) return;
+
+										const response = await resetPassword(values.email);
+										if (response.success) {
+											toast.success(
+												"If the email is valid, you'll receive an email with a link to reset your password.",
+												{
+													position: 'top-left'
+												}
+											);
+										} else {
+											toast.error('An error occurred while resetting your password.', {
+												position: 'top-left'
+											});
+										}
+
 										navigate('/login');
 									}}
 								/>
