@@ -11,6 +11,7 @@ import Login from './Login/Login';
 import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
 import ResetPassword from './ResetPassword/ResetPassword';
+import NewPassword from './NewPassword/NewPassword';
 
 // Analytics Pages
 import Overview from './Overview/Overview';
@@ -88,6 +89,10 @@ export default function Router(): JSX.Element {
 						<Route
 							path='/resetPassword'
 							element={<ResetPassword />}
+						/>
+						<Route
+							path='/newPassword/:token'
+							element={<NewPassword />}
 						/>
 					</Route>
 					<Route
