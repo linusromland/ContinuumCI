@@ -1,6 +1,6 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // Internal Dependencies
@@ -76,6 +76,18 @@ export default function Login(): JSX.Element {
 							})();
 						}}
 					/>
+				)}
+
+				{!registered && (
+					<p className={style.footerText}>
+						Forgot password?{' '}
+						<Link
+							to='/resetPassword'
+							className={style.link}
+						>
+							Reset password
+						</Link>
+					</p>
 				)}
 
 				<p className={style.footerText}>
