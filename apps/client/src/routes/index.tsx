@@ -10,6 +10,7 @@ import SetupLayout from '../components/Layouts/SetupLayout/SetupLayout';
 import Login from './Login/Login';
 import Setup from './Setup/Setup';
 import Welcome from './Welcome/Welcome';
+import ResetPassword from './ResetPassword/ResetPassword';
 
 // Analytics Pages
 import Overview from './Overview/Overview';
@@ -83,6 +84,10 @@ export default function Router(): JSX.Element {
 						<Route
 							path='/setup'
 							element={<Setup />}
+						/>
+						<Route
+							path='/resetPassword'
+							element={<ResetPassword />}
 						/>
 					</Route>
 					<Route
