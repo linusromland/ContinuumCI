@@ -520,4 +520,44 @@ export class UsersService {
 		};
 	}
 
+	async updatePasswordWithToken(token: string, newPassword: string): Promise<ResponseType> {
+		const forgotPassword = await this.ForgotPasswordModel.findById(token);
+
+		if (!forgotPassword) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Invalid token'
+			});
+		}
+
+		// Check if token is expired (30 minutes after creation)
+		if (dayjs(forgotPassword.createdAt).add(30, 'minutes').isBefore(dayjs())) {
+			await forgotPassword.remove();
+
+			throw new BadRequestException({
+				success: false,
+				message: 'Token expired'
+			});
+		}
+
+		const user = await this.UserModel.findById(forgotPassword.user);
+
+		if (!user) {
+			throw new BadRequestException({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		user.password = newPassword;
+
+		await user.save();
+		await forgotPassword.remove();
+
+		return {
+			success: true,
+			message: 'Password updated successfully'
+		};
+	}
+
 }

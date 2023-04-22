@@ -61,4 +61,10 @@ export class UsersController {
 	forgotPassword(@Body() body: { email: string }) {
 		return this.usersService.forgotPassword(body.email);
 	}
+
+	@Post('resetPassword')
+	resetPassword(@Body() body: { token: string; password: string }) {
+		return this.usersService.updatePasswordWithToken(body.token, body.password);
+	}
+
 }
