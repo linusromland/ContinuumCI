@@ -27,19 +27,26 @@
 		font-weight: 600;
 		margin-right: 0.4rem;
 	}
+
+	:nth-child(2) {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 .logs {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	background-color: darken($background, 5%);
+	background-color: darken($background, 2%);
 	max-height: 50vh;
 	overflow-y: auto;
 
 	p {
+		border-radius: $border-radius;
 		padding: 0.5rem;
 		transition: background-color 0.2s ease-in-out;
+		border-bottom: 1px solid darken($background, 5%);
 
 		&:hover {
 			background-color: darken($background, 10%);
