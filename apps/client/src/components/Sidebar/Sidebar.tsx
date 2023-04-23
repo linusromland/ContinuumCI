@@ -21,6 +21,11 @@ export default function Sidebar({ user }: SidebarProps) {
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
 
+	async function changeLocation(path: string) {
+		navigate(path);
+		setOpen(false);
+	}
+
 	return (
 		<div className={clsx(style.sidebar, open ? style.openSidebar : style.closedSidebar)}>
 			<div className={style.header}>
@@ -48,7 +53,7 @@ export default function Sidebar({ user }: SidebarProps) {
 							<Button
 								text='Overview'
 								icon='/icons/overview.svg'
-								onClick={() => navigate('/')}
+								onClick={() => changeLocation('/')}
 								selected={location.pathname === '/'}
 							/>
 						</>
@@ -58,19 +63,19 @@ export default function Sidebar({ user }: SidebarProps) {
 							<Button
 								text='Projects'
 								icon='/icons/projects.svg'
-								onClick={() => navigate('/projects')}
+								onClick={() => changeLocation('/projects')}
 								selected={location.pathname.includes('projects')}
 							/>
 							<Button
 								text='Containers'
 								icon='/icons/containers.svg'
-								onClick={() => navigate('/containers')}
+								onClick={() => changeLocation('/containers')}
 								selected={location.pathname === '/containers'}
 							/>
 							<Button
 								text='Domains'
 								icon='/icons/nginx.svg'
-								onClick={() => navigate('/domains')}
+								onClick={() => changeLocation('/domains')}
 								selected={location.pathname === '/domains'}
 							/>
 						</>
@@ -80,14 +85,14 @@ export default function Sidebar({ user }: SidebarProps) {
 							<Button
 								text='General'
 								icon='/icons/settings.svg'
-								onClick={() => navigate('/settings')}
+								onClick={() => changeLocation('/settings')}
 								selected={location.pathname === '/settings'}
 							/>
 							{user.role == UserRoleEnum.ROOT && (
 								<Button
 									text='Users'
 									icon='/icons/users.svg'
-									onClick={() => navigate('/settings/users')}
+									onClick={() => changeLocation('/settings/users')}
 									selected={location.pathname === '/settings/users'}
 								/>
 							)}
@@ -95,7 +100,7 @@ export default function Sidebar({ user }: SidebarProps) {
 								<Button
 									text='Nginx'
 									icon='/icons/nginx.svg'
-									onClick={() => navigate('/settings/nginx')}
+									onClick={() => changeLocation('/settings/nginx')}
 									selected={location.pathname === '/settings/nginx'}
 								/>
 							)}
@@ -118,7 +123,7 @@ export default function Sidebar({ user }: SidebarProps) {
 								toast.success('Successfully signed out', {
 									position: 'top-left'
 								});
-								navigate('/login');
+								changeLocation('/login');
 							} catch (error) {
 								console.log(error);
 								toast.error('Failed to sign out');
