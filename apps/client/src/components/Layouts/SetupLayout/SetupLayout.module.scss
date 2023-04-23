@@ -27,6 +27,10 @@
 
 .particles {
 	z-index: 1;
+
+	@include mediaQuery('small') {
+		display: none;
+	}
 }
 
 .logo {
