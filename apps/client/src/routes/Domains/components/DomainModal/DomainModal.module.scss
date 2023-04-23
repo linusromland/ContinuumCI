@@ -6,26 +6,15 @@
 .label {
 	font-weight: 700;
 	margin-right: 1rem;
+	font-size: 1.2rem;
 }
 
 .value {
+	font-size: 1rem;
 	font-weight: 300;
 }
 
-.subtitle {
-	font-weight: 700;
-	text-decoration: underline;
-}
-
-.locations {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-}
-
 .location {
-	border: 1px solid rgb(155, 155, 155);
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	display: flex;

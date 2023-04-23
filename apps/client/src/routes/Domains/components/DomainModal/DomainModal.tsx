@@ -36,13 +36,9 @@ export default function DomainModal({ open, onClose, domain }: DomainModalProps)
 					<p className={style.value}>{domain.ssl ? 'Yes' : 'No'}</p>
 				</div>
 				<div className={style.locations}>
-					<h3 className={style.subtitle}>Locations</h3>
 					{domain.locations &&
 						domain.locations.map((location, index) => (
-							<div
-								className={style.location}
-								key={index}
-							>
+							<div key={index}>
 								<div className={style.item}>
 									<h4 className={style.label}>Location</h4>
 									<p className={style.value}>{location.location}</p>
