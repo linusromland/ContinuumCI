@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 // Internal dependencies
 import { ResponseType } from 'shared/src/types';
 import { UserClass } from 'shared/src/classes';
+import { comparePassword } from 'src/utils/hashPassword';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
 	async validateUser(email: string, pass: string): Promise<UserClass> {
 		const user = await this.UserModel.findOne({ email });
 
-		if (user && user.password === pass) {
+		if (user && comparePassword(pass, user.password)) {
 			delete user.password;
 			return user;
 		}

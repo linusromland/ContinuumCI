@@ -15,6 +15,7 @@ import { UserClass, UserQueryClass } from 'shared/src/classes';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 import { UserRoleEnum } from 'shared/src/enums';
+import { hashPassword } from 'src/utils/hashPassword';
 
 @Injectable()
 export class UsersService {
@@ -39,6 +40,7 @@ export class UsersService {
 			const role = (await this.UserModel.countDocuments()) === 0 ? UserRoleEnum.ROOT : UserRoleEnum.USER;
 			const createdUser = new this.UserModel({
 				...user,
+				password: hashPassword(user.password),
 				role,
 				verifiedEmail: role === UserRoleEnum.ROOT ? true : false
 			});
@@ -392,6 +394,7 @@ export class UsersService {
 				});
 			}
 
+			//TODO: ADD PASSWORD CHECK WITH BCRYPT
 			if (updatedUser.password !== oldPassword) {
 				throw new BadRequestException({
 					success: false,
@@ -549,6 +552,7 @@ export class UsersService {
 			});
 		}
 
+		//TODO: HASH PASSWORD WITH BCRYPT
 		user.password = newPassword;
 
 		await user.save();
