@@ -142,6 +142,7 @@ export class DockerService {
 			await Compose.upAll({
 				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
 				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
+				commandOptions: ['--build'],
 				log: true
 			}).then(
 				// On output, save the output
