@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 // Internal Dependencies
 import Button from '../Button/Button';
 import style from './RegistrationForm.module.scss';
+import formStyle from '../../styles/formStyle.module.scss';
 
 const UserSchema = Yup.object().shape({
 	username: Yup.string()
@@ -37,51 +38,51 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 			onSubmit={() => {}} // This is required for the validation to work
 		>
 			{({ values }) => (
-				<Form className={style.form}>
+				<Form className={formStyle.form}>
 					<Field
 						name='username'
 						placeholder='Username'
-						className={style.input}
+						className={formStyle.formInput}
 					/>
 					<ErrorMessage
 						name='username'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 
 					<Field
 						name='email'
 						placeholder='Email'
-						className={style.input}
+						className={formStyle.formInput}
 					/>
 					<ErrorMessage
 						name='email'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 
 					<Field
 						name='password'
 						placeholder='Password'
-						className={style.input}
+						className={formStyle.formInput}
 						type='password'
 					/>
 					<ErrorMessage
 						name='password'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 
 					<Field
 						name='confirmPassword'
 						placeholder='Confirm Password'
-						className={style.input}
+						className={formStyle.formInput}
 						type='password'
 					/>
 					<ErrorMessage
 						name='confirmPassword'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 					<div className={style.buttons}>
 						<Button
