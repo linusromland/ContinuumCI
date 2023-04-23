@@ -1,33 +1,90 @@
 // External dependencies
-import Select, { Props as SelectProps } from 'react-select';
+import Select, { Props as SelectProps, StylesConfig } from 'react-select';
 import { FieldProps } from 'formik';
 
 // Types
 type OptionType = { value: string; label: string };
 type CustomSelectProps = FieldProps & SelectProps<OptionType>;
 
-const SELECT_HEIGHT = '2rem';
-
-const customStyles = {
-	control: (provided: object) => ({
+export const customStyles: StylesConfig<OptionType, false> = {
+	control: (provided, state) => ({
 		...provided,
-		border: '2px solid #dadada',
-		borderRadius: '0.5rem',
-		fontWeight: 700,
 		backgroundColor: '#f3f3f3',
+		borderRadius: '0.5rem',
+		border: `2px solid ${state.isFocused ? '#0084ff' : 'darken(#f3f3f3, 10%)'}`,
+		color: '#000000',
+		fontSize: '0.9rem',
+		fontWeight: 600,
+		padding: '0',
+		transition: 'background-color 0.2s ease-in-out',
+		boxShadow: state.isFocused ? '0 0 3px rgba(0, 132, 255, 0.6)' : 'none',
+		'&:hover': {
+			borderColor: state.isFocused ? '#0084ff' : 'darken(#f3f3f3, 20%)'
+		},
 		display: 'flex',
 		alignItems: 'center',
-		minHeight: SELECT_HEIGHT,
-		maxHeight: SELECT_HEIGHT
+		justifyContent: 'space-between',
+		minHeight: '1.8rem',
+		maxHeight: '1.8rem'
 	}),
-	selectContainer: (provided: object) => ({
+	option: (provided, state) => ({
 		...provided,
-		minHeight: SELECT_HEIGHT,
-		maxHeight: SELECT_HEIGHT
+		backgroundColor: state.isSelected ? '#0084ff' : 'white',
+		color: state.isSelected ? 'white' : 'black',
+		'&:hover': {
+			backgroundColor: state.isSelected ? '#0084ff' : '#f3f3f3'
+		}
 	}),
-	singleValue: (provided: object) => ({
+	menu: (provided) => ({
 		...provided,
-		fontSize: '0.9rem'
+		backgroundColor: '#f3f3f3',
+		borderRadius: '0.5rem',
+		zIndex: 999
+	}),
+	menuList: (provided) => ({
+		...provided,
+		paddingTop: 0,
+		paddingBottom: 0
+	}),
+	multiValue: (provided) => ({
+		...provided,
+		backgroundColor: '#a4e869',
+		color: '#000000',
+		fontSize: '0.9rem',
+		fontWeight: 600,
+		marginLeft: '0',
+		marginRight: '0.5rem'
+	}),
+	multiValueLabel: (provided) => ({
+		...provided,
+		color: '#000000',
+		fontSize: '0.7rem',
+		fontWeight: 600,
+		padding: '0.2rem'
+	}),
+	singleValue: (provided) => ({
+		...provided,
+		color: '#000000',
+		fontSize: '0.9rem',
+		fontWeight: 600,
+		marginLeft: '0',
+		marginRight: '0.5rem'
+	}),
+	dropdownIndicator: (provided) => ({
+		...provided,
+		color: '#000000',
+		padding: '0.3rem'
+	}),
+	valueContainer: (provided) => ({
+		...provided,
+		minHeight: '1.8rem',
+		maxHeight: '1.8rem',
+		padding: '0 0.5rem'
+	}),
+	indicatorsContainer: (provided) => ({
+		...provided,
+		minHeight: '1.8rem',
+		maxHeight: '1.8rem'
 	})
 };
 
