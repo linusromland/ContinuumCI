@@ -39,51 +39,83 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 		>
 			{({ values }) => (
 				<Form className={formStyle.form}>
-					<Field
-						name='username'
-						placeholder='Username'
-						className={formStyle.formInput}
-					/>
-					<ErrorMessage
-						name='username'
-						component='div'
-						className={formStyle.formError}
-					/>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='username'
+							className={formStyle.formLabel}
+						>
+							Username
+						</label>
+						<Field
+							name='username'
+							placeholder='Username'
+							className={formStyle.formInput}
+						/>
+						<ErrorMessage
+							name='username'
+							component='div'
+							className={formStyle.formError}
+						/>{' '}
+					</div>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='email'
+							className={formStyle.formLabel}
+						>
+							Email
+						</label>
 
-					<Field
-						name='email'
-						placeholder='Email'
-						className={formStyle.formInput}
-					/>
-					<ErrorMessage
-						name='email'
-						component='div'
-						className={formStyle.formError}
-					/>
+						<Field
+							name='email'
+							placeholder='Email'
+							className={formStyle.formInput}
+						/>
+						<ErrorMessage
+							name='email'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='password'
+							className={formStyle.formLabel}
+						>
+							Password
+						</label>
+						<Field
+							name='password'
+							placeholder='Password'
+							className={formStyle.formInput}
+							type='password'
+						/>
+						<ErrorMessage
+							name='password'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
+					<div className={formStyle.formGroup}>
+						<label
+							htmlFor='confirmPassword'
+							className={formStyle.formLabel}
+						>
+							Confirm Password
+						</label>
 
-					<Field
-						name='password'
-						placeholder='Password'
-						className={formStyle.formInput}
-						type='password'
-					/>
-					<ErrorMessage
-						name='password'
-						component='div'
-						className={formStyle.formError}
-					/>
+						<Field
+							name='confirmPassword'
+							placeholder='Confirm Password'
+							className={formStyle.formInput}
+							type='password'
+						/>
+						<ErrorMessage
+							name='confirmPassword'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
 
-					<Field
-						name='confirmPassword'
-						placeholder='Confirm Password'
-						className={formStyle.formInput}
-						type='password'
-					/>
-					<ErrorMessage
-						name='confirmPassword'
-						component='div'
-						className={formStyle.formError}
-					/>
 					<div className={style.buttons}>
 						<Button
 							text='Create User'
