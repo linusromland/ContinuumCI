@@ -57,11 +57,11 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 							htmlFor='password'
 							className={formStyle.formLabel}
 						>
-							Password
+							{t.login.password}
 						</label>
 						<Field
 							name='password'
-							placeholder='Password'
+							placeholder={t.login.password}
 							className={formStyle.formInput}
 							type='password'
 						/>
