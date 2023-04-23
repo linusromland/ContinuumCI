@@ -19,6 +19,10 @@
 	padding: 2rem;
 	border-radius: $border-radius;
 	min-width: 30rem;
+
+	@include mediaQuery('small') {
+		width: 100%;
+	}
 }
 
 .header {
