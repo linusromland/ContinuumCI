@@ -12,7 +12,7 @@ export const sv: TranslationKeys = {
 		errorReset: 'Ett fel uppstod vid återställning av ditt lösenord. Försök igen senare.'
 	},
 	login: {
-		title: 'Välkommen tillbaka! Vänligen logga in på ditt konto.',
+		title: 'Välkommen tillbaka! Vänligen logga in.',
 		successLogin: 'Du har loggat in!',
 		invalidLogin: 'Ogiltig e-postadress eller lösenord.',
 		rememberMe: 'Kom ihåg mig',
