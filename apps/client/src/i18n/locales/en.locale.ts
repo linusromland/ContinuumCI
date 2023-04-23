@@ -5,6 +5,27 @@ export const en: TranslationKeys = {
 	setupSidebar: {
 		footer: 'ContinuumCI is a project by Linus Romland. The source code is available on'
 	},
+	sidebar: {
+		analytics: {
+			title: 'Analytics',
+			overview: 'Overview'
+		},
+		deployments: {
+			title: 'Deployments',
+			projects: 'Projects',
+			containers: 'Containers',
+			domains: 'Domains'
+		},
+		settings: {
+			title: 'Settings',
+			general: 'General',
+			users: 'Users'
+		},
+		footer: {
+			authenticatedAs: 'Authenticated as',
+			signOut: 'Sign out'
+		}
+	},
 	resetPassword: {
 		title: 'Reset password',
 		successReset: "If the email is valid, you'll receive an email with a link to reset your password.",

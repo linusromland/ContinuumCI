@@ -2,6 +2,27 @@ export type TranslationKeys = {
 	setupSidebar: {
 		footer: string;
 	};
+	sidebar: {
+		analytics: {
+			title: string;
+			overview: string;
+		};
+		deployments: {
+			title: string;
+			projects: string;
+			containers: string;
+			domains: string;
+		};
+		settings: {
+			title: string;
+			general: string;
+			users: string;
+		};
+		footer: {
+			authenticatedAs: string;
+			signOut: string;
+		};
+	};
 	resetPassword: {
 		title: string;
 		successReset: string;

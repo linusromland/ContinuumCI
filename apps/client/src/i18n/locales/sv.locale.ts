@@ -5,6 +5,27 @@ export const sv: TranslationKeys = {
 	setupSidebar: {
 		footer: 'ContinuumCI är ett projekt av Linus Romland. Källkoden är tillgänglig på'
 	},
+	sidebar: {
+		analytics: {
+			title: 'Analys',
+			overview: 'Översikt'
+		},
+		deployments: {
+			title: 'Utplaceringar',
+			projects: 'Projekt',
+			containers: 'Containrar',
+			domains: 'Domäner'
+		},
+		settings: {
+			title: 'Inställningar',
+			general: 'Allmänt',
+			users: 'Användare'
+		},
+		footer: {
+			authenticatedAs: 'Inloggad som',
+			signOut: 'Logga ut'
+		}
+	},
 	resetPassword: {
 		title: 'Återställ lösenord',
 		successReset:

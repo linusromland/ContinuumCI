@@ -11,12 +11,14 @@ import api from '../../utils/api';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import { toast } from 'react-toastify';
+import useTranslations from '../../i18n/translations';
 
 interface SidebarProps {
 	user: UserClass;
 }
 
 export default function Sidebar({ user }: SidebarProps) {
+	const t = useTranslations();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
@@ -48,49 +50,49 @@ export default function Sidebar({ user }: SidebarProps) {
 			</div>
 			<div className={clsx(style.content, open ? style.open : style.closed)}>
 				<div className={style.buttons}>
-					<ButtonWrapper text='ANALYTICS'>
+					<ButtonWrapper text={t.sidebar.analytics.title}>
 						<>
 							<Button
-								text='Overview'
+								text={t.sidebar.analytics.overview}
 								icon='/icons/overview.svg'
 								onClick={() => changeLocation('/')}
 								selected={location.pathname === '/'}
 							/>
 						</>
 					</ButtonWrapper>
-					<ButtonWrapper text='DEPLOYMENTS'>
+					<ButtonWrapper text={t.sidebar.deployments.title}>
 						<>
 							<Button
-								text='Projects'
+								text={t.sidebar.deployments.projects}
 								icon='/icons/projects.svg'
 								onClick={() => changeLocation('/projects')}
 								selected={location.pathname.includes('projects')}
 							/>
 							<Button
-								text='Containers'
+								text={t.sidebar.deployments.containers}
 								icon='/icons/containers.svg'
 								onClick={() => changeLocation('/containers')}
 								selected={location.pathname === '/containers'}
 							/>
 							<Button
-								text='Domains'
+								text={t.sidebar.deployments.domains}
 								icon='/icons/nginx.svg'
 								onClick={() => changeLocation('/domains')}
 								selected={location.pathname === '/domains'}
 							/>
 						</>
 					</ButtonWrapper>
-					<ButtonWrapper text='SETTINGS'>
+					<ButtonWrapper text={t.sidebar.settings.title}>
 						<>
 							<Button
-								text='General'
+								text={t.sidebar.settings.general}
 								icon='/icons/settings.svg'
 								onClick={() => changeLocation('/settings')}
 								selected={location.pathname === '/settings'}
 							/>
 							{user.role == UserRoleEnum.ROOT && (
 								<Button
-									text='Users'
+									text={t.sidebar.settings.users}
 									icon='/icons/users.svg'
 									onClick={() => changeLocation('/settings/users')}
 									selected={location.pathname === '/settings/users'}
@@ -109,10 +111,10 @@ export default function Sidebar({ user }: SidebarProps) {
 				</div>
 				<div className={style.footer}>
 					<p className={style.footerText}>
-						Authenticated as: <span>{user.username}</span>
+						{t.sidebar.footer.authenticatedAs}: <span>{user.username}</span>
 					</p>
 					<Button
-						text='Sign out'
+						text={t.sidebar.footer.signOut}
 						icon='/icons/signout.svg'
 						onClick={() => {
 							try {
