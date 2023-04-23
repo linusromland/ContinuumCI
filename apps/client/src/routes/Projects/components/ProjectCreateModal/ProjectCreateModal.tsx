@@ -61,7 +61,7 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								htmlFor='gitUrl'
 								className={formStyle.formLabel}
 							>
-								Git URL
+								Git URL <span className={formStyle.formLabelHint}>(should end with .git)</span>
 							</label>
 							<Field
 								name='gitUrl'
