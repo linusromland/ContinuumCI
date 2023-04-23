@@ -9,6 +9,7 @@ import { getUser } from '../../../utils/api/user';
 import setToken from '../../../utils/setToken';
 import { Loading } from '../../Loading/Loading';
 import i18n from '../../../i18n/i18n';
+import { translations } from '../../../i18n/translations';
 
 export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
@@ -55,6 +56,13 @@ export default function RootLayout(): JSX.Element {
 		if (localStorage) {
 			const lang = localStorage.getItem('lang');
 			if (lang) i18n.changeLanguage(lang);
+			else {
+				const browserLang = navigator.language.split('-')[0];
+				const languages = Object.keys(translations);
+				if (languages.includes(browserLang)) {
+					i18n.changeLanguage(browserLang);
+				}
+			}
 		}
 	}, []);
 
