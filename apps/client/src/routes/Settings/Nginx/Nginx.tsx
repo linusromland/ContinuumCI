@@ -12,28 +12,42 @@ import Widget from '../../../components/Widget/Widget';
 import style from './Nginx.module.scss';
 import { createDomain, deleteDomain, getDomains } from '../../../utils/api/nginx/domains';
 import { toast } from 'react-toastify';
-import { DomainsClass } from 'shared/src/classes';
 import { NginxConfigurationType } from 'shared/src/types';
 import { getConfiguration, updateConfiguration } from '../../../utils/api/nginx/configuration';
+import { customStyles } from '../../../components/CustomSelect/CustomSelect';
 
 export default function Nginx(): JSX.Element {
-	const [domainNames, setDomainNames] = useState([] as DomainsClass[]);
+	const [domainNames, setDomainNames] = useState(
+		[] as {
+			value: string;
+			label: string;
+		}[]
+	);
 	const [nginxConfiguration, setNginxConfiguration] = useState({} as NginxConfigurationType);
 	const [newDomainName, setNewDomainName] = useState('');
 	const [sitesEnabledDirectoryModal, setSitesEnabledDirectoryModal] = useState(false);
 	const [accessLogLocationModal, setAccessLogLocationModal] = useState(false);
 	const [localIpAdressesModal, setLocalIpAdressesModal] = useState(false);
-	const [selectedDomainName, setSelectedDomainName] = useState(
-		{} as {
-			value: string;
-			label: string;
-		} | null
-	);
+	const [selectedDomainName, setSelectedDomainName] = useState({
+		value: '',
+		label: ''
+	});
 
 	async function getDomainsData() {
 		const response = await getDomains();
 		if (response.success && response.data) {
-			setDomainNames(response.data);
+			setDomainNames(
+				response.data.map((domainName) => ({
+					value: domainName._id,
+					label: domainName.name
+				}))
+			);
+			console.log(
+				response.data.map((domainName) => ({
+					value: domainName._id,
+					label: domainName.name
+				}))
+			);
 		}
 	}
 
@@ -58,21 +72,6 @@ export default function Nginx(): JSX.Element {
 		getDomainsData();
 		getConfigurationData();
 	}, []);
-
-	const customStyles = {
-		control: (provided: object) => ({
-			...provided,
-			border: '2px solid #dadada',
-			borderRadius: '0.25rem',
-			fontSize: '0.8rem',
-			fontWeight: 700,
-			margin: '0'
-		}),
-		valueContainer: (provided: object) => ({
-			...provided,
-			padding: '0rem'
-		})
-	};
 
 	return (
 		<>
@@ -139,7 +138,7 @@ export default function Nginx(): JSX.Element {
 							{/* List of all domain names */}
 							{domainNames.map((domainName, index) => (
 								<p className={clsx(style.infoContainerValue, style[`row${index + 1}`], style.col2)}>
-									{domainName.name}
+									{domainName.label}
 								</p>
 							))}
 
@@ -184,7 +183,6 @@ export default function Nginx(): JSX.Element {
 							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
 								Remove domain name:
 							</h3>
-
 							<Select
 								className={clsx(style.row1, style.col2)}
 								styles={customStyles}
@@ -192,10 +190,7 @@ export default function Nginx(): JSX.Element {
 									if (option && option.value) setSelectedDomainName(option);
 								}}
 								value={selectedDomainName}
-								options={domainNames.map((domainName) => ({
-									value: domainName._id,
-									label: domainName.name
-								}))}
+								options={domainNames}
 							/>
 							<Button
 								text='Remove'
@@ -209,7 +204,10 @@ export default function Nginx(): JSX.Element {
 
 									if (response) {
 										getDomainsData();
-										setSelectedDomainName(null);
+										setSelectedDomainName({
+											label: '',
+											value: ''
+										});
 									} else {
 										toast.error('Failed to delete domain');
 									}
