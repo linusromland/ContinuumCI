@@ -2,6 +2,7 @@
 
 .main {
 	width: 100%;
+	height: 100%;
 	background-color: darken($background, 5%);
 }
 
@@ -26,6 +27,14 @@
 	gap: 1rem;
 	margin-top: 0.5rem;
 	overflow-y: auto;
+
+	@include mediaQuery('medium') {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@include mediaQuery('small') {
+		grid-template-columns: repeat(1, 1fr);
+	}
 }
 
 .noProjects {
