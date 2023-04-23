@@ -2,7 +2,6 @@
 
 .input {
 	background-color: $background;
-	/* slightly darker outline */
 	border: 2px solid darken($background, 10%);
 	border-radius: $border-radius;
 	color: $text-primary;
