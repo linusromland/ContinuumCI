@@ -14,8 +14,17 @@
 .minSize {
 	height: fit-content;
 	width: fit-content;
+
+	@include mediaQuery('small') {
+		width: 100%;
+	}
 }
 
 .content {
 	width: fit-content;
+	overflow-x: auto;
+
+	@include mediaQuery('small') {
+		width: 100%;
+	}
 }
