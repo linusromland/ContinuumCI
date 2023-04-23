@@ -122,7 +122,11 @@ export default function Sidebar({ user }: SidebarProps) {
 								onClick={() => {
 									const languages = Object.keys(translations);
 									const index = languages.indexOf(i18n.language);
-									i18n.changeLanguage(languages[languages.length == index + 1 ? 0 : index + 1]);
+									const selectedLanguage = languages[languages.length == index + 1 ? 0 : index + 1];
+
+									if (localStorage) localStorage.setItem('lang', selectedLanguage);
+
+									i18n.changeLanguage(selectedLanguage);
 								}}
 							/>
 

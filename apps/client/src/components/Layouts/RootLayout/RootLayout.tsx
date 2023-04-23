@@ -8,6 +8,7 @@ import { getSetup } from '../../../utils/api/setup';
 import { getUser } from '../../../utils/api/user';
 import setToken from '../../../utils/setToken';
 import { Loading } from '../../Loading/Loading';
+import i18n from '../../../i18n/i18n';
 
 export default function RootLayout(): JSX.Element {
 	const navigate = useNavigate();
@@ -48,6 +49,13 @@ export default function RootLayout(): JSX.Element {
 
 			setLoading(false);
 		})();
+	}, []);
+
+	useEffect(() => {
+		if (localStorage) {
+			const lang = localStorage.getItem('lang');
+			if (lang) i18n.changeLanguage(lang);
+		}
 	}, []);
 
 	if (loading) return <Loading />;
