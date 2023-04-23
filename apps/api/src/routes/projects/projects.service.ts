@@ -195,11 +195,21 @@ export class ProjectsService {
 				});
 			}
 
+			if (project.enabled) {
+				// Forefully remove the deployment
+				await this.deploymentService.removeDeployment(userId, projectId, true);
+
+				// Create a new deployment
+				await this.deploymentService.createDeployment(userId, projectId);
+			}
+
 			return {
 				success: true,
 				message: 'Project synced successfully'
 			};
 		} catch (e) {
+			if (e instanceof BadRequestException) throw e;
+
 			throw new BadRequestException({
 				success: false,
 				message: 'Project sync failed'
