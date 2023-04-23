@@ -6,25 +6,28 @@ import * as Yup from 'yup';
 import Button from '../Button/Button';
 import style from './RegistrationForm.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
-
-const UserSchema = Yup.object().shape({
-	username: Yup.string()
-		.min(3, 'Username must be at least 3 characters')
-		.max(20, 'Username must be less than 20 characters')
-		.required('Username is required'),
-	email: Yup.string().email('Invalid email').required('Email is required'),
-	password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
-	confirmPassword: Yup.string()
-		.oneOf([Yup.ref('password'), ''], 'Passwords must match')
-		.min(8, 'Password must be at least 8 characters')
-		.required('Confirm Password is required')
-});
+import useTranslations from '../../i18n/translations';
 
 interface RegistrationFormProps {
 	onSubmit: (values: { username: string; email: string; password: string; confirmPassword: string }) => void;
 }
 
 export default function RegistrationForm({ onSubmit }: RegistrationFormProps): JSX.Element {
+	const t = useTranslations();
+
+	const UserSchema = Yup.object().shape({
+		username: Yup.string()
+			.min(3, t.register.schema.username.min)
+			.max(20, t.register.schema.username.max)
+			.required(t.register.schema.username.required),
+		email: Yup.string().email(t.register.schema.email.invalid).required(t.register.schema.email.required),
+		password: Yup.string().min(8, t.register.schema.password.min).required(t.register.schema.password.required),
+		confirmPassword: Yup.string()
+			.oneOf([Yup.ref('password'), ''], t.register.schema.confirmPassword.notMatch)
+			.min(8, t.register.schema.password.min)
+			.required(t.register.schema.confirmPassword.required)
+	});
+
 	return (
 		<Formik
 			initialValues={{
@@ -44,11 +47,11 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 							htmlFor='username'
 							className={formStyle.formLabel}
 						>
-							Username
+							{t.register.username}
 						</label>
 						<Field
 							name='username'
-							placeholder='Username'
+							placeholder={t.register.username}
 							className={formStyle.formInput}
 						/>
 						<ErrorMessage
@@ -81,11 +84,11 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 							htmlFor='password'
 							className={formStyle.formLabel}
 						>
-							Password
+							{t.login.password}
 						</label>
 						<Field
 							name='password'
-							placeholder='Password'
+							placeholder={t.login.password}
 							className={formStyle.formInput}
 							type='password'
 						/>
@@ -100,12 +103,12 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 							htmlFor='confirmPassword'
 							className={formStyle.formLabel}
 						>
-							Confirm Password
+							{t.register.confirmPassword}
 						</label>
 
 						<Field
 							name='confirmPassword'
-							placeholder='Confirm Password'
+							placeholder={t.register.confirmPassword}
 							className={formStyle.formInput}
 							type='password'
 						/>
@@ -118,7 +121,7 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 
 					<div className={style.buttons}>
 						<Button
-							text='Create User'
+							text={t.register.create}
 							onClick={() => onSubmit(values)}
 						/>
 					</div>

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import style from './LoginForm.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
 import Button from '../Button/Button';
+import useTranslations from '../../i18n/translations';
 
 const UserSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid email').required('Email is required'),
@@ -17,6 +18,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
+	const t = useTranslations();
+
 	return (
 		<Formik
 			initialValues={{
@@ -73,7 +76,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 							htmlFor='rememberMe'
 							className={formStyle.label}
 						>
-							Remember Me
+							{t.login.rememberMe}
 						</label>
 						<Field
 							name='rememberMe'
@@ -83,7 +86,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 
 					<div className={style.buttons}>
 						<Button
-							text='Login'
+							text={t.login.login}
 							onClick={() => onSubmit(values)}
 						/>
 					</div>

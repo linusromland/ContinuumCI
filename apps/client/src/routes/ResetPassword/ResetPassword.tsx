@@ -9,8 +9,10 @@ import formStyle from '../../styles/formStyle.module.scss';
 import Button from '../../components/Button/Button';
 import { resetPassword } from '../../utils/api/user';
 import { toast } from 'react-toastify';
+import useTranslations from '../../i18n/translations';
 
 export default function ResetPassword(): JSX.Element {
+	const t = useTranslations();
 	const navigate = useNavigate();
 
 	const ResetPasswordSchema = Yup.object().shape({
@@ -20,7 +22,7 @@ export default function ResetPassword(): JSX.Element {
 	return (
 		<>
 			<div className={style.container}>
-				<p className={style.subtitle}>Reset Password</p>
+				<p className={style.subtitle}>{t.resetPassword.title}</p>
 				<Formik
 					initialValues={{
 						email: ''
@@ -52,21 +54,18 @@ export default function ResetPassword(): JSX.Element {
 
 							<div className={style.buttons}>
 								<Button
-									text='Reset password'
+									text={t.resetPassword.title}
 									small
 									onClick={async () => {
 										if (!values.email) return;
 
 										const response = await resetPassword(values.email);
 										if (response.success) {
-											toast.success(
-												"If the email is valid, you'll receive an email with a link to reset your password.",
-												{
-													position: 'top-left'
-												}
-											);
+											toast.success(t.resetPassword.successReset, {
+												position: 'top-left'
+											});
 										} else {
-											toast.error('An error occurred while resetting your password.', {
+											toast.error(t.resetPassword.errorReset, {
 												position: 'top-left'
 											});
 										}

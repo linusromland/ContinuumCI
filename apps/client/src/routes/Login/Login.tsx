@@ -9,8 +9,10 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import setToken from '../../utils/setToken';
 import { createUser, getUser } from '../../utils/api/user';
+import useTranslations from '../../i18n/translations';
 
 export default function Login(): JSX.Element {
+	const t = useTranslations();
 	const navigate = useNavigate();
 	const [registered, setRegistered] = useState(false);
 
@@ -24,11 +26,7 @@ export default function Login(): JSX.Element {
 	return (
 		<>
 			<div className={style.container}>
-				<p className={style.subtitle}>
-					{registered
-						? 'Welcome! Please register for an account.'
-						: 'Welcome back! Please login to your account.'}
-				</p>
+				<p className={style.subtitle}>{registered ? t.register.title : t.login.title}</p>
 				{registered ? (
 					<RegistrationForm
 						onSubmit={(values) => {
@@ -44,12 +42,12 @@ export default function Login(): JSX.Element {
 										email: values.email,
 										password: values.password
 									});
-									toast.success('Successfully created user!', {
+									toast.success(t.register.successCreate, {
 										position: 'top-left'
 									});
 									navigate('/');
 								} else {
-									toast.error('An error occurred while creating the user.', {
+									toast.error(t.register.errorCreate, {
 										position: 'top-left'
 									});
 								}
@@ -66,10 +64,10 @@ export default function Login(): JSX.Element {
 										password: values.password,
 										rememberMe: values.rememberMe
 									});
-									toast.success('Successfully logged in!');
+									toast.success(t.login.successLogin);
 									navigate('/');
 								} catch (e) {
-									toast.error('Invalid email or password.', {
+									toast.error(t.login.invalidLogin, {
 										position: 'top-left'
 									});
 								}
@@ -80,23 +78,23 @@ export default function Login(): JSX.Element {
 
 				{!registered && (
 					<p className={style.footerText}>
-						Forgot password?{' '}
+						{t.login.forgotPassword + ' '}
 						<Link
 							to='/resetPassword'
 							className={style.link}
 						>
-							Reset password
+							{t.login.resetPassword}
 						</Link>
 					</p>
 				)}
 
 				<p className={style.footerText}>
-					{registered ? 'Already have an account?' : "Don't have an account?"}{' '}
+					{(registered ? t.register.alreadyRegistered : t.login.notRegistered) + ' '}
 					<a
 						onClick={() => setRegistered(!registered)}
 						className={style.link}
 					>
-						{registered ? 'Login' : 'Register'}
+						{registered ? t.login.login : t.register.register}
 					</a>
 				</p>
 			</div>

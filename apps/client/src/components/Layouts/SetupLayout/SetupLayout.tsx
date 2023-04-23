@@ -7,8 +7,10 @@ import type { Engine } from 'tsparticles-engine';
 
 // Internal Dependencies
 import style from './SetupLayout.module.scss';
+import useTranslations from '../../../i18n/translations';
 
 export default function SetupLayout(): JSX.Element {
+	const t = useTranslations();
 	const navigate = useNavigate();
 
 	const particlesInit = useCallback(async (engine: Engine) => {
@@ -116,8 +118,7 @@ export default function SetupLayout(): JSX.Element {
 				</div>
 				<div className={style.footer}>
 					<p>
-						ContinuumCI is a project by Linus Romland. The source code is available on{' '}
-						<a href='https://github.com/linusromland/ContinuumCI'>GitHub</a>.
+						{t.setupSidebar.footer} <a href='https://github.com/linusromland/ContinuumCI'>GitHub</a>.
 					</p>
 				</div>
 			</div>
