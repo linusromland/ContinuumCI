@@ -1,3 +1,5 @@
+@use 'src/styles' as *;
+
 .main {
 	padding: 1.5rem;
 	min-height: 100vh;
@@ -25,6 +27,12 @@
 		font-weight: 600;
 		margin-right: 0.4rem;
 	}
+
+	:nth-child(2) {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 .widgetWrapper {
@@ -47,6 +55,17 @@
 .statusContainer {
 	display: flex;
 	gap: 0.5rem;
+
+	@include mediaQuery('small') {
+		flex-direction: column;
+		width: fit-content;
+	}
+}
+
+.buttons {
+	@include mediaQuery('small') {
+		gap: 1rem;
+	}
 }
 
 .tables {
@@ -54,4 +73,9 @@
 	grid-template-columns: repeat(2, 1fr);
 	gap: 1rem;
 	width: fit-content;
+
+	@include mediaQuery('medium') {
+		grid-template-columns: repeat(1, 1fr);
+		width: 100%;
+	}
 }
