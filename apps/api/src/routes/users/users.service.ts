@@ -15,7 +15,7 @@ import { UserClass, UserQueryClass } from 'shared/src/classes';
 import { EmailConfigurationClass } from 'shared/src/classes';
 import { EmailConfigurationService } from '../emailConfiguration/emailConfiguration.service';
 import { UserRoleEnum } from 'shared/src/enums';
-import { hashPassword } from 'src/utils/hashPassword';
+import { comparePassword, hashPassword } from 'src/utils/hashPassword';
 
 @Injectable()
 export class UsersService {
@@ -394,15 +394,14 @@ export class UsersService {
 				});
 			}
 
-			//TODO: ADD PASSWORD CHECK WITH BCRYPT
-			if (updatedUser.password !== oldPassword) {
+			if (!comparePassword(oldPassword, updatedUser.password)) {
 				throw new BadRequestException({
 					success: false,
 					message: 'Incorrect password'
 				});
 			}
 
-			updatedUser.password = newPassword;
+			updatedUser.password = hashPassword(newPassword);
 			await updatedUser.save();
 
 			return {
@@ -552,8 +551,7 @@ export class UsersService {
 			});
 		}
 
-		//TODO: HASH PASSWORD WITH BCRYPT
-		user.password = newPassword;
+		user.password = hashPassword(newPassword);
 
 		await user.save();
 		await forgotPassword.remove();
