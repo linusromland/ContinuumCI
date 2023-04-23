@@ -1,4 +1,5 @@
 export type TranslationKeys = {
+	lang: string;
 	setupSidebar: {
 		footer: string;
 	};

@@ -2,6 +2,7 @@
 import { TranslationKeys } from './locale.type';
 
 export const sv: TranslationKeys = {
+	lang: 'Svenska',
 	setupSidebar: {
 		footer: 'ContinuumCI är ett projekt av Linus Romland. Källkoden är tillgänglig på'
 	},

@@ -11,7 +11,8 @@ import api from '../../utils/api';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import { toast } from 'react-toastify';
-import useTranslations from '../../i18n/translations';
+import useTranslations, { translations } from '../../i18n/translations';
+import i18n from '../../i18n/i18n';
 
 interface SidebarProps {
 	user: UserClass;
@@ -110,28 +111,42 @@ export default function Sidebar({ user }: SidebarProps) {
 					</ButtonWrapper>
 				</div>
 				<div className={style.footer}>
-					<p className={style.footerText}>
-						{t.sidebar.footer.authenticatedAs}: <span>{user.username}</span>
-					</p>
-					<Button
-						text={t.sidebar.footer.signOut}
-						icon='/icons/signout.svg'
-						onClick={() => {
-							try {
-								if (!localStorage || !sessionStorage) return;
-								localStorage.removeItem('token');
-								sessionStorage.removeItem('token');
-								api.defaults.headers.common['Authorization'] = '';
-								toast.success('Successfully signed out', {
-									position: 'top-left'
-								});
-								changeLocation('/login');
-							} catch (error) {
-								console.log(error);
-								toast.error('Failed to sign out');
-							}
-						}}
-					/>
+					<ButtonWrapper>
+						<>
+							<p className={style.footerText}>
+								{t.sidebar.footer.authenticatedAs}: <span>{user.username}</span>
+							</p>
+							<Button
+								text={t.lang}
+								icon='/icons/globe.svg'
+								onClick={() => {
+									const languages = Object.keys(translations);
+									const index = languages.indexOf(i18n.language);
+									i18n.changeLanguage(languages[languages.length == index + 1 ? 0 : index + 1]);
+								}}
+							/>
+
+							<Button
+								text={t.sidebar.footer.signOut}
+								icon='/icons/signout.svg'
+								onClick={() => {
+									try {
+										if (!localStorage || !sessionStorage) return;
+										localStorage.removeItem('token');
+										sessionStorage.removeItem('token');
+										api.defaults.headers.common['Authorization'] = '';
+										toast.success('Successfully signed out', {
+											position: 'top-left'
+										});
+										changeLocation('/login');
+									} catch (error) {
+										console.log(error);
+										toast.error('Failed to sign out');
+									}
+								}}
+							/>
+						</>
+					</ButtonWrapper>
 				</div>
 			</div>
 		</div>

@@ -2,6 +2,7 @@
 import { TranslationKeys } from './locale.type';
 
 export const en: TranslationKeys = {
+	lang: 'English',
 	setupSidebar: {
 		footer: 'ContinuumCI is a project by Linus Romland. The source code is available on'
 	},
