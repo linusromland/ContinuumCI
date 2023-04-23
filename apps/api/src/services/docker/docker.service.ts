@@ -115,6 +115,9 @@ export class DockerService {
 				dockerCompose.services[services[i]].environment = [];
 			}
 
+			// Set the restart policy to always
+			dockerCompose.services[services[i]].restart = 'always';
+
 			// Strucutre the environment variables for the docker-compose file
 			const variables = environmentVariables
 				.filter((variable) => {
