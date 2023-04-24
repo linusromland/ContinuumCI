@@ -15,12 +15,14 @@ import {
 } from '../../../../utils/api/enviromentVariable';
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
+import useTranslations from '../../../../i18n/translations';
 
 interface EnviromentVariablesTableProps {
 	project: ProjectClass;
 }
 
 export default function EnviromentVariablesTable({ project }: EnviromentVariablesTableProps): JSX.Element {
+	const t = useTranslations();
 	const [variables, setVariables] = useState([] as EnvironmentVariablesClass[]);
 	const [confirmDelete, setConfirmDelete] = useState('');
 	const [variableInputs, setVariableInputs] = useState([] as string[]);
@@ -50,12 +52,17 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 							src='/icons/env.svg'
 							alt='Enviroment Variables'
 						/>
-						<h1>Enviroment Variables</h1>
+						<h1>{t.enviromentVariablesTable.title}</h1>
 					</div>
-					<p className={style.text}>These values will be used in all containers of this project.</p>
+					<p className={style.text}>{t.enviromentVariablesTable.description}</p>
 					<Table
 						widget={false}
-						headers={['Name', 'Value', 'Services', 'Actions']}
+						headers={[
+							t.enviromentVariablesTable.name,
+							t.enviromentVariablesTable.value,
+							t.enviromentVariablesTable.services,
+							t.enviromentVariablesTable.actions
+						]}
 						data={[
 							...variables.map((variable, index) => [
 								variable.name,
@@ -71,13 +78,17 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 								/>,
 								<p>
 									{variable.services.length === (project.services || []).length
-										? 'All'
+										? t.enviromentVariablesTable.all
 										: variable.services.join(', ')}
 								</p>,
 
 								<div className={style.buttons}>
 									<Button
-										text={variable._id === confirmDelete ? 'Confirm' : 'Remove'}
+										text={
+											variable._id === confirmDelete
+												? t.enviromentVariablesTable.confirmRemove
+												: t.enviromentVariablesTable.remove
+										}
 										theme='error'
 										onClick={async () => {
 											if (variable._id === confirmDelete) {
@@ -86,10 +97,10 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 												setConfirmDelete('');
 
 												if (response) {
-													toast.success(`Variable ${variable.name} deleted`);
+													toast.success(t.enviromentVariablesTable.removeSuccess);
 													getData();
 												} else {
-													toast.error(`Error deleting variable ${variable.name}`);
+													toast.error(t.enviromentVariablesTable.removeError);
 												}
 											} else {
 												setConfirmDelete(variable._id || '');
@@ -98,7 +109,7 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 										small
 									/>
 									<Button
-										text='Save'
+										text={t.enviromentVariablesTable.save}
 										theme='success'
 										onClick={async () => {
 											if (!variableInputs[index]) return;
@@ -109,10 +120,10 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 											const response = await updateVariable(variablesCopy);
 
 											if (response.success) {
-												toast.success(`Variable ${variable.name} updated`);
+												toast.success(t.enviromentVariablesTable.updateSuccess);
 												getData();
 											} else {
-												toast.error(`Error updating variable ${variable.name}`);
+												toast.error(t.enviromentVariablesTable.updateError);
 											}
 										}}
 										small
@@ -122,7 +133,7 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 						]}
 					/>
 					<Button
-						text='Add new'
+						text={t.enviromentVariablesTable.addNew}
 						theme='primary'
 						onClick={() => {
 							setCreateModalOpen(true);
@@ -149,9 +160,9 @@ export default function EnviromentVariablesTable({ project }: EnviromentVariable
 
 					if (response.success) {
 						getData();
-						toast.success(`Variable ${values.name} created`);
+						toast.success(t.enviromentVariablesTable.createSuccess);
 					} else {
-						toast.error(`Error creating variable ${values.name}`);
+						toast.error(t.enviromentVariablesTable.createError);
 					}
 
 					setCreateModalOpen(false);

@@ -158,5 +158,85 @@ export const sv: TranslationKeys = {
 				}
 			}
 		}
+	},
+	project: {
+		projectDetails: 'Projektdetaljer',
+		name: 'Namn',
+		sync: 'Synkronisera',
+		syncSuccess: 'Projektet har synkroniserats!',
+		syncError: 'Ett fel uppstod vid synkronisering av projektet.',
+		start: 'Starta',
+		started: 'startades',
+		stop: 'Stoppa',
+		stopped: 'stoppades',
+		remove: 'Ta bort',
+		confirmRemove: 'Bekräfta borttagning',
+		removeSuccess: 'Projektet har tagits bort!',
+		removeError: 'Ett fel uppstod vid borttagning av projektet.',
+		manualStop: 'Manuellt stoppad',
+		editNameTitle: 'Ändra projektets namn',
+		nameRequired: 'Projektnamn krävs.'
+	},
+	editModal: {
+		title: 'Ändra',
+		update: 'Uppdatera'
+	},
+	enviromentVariablesTable: {
+		title: 'Miljövariabler',
+		description: 'Alla miljövariabler för projektet.',
+		addNew: 'Lägg till ny',
+		save: 'Spara',
+		remove: 'Ta bort',
+		confirmRemove: 'Bekräfta',
+		removeSuccess: 'Variabeln har tagits bort!',
+		removeError: 'Ett fel uppstod vid borttagning av variabeln.',
+		updateSuccess: 'Variabeln har uppdaterats!',
+		updateError: 'Ett fel uppstod vid uppdatering av variabeln.',
+		createSuccess: 'Variabeln har skapats!',
+		createError: 'Ett fel uppstod vid skapande av variabeln.',
+		all: 'Alla',
+		name: 'Namn',
+		value: 'Värde',
+		services: 'Tjänster',
+		availableServices: 'Tillgänglig för vilka tjänster?',
+		actions: 'Åtgärder'
+	},
+	createEnviromentVariables: {
+		title: 'Skapa variabel',
+		schema: {
+			name: {
+				required: 'Namn krävs.',
+				match: 'Namnet får endast innehålla alfanumeriska tecken och understreck.'
+			},
+			value: {
+				required: 'Värde krävs.'
+			},
+			services: {
+				min: 'Minst en tjänst måste väljas.'
+			}
+		}
+	},
+	containersTable: {
+		title: 'Containers',
+		description: 'Alla containers för projektet.',
+		name: 'Namn',
+		state: 'Status',
+		created: 'Skapad'
+	},
+	accessControl: {
+		title: 'Åtkomstkontroll',
+		description: 'Root-användaren och alla administratörer har fullständig åtkomst till alla projekt.',
+		username: 'Användarnamn',
+		email: 'E-post',
+		role: 'Roll',
+		actions: 'Åtgärder',
+		remove: 'Ta bort',
+		addNew: 'Lägg till ny',
+		projectStatus: {
+			owner: 'Ägare',
+			developer: 'Utvecklare',
+			viewer: 'Läsare',
+			unknown: 'Okänd'
+		}
 	}
 };

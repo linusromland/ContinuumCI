@@ -9,12 +9,14 @@ import Table from '../../../../components/Table/Table';
 import Widget from '../../../../components/Widget/Widget';
 import { ContainerType } from 'shared/src/types';
 import { getContainers } from '../../../../utils/api/containers';
+import useTranslations from '../../../../i18n/translations';
 
 interface ContainersTableProps {
 	projectId: string;
 }
 
 export default function ContainersTable({ projectId }: ContainersTableProps): JSX.Element {
+	const t = useTranslations();
 	const [containers, setContainers] = useState([] as ContainerType[]);
 
 	async function getData() {
@@ -36,12 +38,12 @@ export default function ContainersTable({ projectId }: ContainersTableProps): JS
 						src='/icons/containers_black.svg'
 						alt='Containers'
 					/>
-					<h1>Containers</h1>
+					<h1>{t.containersTable.title}</h1>
 				</div>
-				<p className={style.text}>Here you can see all the containers that are running in this project.</p>
+				<p className={style.text}>{t.containersTable.description}</p>
 				<Table
 					widget={false}
-					headers={['Name', 'State', 'Created']}
+					headers={[t.containersTable.name, t.containersTable.state, t.containersTable.created]}
 					data={containers.map((container) => [
 						<Link to={`/containers/${container.id}`}>{container.name}</Link>,
 						container.state,

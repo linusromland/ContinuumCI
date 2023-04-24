@@ -7,6 +7,7 @@ import formStyle from '../../../../styles/formStyle.module.scss';
 import Modal from '../../../../components/Modal/Modal';
 import Button from '../../../../components/Button/Button';
 import CustomMultiSelect from '../../../../components/CustomSelect/CustomMultiSelect';
+import useTranslations from '../../../../i18n/translations';
 
 interface CreateVariableModalProps {
 	serviceList: string[];
@@ -16,9 +17,11 @@ interface CreateVariableModalProps {
 }
 
 export default function CreateVariableModal({ serviceList, onClose, submit, open }: CreateVariableModalProps) {
+	const t = useTranslations();
+
 	return (
 		<Modal
-			title='Create environment variable'
+			title={t.createEnviromentVariables.title}
 			onClose={() => onClose(false)}
 			open={open}
 		>
@@ -31,11 +34,11 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 				enableReinitialize
 				validationSchema={Yup.object({
 					name: Yup.string()
-						.required('Required')
-						.matches(/^[a-zA-Z0-9_]+$/, 'Only alphanumeric characters and underscores are allowed'),
-					value: Yup.string().required('Required'),
+						.required(t.createEnviromentVariables.schema.name.required)
+						.matches(/^[a-zA-Z0-9_]+$/, t.createEnviromentVariables.schema.name.match),
+					value: Yup.string().required(t.createEnviromentVariables.schema.value.required),
 					// String array with at least one element
-					services: Yup.array().of(Yup.string()).min(1, 'At least one service is required')
+					services: Yup.array().of(Yup.string()).min(1, t.createEnviromentVariables.schema.services.min)
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				onSubmit={() => {}} // This is required for the validation to work
@@ -47,12 +50,12 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 								htmlFor='name'
 								className={formStyle.formLabel}
 							>
-								Name
+								{t.enviromentVariablesTable.name}
 							</label>
 							<Field
 								name='name'
 								type='text'
-								placeholder='Name'
+								placeholder={t.enviromentVariablesTable.name}
 								className={formStyle.formInput}
 							/>
 							<ErrorMessage
@@ -66,12 +69,12 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 								htmlFor='value'
 								className={formStyle.formLabel}
 							>
-								Value
+								{t.enviromentVariablesTable.value}
 							</label>
 							<Field
 								name='value'
 								type='text'
-								placeholder='Value'
+								placeholder={t.enviromentVariablesTable.value}
 								className={formStyle.formInput}
 							/>
 							<ErrorMessage
@@ -85,7 +88,7 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 								htmlFor='services'
 								className={formStyle.formLabel}
 							>
-								Services
+								{t.enviromentVariablesTable.services}
 							</label>
 							<Field
 								name='services'
@@ -94,7 +97,7 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 									value: service,
 									label: service
 								}))}
-								placeholder='Available to what services?'
+								placeholder={t.enviromentVariablesTable.availableServices}
 							/>
 							<ErrorMessage
 								name='services'
@@ -103,7 +106,7 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							/>
 						</div>
 						<Button
-							text='Create Variable'
+							text={t.createEnviromentVariables.title}
 							disabled={isSubmitting}
 							onClick={() => {
 								submit({

@@ -4,16 +4,16 @@ import { ProjectRoleEnum } from 'shared/src/enums';
 function formatProjectRole(role: ProjectRoleEnum) {
 	switch (role) {
 		case ProjectRoleEnum.OWNER:
-			return 'Owner';
+			return 'owner';
 
 		case ProjectRoleEnum.DEVELOPER:
-			return 'Developer';
+			return 'developer';
 
 		case ProjectRoleEnum.VIEWER:
-			return 'Viewer';
+			return 'viewer';
 
 		default:
-			return 'Unknown';
+			return 'unknown';
 	}
 }
 

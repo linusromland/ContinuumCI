@@ -155,4 +155,84 @@ export type TranslationKeys = {
 			};
 		};
 	};
+	project: {
+		projectDetails: string;
+		name: string;
+		sync: string;
+		syncSuccess: string;
+		syncError: string;
+		start: string;
+		started: string;
+		stop: string;
+		stopped: string;
+		remove: string;
+		confirmRemove: string;
+		removeSuccess: string;
+		removeError: string;
+		manualStop: string;
+		editNameTitle: string;
+		nameRequired: string;
+	};
+	editModal: {
+		title: string;
+		update: string;
+	};
+	enviromentVariablesTable: {
+		title: string;
+		description: string;
+		addNew: string;
+		save: string;
+		remove: string;
+		confirmRemove: string;
+		removeSuccess: string;
+		removeError: string;
+		updateSuccess: string;
+		updateError: string;
+		createSuccess: string;
+		createError: string;
+		all: string;
+		name: string;
+		value: string;
+		services: string;
+		availableServices: string;
+		actions: string;
+	};
+	createEnviromentVariables: {
+		title: string;
+		schema: {
+			name: {
+				required: string;
+				match: string;
+			};
+			value: {
+				required: string;
+			};
+			services: {
+				min: string;
+			};
+		};
+	};
+	containersTable: {
+		title: string;
+		description: string;
+		name: string;
+		state: string;
+		created: string;
+	};
+	accessControl: {
+		title: string;
+		description: string;
+		username: string;
+		email: string;
+		role: string;
+		actions: string;
+		remove: string;
+		addNew: string;
+		projectStatus: {
+			owner: string;
+			developer: string;
+			viewer: string;
+			unknown: string;
+		};
+	};
 };

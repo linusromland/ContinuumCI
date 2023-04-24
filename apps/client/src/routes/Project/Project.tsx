@@ -18,8 +18,10 @@ import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
 import { ProjectClass } from 'shared/src/classes';
 import { syncProject, editProject, getProject, deleteProject } from '../../utils/api/projects';
 import { createDeployment, removeDeployment } from '../../utils/api/deployment';
+import useTranslations from '../../i18n/translations';
 
 export default function Project() {
+	const t = useTranslations();
 	const { projectId } = useParams();
 	const navigate = useNavigate();
 
@@ -63,7 +65,7 @@ export default function Project() {
 				<Breadcrumbs
 					path={[
 						{
-							name: 'Projects',
+							name: t.sidebar.deployments.projects,
 							link: '/projects'
 						},
 						{
@@ -72,9 +74,9 @@ export default function Project() {
 					]}
 				/>
 				<div className={style.content}>
-					<h1 className={style.title}>Project details</h1>
+					<h1 className={style.title}>{t.project.projectDetails}</h1>
 					<div className={style.infoContainer}>
-						<p>Name:</p>
+						<p>{t.project.name}:</p>
 						<p>{project.name}</p>
 						<button
 							className={style.editIcon}
@@ -87,7 +89,7 @@ export default function Project() {
 						</button>
 					</div>
 					<div className={style.infoContainer}>
-						<p>Git repository:</p>
+						<p>{t.projects.newProject.repositoryUrl}:</p>
 						<a
 							href={project.gitUrl}
 							target='_blank'
@@ -98,23 +100,23 @@ export default function Project() {
 
 					<div className={style.buttons}>
 						<Button
-							text='Sync'
+							text={t.project.sync}
 							theme='success'
 							icon='/icons/sync.svg'
 							onClick={async () => {
 								setSyncLoading(true);
 								const response = await syncProject(project._id);
 								if (response.success) {
-									toast.success('Project synced');
+									toast.success(t.project.syncSuccess);
 									getData();
-								} else toast.error(response.message);
+								} else toast.error(t.project.syncError);
 								setSyncLoading(false);
 							}}
 							loading={syncLoading}
 							small
 						/>
 						<Button
-							text={project.enabled ? 'Stop' : 'Start'}
+							text={project.enabled ? t.project.stop : t.project.start}
 							theme={project.enabled ? 'warning' : 'success'}
 							icon={
 								deploymentLoading
@@ -129,7 +131,13 @@ export default function Project() {
 									? await removeDeployment(project._id)
 									: await createDeployment(project._id);
 								if (response.success) {
-									toast.success('Deployment ' + (project.enabled ? 'stopped' : 'started'));
+									toast.success(
+										`
+										${t.projects.header.title}
+										${project.name} 
+										${project.enabled ? t.project.stopped : t.project.started}
+										`
+									);
 									getData();
 								} else toast.error(response.message);
 								setDeploymentLoading(false);
@@ -138,7 +146,7 @@ export default function Project() {
 							small
 						/>
 						<Button
-							text={confirmDelete ? 'Confirm delete' : 'Delete project'}
+							text={confirmDelete ? t.project.confirmRemove : t.project.remove}
 							theme='error'
 							icon='/icons/delete.svg'
 							onClick={async () => {
@@ -147,9 +155,9 @@ export default function Project() {
 								const response = await deleteProject(project._id);
 
 								if (response.success) {
-									toast.success('Project deleted');
+									toast.success(t.project.removeSuccess);
 									navigate('/projects');
-								} else toast.error(response.message);
+								} else toast.error(t.project.removeError);
 							}}
 							small
 						/>
@@ -157,7 +165,11 @@ export default function Project() {
 					<div className={style.statusContainer}>
 						<StatusWidget
 							icon={deploymentIcon}
-							text={project.enabled ? project.deploymentStatus : 'Manual stop'}
+							text={
+								project.enabled
+									? t.projects.projectCard.status[project.deploymentStatus.toString()]
+									: t.project.manualStop
+							}
 						/>
 						<StatusWidget
 							icon={
@@ -165,7 +177,7 @@ export default function Project() {
 									? '/icons/check.svg'
 									: '/icons/warning.svg'
 							}
-							text={project.syncStatus || ProjectSyncStatus.UNKNOWN}
+							text={t.projects.projectCard.syncStatus[project.syncStatus || ProjectSyncStatus.UNKNOWN]}
 						/>
 					</div>
 					<div className={style.tables}>
@@ -178,13 +190,13 @@ export default function Project() {
 			<TextEditModal
 				onClose={() => setEditNameModalOpen(false)}
 				open={editNameModalOpen}
-				title='Edit project name'
-				fieldName='name'
+				title={t.project.editNameTitle}
+				fieldName={t.project.name.toLowerCase()}
 				initialValues={{
 					name: project.name
 				}}
 				validationSchema={yup.object({
-					name: yup.string().required('Required')
+					name: yup.string().required(t.project.nameRequired)
 				})}
 				submit={async (values) => {
 					const response = await editProject(

@@ -5,6 +5,7 @@ import { Formik, Field, ErrorMessage, Form, FormikValues } from 'formik';
 import formStyle from '../../styles/formStyle.module.scss';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
+import useTranslations from '../../i18n/translations';
 
 interface TextEditModalProps {
 	onClose: (update: boolean) => void;
@@ -22,12 +23,14 @@ export default function TextEditModal({
 	open,
 	initialValues,
 	validationSchema,
-	title = 'Edit',
+	title,
 	fieldName = 'inputName'
 }: TextEditModalProps) {
+	const t = useTranslations();
+
 	return (
 		<Modal
-			title={title}
+			title={title ?? t.editModal.title}
 			onClose={() => onClose(false)}
 			open={open}
 		>
@@ -60,7 +63,7 @@ export default function TextEditModal({
 							/>
 						</div>
 						<Button
-							text={`Update ${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`}
+							text={`${t.editModal.update} ${fieldName}`}
 							disabled={isSubmitting}
 							onClick={() => {
 								submit(values);

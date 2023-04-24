@@ -6,12 +6,15 @@ import Widget from '../../../../components/Widget/Widget';
 import { ProjectClass, UserClass } from 'shared/src/classes';
 import { ProjectRoleEnum } from 'shared/src/enums';
 import formatProjectRole from '../../../../utils/formatProjectRole';
+import useTranslations from '../../../../i18n/translations';
 
 interface AccessControlTableProps {
 	project: ProjectClass;
 }
 
 export default function AccessControlTable({ project }: AccessControlTableProps): JSX.Element {
+	const t = useTranslations();
+
 	return (
 		<>
 			<Widget>
@@ -21,19 +24,22 @@ export default function AccessControlTable({ project }: AccessControlTableProps)
 							src='/icons/users_black.svg'
 							alt='Enviroment Varisables'
 						/>
-						<h1>Access Control</h1>
+						<h1>{t.accessControl.title}</h1>
 					</div>
-					<p className={style.text}>
-						The root user & all administrators always have access to this application.
-					</p>
+					<p className={style.text}>{t.accessControl.description}</p>
 					<Table
-						headers={['Username', 'E-mail', 'Role', 'Actions']}
+						headers={[
+							t.accessControl.username,
+							t.accessControl.email,
+							t.accessControl.role,
+							t.accessControl.actions
+						]}
 						data={(project.permissions || []).map((user) => [
 							(user.user as UserClass).username,
 							(user.user as UserClass).email,
-							formatProjectRole(user.role),
+							t.accessControl.projectStatus[formatProjectRole(user.role)],
 							<Button
-								text='Remove'
+								text={t.accessControl.remove}
 								small
 								theme='danger'
 								onClick={() => {
@@ -45,7 +51,7 @@ export default function AccessControlTable({ project }: AccessControlTableProps)
 						widget={false}
 					/>
 					<Button
-						text='Add new'
+						text={t.accessControl.addNew}
 						theme='primary'
 						onClick={() => {
 							console.log('add new');
