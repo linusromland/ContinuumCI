@@ -1,16 +1,16 @@
 enum ProjectSyncStatus {
-	UNKNOWN = 'Unknown Sync Status',
-	IN_SYNC = 'In Sync',
-	OUT_OF_SYNC = 'Out of Sync'
+	UNKNOWN = 'unknown',
+	IN_SYNC = 'inSync',
+	OUT_OF_SYNC = 'outOfSync'
 }
 
 enum ProjectDeploymentStatus {
-	UNKNOWN = 'Unknown Deployment Status',
-	RUNNING = 'Running',
-	NOT_RUNNING = 'Not Running',
-	RESTARTING = 'Restarting',
-	CRASHED = 'Crashed',
-	PARTIALLY_RUNNING = 'Partially Running'
+	UNKNOWN = 'unknown',
+	RUNNING = 'running',
+	NOT_RUNNING = 'notRunning',
+	RESTARTING = 'restarting',
+	CRASHED = 'crashed',
+	PARTIALLY_RUNNING = 'partipartiallyRunningallyRunning'
 }
 
 export { ProjectSyncStatus, ProjectDeploymentStatus };

@@ -107,5 +107,55 @@ export const en: TranslationKeys = {
 			ip: 'IP',
 			size: 'Size (bytes)'
 		}
+	},
+	projects: {
+		header: {
+			title: 'Projects',
+			lastUpdated: 'Last updated'
+		},
+		newProjectButton: 'New project',
+		search: 'Search',
+		noProjects: 'No projects found.',
+		projectCard: {
+			status: {
+				title: 'Status',
+				unknown: 'Unknown',
+				running: 'Running',
+				notRunning: 'Not running',
+				restarting: 'Restarting',
+				crashed: 'Crashed',
+				partiallyRunning: 'Partially running'
+			},
+			syncStatus: {
+				title: 'Sync status',
+				unknown: 'Unknown',
+				inSync: 'In sync',
+				outOfSync: 'Out of sync'
+			},
+			repository: 'Repository'
+		},
+		newProject: {
+			title: 'Create new project',
+			projectName: 'Project name',
+			repositoryUrl: 'Repository URL',
+			repositoryUrlHint: '(should end with .git)',
+			branch: 'Branch',
+			create: 'Create project',
+			successCreate: 'Project created successfully.',
+			errorCreate: 'An error occurred while creating the project. Please try again later.',
+			schema: {
+				name: {
+					min: 'Project name must be at least 3 characters long.',
+					required: 'Project name is required.'
+				},
+				repositoryUrl: {
+					required: 'Repository URL is required.',
+					invalid: 'Repository URL is invalid.'
+				},
+				branch: {
+					required: 'Branch is required.'
+				}
+			}
+		}
 	}
 };

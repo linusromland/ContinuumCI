@@ -108,5 +108,55 @@ export const sv: TranslationKeys = {
 			ip: 'IP',
 			size: 'Storlek (bytes)'
 		}
+	},
+	projects: {
+		header: {
+			title: 'Projekt',
+			lastUpdated: 'Senast uppdaterad'
+		},
+		newProjectButton: 'Nytt projekt',
+		search: 'Sök',
+		noProjects: 'Inga projekt hittades.',
+		projectCard: {
+			status: {
+				title: 'Status',
+				unknown: 'Okänd',
+				running: 'Kör',
+				notRunning: 'Kör inte',
+				restarting: 'Startar om',
+				crashed: 'Kraschade',
+				partiallyRunning: 'Delvis körning'
+			},
+			syncStatus: {
+				title: 'Sync status',
+				unknown: 'Okänd',
+				inSync: 'I synk',
+				outOfSync: 'Ej i synk'
+			},
+			repository: 'Repository'
+		},
+		newProject: {
+			title: 'Nytt projekt',
+			projectName: 'Projektnamn',
+			repositoryUrl: 'Repository URL',
+			repositoryUrlHint: '(skall sluta med .git)',
+			branch: 'Branch',
+			create: 'Skapa projekt',
+			successCreate: 'Projektet har skapats!',
+			errorCreate: 'Ett fel uppstod vid skapande av projektet. Försök igen senare.',
+			schema: {
+				name: {
+					min: 'Projektnamnet måste vara minst 3 tecken långt.',
+					required: 'Projektnamn krävs.'
+				},
+				repositoryUrl: {
+					required: 'Repository URL krävs.',
+					invalid: 'Repository URL är ogiltig.'
+				},
+				branch: {
+					required: 'Branch krävs.'
+				}
+			}
+		}
 	}
 };

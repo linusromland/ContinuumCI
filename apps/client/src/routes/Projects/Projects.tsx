@@ -14,8 +14,10 @@ import { getAllProjects, createProject } from '../../utils/api/projects';
 import { ProjectClass } from 'shared/src/classes';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
 import { Loading } from '../../components/Loading/Loading';
+import useTranslations from '../../i18n/translations';
 
 export default function Projects() {
+	const t = useTranslations();
 	const navigate = useNavigate();
 
 	const [modalOpen, setModalOpen] = useState(false as boolean);
@@ -87,7 +89,7 @@ export default function Projects() {
 							/>
 						</div>
 						<Button
-							text='New project'
+							text={t.projects.newProjectButton}
 							onClick={() => {
 								setModalOpen(true);
 							}}
@@ -98,7 +100,7 @@ export default function Projects() {
 						<input
 							className={style.input}
 							type='text'
-							placeholder='Search'
+							placeholder={t.projects.search}
 							onChange={(e) => setSearchFilter(e.target.value)}
 							value={searchFilter}
 						/>
@@ -123,7 +125,7 @@ export default function Projects() {
 						{projects.filter((project) => {
 							if (!searchFilter) return true;
 							return project.name.toLowerCase().includes(searchFilter.toLowerCase());
-						}).length === 0 && <p className={style.noProjects}>No projects found</p>}
+						}).length === 0 && <p className={style.noProjects}>{t.projects.noProjects}</p>}
 					</div>
 				</div>
 			</main>
@@ -138,11 +140,11 @@ export default function Projects() {
 					});
 
 					if (response.success) {
-						toast.success('Project created');
+						toast.success(t.projects.newProject.successCreate);
 						setModalOpen(false);
 						getProjects();
 					} else {
-						toast.error("Couldn't create project");
+						toast.error(t.projects.newProject.errorCreate);
 					}
 				}}
 			/>

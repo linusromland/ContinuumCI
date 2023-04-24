@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { ProjectClass } from 'shared/src/classes';
 import style from './ProjectCard.module.scss';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
+import useTranslations from '../../../../i18n/translations';
 
 interface ProjectCardProps {
 	project: ProjectClass;
@@ -14,6 +15,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps): JSX.Element {
+	const t = useTranslations();
 	const [icon, setIcon] = useState('git');
 	const [status, setStatus] = useState('success');
 
@@ -43,19 +45,21 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps): JSX
 			</div>
 			<div className={style.content}>
 				<p>
-					Status: <span>{project.deploymentStatus}</span>
+					{t.projects.projectCard.status.title}:{' '}
+					<span>{t.projects.projectCard.status[project.deploymentStatus.toString()]}</span>
 				</p>
 				<p>
-					Sync status: <span>{project.syncStatus}</span>
+					{t.projects.projectCard.syncStatus.title}:{' '}
+					<span>{t.projects.projectCard.syncStatus[project.syncStatus]}</span>
 				</p>
 				<p>
-					Repository: <a>{project.gitUrl}</a>
+					{t.projects.projectCard.repository}: <a>{project.gitUrl}</a>
 				</p>
 				<p>
 					URL: <a>https://romland.dev</a>
 				</p>
 				<p>
-					Last updated:{' '}
+					{t.projects.header.lastUpdated}:{' '}
 					<span>{project.updatedAt ? dayjs(project.updatedAt).format('YYYY-MM-DD HH:mm:ss') : 'Never'}</span>
 				</p>
 			</div>

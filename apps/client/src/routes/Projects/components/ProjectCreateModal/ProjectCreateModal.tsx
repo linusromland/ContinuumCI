@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import formStyle from '../../../../styles/formStyle.module.scss';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
+import useTranslations from '../../../../i18n/translations';
 
 interface ProjectCreateModalProps {
 	onClose: (update: boolean) => void;
@@ -14,9 +15,11 @@ interface ProjectCreateModalProps {
 }
 
 export default function ProjectCreateModal({ onClose, submit, open }: ProjectCreateModalProps) {
+	const t = useTranslations();
+
 	return (
 		<Modal
-			title='Create new project'
+			title={t.projects.newProject.title}
 			onClose={() => onClose(false)}
 			open={open}
 		>
@@ -28,9 +31,13 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 				}}
 				enableReinitialize
 				validationSchema={Yup.object({
-					name: Yup.string().min(3, 'Must be 3 characters or more').required('Required'),
-					gitUrl: Yup.string().url('Must be a valid URL').required('Required'),
-					branch: Yup.string().required('Required')
+					name: Yup.string()
+						.min(3, t.projects.newProject.schema.name.min)
+						.required(t.projects.newProject.schema.name.required),
+					gitUrl: Yup.string()
+						.url(t.projects.newProject.schema.repositoryUrl.invalid)
+						.required(t.projects.newProject.schema.repositoryUrl.invalid),
+					branch: Yup.string().required(t.projects.newProject.schema.branch.required)
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				onSubmit={() => {}} // This is required for the validation to work
@@ -42,12 +49,12 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								htmlFor='name'
 								className={formStyle.formLabel}
 							>
-								Project name
+								{t.projects.newProject.projectName}
 							</label>
 							<Field
 								name='name'
 								type='text'
-								placeholder='Project name'
+								placeholder={t.projects.newProject.projectName}
 								className={formStyle.formInput}
 							/>
 							<ErrorMessage
@@ -61,12 +68,15 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								htmlFor='gitUrl'
 								className={formStyle.formLabel}
 							>
-								Git URL <span className={formStyle.formLabelHint}>(should end with .git)</span>
+								{t.projects.newProject.repositoryUrl}{' '}
+								<span className={formStyle.formLabelHint}>
+									{t.projects.newProject.repositoryUrlHint}
+								</span>
 							</label>
 							<Field
 								name='gitUrl'
 								type='text'
-								placeholder='Git URL'
+								placeholder={t.projects.newProject.repositoryUrl}
 								className={formStyle.formInput}
 							/>
 							<ErrorMessage
@@ -80,12 +90,12 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 								htmlFor='branch'
 								className={formStyle.formLabel}
 							>
-								Branch
+								{t.projects.newProject.branch}
 							</label>
 							<Field
 								name='branch'
 								type='text'
-								placeholder='Branch'
+								placeholder={t.projects.newProject.branch}
 								className={formStyle.formInput}
 							/>
 							<ErrorMessage
@@ -95,7 +105,7 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 							/>
 						</div>
 						<Button
-							text='Create project'
+							text={t.projects.newProject.create}
 							disabled={isSubmitting}
 							onClick={() => {
 								submit(values);

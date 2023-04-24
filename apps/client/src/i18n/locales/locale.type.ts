@@ -105,4 +105,54 @@ export type TranslationKeys = {
 			size: string;
 		};
 	};
+	projects: {
+		header: {
+			title: string;
+			lastUpdated: string;
+		};
+		newProjectButton: string;
+		search: string;
+		noProjects: string;
+		projectCard: {
+			status: {
+				title: string;
+				unknown: string;
+				running: string;
+				notRunning: string;
+				restarting: string;
+				crashed: string;
+				partiallyRunning: string;
+			};
+			syncStatus: {
+				title: string;
+				unknown: string;
+				inSync: string;
+				outOfSync: string;
+			};
+			repository: string;
+		};
+		newProject: {
+			title: string;
+			projectName: string;
+			repositoryUrl: string;
+			repositoryUrlHint: string;
+			branch: string;
+			create: string;
+			successCreate: string;
+			errorCreate: string;
+			schema: {
+				name: {
+					min: string;
+					required: string;
+				};
+				repositoryUrl: {
+					required: string;
+					invalid: string;
+				};
+				branch: {
+					required: string;
+				};
+			};
+		};
+	};
 };
