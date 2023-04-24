@@ -1,5 +1,6 @@
 // Internal Dependencies
 import Widget from '../Widget/Widget';
+import useTranslations from '../../i18n/translations';
 import style from './Table.module.scss';
 
 function Wrapper({ children }: { children: JSX.Element }): JSX.Element {
@@ -14,6 +15,7 @@ interface TableProps {
 }
 
 export default function Table({ headers, data, widget = true, onRowClick }: TableProps): JSX.Element {
+	const t = useTranslations();
 	const WrapperComponent = widget ? Widget : Wrapper;
 
 	return (
@@ -44,7 +46,7 @@ export default function Table({ headers, data, widget = true, onRowClick }: Tabl
 								colSpan={headers.length}
 								className={style.empty}
 							>
-								No data
+								{t.table.noData}
 							</td>
 						</tr>
 					)}

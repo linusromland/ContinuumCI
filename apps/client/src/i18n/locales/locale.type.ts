@@ -1,5 +1,8 @@
 export type TranslationKeys = {
 	lang: string;
+	table: {
+		noData: string;
+	};
 	setupSidebar: {
 		footer: string;
 	};
@@ -67,6 +70,39 @@ export type TranslationKeys = {
 				notMatch: string;
 				required: string;
 			};
+		};
+	};
+	overview: {
+		welcomeBack: string;
+		applicationStatus: {
+			title: string;
+			errorDescription: string;
+			successDescription: string;
+			activeApplications: string;
+		};
+		cpuUsage: {
+			title: string;
+			on: string;
+			cores: string;
+		};
+		memoryUsage: {
+			title: string;
+			ofTotal: string;
+		};
+		networkUsage: {
+			title: string;
+			sending: string;
+			receiving: string;
+		};
+		images: string;
+		requestTable: {
+			title: string;
+			time: string;
+			method: string;
+			status: string;
+			url: string;
+			ip: string;
+			size: string;
 		};
 	};
 };

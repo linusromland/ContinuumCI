@@ -13,6 +13,7 @@ import { NginxLogsType, OverviewType } from 'shared/src/types';
 import { getOverview } from '../../utils/api/overview';
 import { formatNumber } from '../../utils/formatNumber';
 import { getLogs } from '../../utils/api/nginx/logs';
+import useTranslations from '../../i18n/translations';
 
 type filesizeType = {
 	value: number;
@@ -21,6 +22,7 @@ type filesizeType = {
 };
 
 export default function Overview(): JSX.Element {
+	const t = useTranslations();
 	const [user, setUser] = useState('');
 	const [data, setData] = useState({} as OverviewType);
 	const [logs, setLogs] = useState([] as NginxLogsType[]);
@@ -68,7 +70,7 @@ export default function Overview(): JSX.Element {
 	return (
 		<div className={style.main}>
 			<h1 className={style.title}>
-				Welcome back, <span>{user}</span> 👋
+				{t.overview.welcomeBack}, <span>{user}</span> 👋
 			</h1>
 			<div className={style.widgets}>
 				<ApplicationWidget
@@ -78,12 +80,12 @@ export default function Overview(): JSX.Element {
 				<div className={style.widgetsRight}>
 					<div className={style.smallWidgets}>
 						<StatsWidget
-							title='CPU Usage'
+							title={t.overview.cpuUsage.title}
 							value={formatNumber(data.cpuUsage)}
-							footer={`on ${data.cpuCores || 0} cores`}
+							footer={`${t.overview.cpuUsage.on} ${data.cpuCores || 0} ${t.overview.cpuUsage.cores}`}
 						/>
 						<StatsWidget
-							title='Memory Usage'
+							title={t.overview.memoryUsage.title}
 							value={
 								(
 									filesize(data.memoryUsage || 0, {
@@ -103,13 +105,13 @@ export default function Overview(): JSX.Element {
 									}) as filesizeType
 								).unit
 							}
-							footer={`of ${filesize(data.memoryTotal || 0, {
+							footer={`${t.overview.memoryUsage.ofTotal} ${filesize(data.memoryTotal || 0, {
 								base: 10,
 								round: 0
 							})}`}
 						/>
 						<StatsWidget
-							title='Network Usage'
+							title={t.overview.networkUsage.title}
 							value={
 								(
 									filesize(data.networkSending || 0, {
@@ -129,10 +131,10 @@ export default function Overview(): JSX.Element {
 								).symbol + '/s'
 							}
 							valueRange={undefined}
-							footer='Sending'
+							footer={t.overview.networkUsage.sending}
 						/>
 						<StatsWidget
-							title='Network Usage'
+							title={t.overview.networkUsage.title}
 							value={
 								(
 									filesize(data.networkReceiving || 0, {
@@ -152,32 +154,39 @@ export default function Overview(): JSX.Element {
 								).symbol + '/s'
 							}
 							valueRange={undefined}
-							footer='Receiving'
+							footer={t.overview.networkUsage.receiving}
 						/>
 					</div>
 					<div className={style.smallWidgets}>
 						<InfoWidget
 							icon='/icons/projects_white.svg'
 							value={data.projects?.toString() || '0'}
-							label='Projects'
+							label={t.sidebar.deployments.projects}
 						/>
 						<InfoWidget
 							icon='/icons/containers_white.svg'
 							value={data.containers?.toString() || '0'}
-							label='Containers'
+							label={t.sidebar.deployments.containers}
 						/>
 						<InfoWidget
 							icon='/icons/image_white.svg'
 							value={data.images?.toString() || '0'}
-							label='Images'
+							label={t.overview.images}
 						/>
 					</div>
 				</div>
 			</div>
 			<div className={style.table}>
-				<h2 className={style.subtitle}>10 latests requests</h2>
+				<h2 className={style.subtitle}>{t.overview.requestTable.title}</h2>
 				<Table
-					headers={['Time', 'Method', 'Status', 'URL', 'IP', 'Size (bytes)']}
+					headers={[
+						t.overview.requestTable.time,
+						t.overview.requestTable.method,
+						t.overview.requestTable.status,
+						t.overview.requestTable.url,
+						t.overview.requestTable.ip,
+						t.overview.requestTable.size
+					]}
 					data={logs.map((log) => [
 						log.time_local,
 						log.request_method,

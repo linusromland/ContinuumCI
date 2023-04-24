@@ -3,6 +3,9 @@ import { TranslationKeys } from './locale.type';
 
 export const en: TranslationKeys = {
 	lang: 'English',
+	table: {
+		noData: 'No data available'
+	},
 	setupSidebar: {
 		footer: 'ContinuumCI is a project by Linus Romland. The source code is available on'
 	},
@@ -70,6 +73,39 @@ export const en: TranslationKeys = {
 				notMatch: 'Passwords do not match.',
 				required: 'Confirm password is required.'
 			}
+		}
+	},
+	overview: {
+		welcomeBack: 'Welcome back',
+		applicationStatus: {
+			title: 'Application status',
+			errorDescription: 'Some applications are not running.',
+			successDescription: 'Everything operating normally!',
+			activeApplications: 'applications active'
+		},
+		cpuUsage: {
+			title: 'CPU Usage',
+			on: 'on',
+			cores: 'cores'
+		},
+		memoryUsage: {
+			title: 'Memory Usage',
+			ofTotal: 'of'
+		},
+		networkUsage: {
+			title: 'Network Usage',
+			sending: 'Sending',
+			receiving: 'Receiving'
+		},
+		images: 'Images',
+		requestTable: {
+			title: '10 latests requests',
+			time: 'Time',
+			method: 'Method',
+			status: 'Status',
+			url: 'URL',
+			ip: 'IP',
+			size: 'Size (bytes)'
 		}
 	}
 };

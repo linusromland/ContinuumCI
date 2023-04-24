@@ -3,6 +3,9 @@ import { TranslationKeys } from './locale.type';
 
 export const sv: TranslationKeys = {
 	lang: 'Svenska',
+	table: {
+		noData: 'Ingen data tillgänglig'
+	},
 	setupSidebar: {
 		footer: 'ContinuumCI är ett projekt av Linus Romland. Källkoden är tillgänglig på'
 	},
@@ -71,6 +74,39 @@ export const sv: TranslationKeys = {
 				notMatch: 'Lösenorden matchar inte.',
 				required: 'Bekräfta lösenord krävs.'
 			}
+		}
+	},
+	overview: {
+		welcomeBack: 'Välkommen tillbaka',
+		applicationStatus: {
+			title: 'Applikationsstatus',
+			errorDescription: 'Vissa applikationer körs inte.',
+			successDescription: 'Alla applikationer körs.',
+			activeApplications: 'aktiva applikationer'
+		},
+		cpuUsage: {
+			title: 'CPU Användning',
+			on: 'på',
+			cores: 'kärnor'
+		},
+		memoryUsage: {
+			title: 'Minnesanvändning',
+			ofTotal: 'av totalt'
+		},
+		networkUsage: {
+			title: 'Nätverksanvändning',
+			sending: 'Skickar',
+			receiving: 'Tar emot'
+		},
+		images: 'Dockerbilder',
+		requestTable: {
+			title: '10 senaste requesterna',
+			time: 'Tid',
+			method: 'Metod',
+			status: 'Status',
+			url: 'URL',
+			ip: 'IP',
+			size: 'Storlek (bytes)'
 		}
 	}
 };
