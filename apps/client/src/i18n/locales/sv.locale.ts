@@ -238,5 +238,13 @@ export const sv: TranslationKeys = {
 			viewer: 'Läsare',
 			unknown: 'Okänd'
 		}
+	},
+	containers: {
+		title: 'Containrar',
+		availableContainers: 'Tillgängliga containrar',
+		noContainersFound: 'Inga containrar hittades.',
+		name: 'Namn',
+		state: 'Status',
+		created: 'Skapad'
 	}
 };

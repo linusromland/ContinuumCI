@@ -157,5 +157,13 @@ export const en: TranslationKeys = {
 				}
 			}
 		}
+	},
+	containers: {
+		title: 'Containers',
+		availableContainers: 'Available containers',
+		noContainersFound: 'No containers found.',
+		name: 'Name',
+		state: 'State',
+		created: 'Created'
 	}
 };

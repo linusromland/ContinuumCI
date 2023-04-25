@@ -11,8 +11,10 @@ import { getContainers } from '../../utils/api/containers';
 import { ContainerType } from 'shared/src/types';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import { Loading } from '../../components/Loading/Loading';
+import useTranslations from '../../i18n/translations';
 
 export default function Containers(): JSX.Element {
+	const t = useTranslations();
 	const [containers, setContainers] = useState([] as ContainerType[]);
 	const [dataReady, setDataReady] = useState(false);
 
@@ -36,7 +38,7 @@ export default function Containers(): JSX.Element {
 			<Breadcrumbs
 				path={[
 					{
-						name: 'Containers',
+						name: t.containers.title,
 						link: '/conatiners'
 					}
 				]}
@@ -44,13 +46,13 @@ export default function Containers(): JSX.Element {
 			<div className={style.content}>
 				{containers && containers.length > 0 && (
 					<>
-						<h1 className={style.title}>Containers</h1>
+						<h1 className={style.title}>{t.containers.title}</h1>
 						<Widget contentClass={style.contentClass}>
 							<div className={style.container}>
-								<h2 className={style.subtitle}>Available containers</h2>
+								<h2 className={style.subtitle}>{t.containers.availableContainers}</h2>
 								<Table
 									widget={false}
-									headers={['Name', 'State', 'Created']}
+									headers={[t.containers.name, t.containers.state, t.containers.created]}
 									data={containers.map((container) => [
 										<Link to={`/containers/${container.id}`}>{container.name}</Link>,
 										container.state,
@@ -65,8 +67,8 @@ export default function Containers(): JSX.Element {
 				)}
 				{containers && containers.length === 0 && (
 					<>
-						<h2 className={style.title}>Containers</h2>
-						<p>No containers found.</p>
+						<h2 className={style.title}>{t.containers.title}</h2>
+						<p>{t.containers.noContainersFound}</p>
 					</>
 				)}
 			</div>

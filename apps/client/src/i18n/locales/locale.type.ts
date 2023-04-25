@@ -235,4 +235,12 @@ export type TranslationKeys = {
 			unknown: string;
 		};
 	};
+	containers: {
+		title: string;
+		availableContainers: string;
+		noContainersFound: string;
+		name: string;
+		state: string;
+		created: string;
+	};
 };
