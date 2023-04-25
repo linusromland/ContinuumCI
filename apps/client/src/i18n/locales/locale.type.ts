@@ -255,6 +255,14 @@ export type TranslationKeys = {
 		noDomainsFound: string;
 		serverName: string;
 		locations: string;
+		location: string;
+		proxyPass: string;
+		websocketConfigured: string;
+		internalOnly: string;
+		remove: string;
+		confirmRemove: string;
+		removeSuccess: string;
+		removeError: string;
 		sslConfigured: string;
 		yes: string;
 		no: string;

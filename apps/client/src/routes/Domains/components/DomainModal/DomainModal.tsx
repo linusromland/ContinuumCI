@@ -8,6 +8,7 @@ import Modal from '../../../../components/Modal/Modal';
 import { NginxDeploymentClass } from 'shared/src/classes';
 import Button from '../../../../components/Button/Button';
 import { removeDeployment } from '../../../../utils/api/nginx/deployment';
+import useTranslations from '../../../../i18n/translations';
 
 interface DomainModalProps {
 	onClose: (update: boolean) => void;
@@ -16,6 +17,8 @@ interface DomainModalProps {
 }
 
 export default function DomainModal({ open, onClose, domain }: DomainModalProps) {
+	const t = useTranslations();
+
 	const [confirmDelete, setConfirmDelete] = useState(false);
 
 	if (!domain) return null;
@@ -28,39 +31,39 @@ export default function DomainModal({ open, onClose, domain }: DomainModalProps)
 		>
 			<div>
 				<div className={style.item}>
-					<h3 className={style.label}>Server Name</h3>
+					<h3 className={style.label}>{t.domains.serverName}</h3>
 					<p className={style.value}>{domain.server_name}</p>
 				</div>
 				<div className={style.item}>
-					<h3 className={style.label}>Configured for SSL</h3>
-					<p className={style.value}>{domain.ssl ? 'Yes' : 'No'}</p>
+					<h3 className={style.label}>{t.domains.sslConfigured}</h3>
+					<p className={style.value}>{domain.ssl ? t.domains.yes : t.domains.no}</p>
 				</div>
 				<div className={style.locations}>
 					{domain.locations &&
 						domain.locations.map((location, index) => (
 							<div key={index}>
 								<div className={style.item}>
-									<h4 className={style.label}>Location</h4>
+									<h4 className={style.label}>{t.domains.location}</h4>
 									<p className={style.value}>{location.location}</p>
 								</div>
 								<div className={style.item}>
-									<h4 className={style.label}>Proxy Pass</h4>
+									<h4 className={style.label}>{t.domains.proxyPass}</h4>
 									<p className={style.value}>{location.proxy_pass}</p>
 								</div>
 								<div className={style.item}>
-									<h4 className={style.label}>Configured for Websocket</h4>
-									<p className={style.value}>{location.websocket ? 'Yes' : 'No'}</p>
+									<h4 className={style.label}>{t.domains.websocketConfigured}</h4>
+									<p className={style.value}>{location.websocket ? t.domains.yes : t.domains.no}</p>
 								</div>
 								<div className={style.item}>
-									<h4 className={style.label}>Internal only</h4>
-									<p className={style.value}>{location.internal ? 'Yes' : 'No'}</p>
+									<h4 className={style.label}>{t.domains.internalOnly}</h4>
+									<p className={style.value}>{location.internal ? t.domains.yes : t.domains.no}</p>
 								</div>
 							</div>
 						))}
 				</div>
 				<div className={style.actions}>
 					<Button
-						text={confirmDelete ? 'Confirm Delete' : 'Delete Domain'}
+						text={confirmDelete ? t.domains.confirmRemove : t.domains.remove}
 						theme='error'
 						small
 						onClick={async () => {
@@ -72,12 +75,12 @@ export default function DomainModal({ open, onClose, domain }: DomainModalProps)
 							const response = await removeDeployment(domain._id);
 
 							if (response.success) {
-								toast.success('Domain deleted successfully');
+								toast.success(t.domains.removeSuccess);
 								onClose(true);
 								return;
 							}
 
-							toast.error('Failed to delete domain');
+							toast.error(t.domains.removeError);
 						}}
 					/>
 				</div>

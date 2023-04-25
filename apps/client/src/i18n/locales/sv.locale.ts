@@ -259,7 +259,15 @@ export const sv: TranslationKeys = {
 		noDomainsFound: 'Inga domäner hittades.',
 		serverName: 'Servernamn',
 		locations: 'Platser',
+		location: 'Plats',
+		proxyPass: 'Proxy Pass',
 		sslConfigured: 'SSL konfigurerad',
+		websocketConfigured: 'Websocket konfigurerad',
+		internalOnly: 'Endast internt',
+		remove: 'Ta bort',
+		confirmRemove: 'Bekräfta borttagning',
+		removeSuccess: 'Domänen har tagits bort!',
+		removeError: 'Ett fel uppstod vid borttagning av domänen.',
 		yes: 'Ja',
 		no: 'Nej'
 	}
