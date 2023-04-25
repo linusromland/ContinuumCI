@@ -249,4 +249,14 @@ export type TranslationKeys = {
 		logs: string;
 		lastUpdated: string;
 	};
+	domains: {
+		title: string;
+		createDomain: string;
+		noDomainsFound: string;
+		serverName: string;
+		locations: string;
+		sslConfigured: string;
+		yes: string;
+		no: string;
+	};
 };

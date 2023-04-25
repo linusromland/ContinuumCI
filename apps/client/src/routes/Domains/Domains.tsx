@@ -12,8 +12,11 @@ import { getDeployments } from '../../utils/api/nginx/deployment';
 import DomainModal from './components/DomainModal/DomainModal';
 import CreateDomainModal from './components/CreateDomainModal/CreateDomainModal';
 import Button from '../../components/Button/Button';
+import useTranslations from '../../i18n/translations';
 
 export default function Domains() {
+	const t = useTranslations();
+
 	const [domains, setDomains] = useState([] as NginxDeploymentClass[]);
 	const [selectedDomain, setSelectedDomain] = useState({} as NginxDeploymentClass);
 	const [viewModalOpen, setViewModalOpen] = useState(false);
@@ -41,14 +44,14 @@ export default function Domains() {
 				<Breadcrumbs
 					path={[
 						{
-							name: 'Domains',
+							name: t.domains.title,
 							link: '/domains'
 						}
 					]}
 				/>
-				<h1 className={style.title}>Domains</h1>
+				<h1 className={style.title}>{t.domains.title}</h1>
 				<Button
-					text='Create Domain'
+					text={t.domains.createDomain}
 					theme='success'
 					small
 					onClick={() => setCreateModalOpen(true)}
@@ -60,13 +63,13 @@ export default function Domains() {
 								<div className={style.container}>
 									<Table
 										widget={false}
-										headers={['Server Name', 'Locations', 'SSL Configured']}
+										headers={[t.domains.serverName, t.domains.locations, t.domains.sslConfigured]}
 										data={domains.map((domain) => [
 											domain.server_name,
 											`${domain.locations.length} location${
 												domain.locations.length > 1 ? 's' : ''
 											}`,
-											domain.ssl ? 'Yes' : 'No'
+											domain.ssl ? t.domains.yes : t.domains.no
 										])}
 										onRowClick={(row) => {
 											const clickedDomain = domains.find(
@@ -85,7 +88,7 @@ export default function Domains() {
 					)}
 					{domains && domains.length === 0 && (
 						<>
-							<p>No domains found.</p>
+							<p>{t.domains.noDomainsFound}</p>
 						</>
 					)}
 				</div>

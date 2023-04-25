@@ -252,5 +252,15 @@ export const sv: TranslationKeys = {
 		id: 'Id',
 		logs: 'Loggar',
 		lastUpdated: 'Senast uppdaterad'
+	},
+	domains: {
+		title: 'Domäner',
+		createDomain: 'Skapa domän',
+		noDomainsFound: 'Inga domäner hittades.',
+		serverName: 'Servernamn',
+		locations: 'Platser',
+		sslConfigured: 'SSL konfigurerad',
+		yes: 'Ja',
+		no: 'Nej'
 	}
 };
