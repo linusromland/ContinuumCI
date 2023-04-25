@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 // Internal dependencies
+import style from './ChangeRoleModal.module.scss';
 import formStyle from '../../../../../styles/formStyle.module.scss';
 import Modal from '../../../../../components/Modal/Modal';
 import Button from '../../../../../components/Button/Button';
@@ -27,7 +28,7 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 			onClose={() => onClose(false)}
 			open={open}
 		>
-			<p>This will change the role of {username}.</p>
+			<p className={style.text}>This will change the role of {username}.</p>
 			<Formik
 				initialValues={{
 					role: {
