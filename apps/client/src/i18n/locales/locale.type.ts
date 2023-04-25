@@ -362,8 +362,10 @@ export type TranslationKeys = {
 			roleRequired: string;
 		};
 		role: string;
+		root: string;
 		admin: string;
 		user: string;
+		unknown: string;
 		submit: string;
 		success: string;
 		error: string;
