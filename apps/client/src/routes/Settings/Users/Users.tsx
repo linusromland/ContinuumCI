@@ -12,8 +12,11 @@ import { getUsers } from '../../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import ChangeRoleModal from './components/ChangeRoleModal/ChangeRoleModal';
+import useTranslations from '../../../i18n/translations';
 
 export default function Users(): JSX.Element {
+	const t = useTranslations();
+
 	const [users, setUsers] = useState([] as UserClass[]);
 	const [selectedUser, setSelectedUser] = useState(null as UserClass | null);
 	const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
@@ -29,23 +32,30 @@ export default function Users(): JSX.Element {
 
 	return (
 		<div className={style.main}>
-			<Breadcrumbs path={[{ name: 'Settings' }, { name: 'Users' }]} />
+			<Breadcrumbs path={[{ name: t.settings.title }, { name: t.userSettings.users }]} />
 			{users && users.length > 0 && (
 				<>
-					<h1 className={style.title}>User Settings</h1>
+					<h1 className={style.title}>{t.userSettings.title}</h1>
 					<Widget>
 						<div className={style.container}>
-							<h2 className={style.subtitle}>Users</h2>
+							<h2 className={style.subtitle}>{t.userSettings.users}</h2>
 							<Table
-								headers={['Account Type', 'Username', 'E-mail', 'Last Login', 'Last IP', 'Actions']}
+								headers={[
+									t.userSettings.accountType,
+									t.userSettings.username,
+									t.userSettings.email,
+									t.userSettings.lastLogin,
+									t.userSettings.lastIp,
+									t.userSettings.actions
+								]}
 								data={users.map((user) => [
 									formatRole(user.role),
 									user.username,
 									user.email,
-									user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never',
-									user.lastIp ? user.lastIp : 'Never',
+									user.lastLogin ? new Date(user.lastLogin).toLocaleString() : t.userSettings.never,
+									user.lastIp ? user.lastIp : t.userSettings.never,
 									<Button
-										text='Edit'
+										text={t.userSettings.edit}
 										small
 										theme='secondary'
 										onClick={() => {
@@ -63,8 +73,8 @@ export default function Users(): JSX.Element {
 			)}
 			{users && users.length === 0 && (
 				<div className={style.container}>
-					<h2 className={style.subtitle}>Users</h2>
-					<p>No users found.</p>
+					<h2 className={style.subtitle}>{t.userSettings.users}</h2>
+					<p>{t.userSettings.noUsersFound}</p>
 				</div>
 			)}
 			<ChangeRoleModal

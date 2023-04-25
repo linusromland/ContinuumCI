@@ -342,4 +342,17 @@ export type TranslationKeys = {
 		success: string;
 		error: string;
 	};
+	userSettings: {
+		title: string;
+		noUsersFound: string;
+		users: string;
+		accountType: string;
+		username: string;
+		email: string;
+		lastLogin: string;
+		lastIp: string;
+		actions: string;
+		edit: string;
+		never: string;
+	};
 };

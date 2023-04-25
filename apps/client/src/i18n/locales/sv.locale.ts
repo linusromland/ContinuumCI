@@ -345,5 +345,18 @@ export const sv: TranslationKeys = {
 		submit: 'Ändra lösenord',
 		success: 'Lösenordet har ändrats!',
 		error: 'Ett fel uppstod vid ändring av lösenordet.'
+	},
+	userSettings: {
+		title: 'Användarinställningar',
+		noUsersFound: 'Inga användare hittades.',
+		users: 'Användare',
+		accountType: 'Kontotyp',
+		username: 'Användarnamn',
+		email: 'Email',
+		lastLogin: 'Senaste inloggning',
+		lastIp: 'Senaste IP',
+		actions: 'Åtgärder',
+		edit: 'Redigera',
+		never: 'Aldrig'
 	}
 };
