@@ -7,8 +7,11 @@ import * as Yup from 'yup';
 import formStyle from '../../../../../styles/formStyle.module.scss';
 import Button from '../../../../../components/Button/Button';
 import { updatePassword } from '../../../../../utils/api/user';
+import useTranslations from '../../../../../i18n/translations';
 
 export default function ChangePasswordForm() {
+	const t = useTranslations();
+
 	return (
 		<Formik
 			initialValues={{
@@ -17,13 +20,13 @@ export default function ChangePasswordForm() {
 				confirmPassword: ''
 			}}
 			validationSchema={Yup.object().shape({
-				oldPassword: Yup.string().required('Password is required'),
+				oldPassword: Yup.string().required(t.changePasswordModal.oldPassword.required),
 				newPassword: Yup.string()
-					.min(8, 'Password must be at least 8 characters')
-					.required('Password is required'),
+					.min(8, t.changePasswordModal.newPassword.minLength)
+					.required(t.changePasswordModal.newPassword.required),
 				confirmPassword: Yup.string()
-					.oneOf([Yup.ref('newPassword')], 'Passwords must match')
-					.required('Password is required')
+					.oneOf([Yup.ref('newPassword')], t.changePasswordModal.confirmPassword.match)
+					.required(t.changePasswordModal.confirmPassword.required)
 			})}
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			onSubmit={() => {}} // This is required for the validation to work
@@ -35,12 +38,12 @@ export default function ChangePasswordForm() {
 							htmlFor='oldPassword'
 							className={formStyle.formLabel}
 						>
-							Old password
+							{t.changePasswordModal.oldPassword.title}
 						</label>
 						<Field
 							name='oldPassword'
 							type='password'
-							placeholder='Old password'
+							placeholder={t.changePasswordModal.oldPassword.title}
 							className={formStyle.formInput}
 						/>
 						<ErrorMessage
@@ -54,12 +57,12 @@ export default function ChangePasswordForm() {
 							htmlFor='newPassword'
 							className={formStyle.formLabel}
 						>
-							New password
+							{t.changePasswordModal.newPassword.title}
 						</label>
 						<Field
 							name='newPassword'
 							type='password'
-							placeholder='New password'
+							placeholder={t.changePasswordModal.newPassword.title}
 							className={formStyle.formInput}
 						/>
 						<ErrorMessage
@@ -73,12 +76,12 @@ export default function ChangePasswordForm() {
 							htmlFor='confirmPassword'
 							className={formStyle.formLabel}
 						>
-							Confirm password
+							{t.changePasswordModal.confirmPassword.title}
 						</label>
 						<Field
 							name='confirmPassword'
 							type='password'
-							placeholder='Confirm password'
+							placeholder={t.changePasswordModal.confirmPassword.title}
 							className={formStyle.formInput}
 						/>
 						<ErrorMessage
@@ -88,16 +91,16 @@ export default function ChangePasswordForm() {
 						/>
 					</div>
 					<Button
-						text='Change password'
+						text={t.changePasswordModal.submit}
 						disabled={isSubmitting}
 						onClick={async () => {
 							const response = await updatePassword(values.oldPassword, values.newPassword);
 
 							if (response.success) {
-								toast.success('Password changed successfully');
+								toast.success(t.changePasswordModal.success);
 								resetForm();
 							} else {
-								toast.error(response.message);
+								toast.error(t.changePasswordModal.error);
 							}
 						}}
 						small

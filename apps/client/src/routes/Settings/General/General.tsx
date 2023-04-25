@@ -14,8 +14,10 @@ import style from './General.module.scss';
 import TextEditModal from '../../../components/TextEditModal/TextEditModal';
 import formatRole from '../../../utils/formatRole';
 import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
+import useTranslations from '../../../i18n/translations';
 
 export default function GeneralSettings(): JSX.Element {
+	const t = useTranslations();
 	const [changeUsernameModal, setChangeUsernameModal] = useState(false);
 	const [changeEmailModal, setChangeEmailModal] = useState(false);
 	const [user, setUser] = useState({} as UserClass);
@@ -36,30 +38,36 @@ export default function GeneralSettings(): JSX.Element {
 	return (
 		<>
 			<div className={style.main}>
-				<Breadcrumbs path={[{ name: 'Settings' }, { name: 'General' }]} />
-				<h1 className={style.title}>General Settings</h1>
+				<Breadcrumbs path={[{ name: t.settings.title }, { name: t.generalSettings.general }]} />
+				<h1 className={style.title}>{t.generalSettings.title}</h1>
 				<Widget>
 					<div className={style.container}>
 						<h2 className={style.subtitle}>Account Settings</h2>
 
 						<div className={style.infoContainer}>
-							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>Account Role:</h3>
+							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
+								{t.generalSettings.accountRole}:
+							</h3>
 							<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
 								{formatRole(user.role)}
 							</p>
-							<h3 className={clsx(style.infoContainerTitle, style.row2, style.col1)}>Username:</h3>
+							<h3 className={clsx(style.infoContainerTitle, style.row2, style.col1)}>
+								{t.generalSettings.username}:
+							</h3>
 							<p className={clsx(style.infoContainerValue, style.row2, style.col2)}>{user.username}</p>
 							<Button
-								text='Change'
+								text={t.generalSettings.change}
 								onClick={() => setChangeUsernameModal(true)}
 								small
 								theme='secondary'
 								className={clsx(style.row2, style.col3)}
 							/>
-							<h3 className={clsx(style.infoContainerTitle, style.row3, style.col1)}>Email:</h3>
+							<h3 className={clsx(style.infoContainerTitle, style.row3, style.col1)}>
+								{t.generalSettings.email}:
+							</h3>
 							<p className={clsx(style.infoContainerValue, style.row3, style.col2)}>{user.email}</p>
 							<Button
-								text='Change'
+								text={t.generalSettings.change}
 								onClick={() => setChangeEmailModal(true)}
 								small
 								theme='secondary'
@@ -70,7 +78,9 @@ export default function GeneralSettings(): JSX.Element {
 				</Widget>
 				<Widget>
 					<div className={style.container}>
-						<h2 className={style.subtitle}>Change password</h2>
+						<h2 className={style.subtitle}>
+							{t.generalSettings.change} {t.generalSettings.email.toLocaleLowerCase()}
+						</h2>
 
 						<div className={style.infoContainer}>
 							<ChangePasswordForm />
@@ -80,17 +90,19 @@ export default function GeneralSettings(): JSX.Element {
 			</div>
 
 			<TextEditModal
-				title='Change Username'
-				fieldName='username'
+				title={`${t.generalSettings.change} ${t.generalSettings.username.toLowerCase()}`}
+				fieldName={t.generalSettings.username.toLowerCase()}
 				open={changeUsernameModal}
 				onClose={() => {
 					setChangeUsernameModal(false);
 				}}
 				initialValues={{
-					username: user.username
+					[t.generalSettings.username.toLowerCase()]: user.username
 				}}
 				validationSchema={Yup.object().shape({
-					username: Yup.string().required('Username is required')
+					[t.generalSettings.username.toLowerCase()]: Yup.string().required(
+						t.generalSettings.usernameRequired
+					)
 				})}
 				submit={async (values) => {
 					const response = await updateUsername(values.username);
@@ -98,25 +110,25 @@ export default function GeneralSettings(): JSX.Element {
 					if (response.success) {
 						setChangeUsernameModal(false);
 						getData();
-						toast.success(response.message);
+						toast.success(t.generalSettings.usernameSuccess);
 					} else {
-						toast.error(response.message);
+						toast.error(t.generalSettings.usernameError);
 					}
 				}}
 			/>
 
 			<TextEditModal
-				title='Change Email'
-				fieldName='email'
+				title={`${t.generalSettings.change} ${t.generalSettings.email.toLowerCase()}`}
+				fieldName={t.generalSettings.email.toLowerCase()}
 				open={changeEmailModal}
 				onClose={() => {
 					setChangeEmailModal(false);
 				}}
 				initialValues={{
-					email: user.email
+					[t.generalSettings.email.toLowerCase()]: user.email
 				}}
 				validationSchema={Yup.object().shape({
-					email: Yup.string().email('Invalid email').required('Email is required')
+					email: Yup.string().email(t.generalSettings.emailInvalid).required(t.generalSettings.emailRequired)
 				})}
 				submit={async (values) => {
 					const response = await updateEmail(values.email);
@@ -124,9 +136,9 @@ export default function GeneralSettings(): JSX.Element {
 					if (response.success) {
 						setChangeEmailModal(false);
 						getData();
-						toast.success(response.message);
+						toast.success(t.generalSettings.emailSuccess);
 					} else {
-						toast.error(response.message);
+						toast.error(t.generalSettings.emailError);
 					}
 				}}
 			/>

@@ -308,5 +308,42 @@ export const sv: TranslationKeys = {
 			project: 'Projekt tjänst',
 			custom: 'Anpassad'
 		}
+	},
+	settings: {
+		title: 'Inställningar'
+	},
+	generalSettings: {
+		title: 'Allmänna inställningar',
+		general: 'Allmänt',
+		accountRole: 'Kontots roll',
+		username: 'Användarnamn',
+		email: 'Email',
+		change: 'Ändra',
+		usernameRequired: 'Användarnamn krävs.',
+		usernameSuccess: 'Användarnamnet har ändrats!',
+		usernameError: 'Ett fel uppstod vid ändring av användarnamnet.',
+		emailRequired: 'Email krävs.',
+		emailInvalid: 'Ogiltig email.',
+		emailSuccess: 'Email har ändrats!',
+		emailError: 'Ett fel uppstod vid ändring av email.'
+	},
+	changePasswordModal: {
+		oldPassword: {
+			title: 'Gammalt lösenord',
+			required: 'Gammalt lösenord krävs.'
+		},
+		newPassword: {
+			title: 'Nytt lösenord',
+			required: 'Nytt lösenord krävs.',
+			minLength: 'Lösenordet måste vara minst 8 tecken långt.'
+		},
+		confirmPassword: {
+			title: 'Bekräfta lösenord',
+			required: 'Bekräfta lösenord krävs.',
+			match: 'Lösenorden matchar inte.'
+		},
+		submit: 'Ändra lösenord',
+		success: 'Lösenordet har ändrats!',
+		error: 'Ett fel uppstod vid ändring av lösenordet.'
 	}
 };

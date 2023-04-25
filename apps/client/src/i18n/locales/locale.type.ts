@@ -305,4 +305,41 @@ export type TranslationKeys = {
 			custom: string;
 		};
 	};
+	settings: {
+		title: string;
+	};
+	generalSettings: {
+		title: string;
+		general: string;
+		accountRole: string;
+		username: string;
+		email: string;
+		change: string;
+		usernameRequired: string;
+		usernameSuccess: string;
+		usernameError: string;
+		emailRequired: string;
+		emailInvalid: string;
+		emailSuccess: string;
+		emailError: string;
+	};
+	changePasswordModal: {
+		oldPassword: {
+			title: string;
+			required: string;
+		};
+		newPassword: {
+			title: string;
+			required: string;
+			minLength: string;
+		};
+		confirmPassword: {
+			title: string;
+			required: string;
+			match: string;
+		};
+		submit: string;
+		success: string;
+		error: string;
+	};
 };
