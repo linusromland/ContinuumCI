@@ -1,19 +1,20 @@
 // Internal dependencies
 import { UserRoleEnum } from 'shared/src/enums';
+import { TranslationKeys } from '../i18n/locales/locale.type';
 
-function formatRole(role: UserRoleEnum) {
+function formatRole(role: UserRoleEnum, t: TranslationKeys) {
 	switch (role) {
 		case UserRoleEnum.ROOT:
-			return 'Root';
+			return t.changeRoleModal.root;
 
 		case UserRoleEnum.ADMIN:
-			return 'Admin';
+			return t.changeRoleModal.admin;
 
 		case UserRoleEnum.USER:
-			return 'User';
+			return t.changeRoleModal.user;
 
 		default:
-			return 'Unknown';
+			return t.changeRoleModal.unknown;
 	}
 }
 

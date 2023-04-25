@@ -358,5 +358,20 @@ export const sv: TranslationKeys = {
 		actions: 'Åtgärder',
 		edit: 'Redigera',
 		never: 'Aldrig'
+	},
+	changeRoleModal: {
+		title: 'Ändra roll',
+		description: 'Detta kommer att ändra rollen för användaren.',
+		schema: {
+			roleRequired: 'Roll krävs.'
+		},
+		role: 'Roll',
+		root: 'Root',
+		admin: 'Administratör',
+		user: 'Användare',
+		unknown: 'Okänd',
+		submit: 'Ändra roll',
+		success: 'Rollen har ändrats!',
+		error: 'Ett fel uppstod vid ändring av rollen.'
 	}
 };

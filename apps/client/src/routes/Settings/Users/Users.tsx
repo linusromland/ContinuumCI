@@ -49,7 +49,7 @@ export default function Users(): JSX.Element {
 									t.userSettings.actions
 								]}
 								data={users.map((user) => [
-									formatRole(user.role),
+									formatRole(user.role, t),
 									user.username,
 									user.email,
 									user.lastLogin ? new Date(user.lastLogin).toLocaleString() : t.userSettings.never,
@@ -86,7 +86,6 @@ export default function Users(): JSX.Element {
 						getData();
 					}
 				}}
-				username={selectedUser?.username || ''}
 				userId={selectedUser?._id || ''}
 				currentRole={selectedUser?.role || UserRoleEnum.USER}
 			/>

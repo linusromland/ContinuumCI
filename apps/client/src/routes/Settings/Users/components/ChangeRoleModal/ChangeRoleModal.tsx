@@ -12,35 +12,37 @@ import { UserRoleEnum } from 'shared/src/enums';
 import CustomSelect from '../../../../../components/CustomSelect/CustomSelect';
 import formatRole from '../../../../../utils/formatRole';
 import { updateRole } from '../../../../../utils/api/user';
+import useTranslations from '../../../../../i18n/translations';
 
 interface ChangeRoleModalProps {
 	onClose: (update: boolean) => void;
 	open: boolean;
 	currentRole: UserRoleEnum;
-	username: string;
 	userId: string;
 }
 
-export default function ChangeRoleModal({ onClose, open, currentRole, username, userId }: ChangeRoleModalProps) {
+export default function ChangeRoleModal({ onClose, open, currentRole, userId }: ChangeRoleModalProps) {
+	const t = useTranslations();
+
 	return (
 		<Modal
-			title='Change Role'
+			title={t.changeRoleModal.title}
 			onClose={() => onClose(false)}
 			open={open}
 		>
-			<p className={style.text}>This will change the role of {username}.</p>
+			<p className={style.text}>{t.changeRoleModal.description}</p>
 			<Formik
 				initialValues={{
 					role: {
 						value: currentRole,
-						label: formatRole(currentRole)
+						label: formatRole(currentRole, t)
 					}
 				}}
 				enableReinitialize
 				validationSchema={Yup.object().shape({
 					role: Yup.object().shape({
-						value: Yup.string().required('Role is required'),
-						label: Yup.string().required('Role is required')
+						value: Yup.string().required(t.changeRoleModal.schema.roleRequired),
+						label: Yup.string().required(t.changeRoleModal.schema.roleRequired)
 					})
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -53,7 +55,7 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 								htmlFor='role'
 								className={formStyle.formLabel}
 							>
-								Role
+								{t.changeRoleModal.role}
 							</label>
 							<Field
 								name='role'
@@ -61,14 +63,14 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 								options={[
 									{
 										value: UserRoleEnum.ADMIN,
-										label: 'Admin'
+										label: t.changeRoleModal.admin
 									},
 									{
 										value: UserRoleEnum.USER,
-										label: 'User'
+										label: t.changeRoleModal.user
 									}
 								]}
-								placeholder='Role'
+								placeholder={t.changeRoleModal.role}
 							/>
 							<ErrorMessage
 								name='role'
@@ -77,16 +79,16 @@ export default function ChangeRoleModal({ onClose, open, currentRole, username, 
 							/>
 						</div>
 						<Button
-							text='Change role'
+							text={t.changeRoleModal.submit}
 							disabled={isSubmitting}
 							onClick={async () => {
 								const response = await updateRole(userId, values.role.value);
 
 								if (response.success) {
-									toast.success(`Successfully changed role of ${username}`);
+									toast.success(t.changeRoleModal.success);
 									onClose(true);
 								} else {
-									toast.error(`Failed to change role of ${username}`);
+									toast.error(t.changeRoleModal.error);
 									onClose(false);
 								}
 							}}

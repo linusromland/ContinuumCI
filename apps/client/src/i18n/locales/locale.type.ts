@@ -355,4 +355,17 @@ export type TranslationKeys = {
 		edit: string;
 		never: string;
 	};
+	changeRoleModal: {
+		title: string;
+		description: string;
+		schema: {
+			roleRequired: string;
+		};
+		role: string;
+		admin: string;
+		user: string;
+		submit: string;
+		success: string;
+		error: string;
+	};
 };
