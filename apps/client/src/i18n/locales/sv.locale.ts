@@ -246,5 +246,11 @@ export const sv: TranslationKeys = {
 		name: 'Namn',
 		state: 'Status',
 		created: 'Skapad'
+	},
+	container: {
+		title: 'Containerdetaljer',
+		id: 'Id',
+		logs: 'Loggar',
+		lastUpdated: 'Senast uppdaterad'
 	}
 };

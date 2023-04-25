@@ -7,12 +7,14 @@ import dayjs from 'dayjs';
 // Internal dependencies
 import style from './Container.module.scss';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import Widget from '../../components/Widget/Widget';
 import { Loading } from '../../components/Loading/Loading';
 import { ContainerTypeWithLogs } from 'shared/src/types';
 import { getContainerWithLogs } from '../../utils/api/containers';
-import Widget from '../../components/Widget/Widget';
+import useTranslations from '../../i18n/translations';
 
 export default function Container() {
+	const t = useTranslations();
 	const { containerId } = useParams();
 	const navigate = useNavigate();
 
@@ -54,7 +56,7 @@ export default function Container() {
 				<Breadcrumbs
 					path={[
 						{
-							name: 'Containers',
+							name: t.containers.title,
 							link: '/containers'
 						},
 						{
@@ -63,31 +65,31 @@ export default function Container() {
 					]}
 				/>
 				<div className={style.content}>
-					<h1 className={style.title}>Container details</h1>
+					<h1 className={style.title}>{t.container.title}</h1>
 					<div className={style.infoContainer}>
-						<p>Name:</p>
+						<p>{t.containers.name}:</p>
 						<p>{container.name}</p>
 					</div>
 					<div className={style.infoContainer}>
-						<p>Id:</p>
+						<p>{t.container.id}:</p>
 						<p>{container.id}</p>
 					</div>
 					<div className={style.infoContainer}>
-						<p>State:</p>
+						<p>{t.containers.state}:</p>
 						<p>{container.state}</p>
 					</div>
 					<div className={style.infoContainer}>
-						<p>Created:</p>
+						<p>{t.containers.created}:</p>
 						<p>{container.created ? dayjs(container.created).format('YYYY-MM-DD HH:mm') : '-'}</p>
 					</div>
 					<div className={style.logsContainer}>
 						<Widget>
 							<>
 								<div className={style.logHeader}>
-									<p className={style.title}>Logs</p>
+									<p className={style.title}>{t.container.logs}</p>
 									<div className={style.lastUpdated}>
 										<p>
-											Last updated:{' '}
+											{t.container.lastUpdated}:{' '}
 											<span>{lastUpdated ? dayjs(lastUpdated).format('HH:mm:ss') : 'Never'}</span>
 										</p>
 										<button

@@ -243,4 +243,10 @@ export type TranslationKeys = {
 		state: string;
 		created: string;
 	};
+	container: {
+		title: string;
+		id: string;
+		logs: string;
+		lastUpdated: string;
+	};
 };
