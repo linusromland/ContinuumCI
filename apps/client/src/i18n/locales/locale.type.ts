@@ -252,10 +252,16 @@ export type TranslationKeys = {
 	domains: {
 		title: string;
 		createDomain: string;
+		createDomainSuccess: string;
+		createDomainError: string;
 		noDomainsFound: string;
 		serverName: string;
+		leaveEmptyForRoot: string;
 		locations: string;
 		location: string;
+		project: string;
+		service: string;
+		port: string;
 		proxyPass: string;
 		websocketConfigured: string;
 		internalOnly: string;
@@ -266,5 +272,37 @@ export type TranslationKeys = {
 		sslConfigured: string;
 		yes: string;
 		no: string;
+		schema: {
+			serverName: {
+				required: string;
+				matches: string;
+			};
+			domain: {
+				required: string;
+			};
+			location: {
+				required: string;
+			};
+			locationMin: string;
+			proxyPass: {
+				required: string;
+			};
+			project: {
+				id: {
+					required: string;
+				};
+				service: {
+					required: string;
+				};
+			};
+			ssl: {
+				required: string;
+			};
+		};
+		type: {
+			title: string;
+			project: string;
+			custom: string;
+		};
 	};
 };

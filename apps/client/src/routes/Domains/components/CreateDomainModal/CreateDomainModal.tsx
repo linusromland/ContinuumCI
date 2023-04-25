@@ -16,6 +16,7 @@ import { Loading } from '../../../../components/Loading/Loading';
 import { createDeployment } from '../../../../utils/api/nginx/deployment';
 import { toast } from 'react-toastify';
 import defaultProject from '../../../../utils/getdefaultProject';
+import useTranslations from '../../../../i18n/translations';
 
 interface DomainModalProps {
 	onClose: (update: boolean) => void;
@@ -23,6 +24,8 @@ interface DomainModalProps {
 }
 
 export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
+	const t = useTranslations();
+
 	const [projects, setProjects] = useState([] as ProjectClass[]);
 	const [domains, setDomains] = useState(
 		[] as {
@@ -59,7 +62,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 	if (!dataReady) {
 		return (
 			<Modal
-				title='Create Domain'
+				title={t.domains.title}
 				onClose={() => console.log("Can't close")}
 				open={open}
 			>
@@ -70,7 +73,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 
 	return (
 		<Modal
-			title='Create Domain'
+			title={t.domains.title}
 			onClose={() => onClose(false)}
 			open={open}
 		>
@@ -124,23 +127,25 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 				}}
 				enableReinitialize
 				validationSchema={Yup.object({
-					server_name: Yup.string().matches(/^[a-z]+$/, 'Only small letters a-z allowed'),
-					domain: Yup.string().required('Required'),
+					server_name: Yup.string()
+						.matches(/^[a-z]+$/, t.domains.schema.serverName.matches)
+						.required(t.domains.schema.serverName.required),
+					domain: Yup.string().required(t.domains.schema.domain.required),
 					locations: Yup.array()
 						.of(
 							Yup.object({
-								location: Yup.string().required('Required'),
-								proxy_pass: Yup.string().required('Required'),
+								location: Yup.string().required(t.domains.schema.location.required),
+								proxy_pass: Yup.string().required(t.domains.schema.proxyPass.required),
 								project: Yup.object({
-									id: Yup.string().required('Required'),
-									service: Yup.string().required('Required')
+									id: Yup.string().required(t.domains.schema.project.id.required),
+									service: Yup.string().required(t.domains.schema.project.service.required)
 								}),
 								websocket: Yup.boolean(),
 								internal: Yup.boolean()
 							})
 						)
-						.min(1, 'At least one location is required'),
-					ssl: Yup.boolean()
+						.min(1, t.domains.schema.locationMin),
+					ssl: Yup.boolean().required(t.domains.schema.ssl.required)
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				onSubmit={() => {}} // This is required for the validation to work
@@ -152,13 +157,13 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								htmlFor='server_name'
 								className={formStyle.formLabel}
 							>
-								Server Name
+								{t.domains.serverName}
 							</label>
 							<div className={style.serverNameInput}>
 								<Field
 									name='server_name'
 									type='text'
-									placeholder='(leave empty for root)'
+									placeholder={`(${t.domains.leaveEmptyForRoot})`}
 									className={formStyle.formInput}
 								/>
 								<Field
@@ -184,14 +189,14 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 										htmlFor={`locations[${index}].type`}
 										className={formStyle.formLabel}
 									>
-										Type
+										{t.domains.type.title}
 									</label>
 									<Field
 										name={`locations[${index}].type`}
 										component={CustomSelect}
 										options={[
-											{ value: 'project', label: 'Project service' },
-											{ value: 'custom', label: 'Custom' }
+											{ value: 'project', label: t.domains.type.project },
+											{ value: 'custom', label: t.domains.type.custom }
 										]}
 										placeholder='Type'
 									/>
@@ -209,7 +214,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 												htmlFor={`locations[${index}].project.id`}
 												className={formStyle.formLabel}
 											>
-												Project
+												{t.domains.project}
 											</label>
 											<Field
 												name={`locations[${index}].project.id`}
@@ -218,7 +223,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 													value: project._id,
 													label: project.name
 												}))}
-												placeholder='Project'
+												placeholder={t.domains.project}
 											/>
 											<ErrorMessage
 												name={`locations[${index}].project.id`}
@@ -231,7 +236,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 												htmlFor={`locations[${index}].project.service`}
 												className={formStyle.formLabel}
 											>
-												Service
+												{t.domains.service}
 											</label>
 											<Field
 												name={`locations[${index}].project.service`}
@@ -247,11 +252,11 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 															label:
 																service.name +
 																(service.ports.length === 1
-																	? ` (Port ${service.ports[0]})`
+																	? ` (${t.domains.port} ${service.ports[0]})`
 																	: '')
 														})) || []
 												}
-												placeholder='Service'
+												placeholder={t.domains.service}
 											/>
 											<ErrorMessage
 												name={`locations[${index}].project.service`}
@@ -272,7 +277,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 														htmlFor={`locations[${index}].project.port`}
 														className={formStyle.formLabel}
 													>
-														Port
+														{t.domains.port}
 													</label>
 													<Field
 														name={`locations[${index}].project.port`}
@@ -293,7 +298,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 																	label: port
 																})) || []
 														}
-														placeholder='Port'
+														placeholder={t.domains.port}
 													/>
 													<ErrorMessage
 														name={`locations[${index}].project.port`}
@@ -310,12 +315,12 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 											htmlFor={`locations[${index}].proxy_pass`}
 											className={formStyle.formLabel}
 										>
-											Proxy Pass
+											{t.domains.proxyPass}
 										</label>
 										<Field
 											name={`locations[${index}].proxy_pass`}
 											type='text'
-											placeholder='Proxy Pass'
+											placeholder={t.domains.proxyPass}
 											className={formStyle.formInput}
 										/>
 										<ErrorMessage
@@ -331,12 +336,13 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 											htmlFor={`locations[${index}].websocket`}
 											className={formStyle.formLabel}
 										>
-											Support for Websocket
+											{t.domains.websocketConfigured}
 										</label>
 										<Field
 											name={`locations[${index}].websocket`}
 											type='checkbox'
 											className={formStyle.formInput}
+											placeholder={t.domains.websocketConfigured}
 										/>
 									</div>
 									<ErrorMessage
@@ -352,12 +358,13 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 											htmlFor={`locations[${index}].internal`}
 											className={formStyle.formLabel}
 										>
-											Prohibit external access
+											{t.domains.internalOnly}
 										</label>
 										<Field
 											name={`locations[${index}].internal`}
 											type='checkbox'
 											className={formStyle.formInput}
+											placeholder={t.domains.internalOnly}
 										/>
 									</div>
 									<ErrorMessage
@@ -374,12 +381,13 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 									htmlFor='ssl'
 									className={formStyle.formLabel}
 								>
-									Configure SSL
+									{t.domains.sslConfigured}
 								</label>
 								<Field
 									name='ssl'
 									type='checkbox'
 									className={formStyle.formInput}
+									placeholder={t.domains.sslConfigured}
 								/>
 							</div>
 							<ErrorMessage
@@ -391,7 +399,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 
 						<div className={formStyle.actions}>
 							<Button
-								text='Create Domain'
+								text={t.domains.createDomain}
 								theme='success'
 								small
 								onClick={async () => {
@@ -435,10 +443,10 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 									const response = await createDeployment(deploymentValues);
 
 									if (response.success) {
-										toast.success('Domain created successfully');
+										toast.success(t.domains.createDomainSuccess);
 										onClose(true);
 									} else {
-										toast.error('Something went wrong while creating domain');
+										toast.error(t.domains.createDomainError);
 										onClose(false);
 									}
 								}}

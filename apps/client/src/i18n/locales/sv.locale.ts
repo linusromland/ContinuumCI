@@ -256,10 +256,16 @@ export const sv: TranslationKeys = {
 	domains: {
 		title: 'Domäner',
 		createDomain: 'Skapa domän',
+		createDomainSuccess: 'Domänen har skapats!',
+		createDomainError: 'Ett fel uppstod vid skapande av domänen.',
 		noDomainsFound: 'Inga domäner hittades.',
 		serverName: 'Servernamn',
+		leaveEmptyForRoot: 'Lämna tomt för root',
 		locations: 'Platser',
 		location: 'Plats',
+		project: 'Projekt',
+		service: 'Tjänst',
+		port: 'Port',
 		proxyPass: 'Proxy Pass',
 		sslConfigured: 'SSL konfigurerad',
 		websocketConfigured: 'Websocket konfigurerad',
@@ -269,6 +275,38 @@ export const sv: TranslationKeys = {
 		removeSuccess: 'Domänen har tagits bort!',
 		removeError: 'Ett fel uppstod vid borttagning av domänen.',
 		yes: 'Ja',
-		no: 'Nej'
+		no: 'Nej',
+		schema: {
+			serverName: {
+				required: 'Servernamn krävs.',
+				matches: 'Servernamnet får endast innehålla små bokstäver, a-z.'
+			},
+			domain: {
+				required: 'Domän krävs.'
+			},
+			location: {
+				required: 'Plats krävs.'
+			},
+			locationMin: 'Minst en plats måste väljas.',
+			proxyPass: {
+				required: 'Proxy Pass krävs.'
+			},
+			project: {
+				id: {
+					required: 'Projektid krävs.'
+				},
+				service: {
+					required: 'Tjänst krävs.'
+				}
+			},
+			ssl: {
+				required: 'SSL krävs.'
+			}
+		},
+		type: {
+			title: 'Typ',
+			project: 'Projekt tjänst',
+			custom: 'Anpassad'
+		}
 	}
 };
