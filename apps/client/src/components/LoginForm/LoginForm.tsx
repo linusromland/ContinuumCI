@@ -28,10 +28,11 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 				rememberMe: false
 			}}
 			validationSchema={UserSchema}
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			onSubmit={() => {}} // This is required for the validation to work
+			onSubmit={(values) => {
+				onSubmit(values);
+			}}
 		>
-			{({ values }) => (
+			{({ isSubmitting, dirty }) => (
 				<Form className={formStyle.form}>
 					<div className={formStyle.formGroup}>
 						<label
@@ -86,8 +87,9 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 
 					<div className={style.buttons}>
 						<Button
+							disabled={!dirty || isSubmitting}
 							text={t.login.login}
-							onClick={() => onSubmit(values)}
+							type='submit'
 						/>
 					</div>
 				</Form>

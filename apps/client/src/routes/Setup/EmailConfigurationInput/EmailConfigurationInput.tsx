@@ -48,10 +48,11 @@ export default function EmailConfigurationInput({ onSubmit }: EmailConfiguration
 				}
 			}}
 			validationSchema={EmailConfigurationSchema}
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			onSubmit={() => {}} // This is required for the validation to work
+			onSubmit={(values) => {
+				onSubmit(false, values);
+			}}
 		>
-			{({ values }) => (
+			{({ dirty, isSubmitting, values }) => (
 				<Form className={style.form}>
 					<Field
 						name='service'
@@ -94,12 +95,14 @@ export default function EmailConfigurationInput({ onSubmit }: EmailConfiguration
 					<div className={style.buttons}>
 						<Button
 							text='Skip'
+							type='button'
 							onClick={() => onSubmit(true)}
 						/>
 
 						<Button
 							text='Continue'
-							onClick={() => onSubmit(false, values)}
+							type='submit'
+							disabled={!dirty || isSubmitting}
 						/>
 					</div>
 				</Form>

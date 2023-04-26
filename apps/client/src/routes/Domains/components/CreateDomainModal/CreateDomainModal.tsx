@@ -162,10 +162,57 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 						.min(1, t.domains.schema.locationMin),
 					ssl: Yup.boolean().required(t.domains.schema.ssl.required)
 				})}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={async (values) => {
+					console.log(values);
+					const proxy_passes: string[] = [];
+
+					for (const location of values.locations) {
+						if (location.type.value === 'project') {
+							let port = location.project?.port?.value;
+
+							if (!port) {
+								const project = projects.find(
+									(project) => project._id.toString() === location.project?.id.value
+								);
+
+								const service = project?.services.find(
+									(service) => service.name === location.project?.service.value
+								);
+
+								port = service?.containerPorts[0].toString();
+							}
+
+							proxy_passes.push(`http://host.docker.internal:${port}`);
+						} else {
+							proxy_passes.push(location.proxy_pass);
+						}
+					}
+
+					const deploymentValues = {
+						server_name: values.server_name
+							? values.server_name + values.domain.value
+							: values.domain.value.substring(1),
+						ssl: values.ssl,
+						locations: values.locations.map((location, index) => ({
+							location: location.location,
+							proxy_pass: proxy_passes[index],
+							websocket: location.websocket ? true : false,
+							internal: location.internal ? true : false
+						}))
+					};
+
+					const response = await createDeployment(deploymentValues);
+
+					if (response.success) {
+						toast.success(t.domains.createDomainSuccess);
+						onClose(true);
+					} else {
+						toast.error(t.domains.createDomainError);
+						onClose(false);
+					}
+				}}
 			>
-				{({ values }) => (
+				{({ values, errors, isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -417,54 +464,11 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								text={t.domains.createDomain}
 								theme='success'
 								small
-								onClick={async () => {
-									const proxy_passes: string[] = [];
-
-									for (const location of values.locations) {
-										if (location.type.value === 'project') {
-											let port = location.project?.port?.value;
-
-											if (!port) {
-												const project = projects.find(
-													(project) => project._id.toString() === location.project?.id.value
-												);
-
-												const service = project?.services.find(
-													(service) => service.name === location.project?.service.value
-												);
-
-												port = service?.containerPorts[0].toString();
-											}
-
-											proxy_passes.push(`http://host.docker.internal:${port}`);
-										} else {
-											proxy_passes.push(location.proxy_pass);
-										}
-									}
-
-									const deploymentValues = {
-										server_name: values.server_name
-											? values.server_name + values.domain.value
-											: values.domain.value.substring(1),
-										ssl: values.ssl,
-										locations: values.locations.map((location, index) => ({
-											location: location.location,
-											proxy_pass: proxy_passes[index],
-											websocket: location.websocket ? true : false,
-											internal: location.internal ? true : false
-										}))
-									};
-
-									const response = await createDeployment(deploymentValues);
-
-									if (response.success) {
-										toast.success(t.domains.createDomainSuccess);
-										onClose(true);
-									} else {
-										toast.error(t.domains.createDomainError);
-										onClose(false);
-									}
+								type='submit'
+								onClick={() => {
+									console.log(errors);
 								}}
+								disabled={isSubmitting || !dirty}
 							/>
 						</div>
 					</Form>

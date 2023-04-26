@@ -47,10 +47,25 @@ export default function NewPassword(): JSX.Element {
 						confirmPassword: ''
 					}}
 					validationSchema={NewPasswordSchema}
-					// eslint-disable-next-line @typescript-eslint/no-empty-function
-					onSubmit={() => {}} // This is required for the validation to work
+					onSubmit={async (values) => {
+						if (!token || !values.password || values.password !== values.confirmPassword) return;
+
+						const response = await updatePasswordWithResetToken(token, values.password);
+
+						if (response.success) {
+							toast.success('Successfully updated password!', {
+								position: 'top-left'
+							});
+						} else {
+							toast.error('An error occurred while updating the password.', {
+								position: 'top-left'
+							});
+						}
+
+						navigate('/login');
+					}}
 				>
-					{({ values }) => (
+					{({ dirty, isSubmitting }) => (
 						<Form className={formStyle.form}>
 							<div className={formStyle.formGroup}>
 								<label
@@ -96,24 +111,8 @@ export default function NewPassword(): JSX.Element {
 								<Button
 									text='Reset password'
 									small
-									onClick={async () => {
-										if (!token || !values.password || values.password !== values.confirmPassword)
-											return;
-
-										const response = await updatePasswordWithResetToken(token, values.password);
-
-										if (response.success) {
-											toast.success('Successfully updated password!', {
-												position: 'top-left'
-											});
-										} else {
-											toast.error('An error occurred while updating the password.', {
-												position: 'top-left'
-											});
-										}
-
-										navigate('/login');
-									}}
+									type='submit'
+									disabled={!dirty || isSubmitting}
 								/>
 							</div>
 						</Form>

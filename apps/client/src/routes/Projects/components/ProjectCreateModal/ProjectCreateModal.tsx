@@ -39,10 +39,11 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 						.required(t.projects.newProject.schema.repositoryUrl.invalid),
 					branch: Yup.string().required(t.projects.newProject.schema.branch.required)
 				})}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={(values) => {
+					submit(values);
+				}}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -106,10 +107,8 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 						</div>
 						<Button
 							text={t.projects.newProject.create}
-							disabled={isSubmitting}
-							onClick={() => {
-								submit(values);
-							}}
+							disabled={isSubmitting || !dirty}
+							type='submit'
 							theme='secondary'
 						/>
 					</Form>

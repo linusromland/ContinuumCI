@@ -37,10 +37,11 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 				confirmPassword: ''
 			}}
 			validationSchema={UserSchema}
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			onSubmit={() => {}} // This is required for the validation to work
+			onSubmit={(values) => {
+				onSubmit(values);
+			}}
 		>
-			{({ values }) => (
+			{({ dirty, isSubmitting }) => (
 				<Form className={formStyle.form}>
 					<div className={formStyle.formGroup}>
 						<label
@@ -122,7 +123,8 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 					<div className={style.buttons}>
 						<Button
 							text={t.register.create}
-							onClick={() => onSubmit(values)}
+							type='submit'
+							disabled={!dirty || isSubmitting}
 						/>
 					</div>
 				</Form>

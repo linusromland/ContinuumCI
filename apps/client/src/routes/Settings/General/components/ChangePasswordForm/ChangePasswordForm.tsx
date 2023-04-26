@@ -28,10 +28,18 @@ export default function ChangePasswordForm() {
 					.oneOf([Yup.ref('newPassword')], t.changePasswordModal.confirmPassword.match)
 					.required(t.changePasswordModal.confirmPassword.required)
 			})}
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			onSubmit={() => {}} // This is required for the validation to work
+			onSubmit={async (values, { resetForm }) => {
+				const response = await updatePassword(values.oldPassword, values.newPassword);
+
+				if (response.success) {
+					toast.success(t.changePasswordModal.success);
+					resetForm();
+				} else {
+					toast.error(t.changePasswordModal.error);
+				}
+			}}
 		>
-			{({ isSubmitting, values, resetForm }) => (
+			{({ isSubmitting, dirty }) => (
 				<Form className={formStyle.form}>
 					<div className={formStyle.formGroup}>
 						<label
@@ -92,17 +100,8 @@ export default function ChangePasswordForm() {
 					</div>
 					<Button
 						text={t.changePasswordModal.submit}
-						disabled={isSubmitting}
-						onClick={async () => {
-							const response = await updatePassword(values.oldPassword, values.newPassword);
-
-							if (response.success) {
-								toast.success(t.changePasswordModal.success);
-								resetForm();
-							} else {
-								toast.error(t.changePasswordModal.error);
-							}
-						}}
+						disabled={isSubmitting || !dirty}
+						type='submit'
 						small
 						theme='secondary'
 					/>

@@ -69,10 +69,16 @@ export default function AddUserModal({ existingUsers, onClose, submit, open }: A
 						value: Yup.string().required(t.addUserModal.schema.role.required)
 					})
 				})}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={(values) => {
+					if (!values.user || !values.role) return;
+
+					submit({
+						user: values.user.value,
+						role: values.role.value
+					});
+				}}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -124,15 +130,8 @@ export default function AddUserModal({ existingUsers, onClose, submit, open }: A
 
 						<Button
 							text={t.addUserModal.add}
-							disabled={isSubmitting}
-							onClick={() => {
-								if (!values.user || !values.role) return;
-
-								submit({
-									user: values.user.value,
-									role: values.role.value
-								});
-							}}
+							disabled={isSubmitting || !dirty}
+							type='submit'
 							theme='secondary'
 						/>
 					</Form>

@@ -45,10 +45,19 @@ export default function ChangeRoleModal({ onClose, open, currentRole, userId }: 
 						label: Yup.string().required(t.changeRoleModal.schema.roleRequired)
 					})
 				})}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={async (values) => {
+					const response = await updateRole(userId, values.role.value);
+
+					if (response.success) {
+						toast.success(t.changeRoleModal.success);
+						onClose(true);
+					} else {
+						toast.error(t.changeRoleModal.error);
+						onClose(false);
+					}
+				}}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -80,18 +89,8 @@ export default function ChangeRoleModal({ onClose, open, currentRole, userId }: 
 						</div>
 						<Button
 							text={t.changeRoleModal.submit}
-							disabled={isSubmitting}
-							onClick={async () => {
-								const response = await updateRole(userId, values.role.value);
-
-								if (response.success) {
-									toast.success(t.changeRoleModal.success);
-									onClose(true);
-								} else {
-									toast.error(t.changeRoleModal.error);
-									onClose(false);
-								}
-							}}
+							disabled={isSubmitting || !dirty}
+							type='submit'
 							theme='secondary'
 						/>
 					</Form>

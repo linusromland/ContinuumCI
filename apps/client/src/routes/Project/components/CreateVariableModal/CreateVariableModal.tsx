@@ -47,10 +47,14 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 						)
 						.min(1, t.createEnviromentVariables.schema.services.min)
 				})}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={(values) => {
+					submit({
+						...values,
+						services: values.services.map((service: { value: string; label: string }) => service.value)
+					});
+				}}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -114,15 +118,8 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 						</div>
 						<Button
 							text={t.createEnviromentVariables.title}
-							disabled={isSubmitting}
-							onClick={() => {
-								submit({
-									...values,
-									services: values.services.map(
-										(service: { value: string; label: string }) => service.value
-									)
-								});
-							}}
+							disabled={isSubmitting || !dirty}
+							type='submit'
 							theme='secondary'
 						/>
 					</Form>

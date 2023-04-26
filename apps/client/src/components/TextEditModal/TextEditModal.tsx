@@ -38,10 +38,11 @@ export default function TextEditModal({
 				initialValues={initialValues}
 				enableReinitialize
 				validationSchema={validationSchema}
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				onSubmit={() => {}} // This is required for the validation to work
+				onSubmit={(values) => {
+					submit(values);
+				}}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -64,10 +65,8 @@ export default function TextEditModal({
 						</div>
 						<Button
 							text={`${t.editModal.update} ${fieldName}`}
-							disabled={isSubmitting}
-							onClick={() => {
-								submit(values);
-							}}
+							disabled={isSubmitting || !dirty}
+							type='submit'
 							theme='secondary'
 						/>
 					</Form>

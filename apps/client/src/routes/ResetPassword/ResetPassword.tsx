@@ -28,10 +28,22 @@ export default function ResetPassword(): JSX.Element {
 						email: ''
 					}}
 					validationSchema={ResetPasswordSchema}
-					// eslint-disable-next-line @typescript-eslint/no-empty-function
-					onSubmit={() => {}} // This is required for the validation to work
+					onSubmit={async (values) => {
+						const response = await resetPassword(values.email);
+						if (response.success) {
+							toast.success(t.resetPassword.successReset, {
+								position: 'top-left'
+							});
+						} else {
+							toast.error(t.resetPassword.errorReset, {
+								position: 'top-left'
+							});
+						}
+
+						navigate('/login');
+					}}
 				>
-					{({ values }) => (
+					{({ isSubmitting, dirty }) => (
 						<Form className={formStyle.form}>
 							<div className={formStyle.formGroup}>
 								<label
@@ -56,22 +68,8 @@ export default function ResetPassword(): JSX.Element {
 								<Button
 									text={t.resetPassword.title}
 									small
-									onClick={async () => {
-										if (!values.email) return;
-
-										const response = await resetPassword(values.email);
-										if (response.success) {
-											toast.success(t.resetPassword.successReset, {
-												position: 'top-left'
-											});
-										} else {
-											toast.error(t.resetPassword.errorReset, {
-												position: 'top-left'
-											});
-										}
-
-										navigate('/login');
-									}}
+									type='submit'
+									disabled={!dirty || isSubmitting}
 								/>
 							</div>
 						</Form>
