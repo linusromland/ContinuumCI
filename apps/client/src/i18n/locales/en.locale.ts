@@ -158,6 +158,86 @@ export const en: TranslationKeys = {
 			}
 		}
 	},
+	project: {
+		projectDetails: 'Project Details',
+		name: 'Name',
+		sync: 'Sync',
+		syncSuccess: 'Project synced!',
+		syncError: 'An error occurred while syncing project.',
+		start: 'Start',
+		started: 'started',
+		stop: 'Stop',
+		stopped: 'stopped',
+		remove: 'Remove',
+		confirmRemove: 'Confirm Removal',
+		removeSuccess: 'Project removed!',
+		removeError: 'An error occurred while removing project.',
+		manualStop: 'Manually stopped',
+		editNameTitle: 'Edit project name',
+		nameRequired: 'Project name required.'
+	},
+	editModal: {
+		title: 'Edit',
+		update: 'Update'
+	},
+	enviromentVariablesTable: {
+		title: 'Environment Variables',
+		description: 'All environment variables for the project.',
+		addNew: 'Add new',
+		save: 'Save',
+		remove: 'Remove',
+		confirmRemove: 'Confirm',
+		removeSuccess: 'Variable removed!',
+		removeError: 'An error occurred while removing variable.',
+		updateSuccess: 'Variable updated!',
+		updateError: 'An error occurred while updating variable.',
+		createSuccess: 'Variable created!',
+		createError: 'An error occurred while creating variable.',
+		all: 'All',
+		name: 'Name',
+		value: 'Value',
+		services: 'Services',
+		availableServices: 'Available for which services?',
+		actions: 'Actions'
+	},
+	createEnviromentVariables: {
+		title: 'Create Variable',
+		schema: {
+			name: {
+				required: 'Name is required.',
+				match: 'Name can only contain alphanumeric characters and underscores.'
+			},
+			value: {
+				required: 'Value is required.'
+			},
+			services: {
+				min: 'At least one service must be selected.'
+			}
+		}
+	},
+	containersTable: {
+		title: 'Containers',
+		description: 'All containers for the project.',
+		name: 'Name',
+		state: 'State',
+		created: 'Created'
+	},
+	accessControl: {
+		title: 'Access Control',
+		description: 'The root user and all administrators have full access to all projects.',
+		username: 'Username',
+		email: 'Email',
+		role: 'Role',
+		actions: 'Actions',
+		remove: 'Remove',
+		addNew: 'Add new',
+		projectStatus: {
+			owner: 'Owner',
+			developer: 'Developer',
+			viewer: 'Viewer',
+			unknown: 'Unknown'
+		}
+	},
 	containers: {
 		title: 'Containers',
 		availableContainers: 'Available containers',
@@ -165,5 +245,160 @@ export const en: TranslationKeys = {
 		name: 'Name',
 		state: 'State',
 		created: 'Created'
+	},
+	container: {
+		title: 'Container Details',
+		id: 'Id',
+		logs: 'Logs',
+		lastUpdated: 'Last Updated'
+	},
+	domains: {
+		title: 'Domains',
+		createDomain: 'Create Domain',
+		createDomainSuccess: 'The domain has been created!',
+		createDomainError: 'An error occurred while creating the domain.',
+		noDomainsFound: 'No domains found.',
+		serverName: 'Server Name',
+		leaveEmptyForRoot: 'Leave empty for root',
+		locations: 'Locations',
+		location: 'Location',
+		project: 'Project',
+		service: 'Service',
+		port: 'Port',
+		proxyPass: 'Proxy Pass',
+		sslConfigured: 'SSL configured',
+		websocketConfigured: 'Websocket configured',
+		internalOnly: 'Internal only',
+		remove: 'Remove',
+		confirmRemove: 'Confirm removal',
+		removeSuccess: 'The domain has been removed!',
+		removeError: 'An error occurred while removing the domain.',
+		yes: 'Yes',
+		no: 'No',
+		schema: {
+			serverName: {
+				required: 'Server name is required.',
+				matches: 'Server name may only contain lowercase letters, a-z.'
+			},
+			domain: {
+				required: 'Domain is required.'
+			},
+			location: {
+				required: 'Location is required.'
+			},
+			locationMin: 'At least one location must be selected.',
+			proxyPass: {
+				required: 'Proxy Pass is required.'
+			},
+			project: {
+				id: {
+					required: 'Project ID is required.'
+				},
+				service: {
+					required: 'Service is required.'
+				}
+			},
+			ssl: {
+				required: 'SSL is required.'
+			}
+		},
+		type: {
+			title: 'Type',
+			project: 'Project Service',
+			custom: 'Custom'
+		}
+	},
+	settings: {
+		title: 'Settings'
+	},
+	generalSettings: {
+		title: 'General Settings',
+		general: 'General',
+		accountRole: 'Account Role',
+		username: 'Username',
+		email: 'Email',
+		change: 'Change',
+		usernameRequired: 'Username is required.',
+		usernameSuccess: 'Username has been changed!',
+		usernameError: 'An error occurred while changing the username.',
+		emailRequired: 'Email is required.',
+		emailInvalid: 'Invalid email.',
+		emailSuccess: 'Email has been changed!',
+		emailError: 'An error occurred while changing the email.'
+	},
+	changePasswordModal: {
+		oldPassword: {
+			title: 'Old Password',
+			required: 'Old password is required.'
+		},
+		newPassword: {
+			title: 'New Password',
+			required: 'New password is required.',
+			minLength: 'Password must be at least 8 characters long.'
+		},
+		confirmPassword: {
+			title: 'Confirm Password',
+			required: 'Confirm password is required.',
+			match: 'Passwords do not match.'
+		},
+		submit: 'Change Password',
+		success: 'Password has been changed!',
+		error: 'An error occurred while changing the password.'
+	},
+	userSettings: {
+		title: 'User Settings',
+		noUsersFound: 'No users found.',
+		users: 'Users',
+		accountType: 'Account Type',
+		username: 'Username',
+		email: 'Email',
+		lastLogin: 'Last Login',
+		lastIp: 'Last IP',
+		actions: 'Actions',
+		edit: 'Edit',
+		never: 'Never'
+	},
+	changeRoleModal: {
+		title: 'Change Role',
+		description: "This will change the user's role.",
+		schema: {
+			roleRequired: 'Role is required.'
+		},
+		role: 'Role',
+		root: 'Root',
+		admin: 'Administrator',
+		user: 'User',
+		unknown: 'Unknown',
+		submit: 'Change Role',
+		success: 'Role has been changed!',
+		error: 'An error occurred while changing the role.'
+	},
+	nginx: {
+		title: 'Nginx Settings',
+		nginx: 'Nginx',
+		configuration: {
+			title: 'Configuration',
+			sitesEnabledDirectory: 'Sites Enabled directory',
+			sitesEnabledDirectoryRequired: 'Sites Enabled directory is required.',
+			accessLogLocation: 'Access log location',
+			accessLogLocationRequired: 'Access log location is required.',
+			localIpAddresses: 'Local IP addresses',
+			localIpAddressesRequired: 'Local IP addresses is required.',
+			edit: 'Edit',
+			notSet: 'Not set',
+			successfullyUpdated: 'Configuration has been updated!',
+			failedToUpdate: 'An error occurred while updating the configuration.'
+		},
+		domains: {
+			title: 'Domains',
+			availableDomains: 'Available Domains',
+			noDomainsFound: 'No domains found.',
+			addDomainName: 'Add domain name',
+			failedToAddDomain: 'Failed to add domain name.',
+			removeDomainName: 'Remove domain name',
+			failedToRemoveDomain: 'Failed to remove domain name.',
+			add: 'Add',
+			remove: 'Remove'
+		}
 	}
 };
