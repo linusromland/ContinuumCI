@@ -370,4 +370,32 @@ export type TranslationKeys = {
 		success: string;
 		error: string;
 	};
+	nginx: {
+		title: string;
+		nginx: string;
+		configuration: {
+			title: string;
+			sitesEnabledDirectory: string;
+			sitesEnabledDirectoryRequired: string;
+			accessLogLocation: string;
+			accessLogLocationRequired: string;
+			localIpAddresses: string;
+			localIpAddressesRequired: string;
+			edit: string;
+			notSet: string;
+			successfullyUpdated: string;
+			failedToUpdate: string;
+		};
+		domains: {
+			title: string;
+			availableDomains: string;
+			noDomainsFound: string;
+			addDomainName: string;
+			failedToAddDomain: string;
+			removeDomainName: string;
+			failedToRemoveDomain: string;
+			add: string;
+			remove: string;
+		};
+	};
 };

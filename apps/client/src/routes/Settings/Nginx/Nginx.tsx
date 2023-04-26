@@ -15,8 +15,11 @@ import { toast } from 'react-toastify';
 import { NginxConfigurationType } from 'shared/src/types';
 import { getConfiguration, updateConfiguration } from '../../../utils/api/nginx/configuration';
 import { customStyles } from '../../../components/CustomSelect/CustomSelect';
+import useTranslations from '../../../i18n/translations';
 
 export default function Nginx(): JSX.Element {
+	const t = useTranslations();
+
 	const [domainNames, setDomainNames] = useState(
 		[] as {
 			value: string;
@@ -42,12 +45,6 @@ export default function Nginx(): JSX.Element {
 					label: domainName.name
 				}))
 			);
-			console.log(
-				response.data.map((domainName) => ({
-					value: domainName._id,
-					label: domainName.name
-				}))
-			);
 		}
 	}
 
@@ -62,9 +59,9 @@ export default function Nginx(): JSX.Element {
 		const response = await updateConfiguration(configuration);
 		if (response.success) {
 			getConfigurationData();
-			toast.success('Configuration updated');
+			toast.success(t.nginx.configuration.successfullyUpdated);
 		} else {
-			toast.error(response.message);
+			toast.error(t.nginx.configuration.failedToUpdate);
 		}
 	}
 
@@ -76,48 +73,48 @@ export default function Nginx(): JSX.Element {
 	return (
 		<>
 			<div className={style.main}>
-				<Breadcrumbs path={[{ name: 'Settings' }, { name: 'Nginx' }]} />
+				<Breadcrumbs path={[{ name: t.settings.title }, { name: t.nginx.nginx }]} />
 
-				<h1 className={style.title}>Nginx Settings</h1>
+				<h1 className={style.title}>{t.nginx.title}</h1>
 				<Widget>
 					<div className={style.container}>
-						<h2 className={style.subtitle}>Configuration</h2>
+						<h2 className={style.subtitle}>{t.nginx.configuration.title}</h2>
 
 						<div className={style.infoContainer}>
 							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								Sites Enabled Directory:
+								{t.nginx.configuration.sitesEnabledDirectory}:
 							</h3>
 							<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
-								{nginxConfiguration.sitesEnabledLocation || 'Not set'}
+								{nginxConfiguration.sitesEnabledLocation || t.nginx.configuration.notSet}
 							</p>
 							<Button
-								text='Change'
+								text={t.nginx.configuration.edit}
 								onClick={() => setSitesEnabledDirectoryModal(true)}
 								small
 								theme='secondary'
 								className={clsx(style.row1, style.col3)}
 							/>
 							<h3 className={clsx(style.infoContainerTitle, style.row2, style.col1)}>
-								Access Log Location:
+								{t.nginx.configuration.accessLogLocation}:
 							</h3>
 							<p className={clsx(style.infoContainerValue, style.row2, style.col2)}>
-								{nginxConfiguration.accessLogLocation || 'Not set'}
+								{nginxConfiguration.accessLogLocation || t.nginx.configuration.notSet}
 							</p>
 							<Button
-								text='Change'
+								text={t.nginx.configuration.edit}
 								onClick={() => setAccessLogLocationModal(true)}
 								small
 								theme='secondary'
 								className={clsx(style.row2, style.col3)}
 							/>
 							<h3 className={clsx(style.infoContainerTitle, style.row3, style.col1)}>
-								Local IP-Adresses:
+								{t.nginx.configuration.localIpAddresses}:
 							</h3>
 							<p className={clsx(style.infoContainerValue, style.row3, style.col2)}>
-								{nginxConfiguration.localIps || 'Not set'}
+								{nginxConfiguration.localIps || t.nginx.configuration.notSet}
 							</p>
 							<Button
-								text='Change'
+								text={t.nginx.configuration.edit}
 								onClick={() => setLocalIpAdressesModal(true)}
 								small
 								theme='secondary'
@@ -128,14 +125,12 @@ export default function Nginx(): JSX.Element {
 				</Widget>
 				<Widget>
 					<div className={style.container}>
-						<h2 className={style.subtitle}>Domain names</h2>
+						<h2 className={style.subtitle}>{t.nginx.domains.title}</h2>
 
-						{/* List of all avaible domain names, button to remove a domain name & input to add a new domain name */}
 						<div className={style.infoContainer}>
 							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								Available domain names:
+								{t.nginx.domains.availableDomains}:
 							</h3>
-							{/* List of all domain names */}
 							{domainNames.map((domainName, index) => (
 								<p className={clsx(style.infoContainerValue, style[`row${index + 1}`], style.col2)}>
 									{domainName.label}
@@ -144,12 +139,14 @@ export default function Nginx(): JSX.Element {
 
 							{domainNames.length === 0 && (
 								<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
-									No domain names available
+									{t.nginx.domains.noDomainsFound}
 								</p>
 							)}
 						</div>
 						<div className={clsx(style.infoContainer, style.actions)}>
-							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>Add domain name:</h3>
+							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
+								{t.nginx.domains.addDomainName}:
+							</h3>
 							<input
 								className={clsx(style.input, style.row1, style.col2)}
 								type='text'
@@ -161,7 +158,7 @@ export default function Nginx(): JSX.Element {
 							/>
 
 							<Button
-								text='Add'
+								text={t.nginx.domains.add}
 								small
 								theme='secondary'
 								className={clsx(style.row1, style.col3)}
@@ -174,14 +171,14 @@ export default function Nginx(): JSX.Element {
 										getDomainsData();
 										setNewDomainName('');
 									} else {
-										toast.error('Failed to create domain');
+										toast.error(t.nginx.domains.failedToAddDomain);
 									}
 								}}
 							/>
 						</div>
 						<div className={style.infoContainer}>
 							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								Remove domain name:
+								{t.nginx.domains.removeDomainName}:
 							</h3>
 							<Select
 								className={clsx(style.row1, style.col2)}
@@ -193,7 +190,7 @@ export default function Nginx(): JSX.Element {
 								options={domainNames}
 							/>
 							<Button
-								text='Remove'
+								text={t.nginx.domains.remove}
 								small
 								theme='secondary'
 								className={clsx(style.row1, style.col3)}
@@ -209,7 +206,7 @@ export default function Nginx(): JSX.Element {
 											value: ''
 										});
 									} else {
-										toast.error('Failed to delete domain');
+										toast.error(t.nginx.domains.failedToRemoveDomain);
 									}
 								}}
 							/>
@@ -219,17 +216,20 @@ export default function Nginx(): JSX.Element {
 			</div>
 
 			<TextEditModal
-				title='Change Sites Enabled Directory'
-				fieldName='sitesEnabledLocation'
+				title={`${
+					t.nginx.configuration.edit
+				} ${t.nginx.configuration.sitesEnabledDirectory.toLocaleLowerCase()}`}
+				fieldName={t.nginx.configuration.sitesEnabledDirectory.toLocaleLowerCase()}
 				open={sitesEnabledDirectoryModal}
 				onClose={() => {
 					setSitesEnabledDirectoryModal(false);
 				}}
 				initialValues={{
-					sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation
+					[t.nginx.configuration.sitesEnabledDirectory.toLocaleLowerCase()]:
+						nginxConfiguration.sitesEnabledLocation
 				}}
 				validationSchema={Yup.object().shape({
-					sitesEnabledLocation: Yup.string().required('Sites Enabled Directory is required')
+					sitesEnabledLocation: Yup.string().required(t.nginx.configuration.sitesEnabledDirectoryRequired)
 				})}
 				submit={async (values) => {
 					editConfiguration({
@@ -241,17 +241,17 @@ export default function Nginx(): JSX.Element {
 			/>
 
 			<TextEditModal
-				title='Change Access Log Location'
-				fieldName='accessLogLocation'
+				title={t.nginx.configuration.edit + ' ' + t.nginx.configuration.accessLogLocation.toLocaleLowerCase()}
+				fieldName={t.nginx.configuration.accessLogLocation.toLocaleLowerCase()}
 				open={accessLogLocationModal}
 				onClose={() => {
 					setAccessLogLocationModal(false);
 				}}
 				initialValues={{
-					accessLogLocation: nginxConfiguration.accessLogLocation
+					[t.nginx.configuration.accessLogLocation.toLocaleLowerCase()]: nginxConfiguration.accessLogLocation
 				}}
 				validationSchema={Yup.object().shape({
-					accessLogLocation: Yup.string().required('Access Log Location is required')
+					accessLogLocation: Yup.string().required(t.nginx.configuration.accessLogLocationRequired)
 				})}
 				submit={async (values) => {
 					editConfiguration({
@@ -263,17 +263,17 @@ export default function Nginx(): JSX.Element {
 			/>
 
 			<TextEditModal
-				title='Change Local IP-Adresses'
-				fieldName='localIps'
+				title={t.nginx.configuration.edit + ' ' + t.nginx.configuration.localIpAddresses.toLocaleLowerCase()}
+				fieldName={t.nginx.configuration.localIpAddresses.toLocaleLowerCase()}
 				open={localIpAdressesModal}
 				onClose={() => {
 					setLocalIpAdressesModal(false);
 				}}
 				initialValues={{
-					localIps: nginxConfiguration.localIps
+					[t.nginx.configuration.localIpAddresses.toLocaleLowerCase()]: nginxConfiguration.localIps
 				}}
 				validationSchema={Yup.object().shape({
-					localIps: Yup.string().required('Local IP-Adresses is required')
+					localIps: Yup.string().required(t.nginx.configuration.localIpAddressesRequired)
 				})}
 				submit={async (values) => {
 					editConfiguration({

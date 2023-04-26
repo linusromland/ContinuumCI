@@ -373,5 +373,33 @@ export const sv: TranslationKeys = {
 		submit: 'Ändra roll',
 		success: 'Rollen har ändrats!',
 		error: 'Ett fel uppstod vid ändring av rollen.'
+	},
+	nginx: {
+		title: 'Nginx inställningar',
+		nginx: 'Nginx',
+		configuration: {
+			title: 'Konfiguration',
+			sitesEnabledDirectory: 'Sites Enabled filmapp',
+			sitesEnabledDirectoryRequired: 'Sites Enabled filmapp krävs.',
+			accessLogLocation: 'Åtkomstloggningsplats',
+			accessLogLocationRequired: 'Åtkomstloggningsplats krävs.',
+			localIpAddresses: 'Lokala IP-adresser',
+			localIpAddressesRequired: 'Lokala IP-adresser krävs.',
+			edit: 'Redigera',
+			notSet: 'Inte satt',
+			successfullyUpdated: 'Konfigurationen har ändrats!',
+			failedToUpdate: 'Ett fel uppstod vid ändring av konfigurationen.'
+		},
+		domains: {
+			title: 'Domäner',
+			availableDomains: 'Tillgängliga domäner',
+			noDomainsFound: 'Inga domäner hittades.',
+			addDomainName: 'Lägg till domännamn',
+			failedToAddDomain: 'Det gick inte att lägga till domännamnet.',
+			removeDomainName: 'Ta bort domännamn',
+			failedToRemoveDomain: 'Det gick inte att ta bort domännamnet.',
+			add: 'Lägg till',
+			remove: 'Ta bort'
+		}
 	}
 };
