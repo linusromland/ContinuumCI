@@ -7,7 +7,7 @@ export const sv: TranslationKeys = {
 		noData: 'Ingen data tillgänglig'
 	},
 	setupSidebar: {
-		footer: 'ContinuumCI är ett projekt av Linus Romland. Källkoden är tillgänglig på'
+		footer: 'ContinuumCI av Linus Romland. Källkod på'
 	},
 	sidebar: {
 		analytics: {
@@ -15,9 +15,9 @@ export const sv: TranslationKeys = {
 			overview: 'Översikt'
 		},
 		deployments: {
-			title: 'Utplaceringar',
+			title: 'Distributioner',
 			projects: 'Projekt',
-			containers: 'Containrar',
+			containers: 'Containers',
 			domains: 'Domäner'
 		},
 		settings: {
@@ -32,34 +32,33 @@ export const sv: TranslationKeys = {
 	},
 	resetPassword: {
 		title: 'Återställ lösenord',
-		successReset:
-			'Om e-postadressen är giltig kommer du att få ett e-postmeddelande med en länk för att återställa ditt lösenord.',
-		errorReset: 'Ett fel uppstod vid återställning av ditt lösenord. Försök igen senare.'
+		successReset: 'Om e-postadressen är giltig kommer du att få en länk för att återställa ditt lösenord.',
+		errorReset: 'Ett fel inträffade. Försök igen senare.'
 	},
 	login: {
-		title: 'Välkommen tillbaka! Vänligen logga in.',
-		successLogin: 'Du har loggat in!',
+		title: 'Välkommen tillbaka! Logga in på ditt konto.',
+		successLogin: 'Inloggning lyckades.',
 		invalidLogin: 'Ogiltig e-postadress eller lösenord.',
 		rememberMe: 'Kom ihåg mig',
-		forgotPassword: 'Glömt lösenordet?',
+		forgotPassword: 'Glömt lösenord?',
 		resetPassword: 'Återställ lösenord',
-		notRegistered: 'Har du inget konto?',
+		notRegistered: 'Har du inget konto ännu?',
 		login: 'Logga in',
 		password: 'Lösenord'
 	},
 	register: {
-		title: 'Välkommen! Vänligen registrera ett konto.',
-		successCreate: 'Ditt konto har skapats!',
-		errorCreate: 'Ett fel uppstod vid skapande av ditt konto. Försök igen senare.',
+		title: 'Välkommen! Registrera dig för ett konto.',
+		successCreate: 'Kontot har skapats framgångsrikt.',
+		errorCreate: 'Ett fel inträffade. Försök igen senare.',
 		alreadyRegistered: 'Har du redan ett konto?',
 		username: 'Användarnamn',
-		confirmPassword: 'Bekräfta lösenordet',
+		confirmPassword: 'Bekräfta lösenord',
 		create: 'Skapa konto',
 		register: 'Registrera',
 		schema: {
 			username: {
-				min: 'Användarnamnet måste vara minst 3 tecken långt.',
-				max: 'Användarnamnet får vara högst 20 tecken långt.',
+				min: 'Minst 3 tecken.',
+				max: 'Högst 20 tecken.',
 				required: 'Användarnamn krävs.'
 			},
 			email: {
@@ -67,12 +66,12 @@ export const sv: TranslationKeys = {
 				invalid: 'E-postadressen är ogiltig.'
 			},
 			password: {
-				min: 'Lösenordet måste vara minst 8 tecken långt.',
+				min: 'Minst 8 tecken.',
 				required: 'Lösenord krävs.'
 			},
 			confirmPassword: {
 				notMatch: 'Lösenorden matchar inte.',
-				required: 'Bekräfta lösenord krävs.'
+				required: 'Bekräftelse av lösenord krävs.'
 			}
 		}
 	},
@@ -81,26 +80,26 @@ export const sv: TranslationKeys = {
 		applicationStatus: {
 			title: 'Applikationsstatus',
 			errorDescription: 'Vissa applikationer körs inte.',
-			successDescription: 'Alla applikationer körs.',
+			successDescription: 'Allt fungerar normalt!',
 			activeApplications: 'aktiva applikationer'
 		},
 		cpuUsage: {
-			title: 'CPU Användning',
+			title: 'CPU-användning',
 			on: 'på',
 			cores: 'kärnor'
 		},
 		memoryUsage: {
 			title: 'Minnesanvändning',
-			ofTotal: 'av totalt'
+			ofTotal: 'av'
 		},
 		networkUsage: {
 			title: 'Nätverksanvändning',
 			sending: 'Skickar',
 			receiving: 'Tar emot'
 		},
-		images: 'Dockerbilder',
+		images: 'Bilder',
 		requestTable: {
-			title: '10 senaste requesterna',
+			title: '10 senaste förfrågningarna',
 			time: 'Tid',
 			method: 'Metod',
 			status: 'Status',
@@ -125,28 +124,28 @@ export const sv: TranslationKeys = {
 				notRunning: 'Kör inte',
 				restarting: 'Startar om',
 				crashed: 'Kraschade',
-				partiallyRunning: 'Delvis körning'
+				partiallyRunning: 'Delvis igång'
 			},
 			syncStatus: {
-				title: 'Sync status',
+				title: 'Synkroniseringsstatus',
 				unknown: 'Okänd',
-				inSync: 'I synk',
-				outOfSync: 'Ej i synk'
+				inSync: 'Synkroniserad',
+				outOfSync: 'Inte synkroniserad'
 			},
 			repository: 'Repository'
 		},
 		newProject: {
-			title: 'Nytt projekt',
+			title: 'Skapa nytt projekt',
 			projectName: 'Projektnamn',
 			repositoryUrl: 'Repository URL',
-			repositoryUrlHint: '(skall sluta med .git)',
-			branch: 'Branch',
+			repositoryUrlHint: '(bör sluta med .git)',
+			branch: 'Gren',
 			create: 'Skapa projekt',
-			successCreate: 'Projektet har skapats!',
-			errorCreate: 'Ett fel uppstod vid skapande av projektet. Försök igen senare.',
+			successCreate: 'Projektet skapades framgångsrikt.',
+			errorCreate: 'Ett fel inträffade. Försök igen senare.',
 			schema: {
 				name: {
-					min: 'Projektnamnet måste vara minst 3 tecken långt.',
+					min: 'Minst 3 tecken.',
 					required: 'Projektnamn krävs.'
 				},
 				repositoryUrl: {
@@ -154,7 +153,7 @@ export const sv: TranslationKeys = {
 					invalid: 'Repository URL är ogiltig.'
 				},
 				branch: {
-					required: 'Branch krävs.'
+					required: 'Gren krävs.'
 				}
 			}
 		}
@@ -163,43 +162,43 @@ export const sv: TranslationKeys = {
 		projectDetails: 'Projektdetaljer',
 		name: 'Namn',
 		sync: 'Synkronisera',
-		syncSuccess: 'Projektet har synkroniserats!',
-		alreadyInSync: 'Projektet är redan i synk.',
-		syncError: 'Ett fel uppstod vid synkronisering av projektet.',
+		syncSuccess: 'Projekt synkroniserat!',
+		alreadyInSync: 'Projektet är redan synkroniserat.',
+		syncError: 'Ett fel inträffade vid synkronisering av projekt.',
 		start: 'Starta',
-		started: 'startades',
+		started: 'startade',
 		stop: 'Stoppa',
-		stopped: 'stoppades',
+		stopped: 'stoppade',
 		remove: 'Ta bort',
 		confirmRemove: 'Bekräfta borttagning',
-		removeSuccess: 'Projektet har tagits bort!',
-		removeError: 'Ett fel uppstod vid borttagning av projektet.',
+		removeSuccess: 'Projektet togs bort!',
+		removeError: 'Ett fel inträffade vid borttagning av projekt.',
 		manualStop: 'Manuellt stoppad',
-		editNameTitle: 'Ändra projektets namn',
+		editNameTitle: 'Ändra projektnamn',
 		nameRequired: 'Projektnamn krävs.'
 	},
 	editModal: {
-		title: 'Ändra',
+		title: 'Redigera',
 		update: 'Uppdatera'
 	},
 	enviromentVariablesTable: {
 		title: 'Miljövariabler',
-		description: 'Alla miljövariabler för projektet.',
+		description: 'Alla variabler för projektet.',
 		addNew: 'Lägg till ny',
 		save: 'Spara',
 		remove: 'Ta bort',
 		confirmRemove: 'Bekräfta',
-		removeSuccess: 'Variabeln har tagits bort!',
-		removeError: 'Ett fel uppstod vid borttagning av variabeln.',
-		updateSuccess: 'Variabeln har uppdaterats!',
-		updateError: 'Ett fel uppstod vid uppdatering av variabeln.',
-		createSuccess: 'Variabeln har skapats!',
-		createError: 'Ett fel uppstod vid skapande av variabeln.',
+		removeSuccess: 'Variabeln borttagen!',
+		removeError: 'Ett fel inträffade vid borttagning av variabeln.',
+		updateSuccess: 'Variabeln uppdaterad!',
+		updateError: 'Ett fel inträffade vid uppdatering av variabeln.',
+		createSuccess: 'Variabeln skapad!',
+		createError: 'Ett fel inträffade vid skapande av variabeln.',
 		all: 'Alla',
 		name: 'Namn',
 		value: 'Värde',
 		services: 'Tjänster',
-		availableServices: 'Tillgänglig för vilka tjänster?',
+		availableServices: 'Tillgängliga för vilka tjänster?',
 		actions: 'Åtgärder'
 	},
 	createEnviromentVariables: {
@@ -207,7 +206,7 @@ export const sv: TranslationKeys = {
 		schema: {
 			name: {
 				required: 'Namn krävs.',
-				match: 'Namnet får endast innehålla alfanumeriska tecken och understreck.'
+				match: 'Namn kan endast innehålla alfanumeriska tecken och understreck.'
 			},
 			value: {
 				required: 'Värde krävs.'
@@ -225,62 +224,63 @@ export const sv: TranslationKeys = {
 		created: 'Skapad'
 	},
 	accessControl: {
-		title: 'Åtkomstkontroll',
-		description: 'Root-användaren och alla administratörer har fullständig åtkomst till alla projekt.',
+		title: 'Hantering av åtkomstkontroll',
+		description: 'Rotanvändaren och alla administratörer har full åtkomst till alla projekt.',
 		username: 'Användarnamn',
-		email: 'E-post',
-		role: 'Roll',
-		actions: 'Åtgärder',
-		remove: 'Ta bort',
-		addNew: 'Lägg till ny',
+		email: 'E-postadress',
+		role: 'Användarroll',
+		actions: 'Tillgängliga åtgärder',
+		remove: 'Ta bort användare',
+		confirmRemove: 'Bekräfta borttagning',
+		addNew: 'Lägg till ny användare',
 		projectStatus: {
-			owner: 'Ägare',
-			developer: 'Utvecklare',
-			viewer: 'Läsare',
-			unknown: 'Okänd'
+			owner: 'Projektägare',
+			developer: 'Projektutvecklare',
+			viewer: 'Projektvisare',
+			unknown: 'Okänd roll'
 		}
 	},
 	containers: {
-		title: 'Containrar',
+		title: 'Hantering av containrar',
 		availableContainers: 'Tillgängliga containrar',
 		noContainersFound: 'Inga containrar hittades.',
-		name: 'Namn',
-		state: 'Status',
+		name: 'Containernamn',
+		state: 'Nuvarande status',
 		created: 'Skapad'
 	},
 	container: {
 		title: 'Containerdetaljer',
-		id: 'Id',
-		logs: 'Loggar',
+		id: 'Container-ID',
+		logs: 'Containerloggar',
 		lastUpdated: 'Senast uppdaterad'
 	},
 	domains: {
-		title: 'Domäner',
-		createDomain: 'Skapa domän',
-		createDomainSuccess: 'Domänen har skapats!',
-		createDomainError: 'Ett fel uppstod vid skapande av domänen.',
+		title: 'Domänhantering',
+		createDomain: 'Skapa ny domän',
+		createDomainSuccess: 'Domänen har skapats framgångsrikt!',
+		createDomainError: 'Ett fel inträffade vid skapande av domänen.',
 		noDomainsFound: 'Inga domäner hittades.',
 		serverName: 'Servernamn',
-		leaveEmptyForRoot: 'Lämna tomt för root',
-		locations: 'Platser',
+		leaveEmptyForRoot: 'Lämna tomt för rot-domän',
+		locations: 'Domänplatser',
 		location: 'Plats',
-		project: 'Projekt',
-		service: 'Tjänst',
-		port: 'Port',
+		project: 'Associerat projekt',
+		service: 'Associerad tjänst',
+		port: 'Tjänstport',
 		proxyPass: 'Proxy Pass',
-		sslConfigured: 'SSL konfigurerad',
-		websocketConfigured: 'Websocket konfigurerad',
-		internalOnly: 'Endast internt',
-		remove: 'Ta bort',
-		confirmRemove: 'Bekräfta borttagning',
-		removeSuccess: 'Domänen har tagits bort!',
-		removeError: 'Ett fel uppstod vid borttagning av domänen.',
+		sslConfigured: 'SSL-konfigurationsstatus',
+		websocketConfigured: 'Websocket-konfigurationsstatus',
+		internalOnly: 'Endast intern domän',
+		remove: 'Ta bort domän',
+		confirmRemove: 'Bekräfta domänborttagning',
+		removeSuccess: 'Domänen har framgångsrikt tagits bort!',
+		removeError: 'Ett fel inträffade vid borttagning av domänen.',
 		yes: 'Ja',
 		no: 'Nej',
 		schema: {
 			serverName: {
 				required: 'Servernamn krävs.',
-				matches: 'Servernamnet får endast innehålla små bokstäver, a-z.'
+				matches: 'Servernamnet får endast innehålla gemener, a-z.'
 			},
 			domain: {
 				required: 'Domän krävs.'
@@ -294,7 +294,7 @@ export const sv: TranslationKeys = {
 			},
 			project: {
 				id: {
-					required: 'Projektid krävs.'
+					required: 'Projekt-ID krävs.'
 				},
 				service: {
 					required: 'Tjänst krävs.'
@@ -305,28 +305,28 @@ export const sv: TranslationKeys = {
 			}
 		},
 		type: {
-			title: 'Typ',
-			project: 'Projekt tjänst',
-			custom: 'Anpassad'
+			title: 'Domäntyp',
+			project: 'Projekttjänstens domän',
+			custom: 'Anpassad domän'
 		}
 	},
 	settings: {
-		title: 'Inställningar'
+		title: 'Appinställningar'
 	},
 	generalSettings: {
 		title: 'Allmänna inställningar',
-		general: 'Allmänt',
-		accountRole: 'Kontots roll',
+		general: 'Allmän information',
+		accountRole: 'Kontoroll',
 		username: 'Användarnamn',
-		email: 'Email',
+		email: 'E-postadress',
 		change: 'Ändra',
 		usernameRequired: 'Användarnamn krävs.',
-		usernameSuccess: 'Användarnamnet har ändrats!',
-		usernameError: 'Ett fel uppstod vid ändring av användarnamnet.',
-		emailRequired: 'Email krävs.',
-		emailInvalid: 'Ogiltig email.',
-		emailSuccess: 'Email har ändrats!',
-		emailError: 'Ett fel uppstod vid ändring av email.'
+		usernameSuccess: 'Användarnamnet har ändrats framgångsrikt!',
+		usernameError: 'Ett fel inträffade vid ändring av användarnamnet.',
+		emailRequired: 'E-post krävs.',
+		emailInvalid: 'Ogiltig e-postadress.',
+		emailSuccess: 'E-postadressen har ändrats framgångsrikt!',
+		emailError: 'Ett fel inträffade vid ändring av e-postadressen.'
 	},
 	changePasswordModal: {
 		oldPassword: {
@@ -339,68 +339,86 @@ export const sv: TranslationKeys = {
 			minLength: 'Lösenordet måste vara minst 8 tecken långt.'
 		},
 		confirmPassword: {
-			title: 'Bekräfta lösenord',
-			required: 'Bekräfta lösenord krävs.',
+			title: 'Bekräfta nytt lösenord',
+			required: 'Bekräftelse av lösenord krävs.',
 			match: 'Lösenorden matchar inte.'
 		},
-		submit: 'Ändra lösenord',
-		success: 'Lösenordet har ändrats!',
-		error: 'Ett fel uppstod vid ändring av lösenordet.'
+		submit: 'Byt lösenord',
+		success: 'Lösenordet har ändrats framgångsrikt!',
+		error: 'Ett fel inträffade vid ändring av lösenordet.'
 	},
 	userSettings: {
 		title: 'Användarinställningar',
 		noUsersFound: 'Inga användare hittades.',
-		users: 'Användare',
+		users: 'Användarlista',
 		accountType: 'Kontotyp',
 		username: 'Användarnamn',
-		email: 'Email',
+		email: 'E-postadress',
 		lastLogin: 'Senaste inloggning',
-		lastIp: 'Senaste IP',
+		lastIp: 'Senaste IP-adress',
 		actions: 'Åtgärder',
-		edit: 'Redigera',
-		never: 'Aldrig'
+		edit: 'Redigera användare',
+		never: 'Aldrig inloggad'
 	},
 	changeRoleModal: {
-		title: 'Ändra roll',
-		description: 'Detta kommer att ändra rollen för användaren.',
+		title: 'Ändra användarroll',
+		description: 'Detta kommer att ändra användarens roll.',
 		schema: {
 			roleRequired: 'Roll krävs.'
 		},
-		role: 'Roll',
-		root: 'Root',
+		role: 'Användarroll',
+		root: 'Rotanvändare',
 		admin: 'Administratör',
-		user: 'Användare',
-		unknown: 'Okänd',
+		user: 'Standardanvändare',
+		unknown: 'Okänd roll',
 		submit: 'Ändra roll',
-		success: 'Rollen har ändrats!',
-		error: 'Ett fel uppstod vid ändring av rollen.'
+		success: 'Rollen har ändrats framgångsrikt!',
+		error: 'Ett fel inträffade vid ändring av rollen.'
 	},
 	nginx: {
-		title: 'Nginx inställningar',
-		nginx: 'Nginx',
+		title: 'Nginx-inställningar',
+		nginx: 'Nginx-konfiguration',
 		configuration: {
-			title: 'Konfiguration',
-			sitesEnabledDirectory: 'Sites Enabled filmapp',
-			sitesEnabledDirectoryRequired: 'Sites Enabled filmapp krävs.',
-			accessLogLocation: 'Åtkomstloggningsplats',
-			accessLogLocationRequired: 'Åtkomstloggningsplats krävs.',
+			title: 'Nginx-konfiguration',
+			sitesEnabledDirectory: 'Katalog för aktiverade webbplatser',
+			sitesEnabledDirectoryRequired: 'Katalog för aktiverade webbplatser krävs.',
+			accessLogLocation: 'Plats för åtkomstlogg',
+			accessLogLocationRequired: 'Plats för åtkomstlogg krävs.',
 			localIpAddresses: 'Lokala IP-adresser',
 			localIpAddressesRequired: 'Lokala IP-adresser krävs.',
-			edit: 'Redigera',
-			notSet: 'Inte satt',
-			successfullyUpdated: 'Konfigurationen har ändrats!',
-			failedToUpdate: 'Ett fel uppstod vid ändring av konfigurationen.'
+			edit: 'Redigera konfiguration',
+			notSet: 'Inte inställt',
+			successfullyUpdated: 'Konfigurationen har uppdaterats framgångsrikt!',
+			failedToUpdate: 'Ett fel inträffade vid uppdatering av konfigurationen.'
 		},
 		domains: {
-			title: 'Domäner',
+			title: 'Nginx-domäner',
 			availableDomains: 'Tillgängliga domäner',
 			noDomainsFound: 'Inga domäner hittades.',
 			addDomainName: 'Lägg till domännamn',
-			failedToAddDomain: 'Det gick inte att lägga till domännamnet.',
+			failedToAddDomain: 'Misslyckades med att lägga till domännamn.',
 			removeDomainName: 'Ta bort domännamn',
-			failedToRemoveDomain: 'Det gick inte att ta bort domännamnet.',
-			add: 'Lägg till',
-			remove: 'Ta bort'
+			failedToRemoveDomain: 'Misslyckades med att ta bort domännamn.',
+			add: 'Lägg till domän',
+			remove: 'Ta bort domän'
+		}
+	},
+	addUserModal: {
+		title: 'Lägg till användare i projektet',
+		user: 'Välj användare',
+		role: 'Välj roll',
+		add: 'Lägg till användare',
+		addSuccess: 'Användaren har framgångsrikt lagts till i projektet!',
+		addError: 'Ett fel inträffade vid tillägg av användaren i projektet.',
+		removeSuccess: 'Användaren har tagits bort från projektet framgångsrikt!',
+		removeError: 'Ett fel inträffade vid borttagning av användaren från projektet.',
+		schema: {
+			user: {
+				required: 'Val av användare krävs.'
+			},
+			role: {
+				required: 'Val av roll krävs.'
+			}
 		}
 	}
 };
