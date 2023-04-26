@@ -14,6 +14,7 @@ import { getOverview } from '../../utils/api/overview';
 import { formatNumber } from '../../utils/formatNumber';
 import { getLogs } from '../../utils/api/nginx/logs';
 import useTranslations from '../../i18n/translations';
+import { Loading } from '../../components/Loading/Loading';
 
 type filesizeType = {
 	value: number;
@@ -66,6 +67,8 @@ export default function Overview(): JSX.Element {
 			setLogs(logsResponse.data);
 		}
 	}
+
+	if (!user || !data) return <Loading />;
 
 	return (
 		<div className={style.main}>
