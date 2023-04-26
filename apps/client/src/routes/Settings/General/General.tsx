@@ -49,7 +49,7 @@ export default function GeneralSettings(): JSX.Element {
 								{t.generalSettings.accountRole}:
 							</h3>
 							<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
-								{formatRole(user.role)}
+								{formatRole(user.role, t)}
 							</p>
 							<h3 className={clsx(style.infoContainerTitle, style.row2, style.col1)}>
 								{t.generalSettings.username}:

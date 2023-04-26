@@ -228,6 +228,7 @@ export type TranslationKeys = {
 		role: string;
 		actions: string;
 		remove: string;
+		confirmRemove: string;
 		addNew: string;
 		projectStatus: {
 			owner: string;
@@ -397,6 +398,24 @@ export type TranslationKeys = {
 			failedToRemoveDomain: string;
 			add: string;
 			remove: string;
+		};
+	};
+	addUserModal: {
+		title: string;
+		user: string;
+		role: string;
+		add: string;
+		addSuccess: string;
+		addError: string;
+		removeSuccess: string;
+		removeError: string;
+		schema: {
+			user: {
+				required: string;
+			};
+			role: {
+				required: string;
+			};
 		};
 	};
 };

@@ -231,6 +231,7 @@ export const en: TranslationKeys = {
 		role: 'Role',
 		actions: 'Actions',
 		remove: 'Remove',
+		confirmRemove: 'Confirm',
 		addNew: 'Add new',
 		projectStatus: {
 			owner: 'Owner',
@@ -400,6 +401,24 @@ export const en: TranslationKeys = {
 			failedToRemoveDomain: 'Failed to remove domain name.',
 			add: 'Add',
 			remove: 'Remove'
+		}
+	},
+	addUserModal: {
+		title: 'Add User to Project',
+		user: 'User',
+		role: 'Role',
+		add: 'Add',
+		addSuccess: 'User has been added to the project!',
+		addError: 'An error occurred while adding the user to the project.',
+		removeSuccess: 'User has been removed from the project!',
+		removeError: 'An error occurred while removing the user from the project.',
+		schema: {
+			user: {
+				required: 'User is required.'
+			},
+			role: {
+				required: 'Role is required.'
+			}
 		}
 	}
 };

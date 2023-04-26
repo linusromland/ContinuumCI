@@ -15,7 +15,7 @@ import AccessControlTable from './components/AccessControlTable/AccessControlTab
 import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
 import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
-import { ProjectClass } from 'shared/src/classes';
+import { ProjectClass, UserClass } from 'shared/src/classes';
 import { syncProject, editProject, getProject, deleteProject } from '../../utils/api/projects';
 import { createDeployment, removeDeployment } from '../../utils/api/deployment';
 import useTranslations from '../../i18n/translations';
@@ -184,7 +184,57 @@ export default function Project() {
 					<div className={style.tables}>
 						<EnviromentVariablesTable project={project} />
 						<ContainersTable projectId={projectId || ''} />
-						<AccessControlTable project={project} />
+						<AccessControlTable
+							project={project}
+							submit={async (values, remove) => {
+								if (remove) {
+									const response = await editProject(
+										{
+											name: project.name,
+											permissions: project.permissions
+												.filter((user) => user.user._id !== values.user)
+												.map((user) => ({
+													user: (user.user as UserClass)._id,
+													role: user.role
+												}))
+										},
+										project._id
+									);
+
+									if (response.success) {
+										toast.success(t.addUserModal.removeSuccess);
+										getData();
+									} else {
+										toast.error(t.addUserModal.removeError);
+									}
+									return;
+								}
+
+								const response = await editProject(
+									{
+										name: project.name,
+										permissions: [
+											...project.permissions.map((user) => ({
+												user: (user.user as UserClass)._id,
+												role: user.role
+											})),
+											{
+												user: values.user,
+												role: values.role
+											}
+										]
+									},
+									project._id
+								);
+
+								if (response.success) {
+									toast.success(t.addUserModal.addSuccess);
+									getData();
+								} else {
+									toast.error(t.addUserModal.addError);
+								}
+							}}
+						/>
 					</div>
 				</div>
 			</main>

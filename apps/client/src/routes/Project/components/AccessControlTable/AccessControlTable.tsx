@@ -1,3 +1,7 @@
+// External dependencies
+import { useState } from 'react';
+import { FormikValues } from 'formik';
+
 // Internal dependencies
 import style from './AccessControlTable.module.scss';
 import Button from '../../../../components/Button/Button';
@@ -7,13 +11,18 @@ import { ProjectClass, UserClass } from 'shared/src/classes';
 import { ProjectRoleEnum } from 'shared/src/enums';
 import formatProjectRole from '../../../../utils/formatProjectRole';
 import useTranslations from '../../../../i18n/translations';
+import AddUserModal from './components/AddUserModal/AddUserModal';
 
 interface AccessControlTableProps {
 	project: ProjectClass;
+	submit: (values: FormikValues, remove: boolean) => void;
 }
 
-export default function AccessControlTable({ project }: AccessControlTableProps): JSX.Element {
+export default function AccessControlTable({ project, submit }: AccessControlTableProps): JSX.Element {
 	const t = useTranslations();
+
+	const [open, setOpen] = useState(false);
+	const [confirmDelete, setConfirmDelete] = useState('');
 
 	return (
 		<>
@@ -39,11 +48,27 @@ export default function AccessControlTable({ project }: AccessControlTableProps)
 							(user.user as UserClass).email,
 							t.accessControl.projectStatus[formatProjectRole(user.role)],
 							<Button
-								text={t.accessControl.remove}
+								text={
+									confirmDelete === (user.user as UserClass)._id.toString()
+										? t.accessControl.confirmRemove
+										: t.accessControl.remove
+								}
 								small
-								theme='danger'
+								theme='error'
 								onClick={() => {
-									console.log('remove');
+									if (confirmDelete === (user.user as UserClass)._id.toString()) {
+										submit(
+											{
+												user: (user.user as UserClass)._id.toString(),
+												role: user.role
+											},
+											true
+										);
+										setConfirmDelete('');
+									} else {
+										console.log((user.user as UserClass)._id.toString());
+										setConfirmDelete((user.user as UserClass)._id.toString());
+									}
 								}}
 								disabled={user.role === ProjectRoleEnum.OWNER}
 							/>
@@ -53,13 +78,21 @@ export default function AccessControlTable({ project }: AccessControlTableProps)
 					<Button
 						text={t.accessControl.addNew}
 						theme='primary'
-						onClick={() => {
-							console.log('add new');
-						}}
+						onClick={() => setOpen(true)}
 						small
 					/>
 				</div>
 			</Widget>
+
+			<AddUserModal
+				existingUsers={(project.permissions || []).map((user) => (user.user as UserClass)._id.toString())}
+				onClose={() => setOpen(false)}
+				submit={async (values) => {
+					submit(values, false);
+					setOpen(false);
+				}}
+				open={open}
+			/>
 		</>
 	);
 }
