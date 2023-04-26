@@ -224,56 +224,56 @@ export const en: TranslationKeys = {
 		created: 'Created'
 	},
 	accessControl: {
-		title: 'Access Control',
+		title: 'Access Control Management',
 		description: 'The root user and all administrators have full access to all projects.',
 		username: 'Username',
-		email: 'Email',
-		role: 'Role',
-		actions: 'Actions',
-		remove: 'Remove',
-		confirmRemove: 'Confirm',
-		addNew: 'Add new',
+		email: 'Email Address',
+		role: 'User Role',
+		actions: 'Available Actions',
+		remove: 'Remove User',
+		confirmRemove: 'Confirm Removal',
+		addNew: 'Add New User',
 		projectStatus: {
-			owner: 'Owner',
-			developer: 'Developer',
-			viewer: 'Viewer',
-			unknown: 'Unknown'
+			owner: 'Project Owner',
+			developer: 'Project Developer',
+			viewer: 'Project Viewer',
+			unknown: 'Unknown Role'
 		}
 	},
 	containers: {
-		title: 'Containers',
-		availableContainers: 'Available containers',
+		title: 'Container Management',
+		availableContainers: 'Available Containers',
 		noContainersFound: 'No containers found.',
-		name: 'Name',
-		state: 'State',
-		created: 'Created'
+		name: 'Container Name',
+		state: 'Current State',
+		created: 'Creation Date'
 	},
 	container: {
 		title: 'Container Details',
-		id: 'Id',
-		logs: 'Logs',
-		lastUpdated: 'Last Updated'
+		id: 'Container ID',
+		logs: 'Container Logs',
+		lastUpdated: 'Last Updated On'
 	},
 	domains: {
-		title: 'Domains',
-		createDomain: 'Create Domain',
-		createDomainSuccess: 'The domain has been created!',
+		title: 'Domain Management',
+		createDomain: 'Create New Domain',
+		createDomainSuccess: 'The domain has been successfully created!',
 		createDomainError: 'An error occurred while creating the domain.',
 		noDomainsFound: 'No domains found.',
 		serverName: 'Server Name',
-		leaveEmptyForRoot: 'Leave empty for root',
-		locations: 'Locations',
+		leaveEmptyForRoot: 'Leave empty for root domain',
+		locations: 'Domain Locations',
 		location: 'Location',
-		project: 'Project',
-		service: 'Service',
-		port: 'Port',
+		project: 'Associated Project',
+		service: 'Associated Service',
+		port: 'Service Port',
 		proxyPass: 'Proxy Pass',
-		sslConfigured: 'SSL configured',
-		websocketConfigured: 'Websocket configured',
-		internalOnly: 'Internal only',
-		remove: 'Remove',
-		confirmRemove: 'Confirm removal',
-		removeSuccess: 'The domain has been removed!',
+		sslConfigured: 'SSL Configuration Status',
+		websocketConfigured: 'Websocket Configuration Status',
+		internalOnly: 'Internal Domain Only',
+		remove: 'Remove Domain',
+		confirmRemove: 'Confirm Domain Removal',
+		removeSuccess: 'The domain has been successfully removed!',
 		removeError: 'An error occurred while removing the domain.',
 		yes: 'Yes',
 		no: 'No',
@@ -305,27 +305,27 @@ export const en: TranslationKeys = {
 			}
 		},
 		type: {
-			title: 'Type',
-			project: 'Project Service',
-			custom: 'Custom'
+			title: 'Domain Type',
+			project: 'Project Service Domain',
+			custom: 'Custom Domain'
 		}
 	},
 	settings: {
-		title: 'Settings'
+		title: 'App Settings'
 	},
 	generalSettings: {
 		title: 'General Settings',
-		general: 'General',
+		general: 'General Information',
 		accountRole: 'Account Role',
 		username: 'Username',
-		email: 'Email',
-		change: 'Change',
+		email: 'Email Address',
+		change: 'Modify',
 		usernameRequired: 'Username is required.',
-		usernameSuccess: 'Username has been changed!',
+		usernameSuccess: 'Username has been successfully changed!',
 		usernameError: 'An error occurred while changing the username.',
 		emailRequired: 'Email is required.',
-		emailInvalid: 'Invalid email.',
-		emailSuccess: 'Email has been changed!',
+		emailInvalid: 'Invalid email address.',
+		emailSuccess: 'Email has been successfully changed!',
 		emailError: 'An error occurred while changing the email.'
 	},
 	changePasswordModal: {
@@ -339,85 +339,85 @@ export const en: TranslationKeys = {
 			minLength: 'Password must be at least 8 characters long.'
 		},
 		confirmPassword: {
-			title: 'Confirm Password',
+			title: 'Confirm New Password',
 			required: 'Confirm password is required.',
 			match: 'Passwords do not match.'
 		},
 		submit: 'Change Password',
-		success: 'Password has been changed!',
+		success: 'Password has been successfully changed!',
 		error: 'An error occurred while changing the password.'
 	},
 	userSettings: {
 		title: 'User Settings',
 		noUsersFound: 'No users found.',
-		users: 'Users',
+		users: 'Users List',
 		accountType: 'Account Type',
 		username: 'Username',
-		email: 'Email',
-		lastLogin: 'Last Login',
-		lastIp: 'Last IP',
+		email: 'Email Address',
+		lastLogin: 'Last Login Date',
+		lastIp: 'Last IP Address',
 		actions: 'Actions',
-		edit: 'Edit',
-		never: 'Never'
+		edit: 'Edit User',
+		never: 'Never Logged In'
 	},
 	changeRoleModal: {
-		title: 'Change Role',
+		title: 'Change User Role',
 		description: "This will change the user's role.",
 		schema: {
 			roleRequired: 'Role is required.'
 		},
-		role: 'Role',
-		root: 'Root',
+		role: 'User Role',
+		root: 'Root User',
 		admin: 'Administrator',
-		user: 'User',
-		unknown: 'Unknown',
+		user: 'Standard User',
+		unknown: 'Unknown Role',
 		submit: 'Change Role',
-		success: 'Role has been changed!',
+		success: 'Role has been successfully changed!',
 		error: 'An error occurred while changing the role.'
 	},
 	nginx: {
 		title: 'Nginx Settings',
-		nginx: 'Nginx',
+		nginx: 'Nginx Configuration',
 		configuration: {
-			title: 'Configuration',
-			sitesEnabledDirectory: 'Sites Enabled directory',
+			title: 'Nginx Configuration',
+			sitesEnabledDirectory: 'Sites Enabled Directory',
 			sitesEnabledDirectoryRequired: 'Sites Enabled directory is required.',
-			accessLogLocation: 'Access log location',
+			accessLogLocation: 'Access Log Location',
 			accessLogLocationRequired: 'Access log location is required.',
-			localIpAddresses: 'Local IP addresses',
-			localIpAddressesRequired: 'Local IP addresses is required.',
-			edit: 'Edit',
+			localIpAddresses: 'Local IP Addresses',
+			localIpAddressesRequired: 'Local IP addresses are required.',
+			edit: 'Edit Configuration',
 			notSet: 'Not set',
-			successfullyUpdated: 'Configuration has been updated!',
+			successfullyUpdated: 'Configuration has been successfully updated!',
 			failedToUpdate: 'An error occurred while updating the configuration.'
 		},
 		domains: {
-			title: 'Domains',
+			title: 'Nginx Domains',
 			availableDomains: 'Available Domains',
 			noDomainsFound: 'No domains found.',
-			addDomainName: 'Add domain name',
+			addDomainName: 'Add Domain Name',
 			failedToAddDomain: 'Failed to add domain name.',
-			removeDomainName: 'Remove domain name',
+			removeDomainName: 'Remove Domain Name',
 			failedToRemoveDomain: 'Failed to remove domain name.',
-			add: 'Add',
-			remove: 'Remove'
+			add: 'Add Domain',
+			remove: 'Remove Domain'
 		}
 	},
 	addUserModal: {
 		title: 'Add User to Project',
-		user: 'User',
-		role: 'Role',
-		add: 'Add',
-		addSuccess: 'User has been added to the project!',
+		user: 'Select User',
+		role: 'Select Role',
+		add: 'Add User',
+		addSuccess: 'User has been successfully added to the project!',
 		addError: 'An error occurred while adding the user to the project.',
-		removeSuccess: 'User has been removed from the project!',
+		removeSuccess: 'User has been successfully removed from the project!',
 		removeError: 'An error occurred while removing the user from the project.',
 		schema: {
 			user: {
-				required: 'User is required.'
+				required: 'User selection is required.'
 			},
 			role: {
-				required: 'Role is required.'
+				required: 'Role selection is required.'
 			}
 		}
 	}
