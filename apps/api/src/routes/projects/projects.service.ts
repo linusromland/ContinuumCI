@@ -186,7 +186,7 @@ export class ProjectsService {
 			await git.reset(['--hard']);
 
 			// Pull the latest changes
-			await git.pull();
+			const result = await git.pull();
 
 			if (!(await updateCompose(project, this.ProjectModel))) {
 				throw new BadRequestException({
@@ -195,12 +195,19 @@ export class ProjectsService {
 				});
 			}
 
-			if (project.enabled) {
+			if (project.enabled && result.files.length) {
 				// Forefully remove the deployment
 				await this.deploymentService.removeDeployment(userId, projectId, true);
 
 				// Create a new deployment
 				await this.deploymentService.createDeployment(userId, projectId);
+			}
+
+			if (!result.files.length) {
+				return {
+					success: true,
+					message: 'alreadyInSync'
+				};
 			}
 
 			return {

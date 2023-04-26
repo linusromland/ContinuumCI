@@ -107,7 +107,8 @@ export default function Project() {
 								setSyncLoading(true);
 								const response = await syncProject(project._id);
 								if (response.success) {
-									toast.success(t.project.syncSuccess);
+									if (response.message == 'alreadyInSync') toast.info(t.project.alreadyInSync);
+									else toast.success(t.project.syncSuccess);
 									getData();
 								} else toast.error(t.project.syncError);
 								setSyncLoading(false);

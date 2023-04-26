@@ -163,6 +163,7 @@ export const en: TranslationKeys = {
 		name: 'Name',
 		sync: 'Sync',
 		syncSuccess: 'Project synced!',
+		alreadyInSync: 'Project already in sync.',
 		syncError: 'An error occurred while syncing project.',
 		start: 'Start',
 		started: 'started',

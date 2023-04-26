@@ -160,6 +160,7 @@ export type TranslationKeys = {
 		name: string;
 		sync: string;
 		syncSuccess: string;
+		alreadyInSync: string;
 		syncError: string;
 		start: string;
 		started: string;

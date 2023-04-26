@@ -164,6 +164,7 @@ export const sv: TranslationKeys = {
 		name: 'Namn',
 		sync: 'Synkronisera',
 		syncSuccess: 'Projektet har synkroniserats!',
+		alreadyInSync: 'Projektet är redan i synk.',
 		syncError: 'Ett fel uppstod vid synkronisering av projektet.',
 		start: 'Starta',
 		started: 'startades',
