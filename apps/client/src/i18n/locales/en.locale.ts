@@ -7,7 +7,7 @@ export const en: TranslationKeys = {
 		noData: 'No data available'
 	},
 	setupSidebar: {
-		footer: 'ContinuumCI is a project by Linus Romland. The source code is available on'
+		footer: 'ContinuumCI by Linus Romland. Source code on'
 	},
 	sidebar: {
 		analytics: {
@@ -26,30 +26,30 @@ export const en: TranslationKeys = {
 			users: 'Users'
 		},
 		footer: {
-			authenticatedAs: 'Authenticated as',
+			authenticatedAs: 'Logged in as',
 			signOut: 'Sign out'
 		}
 	},
 	resetPassword: {
 		title: 'Reset password',
-		successReset: "If the email is valid, you'll receive an email with a link to reset your password.",
-		errorReset: 'An error occurred while resetting your password. Please try again later.'
+		successReset: "If the email is valid, you'll receive a link to reset your password.",
+		errorReset: 'An error occurred. Please try again later.'
 	},
 	login: {
-		title: 'Welcome back! Please login to your account.',
-		successLogin: 'You have been logged in successfully.',
+		title: 'Welcome back! Login to your account.',
+		successLogin: 'Logged in successfully.',
 		invalidLogin: 'Invalid email or password.',
 		rememberMe: 'Remember me',
 		forgotPassword: 'Forgot password?',
 		resetPassword: 'Reset password',
-		notRegistered: "Don't have an account?",
+		notRegistered: 'No account yet?',
 		login: 'Login',
 		password: 'Password'
 	},
 	register: {
-		title: 'Welcome! Please register for an account.',
-		successCreate: 'Your account has been created successfully.',
-		errorCreate: 'An error occurred while creating your account. Please try again later.',
+		title: 'Welcome! Register for an account.',
+		successCreate: 'Account created successfully.',
+		errorCreate: 'An error occurred. Please try again later.',
 		alreadyRegistered: 'Already have an account?',
 		username: 'Username',
 		confirmPassword: 'Confirm password',
@@ -57,8 +57,8 @@ export const en: TranslationKeys = {
 		register: 'Register',
 		schema: {
 			username: {
-				min: 'Username must be at least 3 characters long.',
-				max: 'Username must be at most 20 characters long.',
+				min: 'At least 3 characters.',
+				max: 'At most 20 characters.',
 				required: 'Username is required.'
 			},
 			email: {
@@ -66,7 +66,7 @@ export const en: TranslationKeys = {
 				invalid: 'Email is invalid.'
 			},
 			password: {
-				min: 'Password must be at least 8 characters long.',
+				min: 'At least 8 characters.',
 				required: 'Password is required.'
 			},
 			confirmPassword: {
@@ -99,7 +99,7 @@ export const en: TranslationKeys = {
 		},
 		images: 'Images',
 		requestTable: {
-			title: '10 latests requests',
+			title: '10 latest requests',
 			time: 'Time',
 			method: 'Method',
 			status: 'Status',
@@ -142,10 +142,10 @@ export const en: TranslationKeys = {
 			branch: 'Branch',
 			create: 'Create project',
 			successCreate: 'Project created successfully.',
-			errorCreate: 'An error occurred while creating the project. Please try again later.',
+			errorCreate: 'An error occurred. Please try again later.',
 			schema: {
 				name: {
-					min: 'Project name must be at least 3 characters long.',
+					min: 'At least 3 characters.',
 					required: 'Project name is required.'
 				},
 				repositoryUrl: {
@@ -183,7 +183,7 @@ export const en: TranslationKeys = {
 	},
 	enviromentVariablesTable: {
 		title: 'Environment Variables',
-		description: 'All environment variables for the project.',
+		description: 'All variables for the project.',
 		addNew: 'Add new',
 		save: 'Save',
 		remove: 'Remove',
