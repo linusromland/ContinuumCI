@@ -127,18 +127,33 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 				}}
 				enableReinitialize
 				validationSchema={Yup.object({
-					server_name: Yup.string()
-						.matches(/^[a-z]+$/, t.domains.schema.serverName.matches)
-						.required(t.domains.schema.serverName.required),
-					domain: Yup.string().required(t.domains.schema.domain.required),
+					server_name: Yup.string().matches(/^[a-z]+$/, t.domains.schema.serverName.matches),
+					domain: Yup.object({
+						label: Yup.string().required(t.domains.schema.domain.required),
+						value: Yup.string().required(t.domains.schema.domain.required)
+					}),
 					locations: Yup.array()
 						.of(
 							Yup.object({
+								type: Yup.object({
+									label: Yup.string(),
+									value: Yup.string()
+								}),
 								location: Yup.string().required(t.domains.schema.location.required),
-								proxy_pass: Yup.string().required(t.domains.schema.proxyPass.required),
+								// When the type of the location in the array is set to "custom", the proxy_pass field is required
+								proxy_pass: Yup.string().when('type', {
+									is: (type: { label: string; value: string }) => type.value === 'custom',
+									then: (schema) => schema.required(t.domains.schema.proxyPass.required)
+								}),
 								project: Yup.object({
-									id: Yup.string().required(t.domains.schema.project.id.required),
-									service: Yup.string().required(t.domains.schema.project.service.required)
+									id: Yup.object({
+										label: Yup.string(),
+										value: Yup.string()
+									}),
+									service: Yup.object({
+										label: Yup.string(),
+										value: Yup.string()
+									})
 								}),
 								websocket: Yup.boolean(),
 								internal: Yup.boolean()

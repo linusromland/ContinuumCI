@@ -38,7 +38,14 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 						.matches(/^[a-zA-Z0-9_]+$/, t.createEnviromentVariables.schema.name.match),
 					value: Yup.string().required(t.createEnviromentVariables.schema.value.required),
 					// String array with at least one element
-					services: Yup.array().of(Yup.string()).min(1, t.createEnviromentVariables.schema.services.min)
+					services: Yup.array()
+						.of(
+							Yup.object({
+								value: Yup.string(),
+								label: Yup.string()
+							})
+						)
+						.min(1, t.createEnviromentVariables.schema.services.min)
 				})}
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				onSubmit={() => {}} // This is required for the validation to work

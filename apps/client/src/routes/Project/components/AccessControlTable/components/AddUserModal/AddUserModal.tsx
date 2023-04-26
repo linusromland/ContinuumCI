@@ -61,8 +61,8 @@ export default function AddUserModal({ existingUsers, onClose, submit, open }: A
 				enableReinitialize
 				validationSchema={Yup.object({
 					user: Yup.object({
-						label: Yup.string().required(t.addUserModal.schema.user.required),
-						value: Yup.string().required(t.addUserModal.schema.user.required)
+						label: Yup.string().required(t.addUserModal.schema.user.required).nonNullable(),
+						value: Yup.string().required(t.addUserModal.schema.user.required).nonNullable()
 					}),
 					role: Yup.object({
 						label: Yup.string().required(t.addUserModal.schema.role.required),

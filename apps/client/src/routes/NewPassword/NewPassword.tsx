@@ -18,7 +18,7 @@ export default function NewPassword(): JSX.Element {
 	const NewPasswordSchema = Yup.object().shape({
 		password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
 		confirmPassword: Yup.string()
-			.oneOf([Yup.ref('newPassword')], 'Passwords must match')
+			.oneOf([Yup.ref('password')], 'Passwords must match')
 			.required('Password is required')
 	});
 
