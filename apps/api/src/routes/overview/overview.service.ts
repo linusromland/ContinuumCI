@@ -46,7 +46,7 @@ export class OverviewService {
 			data: {
 				cpuUsage: cpuUsage.currentLoad,
 				cpuCores: cpuCores.cores,
-				memoryUsage: mem.used - mem.swapused,
+				memoryUsage: mem.used,
 				memoryTotal: mem.total - mem.swaptotal,
 				networkSending: network[networkAdapterIndex || 0]?.tx_sec,
 				networkReceiving: network[networkAdapterIndex || 0]?.rx_sec,
