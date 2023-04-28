@@ -66,7 +66,6 @@ export default function AccessControlTable({ project, submit }: AccessControlTab
 										);
 										setConfirmDelete('');
 									} else {
-										console.log((user.user as UserClass)._id.toString());
 										setConfirmDelete((user.user as UserClass)._id.toString());
 									}
 								}}

@@ -163,7 +163,6 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 					ssl: Yup.boolean().required(t.domains.schema.ssl.required)
 				})}
 				onSubmit={async (values) => {
-					console.log(values);
 					const proxy_passes: string[] = [];
 
 					for (const location of values.locations) {
@@ -212,7 +211,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 					}
 				}}
 			>
-				{({ values, errors, isSubmitting, dirty }) => (
+				{({ values, isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
 						<div className={formStyle.formGroup}>
 							<label
@@ -465,9 +464,6 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								theme='success'
 								small
 								type='submit'
-								onClick={() => {
-									console.log(errors);
-								}}
 								disabled={isSubmitting || !dirty}
 							/>
 						</div>

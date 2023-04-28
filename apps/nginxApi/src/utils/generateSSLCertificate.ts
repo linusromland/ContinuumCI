@@ -8,16 +8,13 @@ const generateSSLCertificate = async (domain: string, email: string) => {
 			// Generate a new SSL certificate with Certbot
 			exec(
 				`certbot --nginx -d ${domain} -d www.${domain} --agree-tos --no-eff-email --non-interactive --email ${email}`,
-				(error, stdout, stderr) => {
+				(error, _, stderr) => {
 					if (error) {
-						console.log(error);
 						reject(false);
 					}
 					if (stderr) {
-						console.log(stderr);
 						reject(false);
 					}
-					console.log(stdout);
 					resolve(true);
 				}
 			);
@@ -35,22 +32,18 @@ const generateSSLCertificate = async (domain: string, email: string) => {
 			// Automatically renew the SSL certificate before it expires
 			exec(
 				`certbot renew --nginx --agree-tos --no-eff-email --non-interactive --email ${email}`,
-				(error, stdout, stderr) => {
+				(error, _, stderr) => {
 					if (error) {
-						console.log(error);
 						reject(false);
 					}
 					if (stderr) {
-						console.log(stderr);
 						reject(false);
 					}
-					console.log(stdout);
 					resolve(true);
 				}
 			);
 		});
-	} catch (error) {
-		console.log(error, 'error');
+	} catch (_) {
 		return false;
 	}
 };
