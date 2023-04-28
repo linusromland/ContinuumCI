@@ -24,13 +24,7 @@ export class DeploymentsService {
 		private NginxReloadLogsModel: Model<NginxReloadLogsType>
 	) {}
 
-	async create(id: string): Promise<ResponseType> {
-		if (!id) {
-			throw new BadRequestException({
-				success: false,
-				message: 'No id provided'
-			});
-		}
+	async create(id: string, email: string): Promise<ResponseType> {
 		const configuration = await this.NginxConfigurationModel.findOne();
 		if (!configuration) {
 			throw new BadRequestException({
@@ -65,7 +59,7 @@ export class DeploymentsService {
 
 					if (stderr) {
 						if (deployment.ssl) {
-							await generateSSLCertificate(deployment.server_name, 'linusromland@gmail.com');
+							await generateSSLCertificate(deployment.server_name, email);
 						}
 
 						resolve({

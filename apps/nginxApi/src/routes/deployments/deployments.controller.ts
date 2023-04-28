@@ -8,8 +8,8 @@ export class DeploymentsController {
 	constructor(private readonly deploymentsService: DeploymentsService) {}
 
 	@Post('create')
-	async create(@Body() body: { id: string }) {
-		const { id } = body;
+	async create(@Body() body: { id: string; email: string }) {
+		const { id, email } = body;
 
 		if (!id) {
 			throw new BadRequestException({
@@ -18,7 +18,14 @@ export class DeploymentsController {
 			});
 		}
 
-		return this.deploymentsService.create(id);
+		if (!email) {
+			throw new BadRequestException({
+				success: false,
+				message: 'No email provided'
+			});
+		}
+
+		return this.deploymentsService.create(id, email);
 	}
 
 	@Post('delete')

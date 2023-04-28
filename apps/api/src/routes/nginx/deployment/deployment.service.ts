@@ -82,7 +82,8 @@ export class DeploymentService {
 		const request = await axios.post(
 			`${NGINX_API_URL}/deployments/create`,
 			{
-				id: createdDeployment._id.toString()
+				id: createdDeployment._id.toString(),
+				email: user.email
 			},
 			{
 				validateStatus: () => true
