@@ -13,5 +13,9 @@ export const NginxConfigurationSchema = new Schema({
 	accessLogLocation: {
 		type: String,
 		required: true
+	},
+	sslCertificateLocation: {
+		type: String,
+		required: true
 	}
 });

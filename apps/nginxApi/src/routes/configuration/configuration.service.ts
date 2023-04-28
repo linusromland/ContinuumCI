@@ -43,7 +43,8 @@ export class ConfigurationService {
 				data: {
 					localIps: nginxConfiguration.localIps,
 					sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
-					accessLogLocation: nginxConfiguration.accessLogLocation
+					accessLogLocation: nginxConfiguration.accessLogLocation,
+					sslCertificateLocation: nginxConfiguration.sslCertificateLocation
 				}
 			};
 		} catch (error) {

@@ -31,6 +31,7 @@ export default function Nginx(): JSX.Element {
 	const [sitesEnabledDirectoryModal, setSitesEnabledDirectoryModal] = useState(false);
 	const [accessLogLocationModal, setAccessLogLocationModal] = useState(false);
 	const [localIpAdressesModal, setLocalIpAdressesModal] = useState(false);
+	const [sslCertificateLocationModal, setSslCertificateLocationModal] = useState(false);
 	const [selectedDomainName, setSelectedDomainName] = useState({
 		value: '',
 		label: ''
@@ -119,6 +120,19 @@ export default function Nginx(): JSX.Element {
 								small
 								theme='secondary'
 								className={clsx(style.row3, style.col3)}
+							/>
+							<h3 className={clsx(style.infoContainerTitle, style.row4, style.col1)}>
+								{t.nginx.configuration.sslCertificateLocation}:
+							</h3>
+							<p className={clsx(style.infoContainerValue, style.row4, style.col2)}>
+								{nginxConfiguration.sslCertificateLocation || t.nginx.configuration.notSet}
+							</p>
+							<Button
+								text={t.nginx.configuration.edit}
+								onClick={() => setSslCertificateLocationModal(true)}
+								small
+								theme='secondary'
+								className={clsx(style.row4, style.col3)}
 							/>
 						</div>
 					</div>
@@ -235,7 +249,8 @@ export default function Nginx(): JSX.Element {
 					editConfiguration({
 						sitesEnabledLocation: values.sitesEnabledLocation,
 						accessLogLocation: nginxConfiguration.accessLogLocation,
-						localIps: nginxConfiguration.localIps
+						localIps: nginxConfiguration.localIps,
+						sslCertificateLocation: nginxConfiguration.sslCertificateLocation
 					});
 				}}
 			/>
@@ -257,7 +272,8 @@ export default function Nginx(): JSX.Element {
 					editConfiguration({
 						sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
 						accessLogLocation: values.accessLogLocation,
-						localIps: nginxConfiguration.localIps
+						localIps: nginxConfiguration.localIps,
+						sslCertificateLocation: nginxConfiguration.sslCertificateLocation
 					});
 				}}
 			/>
@@ -279,7 +295,34 @@ export default function Nginx(): JSX.Element {
 					editConfiguration({
 						sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
 						accessLogLocation: nginxConfiguration.accessLogLocation,
-						localIps: values.localIps
+						localIps: values.localIps,
+						sslCertificateLocation: nginxConfiguration.sslCertificateLocation
+					});
+				}}
+			/>
+
+			<TextEditModal
+				title={
+					t.nginx.configuration.edit + ' ' + t.nginx.configuration.sslCertificateLocation.toLocaleLowerCase()
+				}
+				fieldName={t.nginx.configuration.sslCertificateLocation.toLocaleLowerCase()}
+				open={sslCertificateLocationModal}
+				onClose={() => {
+					setSslCertificateLocationModal(false);
+				}}
+				initialValues={{
+					[t.nginx.configuration.sslCertificateLocation.toLocaleLowerCase()]:
+						nginxConfiguration.sslCertificateLocation
+				}}
+				validationSchema={Yup.object().shape({
+					sslCertificateLocation: Yup.string().required(t.nginx.configuration.sslCertificateLocationRequired)
+				})}
+				submit={async (values) => {
+					editConfiguration({
+						sitesEnabledLocation: nginxConfiguration.sitesEnabledLocation,
+						accessLogLocation: nginxConfiguration.accessLogLocation,
+						localIps: nginxConfiguration.localIps,
+						sslCertificateLocation: values.sslCertificateLocation
 					});
 				}}
 			/>
