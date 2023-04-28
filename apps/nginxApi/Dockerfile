@@ -7,7 +7,7 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir -p /etc/nginx/sites-enabled
 
 # Install nodejs and npm
-RUN apk add --no-cache nodejs npm
+RUN apk add --no-cache nodejs npm certbot certbot-nginx
 
 # Build the nodejs app
 WORKDIR /app

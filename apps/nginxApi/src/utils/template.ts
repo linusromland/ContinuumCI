@@ -4,6 +4,7 @@ import path from 'path';
 
 // Internal dependencies
 import { NginxDeploymentClass } from 'shared/src/classes';
+import { NginxConfigurationType } from 'shared/src/types';
 
 const templateDir = `../templates`;
 
@@ -19,10 +20,8 @@ const internalWebsocketLocationTemplate = fs.readFileSync(
 	'utf8'
 );
 
-const template = (deployment: NginxDeploymentClass, localIps): string => {
-	const { server_name, locations, ssl } = deployment;
-
-	if (ssl) console.log('SSL is not implemented yet');
+const template = async (deployment: NginxDeploymentClass, configuration: NginxConfigurationType): Promise<string> => {
+	const { server_name, locations } = deployment;
 
 	let templateContent = baseTemplate.replace('{{server_name}}', server_name);
 
@@ -47,7 +46,7 @@ const template = (deployment: NginxDeploymentClass, localIps): string => {
 		);
 
 		if (location.internal) {
-			locationTemplate = locationTemplate.replace('{{internal_ips}}', localIps);
+			locationTemplate = locationTemplate.replace('{{internal_ips}}', configuration.localIps);
 		}
 
 		locationContent += locationTemplate;

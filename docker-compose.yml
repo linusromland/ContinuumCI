@@ -24,9 +24,11 @@ services:
             - default
         volumes:
             - nginx_sites_enabled:/etc/nginx/sites-enabled
+            - letsencrypt:/etc/letsencrypt
             - nginx_logs:/var/log/nginx
         ports:
             - '80:80'
+            - '443:443'
     api:
         depends_on:
             - mongo
@@ -60,5 +62,6 @@ volumes:
     mongodb_data:
     mongodb_config:
     nginx_sites_enabled:
+    letsencrypt:
     nginx_logs:
     projects_data:

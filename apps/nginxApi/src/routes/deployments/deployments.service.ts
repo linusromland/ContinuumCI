@@ -9,6 +9,7 @@ import path from 'path';
 import { ResponseType, NginxConfigurationType, NginxReloadLogsType } from 'shared/src/types';
 import { NginxDeploymentClass } from 'shared/src/classes';
 import template from 'src/utils/template';
+import generateSSLCertificate from 'src/utils/generateSSLCertificate';
 
 @Injectable()
 export class DeploymentsService {
@@ -48,12 +49,12 @@ export class DeploymentsService {
 				});
 			}
 
-			const nginxTemplate = template(deployment, configuration.localIps);
+			const nginxTemplate = await template(deployment, configuration);
 
 			fs.writeFileSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`), nginxTemplate);
 
 			const reloadCommand = new Promise((resolve, reject) => {
-				exec('nginx -s reload', (error, stdout, stderr) => {
+				exec('nginx -s reload', async (error, _, stderr) => {
 					if (error) {
 						reject({
 							success: false,
@@ -63,6 +64,10 @@ export class DeploymentsService {
 					}
 
 					if (stderr) {
+						if (deployment.ssl) {
+							await generateSSLCertificate(deployment.server_name, 'linusromland@gmail.com');
+						}
+
 						resolve({
 							success: true,
 							message: 'Deployment created',
@@ -122,7 +127,10 @@ export class DeploymentsService {
 			}
 
 			try {
-				fs.unlinkSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`));
+				// Check if file exists before trying to delete it
+				if (fs.existsSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`))) {
+					fs.unlinkSync(path.join(configuration.sitesEnabledLocation, `${deployment._id}.conf`));
+				}
 			} catch (error) {
 				console.log(error);
 			}
