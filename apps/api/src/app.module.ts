@@ -1,5 +1,8 @@
 // External dependencies
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+
+// Internal dependencies
+import { NestLogger } from 'shared/src/middlewares';
 
 // Modules import
 import { AuthModule } from './routes/auth/auth.module';
@@ -27,4 +30,8 @@ import { UsersModule } from './routes/users/users.module';
 		UsersModule
 	]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+	configure(consumer: MiddlewareConsumer): void {
+		consumer.apply(NestLogger).forRoutes('*');
+	}
+}
