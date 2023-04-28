@@ -1,5 +1,5 @@
 // External dependencies
-import { Schema } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
 export const ProjectSchema = new Schema(
 	{
@@ -56,7 +56,12 @@ export const ProjectSchema = new Schema(
 					}
 				]
 			}
-		]
+		],
+		cdToken: {
+			type: Types.ObjectId,
+			default: new Types.ObjectId(),
+			unique: true
+		}
 	},
 	{
 		timestamps: true
