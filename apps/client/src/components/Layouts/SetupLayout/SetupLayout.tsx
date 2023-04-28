@@ -19,6 +19,29 @@ export default function SetupLayout(): JSX.Element {
 
 	return (
 		<div className={style.main}>
+			<div className={style.content}>
+				<div>
+					<div
+						className={style.logoWrapper}
+						onClick={() => {
+							navigate('/login');
+						}}
+					>
+						<img
+							src='/logo.svg'
+							alt='ContinuumCI Logo'
+							className={style.logo}
+						/>
+						<h1 className={style.title}>ContinuumCI</h1>
+					</div>
+					<Outlet />
+				</div>
+				<div className={style.footer}>
+					<p>
+						{t.setupSidebar.footer} <a href='https://github.com/linusromland/ContinuumCI'>GitHub</a>.
+					</p>
+				</div>
+			</div>
 			<Particles
 				id='tsparticles'
 				init={particlesInit}
@@ -98,30 +121,6 @@ export default function SetupLayout(): JSX.Element {
 					detectRetina: true
 				}}
 			/>
-
-			<div className={style.content}>
-				<div>
-					<div
-						className={style.logoWrapper}
-						onClick={() => {
-							navigate('/login');
-						}}
-					>
-						<img
-							src='/logo.svg'
-							alt='ContinuumCI Logo'
-							className={style.logo}
-						/>
-						<h1 className={style.title}>ContinuumCI</h1>
-					</div>
-					<Outlet />
-				</div>
-				<div className={style.footer}>
-					<p>
-						{t.setupSidebar.footer} <a href='https://github.com/linusromland/ContinuumCI'>GitHub</a>.
-					</p>
-				</div>
-			</div>
 		</div>
 	);
 }
