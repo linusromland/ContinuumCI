@@ -17,6 +17,7 @@ import { createDeployment } from '../../../../utils/api/nginx/deployment';
 import { toast } from 'react-toastify';
 import defaultProject from '../../../../utils/getdefaultProject';
 import useTranslations from '../../../../i18n/translations';
+import clsx from 'clsx';
 
 interface DomainModalProps {
 	onClose: (update: boolean) => void;
@@ -212,7 +213,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 				}}
 			>
 				{({ values, isSubmitting, dirty }) => (
-					<Form className={formStyle.form}>
+					<Form className={clsx(formStyle.form, style.form)}>
 						<div className={formStyle.formGroup}>
 							<label
 								htmlFor='server_name'
