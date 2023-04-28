@@ -10,7 +10,7 @@ enum ProjectDeploymentStatus {
 	NOT_RUNNING = 'notRunning',
 	RESTARTING = 'restarting',
 	CRASHED = 'crashed',
-	PARTIALLY_RUNNING = 'partipartiallyRunningallyRunning'
+	PARTIALLY_RUNNING = 'partiallyRunning'
 }
 
 export { ProjectSyncStatus, ProjectDeploymentStatus };
