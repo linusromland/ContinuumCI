@@ -122,6 +122,7 @@ export type TranslationKeys = {
 				restarting: string;
 				crashed: string;
 				partiallyRunning: string;
+				[key: string]: string;
 			};
 			syncStatus: {
 				title: string;

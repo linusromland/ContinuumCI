@@ -192,7 +192,7 @@ export default function Project() {
 										{
 											name: project.name,
 											permissions: project.permissions
-												.filter((user) => user.user._id !== values.user)
+												.filter((user) => (user.user as UserClass)._id !== values.user)
 												.map((user) => ({
 													user: (user.user as UserClass)._id,
 													role: user.role
