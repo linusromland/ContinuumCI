@@ -133,6 +133,8 @@ export default function AddUserModal({ existingUsers, onClose, submit, open }: A
 							disabled={isSubmitting || !dirty}
 							type='submit'
 							theme='secondary'
+							icon='/icons/save.svg'
+							loading={isSubmitting}
 						/>
 					</Form>
 				)}

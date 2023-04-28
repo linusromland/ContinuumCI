@@ -90,6 +90,9 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 							disabled={!dirty || isSubmitting}
 							text={t.login.login}
 							type='submit'
+							small
+							icon='/icons/signin.svg'
+							loading={isSubmitting}
 						/>
 					</div>
 				</Form>

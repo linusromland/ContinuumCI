@@ -119,13 +119,7 @@ export default function Project() {
 						<Button
 							text={project.enabled ? t.project.stop : t.project.start}
 							theme={project.enabled ? 'warning' : 'success'}
-							icon={
-								deploymentLoading
-									? '/icons/sync.svg'
-									: project.enabled
-									? '/icons/stop.svg'
-									: '/icons/play.svg'
-							}
+							icon={project.enabled ? '/icons/stop.svg' : '/icons/play.svg'}
 							onClick={async () => {
 								setDeploymentLoading(true);
 								const response = project.enabled

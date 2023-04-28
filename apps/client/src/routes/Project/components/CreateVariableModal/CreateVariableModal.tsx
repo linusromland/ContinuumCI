@@ -121,6 +121,8 @@ export default function CreateVariableModal({ serviceList, onClose, submit, open
 							disabled={isSubmitting || !dirty}
 							type='submit'
 							theme='secondary'
+							icon='/icons/save.svg'
+							loading={isSubmitting}
 						/>
 					</Form>
 				)}

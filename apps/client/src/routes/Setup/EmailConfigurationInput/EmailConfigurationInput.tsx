@@ -103,6 +103,8 @@ export default function EmailConfigurationInput({ onSubmit }: EmailConfiguration
 							text='Continue'
 							type='submit'
 							disabled={!dirty || isSubmitting}
+							icon='/icons/save.svg'
+							loading={isSubmitting}
 						/>
 					</div>
 				</Form>

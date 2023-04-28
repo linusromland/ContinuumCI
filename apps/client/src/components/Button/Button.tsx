@@ -29,7 +29,7 @@ export default function Button({
 			{icon && (
 				<img
 					className={clsx(style.icon, loading && style.loading)}
-					src={icon}
+					src={loading ? '/icons/sync.svg' : icon}
 					alt={text}
 				/>
 			)}

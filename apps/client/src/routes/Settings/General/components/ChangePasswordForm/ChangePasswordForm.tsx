@@ -104,6 +104,8 @@ export default function ChangePasswordForm() {
 						type='submit'
 						small
 						theme='secondary'
+						icon='/icons/save.svg'
+						loading={isSubmitting}
 					/>
 				</Form>
 			)}

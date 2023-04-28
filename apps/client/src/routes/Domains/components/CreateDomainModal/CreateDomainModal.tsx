@@ -26,6 +26,7 @@ interface DomainModalProps {
 export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 	const t = useTranslations();
 
+	const [dataReady, setDataReady] = useState(false);
 	const [projects, setProjects] = useState([] as ProjectClass[]);
 	const [domains, setDomains] = useState(
 		[] as {
@@ -33,7 +34,6 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 			value: string;
 		}[]
 	);
-	const [dataReady, setDataReady] = useState(false);
 
 	async function getProjects() {
 		const response = await getAllProjects();
@@ -465,6 +465,8 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								small
 								type='submit'
 								disabled={isSubmitting || !dirty}
+								icon='/icons/save.svg'
+								loading={isSubmitting}
 							/>
 						</div>
 					</Form>

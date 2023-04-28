@@ -113,6 +113,8 @@ export default function NewPassword(): JSX.Element {
 									small
 									type='submit'
 									disabled={!dirty || isSubmitting}
+									icon='/icons/save.svg'
+									loading={isSubmitting}
 								/>
 							</div>
 						</Form>

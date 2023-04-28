@@ -68,6 +68,8 @@ export default function TextEditModal({
 							disabled={isSubmitting || !dirty}
 							type='submit'
 							theme='secondary'
+							icon='/icons/save.svg'
+							loading={isSubmitting}
 						/>
 					</Form>
 				)}
