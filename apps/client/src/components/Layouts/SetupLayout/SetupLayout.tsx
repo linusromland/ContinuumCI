@@ -47,7 +47,7 @@ export default function SetupLayout(): JSX.Element {
 				init={particlesInit}
 				className={style.particles}
 				options={{
-					fpsLimit: 120,
+					fpsLimit: 60,
 					interactivity: {
 						events: {
 							onClick: {
