@@ -37,8 +37,7 @@ export class LogWatcherService {
 			configuration = new this.NginxConfigurationModel({
 				localIps: '192.168.1.0/24',
 				sitesEnabledLocation: '/etc/nginx/sites-enabled',
-				accessLogLocation: '/var/log/nginx/custom.log',
-				sslCertificateLocation: '/etc/letsencrypt/live'
+				accessLogLocation: '/var/log/nginx/custom.log'
 			});
 			const savedConfiguration = await configuration.save();
 

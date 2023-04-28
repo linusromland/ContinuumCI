@@ -3,7 +3,6 @@ type NginxConfigurationType = {
 	localIps: string;
 	sitesEnabledLocation: string;
 	accessLogLocation: string;
-	sslCertificateLocation: string;
 };
 
 export { NginxConfigurationType };

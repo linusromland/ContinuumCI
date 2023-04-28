@@ -384,8 +384,6 @@ export type TranslationKeys = {
 			accessLogLocationRequired: string;
 			localIpAddresses: string;
 			localIpAddressesRequired: string;
-			sslCertificateLocation: string;
-			sslCertificateLocationRequired: string;
 			edit: string;
 			notSet: string;
 			successfullyUpdated: string;

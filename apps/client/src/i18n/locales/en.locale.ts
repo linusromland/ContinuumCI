@@ -386,8 +386,6 @@ export const en: TranslationKeys = {
 			accessLogLocationRequired: 'Access log location is required.',
 			localIpAddresses: 'Local IP Addresses',
 			localIpAddressesRequired: 'Local IP addresses are required.',
-			sslCertificateLocation: 'SSL Certificate Location',
-			sslCertificateLocationRequired: 'SSL certificate location is required.',
 			edit: 'Edit Configuration',
 			notSet: 'Not set',
 			successfullyUpdated: 'Configuration has been successfully updated!',

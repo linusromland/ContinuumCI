@@ -386,8 +386,6 @@ export const sv: TranslationKeys = {
 			accessLogLocationRequired: 'Plats för åtkomstlogg krävs.',
 			localIpAddresses: 'Lokala IP-adresser',
 			localIpAddressesRequired: 'Lokala IP-adresser krävs.',
-			sslCertificateLocation: 'SSL Certifikatplats',
-			sslCertificateLocationRequired: 'SSL Certifikatplats krävs.',
 			edit: 'Redigera konfiguration',
 			notSet: 'Inte inställt',
 			successfullyUpdated: 'Konfigurationen har uppdaterats framgångsrikt!',
