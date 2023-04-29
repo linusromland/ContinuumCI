@@ -78,8 +78,7 @@ export default function ContinuousDeployment({ token, regenerateToken }: Continu
 				<p>
 					{t.continuousDeployment.footerText}{' '}
 					<a
-						href='
-						https://github.com/linusromland/ContinuumCI'
+						href='https://github.com/linusromland/ContinuumCI/blob/master/docs/deployment/README.md#getting-started-with-continuumci-continuous-deployment'
 						target='_blank'
 					>
 						{t.continuousDeployment.documentation}
