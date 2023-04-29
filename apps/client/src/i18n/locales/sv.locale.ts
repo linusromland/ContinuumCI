@@ -482,8 +482,8 @@ export const sv: TranslationKeys = {
 		title: 'E-postinställningar',
 		configurationStatus: 'Konfigurationsstatus',
 		configurationNotSet: 'Inte inställd.',
-		configurationWorking: 'Funkar.',
-		configurationNotWorking: 'Fel.',
+		configurationWorking: 'Funkar',
+		configurationNotWorking: 'Fel',
 		save: 'Spara'
 	}
 };
