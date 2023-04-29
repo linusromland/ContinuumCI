@@ -1,4 +1,4 @@
-# Setting up ContinuumCI Deployment with GitHub Actions
+# Getting Started with ContinuumCI Continuous Deployment
 
 This guide will walk you through setting up ContinuumCI deployment. With this setup, you can deploy your project to ContinuumCI automatically on every push to your default branch.
 
