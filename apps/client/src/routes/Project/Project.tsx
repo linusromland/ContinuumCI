@@ -19,6 +19,7 @@ import { ProjectClass, UserClass } from 'shared/src/classes';
 import { syncProject, editProject, getProject, deleteProject } from '../../utils/api/projects';
 import { createDeployment, removeDeployment } from '../../utils/api/deployment';
 import useTranslations from '../../i18n/translations';
+import ContinuousDeployment from './components/ContinuousDeployment/ContinuousDeployment';
 
 export default function Project() {
 	const t = useTranslations();
@@ -227,6 +228,12 @@ export default function Project() {
 								} else {
 									toast.error(t.addUserModal.addError);
 								}
+							}}
+						/>
+						<ContinuousDeployment
+							token={project.cdToken as string}
+							regenerateToken={async () => {
+								console.log('regenerate');
 							}}
 						/>
 					</div>

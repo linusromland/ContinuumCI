@@ -461,5 +461,16 @@ export const en: TranslationKeys = {
 	setup: {
 		emailSettingsError: 'An error occurred while configuring the email settings.',
 		userCreateError: 'An error occurred while creating the root user.'
+	},
+	continuousDeployment: {
+		title: 'Continuous Deployment',
+		token: 'Token',
+		regenerateToken: 'Regenerate Token',
+		copy: 'Copy',
+		copySuccess: 'Copied to clipboard!',
+		copyError: 'Failed to copy to clipboard.',
+		apiURL: 'API URL',
+		footerText: 'You can find more information about Continuous Deployment in the',
+		documentation: 'documentation.'
 	}
 };

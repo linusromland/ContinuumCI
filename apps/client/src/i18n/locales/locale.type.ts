@@ -460,4 +460,15 @@ export type TranslationKeys = {
 		emailSettingsError: string;
 		userCreateError: string;
 	};
+	continuousDeployment: {
+		title: string;
+		token: string;
+		regenerateToken: string;
+		copy: string;
+		copySuccess: string;
+		copyError: string;
+		apiURL: string;
+		footerText: string;
+		documentation: string;
+	};
 };

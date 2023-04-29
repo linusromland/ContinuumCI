@@ -461,5 +461,16 @@ export const sv: TranslationKeys = {
 	setup: {
 		emailSettingsError: 'Ett fel inträffade vid uppdatering av e-postinställningarna.',
 		userCreateError: 'Ett fel inträffade vid skapande av rotanvändaren.'
+	},
+	continuousDeployment: {
+		title: 'Continuous Deployment',
+		token: 'Nyckel',
+		regenerateToken: 'Generera ny nyckel',
+		copy: 'Kopiera',
+		copySuccess: 'Kopierat till urklipp!',
+		copyError: 'Ett fel inträffade vid kopiering till urklipp.',
+		apiURL: 'API URL',
+		footerText: 'Läs mer om hur du använder Continuous Deployment i',
+		documentation: 'dokumentation.'
 	}
 };
