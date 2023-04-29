@@ -485,5 +485,14 @@ export const sv: TranslationKeys = {
 		configurationWorking: 'Funkar',
 		configurationNotWorking: 'Fel',
 		save: 'Spara'
+	},
+	welcome: {
+		firstSection:
+			'Vi är glada att ha dig ombord och redo att börja hantera dina projekt, nginx, docker och mer med vår kraftfulla, gratis och open-source programvara.',
+		secondSection:
+			'I denna första installationsguide kommer vi att guida dig genom de nödvändiga stegen för att konfigurera din ContinuumCI-instans, skapa den första rotanvändaren, konfigurera e-postinställningar, ställa in Nginx och mer. Genom att följa dessa instruktioner noggrant kommer du snabbt vara igång och redo att börja hantera dina projekt.',
+		thirdSection:
+			'Första steget i att konfigurera ContinuumCI är att skapa din första rotanvändare. Den här användaren kommer att ha tillgång till alla funktioner och inställningar inom ContinuumCI och kommer att vara ansvarig för att hantera dina projekt. Du kan göra detta genom att logga in på ContinuumCI-webbgränssnittet och följa anvisningarna för att skapa din användare.',
+		getStarted: 'Kom igång'
 	}
 };

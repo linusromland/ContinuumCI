@@ -484,4 +484,10 @@ export type TranslationKeys = {
 		configurationNotWorking: string;
 		save: string;
 	};
+	welcome: {
+		firstSection: string;
+		secondSection: string;
+		thirdSection: string;
+		getStarted: string;
+	};
 };
