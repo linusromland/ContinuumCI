@@ -89,6 +89,8 @@ call_continuumci_deploy_api:
         - if: '$CI_COMMIT_BRANCH == "master"'
 ```
 
+**Note:** If you are using a different branch as your default branch, you will need to change the value of `if: '$CI_COMMIT_BRANCH == "master"'` to match your default branch in the pipeline.
+
 ![createActionsFile](images/gitlab/createActionsFile.png)
 
 ## Step 3: Run the pipeline
