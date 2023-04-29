@@ -28,9 +28,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps): JSX.Element {
 				rememberMe: false
 			}}
 			validationSchema={UserSchema}
-			onSubmit={(values) => {
-				onSubmit(values);
-			}}
+			onSubmit={onSubmit}
 		>
 			{({ isSubmitting, dirty }) => (
 				<Form className={formStyle.form}>

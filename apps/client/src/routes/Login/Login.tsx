@@ -29,43 +29,39 @@ export default function Login(): JSX.Element {
 				<p className={style.subtitle}>{registered ? t.register.title : t.login.title}</p>
 				{registered ? (
 					<RegistrationForm
-						onSubmit={(values) => {
-							(async () => {
-								const userCreated = await createUser({
-									username: values.username,
+						onSubmit={async (values) => {
+							const userCreated = await createUser({
+								username: values.username,
+								email: values.email,
+								password: values.password
+							});
+
+							if (userCreated) {
+								await setToken({
 									email: values.email,
 									password: values.password
 								});
-
-								if (userCreated) {
-									await setToken({
-										email: values.email,
-										password: values.password
-									});
-									toast.success(t.register.successCreate);
-									navigate('/');
-								} else {
-									toast.error(t.register.errorCreate);
-								}
-							})();
+								toast.success(t.register.successCreate);
+								navigate('/');
+							} else {
+								toast.error(t.register.errorCreate);
+							}
 						}}
 					/>
 				) : (
 					<LoginForm
-						onSubmit={(values) => {
-							(async () => {
-								try {
-									await setToken({
-										email: values.email,
-										password: values.password,
-										rememberMe: values.rememberMe
-									});
-									toast.success(t.login.successLogin);
-									navigate('/');
-								} catch (e) {
-									toast.error(t.login.invalidLogin);
-								}
-							})();
+						onSubmit={async (values) => {
+							try {
+								await setToken({
+									email: values.email,
+									password: values.password,
+									rememberMe: values.rememberMe
+								});
+								toast.success(t.login.successLogin);
+								navigate('/');
+							} catch (e) {
+								toast.error(t.login.invalidLogin);
+							}
 						}}
 					/>
 				)}

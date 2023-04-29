@@ -60,46 +60,42 @@ export default function Setup(): JSX.Element {
 						{
 							0: (
 								<RegistrationForm
-									onSubmit={(values) => {
-										(async () => {
-											const userCreated = await createUser({
-												username: values.username,
+									onSubmit={async (values) => {
+										const userCreated = await createUser({
+											username: values.username,
+											email: values.email,
+											password: values.password
+										});
+
+										if (userCreated) {
+											await setToken({
 												email: values.email,
 												password: values.password
 											});
 
-											if (userCreated) {
-												await setToken({
-													email: values.email,
-													password: values.password
-												});
-
-												setStage(1);
-											} else {
-												toast.error(t.setup.userCreateError);
-											}
-										})();
+											setStage(1);
+										} else {
+											toast.error(t.setup.userCreateError);
+										}
 									}}
 								/>
 							),
 							1: (
 								<EmailConfigurationInput
-									onSubmit={(skip, values) => {
-										(async () => {
-											const emailConfiguration = await updateEmailConfiguration({
-												service: skip ? 'skipped' : values?.service?.value || '',
-												auth: {
-													user: values?.gmail?.email || '',
-													pass: values?.gmail?.password || ''
-												}
-											});
-
-											if (emailConfiguration.success) {
-												navigate('/');
-											} else {
-												toast.error(t.setup.emailSettingsError);
+									onSubmit={async (skip, values) => {
+										const emailConfiguration = await updateEmailConfiguration({
+											service: skip ? 'skipped' : values?.service?.value || '',
+											auth: {
+												user: values?.gmail?.email || '',
+												pass: values?.gmail?.password || ''
 											}
-										})();
+										});
+
+										if (emailConfiguration.success) {
+											navigate('/');
+										} else {
+											toast.error(t.setup.emailSettingsError);
+										}
 									}}
 								/>
 							)
