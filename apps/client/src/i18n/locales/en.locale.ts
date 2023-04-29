@@ -320,7 +320,7 @@ export const en: TranslationKeys = {
 		}
 	},
 	settings: {
-		title: 'App Settings'
+		title: 'Application Settings'
 	},
 	generalSettings: {
 		title: 'General Settings',
