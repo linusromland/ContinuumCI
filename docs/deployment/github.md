@@ -18,7 +18,7 @@ Add two secrets with the names CONTINUUMCI_API and TOKEN, and set their values t
 
 To set up ContinuumCI deployment with GitHub Actions, you'll need to create a new workflow file in your repository. This workflow file will define the steps that GitHub Actions will take when deploying your project.
 
-Create a new file in the .github/workflows/ directory of your repository called continuumci-deploy.yml. Copy and paste the following code into the file:
+Create a new file in the `.github/workflows/` directory of your repository called `continuumci-deploy.yml`. Copy and paste the following code into the file:
 
 ```yaml
 name: ContinuumCI Deploy
@@ -93,6 +93,8 @@ Once you've created your workflow file, commit and push your changes to your rep
 
 ## Step 4: Verify that your project was deployed successfully
 
-Once the file is committed and pushed, you can verify that your project was deployed successfully by checking the job status on GitHub. Just click on the "Actions" tab in your repository and look for the job named "ContinuumCI Deploy". If the job was successful, you should see a green checkmark next to it. If the job failed, you should see a red X next to it, you can click on the job to see the logs and find out what went wrong.
+Once the file is committed and pushed, you can verify that your project was deployed successfully by checking the job status on GitHub. Just click on the "Actions" tab in your repository and look for the job named "ContinuumCI Deploy".
+
+If the job was successful, you should see a green checkmark next to it. If the job failed, you should see a red X next to it, you can click on the job to see the logs and find out what went wrong.
 
 ![jobStatus](images/github/jobStatus.png)
