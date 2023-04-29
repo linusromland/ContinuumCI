@@ -22,3 +22,5 @@ To continue, you'll need to go to the corresponding GitHub or GitLab guide:
 
 -   [Setting up ContinuumCI Deployment with GitHub Actions](./github.md)
 -   [Setting up ContinuumCI Deployment with GitLab CI/CD](./gitlab.md)
+
+If you do not use GitHub or GitLab, you can still set up ContinuumCI deployment with your CI/CD tool of choice, but you'll need to write your own pipeline file. You can follow the generic guide on how to create this pipeline file [here](./generic.md).
