@@ -31,13 +31,9 @@ export default function ResetPassword(): JSX.Element {
 					onSubmit={async (values) => {
 						const response = await resetPassword(values.email);
 						if (response.success) {
-							toast.success(t.resetPassword.successReset, {
-								position: 'top-left'
-							});
+							toast.success(t.resetPassword.successReset);
 						} else {
-							toast.error(t.resetPassword.errorReset, {
-								position: 'top-left'
-							});
+							toast.error(t.resetPassword.errorReset);
 						}
 
 						navigate('/login');

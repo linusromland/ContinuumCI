@@ -42,14 +42,10 @@ export default function Login(): JSX.Element {
 										email: values.email,
 										password: values.password
 									});
-									toast.success(t.register.successCreate, {
-										position: 'top-left'
-									});
+									toast.success(t.register.successCreate);
 									navigate('/');
 								} else {
-									toast.error(t.register.errorCreate, {
-										position: 'top-left'
-									});
+									toast.error(t.register.errorCreate);
 								}
 							})();
 						}}
@@ -67,9 +63,7 @@ export default function Login(): JSX.Element {
 									toast.success(t.login.successLogin);
 									navigate('/');
 								} catch (e) {
-									toast.error(t.login.invalidLogin, {
-										position: 'top-left'
-									});
+									toast.error(t.login.invalidLogin);
 								}
 							})();
 						}}

@@ -53,13 +53,9 @@ export default function NewPassword(): JSX.Element {
 						const response = await updatePasswordWithResetToken(token, values.password);
 
 						if (response.success) {
-							toast.success('Successfully updated password!', {
-								position: 'top-left'
-							});
+							toast.success('Successfully updated password!');
 						} else {
-							toast.error('An error occurred while updating the password.', {
-								position: 'top-left'
-							});
+							toast.error('An error occurred while updating the password.');
 						}
 
 						navigate('/login');
