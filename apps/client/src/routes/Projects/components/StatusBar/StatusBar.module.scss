@@ -18,13 +18,13 @@
 }
 
 .succeededBar {
-	background-color: $success;
+	background-color: var(--success);
 }
 
 .warningBar {
-	background-color: $warning;
+	background-color: var(--warning);
 }
 
 .failedBar {
-	background-color: $error;
+	background-color: var(--error);
 }

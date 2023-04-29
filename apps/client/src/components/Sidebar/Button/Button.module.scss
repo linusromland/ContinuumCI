@@ -18,11 +18,11 @@
 	transition: all 0.3s ease-in-out;
 
 	&:hover {
-		background-color: lighten($background-secondary, 15%);
+		background-color: var(--background-secondary-lighten-15);
 	}
 
 	&.selected {
-		background-color: lighten($background-secondary, 15%);
+		background-color: var(--background-secondary-lighten-15);
 	}
 
 	img {
@@ -33,7 +33,7 @@
 	p {
 		font-size: 0.8rem;
 		font-weight: 700;
-		color: $text-moody;
+		color: var(--text-moody);
 		margin-left: 1rem;
 	}
 }

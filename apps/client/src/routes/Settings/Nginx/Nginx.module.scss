@@ -6,7 +6,7 @@
 
 .title {
 	font-size: 1.5em;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 600;
 	margin-bottom: 1rem;
 }
@@ -38,28 +38,28 @@
 
 .infoContainerTitle {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 700;
 }
 
 .infoContainerValue {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 500;
 }
 
 .input {
-	background-color: $background;
-	border: 2px solid darken($background, 10%);
+	background-color: var(--background);
+	border: 2px solid var(--background-darken-10);
 	border-radius: $border-radius;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-size: 0.8rem;
 	font-weight: 600;
 	padding: 0.3rem;
 	transition: background-color 0.2s ease-in-out;
 
 	&:focus {
-		background-color: $background;
+		background-color: var(--background);
 	}
 }
 

@@ -1,6 +1,6 @@
 @use 'src/styles' as *;
 
-.buttonWrapper{
+.buttonWrapper {
 	display: flex;
 	flex-direction: column;
 	margin: 0 1rem 0;
@@ -8,14 +8,14 @@
 	gap: 0.5rem;
 }
 
-.buttons{
+.buttons {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 
-.text{
+.text {
 	font-size: 0.7rem;
 	font-weight: 600;
-	color: $text-moody;
+	color: var(--text-moody);
 }

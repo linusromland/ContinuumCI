@@ -8,23 +8,23 @@
 	width: fit-content;
 	padding: 1rem;
 	border-radius: 0.5rem;
-	background-color: $background;
+	background-color: var(--background);
 	cursor: pointer;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 	transition: all 0.2s ease-in-out;
 
-	border-left: 1rem solid $background;
+	border-left: 1rem solid var(--background);
 
 	&.success {
-		border-left-color: $success;
+		border-left-color: var(--success);
 	}
 
 	&.warning {
-		border-left-color: $warning;
+		border-left-color: var(--warning);
 	}
 
 	&.error {
-		border-left-color: $error;
+		border-left-color: var(--error);
 	}
 
 	&:hover {

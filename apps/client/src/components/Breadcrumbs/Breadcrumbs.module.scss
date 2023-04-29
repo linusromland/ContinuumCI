@@ -10,12 +10,12 @@
 
 .item {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 500;
 	transition: color 0.2s ease-in-out;
 
 	&:hover {
-		color: darken($text-primary, 20%);
+		color: var(--text-primary-darken-20);
 	}
 }
 
@@ -32,6 +32,6 @@
 
 .separator {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 500;
 }

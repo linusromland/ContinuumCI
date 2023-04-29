@@ -9,7 +9,7 @@
 .mainLayout {
 	flex: 1;
 	display: flex;
-	background-color: $background;
+	background-color: var(--background);
 
 	@include mediaQuery('small') {
 		flex-direction: column;

@@ -1,8 +1,8 @@
 @use 'src/styles' as *;
 
 .button {
-	outline: $primary solid 1px;
-	background-color: lighten($primary, 25%);
+	outline: var(--primary) solid 1px;
+	background-color: var(--primary-lighten-25);
 	border: none;
 	border-radius: 0.25rem;
 	color: #000000;
@@ -18,12 +18,12 @@
 	justify-content: center;
 
 	&:hover {
-		background-color: darken($primary, 20%);
+		background-color: var(--primary-darken-20);
 	}
 
 	&:disabled {
-		background-color: lighten($primary, 10%);
-		color: lighten($text-primary, 20%);
+		background-color: var(--primary-lighten-10);
+		color: var(--text-primary-lighten-20);
 		cursor: not-allowed;
 	}
 
@@ -33,54 +33,54 @@
 	}
 
 	&.secondary {
-		outline: $secondary solid 1px;
-		background-color: lighten($secondary, 25%);
+		outline: var(--secondary) solid 1px;
+		background-color: var(--secondary-lighten-25);
 
 		&:hover {
-			background-color: $secondary;
+			background-color: var(--secondary);
 		}
 
 		&:disabled {
-			background-color: lighten($secondary, 10%);
+			background-color: var(--secondary-lighten-10);
 		}
 	}
 
 	&.success {
-		outline: $success solid 1px;
-		background-color: lighten($success, 20%);
+		outline: var(--success) solid 1px;
+		background-color: var(--success-lighten-20);
 
 		&:hover {
-			background-color: $success;
+			background-color: var(--success);
 		}
 
 		&:disabled {
-			background-color: lighten($success, 10%);
+			background-color: var(--success-lighten-10);
 		}
 	}
 
 	&.error {
-		outline: $error solid 1px;
-		background-color: lighten($error, 20%);
+		outline: var(--error) solid 1px;
+		background-color: var(--error-lighten-20);
 
 		&:hover {
-			background-color: $error;
+			background-color: var(--error);
 		}
 
 		&:disabled {
-			background-color: lighten($error, 10%);
+			background-color: var(--error-lighten-10);
 		}
 	}
 
 	&.warning {
-		outline: $warning solid 1px;
-		background-color: lighten($warning, 20%);
+		outline: var(--warning) solid 1px;
+		background-color: var(--warning-lighten-20);
 
 		&:hover {
-			background-color: $warning;
+			background-color: var(--warning);
 		}
 
 		&:disabled {
-			background-color: lighten($warning, 10%);
+			background-color: var(--warning-lighten-10);
 		}
 	}
 }

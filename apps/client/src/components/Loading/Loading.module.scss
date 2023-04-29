@@ -6,8 +6,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: $background;
-	color: $primary;
+	background-color: var(--background);
+	color: var(--primary);
 	font-size: 1.5rem;
 	font-weight: 600;
 }
@@ -15,13 +15,13 @@
 .loadingSpinner {
 	height: 100%;
 	width: 100%;
-	background-color: $background;
-	color: $primary;
+	background-color: var(--background);
+	color: var(--primary);
 	width: 10rem;
 	height: 10rem;
-	border: 1rem solid $primary;
+	border: 1rem solid var(--primary);
 	border-radius: 50%;
-	border-top-color: $secondary;
+	border-top-color: var(--secondary);
 	animation: spin 1s linear infinite;
 }
 

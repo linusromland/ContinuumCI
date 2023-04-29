@@ -38,7 +38,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	background-color: darken($background, 2%);
+	background-color: var(--background-darken-2);
 	max-height: 50vh;
 	overflow-y: auto;
 
@@ -46,10 +46,10 @@
 		border-radius: $border-radius;
 		padding: 0.5rem;
 		transition: background-color 0.2s ease-in-out;
-		border-bottom: 1px solid darken($background, 5%);
+		border-bottom: 1px solid var(--background-darken-5);
 
 		&:hover {
-			background-color: darken($background, 10%);
+			background-color: var(--background-darken-10);
 		}
 	}
 }
@@ -70,7 +70,7 @@
 
 	p {
 		font-size: 1rem;
-		color: $text-primary;
+		color: var(--text-primary);
 		font-weight: 500;
 
 		span {

@@ -1,7 +1,7 @@
 @use 'src/styles' as *;
 
 .unverifiedBanner {
-	background-color: $background-secondary;
+	background-color: var(--background-secondary);
 	display: flex;
 	padding: 0.5rem;
 	align-items: center;
@@ -9,7 +9,7 @@
 
 	p {
 		margin-left: 1rem;
-		color: $text-secondary;
+		color: var(--text-secondary);
 	}
 }
 

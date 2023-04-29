@@ -6,14 +6,14 @@
 
 .title {
 	font-size: 1.5em;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 600;
 	margin-bottom: 1rem;
 }
 
 .subtitle {
 	font-size: 1.2em;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 700;
 	margin-bottom: 1rem;
 }
@@ -44,12 +44,12 @@
 
 .infoContainerTitle {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 700;
 }
 
 .infoContainerValue {
 	font-size: 1rem;
-	color: $text-primary;
+	color: var(--text-primary);
 	font-weight: 500;
 }
