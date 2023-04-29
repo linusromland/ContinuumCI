@@ -59,4 +59,10 @@ export class ProjectsController {
 	deleteProject(@Request() req, @Param('projectId') projectId: string) {
 		return this.projectsService.delete(req.user.sub, projectId);
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('regenerateCdToken')
+	regenerateCdToken(@Request() req, @Body('projectId') projectId: string) {
+		return this.projectsService.regenerateCdToken(req.user.sub, projectId);
+	}
 }

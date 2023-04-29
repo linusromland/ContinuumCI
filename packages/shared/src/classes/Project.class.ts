@@ -6,6 +6,7 @@ import { Type } from 'class-transformer';
 import { ProjectDeploymentStatus, ProjectRoleEnum, ProjectSyncStatus } from '../enums';
 import { UserClass } from './User.class';
 import { MongoBaseClass } from './MongoBase.class';
+import { Types } from 'mongoose';
 
 export class ProjectQueryClass {
 	@IsString()
@@ -39,7 +40,7 @@ export class ProjectClass extends MongoBaseClass {
 	permissions: PermissionClass[];
 	syncStatus: ProjectSyncStatus;
 	deploymentStatus: ProjectDeploymentStatus;
-	cdToken: string;
+	cdToken: string | Types.ObjectId;
 }
 
 class PermissionClass {

@@ -1,6 +1,6 @@
 // External dependencies
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import simpleGit from 'simple-git';
 import fs from 'fs';
 import mongoose from 'mongoose';
@@ -411,5 +411,53 @@ export class ProjectsService {
 			success: true,
 			message: 'Project deleted successfully'
 		};
+	}
+
+	async regenerateCdToken(userId: string, projectId: string): Promise<ResponseType> {
+		try {
+			const user = await this.UserModel.findById(userId);
+
+			if (!user) {
+				throw new BadRequestException({
+					success: false,
+					message: 'User not found'
+				});
+			}
+
+			const updatedProject = await this.ProjectModel.findById(projectId);
+
+			if (!updatedProject) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Project not found'
+				});
+			}
+
+			if (!['admin', 'root'].includes(user.role)) {
+				const user = updatedProject.permissions.find((permission) => permission.user.toString() === userId);
+
+				if (!user || user.role == ProjectRoleEnum.VIEWER) {
+					throw new BadRequestException({
+						success: false,
+						message: 'Not allowed to update this project'
+					});
+				}
+			}
+
+			const token = new Types.ObjectId();
+
+			updatedProject.cdToken = token;
+			updatedProject.save();
+
+			return {
+				success: true,
+				message: 'New token generated successfully'
+			};
+		} catch (error) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Error while generating token'
+			});
+		}
 	}
 }
