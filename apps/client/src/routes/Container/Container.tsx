@@ -33,7 +33,7 @@ export default function Container() {
 			setLastUpdated(new Date());
 		} else {
 			navigate('/containers');
-			toast.error(response.message);
+			toast.error(t.container.notFound);
 		}
 	}
 

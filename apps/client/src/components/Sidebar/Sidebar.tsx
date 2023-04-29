@@ -139,13 +139,10 @@ export default function Sidebar({ user }: SidebarProps) {
 										localStorage.removeItem('token');
 										sessionStorage.removeItem('token');
 										api.defaults.headers.common['Authorization'] = '';
-										toast.success('Successfully signed out', {
-											position: 'top-left'
-										});
+										toast.success(t.sidebar.logoutSuccess);
 										changeLocation('/login');
 									} catch (error) {
-										console.log(error);
-										toast.error('Failed to sign out');
+										toast.error(t.sidebar.logoutError);
 									}
 								}}
 							/>

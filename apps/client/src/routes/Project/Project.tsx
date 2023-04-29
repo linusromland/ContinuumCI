@@ -49,7 +49,7 @@ export default function Project() {
 			}
 		} else {
 			navigate('/projects');
-			toast.error(response.message);
+			toast.error(t.project.notFound);
 		}
 	}
 
@@ -134,7 +134,7 @@ export default function Project() {
 										`
 									);
 									getData();
-								} else toast.error(response.message);
+								} else toast.error(project.enabled ? t.project.stopError : t.project.startError);
 								setDeploymentLoading(false);
 							}}
 							loading={deploymentLoading}
@@ -256,9 +256,9 @@ export default function Project() {
 						setProject(response.data as ProjectClass);
 						setEditNameModalOpen(false);
 						getData();
-						toast.success('Project name updated');
+						toast.success(t.project.projectNameSuccess);
 					} else {
-						toast.error(response.message);
+						toast.error(t.project.projectNameError);
 					}
 				}}
 			/>

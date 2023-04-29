@@ -28,7 +28,9 @@ export const en: TranslationKeys = {
 		footer: {
 			authenticatedAs: 'Logged in as',
 			signOut: 'Sign out'
-		}
+		},
+		logoutSuccess: 'You have been successfully logged out!',
+		logoutError: 'An error occurred while logging out.'
 	},
 	resetPassword: {
 		title: 'Reset password',
@@ -169,13 +171,18 @@ export const en: TranslationKeys = {
 		started: 'started',
 		stop: 'Stop',
 		stopped: 'stopped',
+		stopError: 'An error occurred while stopping project.',
+		startError: 'An error occurred while starting project.',
 		remove: 'Remove',
 		confirmRemove: 'Confirm Removal',
 		removeSuccess: 'Project removed!',
 		removeError: 'An error occurred while removing project.',
 		manualStop: 'Manually stopped',
 		editNameTitle: 'Edit project name',
-		nameRequired: 'Project name required.'
+		projectNameSuccess: 'Project name updated!',
+		projectNameError: 'An error occurred while updating project name.',
+		nameRequired: 'Project name required.',
+		notFound: 'Project not found.'
 	},
 	editModal: {
 		title: 'Edit',
@@ -252,7 +259,8 @@ export const en: TranslationKeys = {
 		title: 'Container Details',
 		id: 'Container ID',
 		logs: 'Container Logs',
-		lastUpdated: 'Last Updated On'
+		lastUpdated: 'Last Updated On',
+		notFound: 'Container not found.'
 	},
 	domains: {
 		title: 'Domain Management',
@@ -420,5 +428,38 @@ export const en: TranslationKeys = {
 				required: 'Role selection is required.'
 			}
 		}
+	},
+	mainLayout: {
+		verifiedEmailSuccess: 'Email has been successfully verified!'
+	},
+	unverifiedBanner: {
+		description: 'Your email address has not been verified. Please check your email for a verification link.',
+		resendEmail: 'Resend email',
+		checkVerification: 'Check verification status',
+		resendSuccess: 'Verification email has been successfully resent!',
+		resendError: 'An error occurred while resending the verification email.'
+	},
+	newPassword: {
+		schema: {
+			password: {
+				required: 'Password is required.',
+				min: 'Password must be at least 8 characters long.'
+			},
+			confirmPassword: {
+				required: 'Confirm password is required.',
+				match: 'Passwords do not match.'
+			}
+		},
+		invalidToken: 'Invalid token.',
+		title: 'Reset Password',
+		submit: 'Reset Password',
+		submitSuccess: 'Password has been successfully reset!',
+		submitError: 'An error occurred while resetting the password.',
+		newPassword: 'New Password',
+		confirmPassword: 'Confirm New Password'
+	},
+	setup: {
+		emailSettingsError: 'An error occurred while configuring the email settings.',
+		userCreateError: 'An error occurred while creating the root user.'
 	}
 };

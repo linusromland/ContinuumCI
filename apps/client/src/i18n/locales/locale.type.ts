@@ -26,6 +26,8 @@ export type TranslationKeys = {
 			authenticatedAs: string;
 			signOut: string;
 		};
+		logoutSuccess: string;
+		logoutError: string;
 	};
 	resetPassword: {
 		title: string;
@@ -167,13 +169,18 @@ export type TranslationKeys = {
 		started: string;
 		stop: string;
 		stopped: string;
+		stopError: string;
+		startError: string;
 		remove: string;
 		confirmRemove: string;
 		removeSuccess: string;
 		removeError: string;
 		manualStop: string;
 		editNameTitle: string;
+		projectNameSuccess: string;
+		projectNameError: string;
 		nameRequired: string;
+		notFound: string;
 	};
 	editModal: {
 		title: string;
@@ -251,6 +258,7 @@ export type TranslationKeys = {
 		id: string;
 		logs: string;
 		lastUpdated: string;
+		notFound: string;
 	};
 	domains: {
 		title: string;
@@ -418,5 +426,38 @@ export type TranslationKeys = {
 				required: string;
 			};
 		};
+	};
+	mainLayout: {
+		verifiedEmailSuccess: string;
+	};
+	unverifiedBanner: {
+		description: string;
+		resendEmail: string;
+		checkVerification: string;
+		resendSuccess: string;
+		resendError: string;
+	};
+	newPassword: {
+		schema: {
+			password: {
+				required: string;
+				min: string;
+			};
+			confirmPassword: {
+				required: string;
+				match: string;
+			};
+		};
+		invalidToken: string;
+		title: string;
+		submit: string;
+		submitSuccess: string;
+		submitError: string;
+		newPassword: string;
+		confirmPassword: string;
+	};
+	setup: {
+		emailSettingsError: string;
+		userCreateError: string;
 	};
 };

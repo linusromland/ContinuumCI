@@ -10,16 +10,20 @@ import formStyle from '../../styles/formStyle.module.scss';
 import Button from '../../components/Button/Button';
 import { toast } from 'react-toastify';
 import { updatePasswordWithResetToken, validateResetToken } from '../../utils/api/user';
+import useTranslations from '../../i18n/translations';
 
 export default function NewPassword(): JSX.Element {
+	const t = useTranslations();
 	const navigate = useNavigate();
 	const { token } = useParams();
 
 	const NewPasswordSchema = Yup.object().shape({
-		password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+		password: Yup.string()
+			.min(8, t.newPassword.schema.password.min)
+			.required(t.newPassword.schema.password.required),
 		confirmPassword: Yup.string()
-			.oneOf([Yup.ref('password')], 'Passwords must match')
-			.required('Password is required')
+			.oneOf([Yup.ref('password')], t.newPassword.schema.confirmPassword.match)
+			.required(t.newPassword.schema.confirmPassword.required)
 	});
 
 	async function validateToken() {
@@ -28,7 +32,7 @@ export default function NewPassword(): JSX.Element {
 		const response = await validateResetToken(token);
 
 		if (!response.success) {
-			toast.error('Invalid token');
+			toast.error(t.newPassword.invalidToken);
 			navigate('/login');
 		}
 	}
@@ -40,7 +44,7 @@ export default function NewPassword(): JSX.Element {
 	return (
 		<>
 			<div className={style.container}>
-				<p className={style.subtitle}>Reset your password</p>
+				<p className={style.subtitle}>{t.newPassword.title}</p>
 				<Formik
 					initialValues={{
 						password: '',
@@ -53,9 +57,9 @@ export default function NewPassword(): JSX.Element {
 						const response = await updatePasswordWithResetToken(token, values.password);
 
 						if (response.success) {
-							toast.success('Successfully updated password!');
+							toast.success(t.newPassword.submitSuccess);
 						} else {
-							toast.error('An error occurred while updating the password.');
+							toast.error(t.newPassword.submitError);
 						}
 
 						navigate('/login');
@@ -68,11 +72,11 @@ export default function NewPassword(): JSX.Element {
 									htmlFor='password'
 									className={formStyle.formLabel}
 								>
-									New Password
+									{t.newPassword.newPassword}
 								</label>
 								<Field
 									name='password'
-									placeholder='New Password'
+									placeholder={t.newPassword.newPassword}
 									type='password'
 									className={formStyle.formInput}
 								/>
@@ -88,11 +92,11 @@ export default function NewPassword(): JSX.Element {
 									htmlFor='confirmPassword'
 									className={formStyle.formLabel}
 								>
-									Confirm Password
+									{t.newPassword.confirmPassword}
 								</label>
 								<Field
 									name='confirmPassword'
-									placeholder='Confirm Password'
+									placeholder={t.newPassword.confirmPassword}
 									type='password'
 									className={formStyle.formInput}
 								/>
@@ -105,7 +109,7 @@ export default function NewPassword(): JSX.Element {
 
 							<div className={style.buttons}>
 								<Button
-									text='Reset password'
+									text={t.newPassword.submit}
 									small
 									type='submit'
 									disabled={!dirty || isSubmitting}

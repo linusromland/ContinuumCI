@@ -12,8 +12,10 @@ import { getSetup } from '../../utils/api/setup';
 import { updateEmailConfiguration } from '../../utils/api/emailConfiguration';
 import setToken from '../../utils/setToken';
 import { SetupType } from 'shared/src/types';
+import useTranslations from '../../i18n/translations';
 
 export default function Setup(): JSX.Element {
+	const t = useTranslations();
 	const navigate = useNavigate();
 
 	const [stage, setStage] = useState(0);
@@ -74,7 +76,7 @@ export default function Setup(): JSX.Element {
 
 												setStage(1);
 											} else {
-												toast.error('An error occurred while creating the root user.');
+												toast.error(t.setup.userCreateError);
 											}
 										})();
 									}}
@@ -95,10 +97,7 @@ export default function Setup(): JSX.Element {
 											if (emailConfiguration.success) {
 												navigate('/');
 											} else {
-												toast.error(
-													emailConfiguration.message ||
-														'An error occurred while configuring the email settings.'
-												);
+												toast.error(t.setup.emailSettingsError);
 											}
 										})();
 									}}

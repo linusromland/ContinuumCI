@@ -28,7 +28,9 @@ export const sv: TranslationKeys = {
 		footer: {
 			authenticatedAs: 'Inloggad som',
 			signOut: 'Logga ut'
-		}
+		},
+		logoutSuccess: 'Du har loggats ut!',
+		logoutError: 'Ett fel inträffade vid utloggning.'
 	},
 	resetPassword: {
 		title: 'Återställ lösenord',
@@ -169,13 +171,18 @@ export const sv: TranslationKeys = {
 		started: 'startade',
 		stop: 'Stoppa',
 		stopped: 'stoppade',
+		stopError: 'Ett fel inträffade vid stopp av projekt.',
+		startError: 'Ett fel inträffade vid start av projekt.',
 		remove: 'Ta bort',
 		confirmRemove: 'Bekräfta borttagning',
 		removeSuccess: 'Projektet togs bort!',
 		removeError: 'Ett fel inträffade vid borttagning av projekt.',
 		manualStop: 'Manuellt stoppad',
 		editNameTitle: 'Ändra projektnamn',
-		nameRequired: 'Projektnamn krävs.'
+		projectNameSuccess: 'Projektnamn uppdaterat!',
+		projectNameError: 'Ett fel inträffade vid uppdatering av projektnamn.',
+		nameRequired: 'Projektnamn krävs.',
+		notFound: 'Projektet hittades inte.'
 	},
 	editModal: {
 		title: 'Redigera',
@@ -252,7 +259,8 @@ export const sv: TranslationKeys = {
 		title: 'Containerdetaljer',
 		id: 'Container-ID',
 		logs: 'Containerloggar',
-		lastUpdated: 'Senast uppdaterad'
+		lastUpdated: 'Senast uppdaterad',
+		notFound: 'Container hittades inte.'
 	},
 	domains: {
 		title: 'Domänhantering',
@@ -420,5 +428,38 @@ export const sv: TranslationKeys = {
 				required: 'Val av roll krävs.'
 			}
 		}
+	},
+	mainLayout: {
+		verifiedEmailSuccess: 'E-postadressen har verifierats!'
+	},
+	unverifiedBanner: {
+		description: 'Din e-postadress har inte verifierats. Kolla din e-post för att verifiera din e-postadress.',
+		resendEmail: 'Skicka igen',
+		checkVerification: 'Kontrollera verifiering',
+		resendSuccess: 'Ett e-postmeddelande har skickats till din e-postadress.',
+		resendError: 'Ett fel inträffade vid skickande av e-postmeddelande.'
+	},
+	newPassword: {
+		schema: {
+			password: {
+				required: 'Lösenord krävs.',
+				min: 'Lösenordet måste vara minst 8 tecken långt.'
+			},
+			confirmPassword: {
+				required: 'Bekräftelse av lösenord krävs.',
+				match: 'Lösenorden matchar inte.'
+			}
+		},
+		invalidToken: 'Ogiltig token.',
+		title: 'Återställ lösenord',
+		submit: 'Återställ lösenord',
+		submitSuccess: 'Lösenordet har återställts!',
+		submitError: 'Ett fel inträffade vid återställning av lösenordet.',
+		newPassword: 'Nytt lösenord',
+		confirmPassword: 'Bekräfta nytt lösenord'
+	},
+	setup: {
+		emailSettingsError: 'Ett fel inträffade vid uppdatering av e-postinställningarna.',
+		userCreateError: 'Ett fel inträffade vid skapande av rotanvändaren.'
 	}
 };

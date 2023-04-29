@@ -9,8 +9,11 @@ import UnverifiedBanner from '../../UnverifiedBanner/UnverifiedBanner';
 import { getUser } from '../../../utils/api/user';
 import { UserClass } from 'shared/src/classes';
 import { toast } from 'react-toastify';
+import useTranslations from '../../../i18n/translations';
 
 export default function MainLayout(): JSX.Element {
+	const t = useTranslations();
+
 	const [user, setUser] = useState({} as UserClass);
 
 	useEffect(() => {
@@ -37,7 +40,7 @@ export default function MainLayout(): JSX.Element {
 					recheckStatus={async () => {
 						const user = await getUserData();
 						if (user?.verifiedEmail) {
-							toast.success('Your email has been verified!');
+							toast.success(t.mainLayout.verifiedEmailSuccess);
 						}
 					}}
 				/>
