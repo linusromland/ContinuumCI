@@ -462,7 +462,11 @@ export const sv: TranslationKeys = {
 	setup: {
 		emailSettingsError: 'Ett fel inträffade vid uppdatering av e-postinställningarna.',
 		emailSettingsSuccess: 'E-postinställningarna har uppdaterats framgångsrikt!',
-		userCreateError: 'Ett fel inträffade vid skapande av rotanvändaren.'
+		userCreateError: 'Ett fel inträffade vid skapande av rotanvändaren.',
+		rootConfiguration:
+			'Det första steget i konfigureringen av ContinuumCI är att skapa din första rotanvändare. Denna användare kommer att ha tillgång till alla funktioner och inställningar inom ContinuumCI och kommer att vara ansvarig för att hantera dina projekt.',
+		emailConfiguration:
+			'Det är nu dags att konfigurera e-postinställningarna för ContinuumCI. Detta är inte obligatoriskt, men rekommenderas starkt. Om du inte konfigurerar e-postinställningar kommer ContinuumCI inte att kunna skicka dig några aviseringar.'
 	},
 	continuousDeployment: {
 		title: 'Continuous Deployment',
@@ -484,7 +488,12 @@ export const sv: TranslationKeys = {
 		configurationNotSet: 'Inte inställd.',
 		configurationWorking: 'Funkar',
 		configurationNotWorking: 'Fel',
-		save: 'Spara'
+		save: 'Spara',
+		skip: 'Hoppa över',
+		email: 'E-post',
+		oneTimePassword: 'Engångslösenord',
+		continue: 'Fortsätt',
+		service: 'E-posttjänst'
 	},
 	welcome: {
 		firstSection:

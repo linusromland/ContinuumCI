@@ -7,6 +7,8 @@ import Button from '../Button/Button';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import style from './EmailConfigurationInput.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
+import useTranslations from '../../i18n/translations';
+import { useEffect } from 'react';
 
 const EmailConfigurationSchema = Yup.object().shape({
 	service: Yup.object().shape({
@@ -59,9 +61,11 @@ export default function EmailConfigurationInput({
 		}
 	},
 	hideSkip,
-	saveButtonText = 'Continue',
+	saveButtonText,
 	onSubmit
 }: EmailConfigurationInputProps): JSX.Element {
+	const t = useTranslations();
+
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -73,48 +77,58 @@ export default function EmailConfigurationInput({
 		>
 			{({ dirty, isSubmitting, values }) => (
 				<Form className={formStyle.form}>
-					<Field
-						name='service'
-						placeholder='Service'
-						component={CustomSelect}
-						options={[{ value: 'gmail', label: 'Gmail' }]}
-					/>
-					<ErrorMessage
-						name='service'
-						component='div'
-						className={formStyle.formError}
-					/>
+					<div className={formStyle.formGroup}>
+						<label className={formStyle.formLabel}>{t.mail.service}</label>
+						<Field
+							name='service'
+							placeholder='Service'
+							component={CustomSelect}
+							options={[{ value: 'gmail', label: 'Gmail' }]}
+						/>
+						<ErrorMessage
+							name='service'
+							component='div'
+							className={formStyle.formError}
+						/>
+					</div>
 
 					{values.service.value === 'gmail' && (
 						<>
-							<Field
-								name='gmail.email'
-								placeholder='Email'
-								className={formStyle.formInput}
-							/>
-							<ErrorMessage
-								name='gmail.email'
-								component='div'
-								className={formStyle.formError}
-							/>
+							<div className={formStyle.formGroup}>
+								<label className={formStyle.formLabel}>{t.mail.email}</label>
+								<Field
+									name='gmail.email'
+									placeholder={t.mail.email}
+									className={formStyle.formInput}
+								/>
+								<ErrorMessage
+									name='gmail.email'
+									component='div'
+									className={formStyle.formError}
+								/>
+							</div>
 
-							<Field
-								name='gmail.password'
-								placeholder='One Time Password'
-								type='password'
-								className={formStyle.formInput}
-							/>
-							<ErrorMessage
-								name='gmail.password'
-								component='div'
-								className={formStyle.formError}
-							/>
+							<div className={formStyle.formGroup}>
+								<label className={formStyle.formLabel}>{t.mail.oneTimePassword}</label>
+
+								<Field
+									name='gmail.password'
+									placeholder={t.mail.oneTimePassword}
+									type='password'
+									className={formStyle.formInput}
+								/>
+								<ErrorMessage
+									name='gmail.password'
+									component='div'
+									className={formStyle.formError}
+								/>
+							</div>
 						</>
 					)}
 					<div className={style.buttons}>
 						{!hideSkip && (
 							<Button
-								text='Skip'
+								text={t.mail.skip}
 								type='button'
 								onClick={() => onSubmit(true)}
 								small
@@ -122,7 +136,7 @@ export default function EmailConfigurationInput({
 						)}
 
 						<Button
-							text={saveButtonText}
+							text={saveButtonText || t.mail.continue}
 							type='submit'
 							disabled={!dirty || isSubmitting}
 							icon='/icons/save.svg'

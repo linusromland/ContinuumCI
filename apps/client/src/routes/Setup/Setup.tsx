@@ -24,14 +24,10 @@ export default function Setup(): JSX.Element {
 	useEffect(() => {
 		switch (stage) {
 			case 0:
-				setInfoText(
-					'The first step in configuring ContinuumCI is to create your first root user. This user will have access to all of the features and settings within ContinuumCI and will be responsible for managing your projects.'
-				);
+				setInfoText(t.setup.rootConfiguration);
 				break;
 			case 1:
-				setInfoText(
-					'It is now time to configure the email settings for ContinuumCI. This is not required, but is highly recommended. If you do not configure email settings, ContinuumCI will not be able to send you any notifications.'
-				);
+				setInfoText(t.setup.emailConfiguration);
 				break;
 		}
 	}, [stage]);

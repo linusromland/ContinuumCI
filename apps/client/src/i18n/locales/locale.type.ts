@@ -461,6 +461,8 @@ export type TranslationKeys = {
 		emailSettingsError: string;
 		emailSettingsSuccess: string;
 		userCreateError: string;
+		rootConfiguration: string;
+		emailConfiguration: string;
 	};
 	continuousDeployment: {
 		title: string;
@@ -483,6 +485,11 @@ export type TranslationKeys = {
 		configurationWorking: string;
 		configurationNotWorking: string;
 		save: string;
+		skip: string;
+		email: string;
+		oneTimePassword: string;
+		continue: string;
+		service: string;
 	};
 	welcome: {
 		firstSection: string;

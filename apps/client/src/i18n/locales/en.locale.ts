@@ -462,7 +462,11 @@ export const en: TranslationKeys = {
 	setup: {
 		emailSettingsError: 'An error occurred while configuring the email settings.',
 		emailSettingsSuccess: 'Email settings have been successfully configured!',
-		userCreateError: 'An error occurred while creating the root user.'
+		userCreateError: 'An error occurred while creating the root user.',
+		rootConfiguration:
+			'The first step in configuring ContinuumCI is to create your first root user. This user will have access to all of the features and settings within ContinuumCI and will be responsible for managing your projects.',
+		emailConfiguration:
+			'It is now time to configure the email settings for ContinuumCI. This is not required, but is highly recommended. If you do not configure email settings, ContinuumCI will not be able to send you any notifications.'
 	},
 	continuousDeployment: {
 		title: 'Continuous Deployment',
@@ -484,7 +488,12 @@ export const en: TranslationKeys = {
 		configurationNotSet: 'Not set',
 		configurationWorking: 'Working',
 		configurationNotWorking: 'Error',
-		save: 'Save'
+		save: 'Save',
+		skip: 'Skip',
+		email: 'Email',
+		oneTimePassword: 'One Time Password',
+		continue: 'Continue',
+		service: 'Email Service Provider'
 	},
 	welcome: {
 		firstSection:
