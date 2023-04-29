@@ -8,7 +8,6 @@ import CustomSelect from '../CustomSelect/CustomSelect';
 import style from './EmailConfigurationInput.module.scss';
 import formStyle from '../../styles/formStyle.module.scss';
 import useTranslations from '../../i18n/translations';
-import { useEffect } from 'react';
 
 const EmailConfigurationSchema = Yup.object().shape({
 	service: Yup.object().shape({
