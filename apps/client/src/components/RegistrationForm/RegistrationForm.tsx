@@ -124,6 +124,7 @@ export default function RegistrationForm({ onSubmit }: RegistrationFormProps): J
 						<Button
 							text={t.register.create}
 							type='submit'
+							small
 							disabled={!dirty || isSubmitting}
 							icon='/icons/signin.svg'
 							loading={isSubmitting}

@@ -78,6 +78,18 @@ export class EmailConfigurationService {
 		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
 	}
 
+	async configured(): Promise<ResponseType<boolean>> {
+		const emailConfiguration = await this.EmailConfigurationModel.findOne({
+			service: { $ne: EmailConfigurationServiceEnum.SKIPPED }
+		}).lean();
+
+		return {
+			success: true,
+			message: 'Email configuration configured check',
+			data: !!emailConfiguration
+		};
+	}
+
 	async sendVerificationEmail(email: string, verificationToken: string, expires: Date): Promise<ResponseType> {
 		try {
 			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();

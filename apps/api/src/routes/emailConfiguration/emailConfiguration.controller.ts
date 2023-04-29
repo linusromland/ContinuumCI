@@ -21,4 +21,9 @@ export class EmailConfigurationController {
 	async get() {
 		return this.emailConfigurationService.get();
 	}
+
+	@Get('configured')
+	async configured() {
+		return this.emailConfigurationService.configured();
+	}
 }

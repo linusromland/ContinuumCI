@@ -21,4 +21,16 @@ async function updateEmailConfiguration({
 	return request.data;
 }
 
-export { updateEmailConfiguration };
+async function getEmailConfiguration(): Promise<ResponseType<EmailConfigurationClass>> {
+	const request = await api.get('/emailConfiguration');
+
+	return request.data;
+}
+
+async function isEmailConfigured(): Promise<ResponseType<boolean>> {
+	const request = await api.get('/emailConfiguration/configured');
+
+	return request.data;
+}
+
+export { updateEmailConfiguration, getEmailConfiguration, isEmailConfigured };

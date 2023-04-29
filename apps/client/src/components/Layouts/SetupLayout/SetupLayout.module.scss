@@ -10,17 +10,22 @@
 
 .content {
 	background-color: $background;
-	padding: 1rem;
+	padding: 1rem 2rem;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
-	min-width: 20rem;
+	min-width: 25rem;
 	transition: all 0.2s ease-in-out;
 	opacity: 1 !important;
 	z-index: 2;
 
 	* {
 		opacity: 1 !important;
+	}
+
+	@include mediaQuery('small') {
+		min-width: 100vw;
+		padding: 1rem;
 	}
 }
 

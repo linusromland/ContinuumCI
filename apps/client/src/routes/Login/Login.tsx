@@ -10,11 +10,23 @@ import RegistrationForm from '../../components/RegistrationForm/RegistrationForm
 import setToken from '../../utils/setToken';
 import { createUser, getUser } from '../../utils/api/user';
 import useTranslations from '../../i18n/translations';
+import { isEmailConfigured } from '../../utils/api/emailConfiguration';
 
 export default function Login(): JSX.Element {
 	const t = useTranslations();
 	const navigate = useNavigate();
 	const [registered, setRegistered] = useState(false);
+	const [emailConfigured, setEmailConfigured] = useState(false);
+
+	useEffect(() => {
+		(async () => {
+			const response = await isEmailConfigured();
+
+			if (response.success) {
+				setEmailConfigured(response.data as boolean);
+			}
+		})();
+	}, []);
 
 	useEffect(() => {
 		(async () => {
@@ -66,7 +78,7 @@ export default function Login(): JSX.Element {
 					/>
 				)}
 
-				{!registered && (
+				{!registered && emailConfigured && (
 					<p className={style.footerText}>
 						{t.login.forgotPassword + ' '}
 						<Link
