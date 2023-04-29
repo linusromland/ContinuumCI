@@ -18,76 +18,9 @@ Add two variables with the names CONTINUUMCI_API and TOKEN, and set their values
 
 To set up ContinuumCI deployment with GitLab CI/CD, you'll need to create a new pipeline file in your repository. This pipeline file will define the stages that GitLab CI/CD will take when deploying your project.
 
-Create a new file called `.gitlab-ci.yml`. Copy and paste the following code into the file:
+Create a new file called `.gitlab-ci.yml`. Copy and paste the code from the [example file](../../examples/gitlab-ci.yml).
 
-```yaml
-image: ubuntu:latest
-
-stages:
-    - deploy
-
-before_script:
-    - 'which curl || (apt-get update -y && apt-get install -y curl jq)'
-
-check_secrets:
-    stage: deploy
-    script:
-        - |
-            if [ -z "$CONTINUUMCI_API" ]; then
-              echo "Missing required secret: CONTINUUMCI_API"
-              exit 1
-            else
-              echo "CONTINUUMCI_API is set to: $CONTINUUMCI_API"
-            fi
-            if [ -z "$TOKEN" ]; then
-              echo "Missing required secret: TOKEN"
-              exit 1
-            else
-              echo "TOKEN is set."
-            fi
-    rules:
-        - if: '$CI_COMMIT_BRANCH == "master"'
-
-check_continuumci_health:
-    stage: deploy
-    needs: ['check_secrets']
-    script:
-        - |
-            response=$(curl -sSL -w "%{http_code}" -X GET "$CONTINUUMCI_API/health" -o /dev/null)
-            if [ "$response" != "200" ]; then
-              echo "Error: ContinuumCI API is not responding."
-              exit 1
-            else
-              echo "ContinuumCI API is running."
-            fi
-    rules:
-        - if: '$CI_COMMIT_BRANCH == "master"'
-
-call_continuumci_deploy_api:
-    stage: deploy
-    needs: ['check_continuumci_health']
-    script:
-        - |
-            response=$(curl -sSL -X GET "$CONTINUUMCI_API/projects/cdDeploy/$TOKEN")
-            success=$(echo "$response" | jq -r '.success')
-            message=$(echo "$response" | jq -r '.message')
-            logs=$(echo "$response" | jq -r '.data[] // empty')
-
-            if [ "$success" = "true" ]; then
-              if [ -n "$logs" ]; then
-                echo "$logs"
-              fi
-              echo "Deployment successful: $message"
-            else
-              if [ -n "$logs" ]; then
-                echo "$logs"
-              fi
-              echo "Deployment failed: $message"
-              exit 1
-            fi
-    rules:
-        - if: '$CI_COMMIT_BRANCH == "master"'
-```
+This pipeline file will define the steps that GitLab CI/CD will take when deploying your project.
 
 **Note:** If you are using a different branch as your default branch, you will need to change the value of `if: '$CI_COMMIT_BRANCH == "master"'` to match your default branch in the pipeline.
 

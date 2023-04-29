@@ -18,68 +18,7 @@ Add two secrets with the names CONTINUUMCI_API and TOKEN, and set their values t
 
 To set up ContinuumCI deployment with GitHub Actions, you'll need to create a new workflow file in your repository. This workflow file will define the steps that GitHub Actions will take when deploying your project.
 
-Create a new file in the `.github/workflows/` directory of your repository called `continuumci-deploy.yml`. Copy and paste the following code into the file:
-
-```yaml
-name: ContinuumCI Deploy
-
-on:
-    push:
-        branches:
-            - master
-
-jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        env:
-            CONTINUUMCI_API: ${{ secrets.CONTINUUMCI_API }}
-            TOKEN: ${{ secrets.TOKEN }}
-        steps:
-            - name: Check for required secrets
-              run: |
-                  if [ -z "${{ secrets.CONTINUUMCI_API }}" ]; then
-                    echo "Missing required secret: CONTINUUMCI_API"
-                    exit 1
-                  fi
-                  if [ -z "${{ secrets.TOKEN }}" ]; then
-                    echo "Missing required secret: TOKEN"
-                    exit 1
-                  fi
-            - name: Check ContinuumCI API health
-              run: |
-                  response=$(curl -sSL -w "%{http_code}" -X GET "${{ env.CONTINUUMCI_API }}/health" -o /dev/null)
-                  if [ "$response" != "200" ]; then
-                    echo "Error: ContinuumCI API is not responding."
-                    exit 1
-                  else
-                    echo "ContinuumCI API is running."
-                  fi
-              env:
-                  CONTINUUMCI_API: ${{ secrets.CONTINUUMCI_API }}
-            - name: Call ContinuumCI Deploy API
-              run: |
-                  response=$(curl -sSL -X GET "${{ env.CONTINUUMCI_API }}/projects/cdDeploy/${{ env.TOKEN }}")
-                  success=$(echo "$response" | jq -r '.success')
-                  message=$(echo "$response" | jq -r '.message')
-                  logs=$(echo "$response" | jq -r '.data[] // empty')
-
-                  if [ "$success" = "true" ]; then
-                    if [ -n "$logs" ]; then
-                      echo "$logs"
-                    fi
-                    echo "Deployment successful: $message"
-                  else
-                    if [ -n "$logs" ]; then
-                      echo "$logs"
-                    fi
-                    echo "Deployment failed: $message"
-                    exit 1
-                  fi
-              env:
-                  CONTINUUMCI_API: ${{ secrets.CONTINUUMCI_API }}
-                  TOKEN: ${{ secrets.TOKEN }}
-                  CI: true
-```
+Create a new file in the `.github/workflows/` directory of your repository called `continuumci-deploy.yml`. Copy and paste the code from the [example file](../../examples/github-action.yml).
 
 This workflow file will define the steps that GitHub Actions will take when deploying your project. It will also define the environment variables that GitHub Actions will use when running these steps.
 
