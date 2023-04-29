@@ -12,6 +12,7 @@ import { NginxModule } from './routes/nginx/nginx.module';
 import { OverviewModule } from './routes/overview/overview.module';
 import { EmailConfigurationModule } from './routes/emailConfiguration/emailConfiguration.module';
 import { EnvironmentVariablesModule } from './routes/environmentVariables/environmentVariables.module';
+import { HealthModule } from './routes/health/health.module';
 import { ProjectsModule } from './routes/projects/projects.module';
 import { SetupModule } from './routes/setup/setup.module';
 import { UsersModule } from './routes/users/users.module';
@@ -25,6 +26,7 @@ import { UsersModule } from './routes/users/users.module';
 		OverviewModule,
 		EmailConfigurationModule,
 		EnvironmentVariablesModule,
+		HealthModule,
 		ProjectsModule,
 		SetupModule,
 		UsersModule
