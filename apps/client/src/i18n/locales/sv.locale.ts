@@ -23,7 +23,8 @@ export const sv: TranslationKeys = {
 		settings: {
 			title: 'Inställningar',
 			general: 'Allmänt',
-			users: 'Användare'
+			users: 'Användare',
+			mail: 'E-post'
 		},
 		footer: {
 			authenticatedAs: 'Inloggad som',
@@ -460,6 +461,7 @@ export const sv: TranslationKeys = {
 	},
 	setup: {
 		emailSettingsError: 'Ett fel inträffade vid uppdatering av e-postinställningarna.',
+		emailSettingsSuccess: 'E-postinställningarna har uppdaterats framgångsrikt!',
 		userCreateError: 'Ett fel inträffade vid skapande av rotanvändaren.'
 	},
 	continuousDeployment: {
@@ -475,5 +477,13 @@ export const sv: TranslationKeys = {
 		documentation: 'dokumentation.',
 		regenerateSuccess: 'Ny nyckel har genererats!',
 		regenerateError: 'Ett fel inträffade vid generering av ny nyckel.'
+	},
+	mail: {
+		title: 'E-postinställningar',
+		configurationStatus: 'Konfigurationsstatus',
+		configurationNotSet: 'Inte inställd.',
+		configurationWorking: 'Funkar.',
+		configurationNotWorking: 'Fel.',
+		save: 'Spara'
 	}
 };

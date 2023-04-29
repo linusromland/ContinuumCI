@@ -23,7 +23,8 @@ export const en: TranslationKeys = {
 		settings: {
 			title: 'Settings',
 			general: 'General',
-			users: 'Users'
+			users: 'Users',
+			mail: 'Mail'
 		},
 		footer: {
 			authenticatedAs: 'Logged in as',
@@ -460,6 +461,7 @@ export const en: TranslationKeys = {
 	},
 	setup: {
 		emailSettingsError: 'An error occurred while configuring the email settings.',
+		emailSettingsSuccess: 'Email settings have been successfully configured!',
 		userCreateError: 'An error occurred while creating the root user.'
 	},
 	continuousDeployment: {
@@ -475,5 +477,13 @@ export const en: TranslationKeys = {
 		documentation: 'documentation.',
 		regenerateSuccess: 'Token has been successfully regenerated!',
 		regenerateError: 'An error occurred while regenerating the token.'
+	},
+	mail: {
+		title: 'Mail Settings',
+		configurationStatus: 'Configuration Status',
+		configurationNotSet: 'Not set',
+		configurationWorking: 'Working',
+		configurationNotWorking: 'Error',
+		save: 'Save'
 	}
 };

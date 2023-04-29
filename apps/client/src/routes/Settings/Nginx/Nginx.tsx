@@ -78,7 +78,7 @@ export default function Nginx(): JSX.Element {
 				<h1 className={style.title}>{t.nginx.title}</h1>
 				<Widget>
 					<div className={style.container}>
-						<h2 className={style.subtitle}>{t.nginx.configuration.title}</h2>
+						<h2>{t.nginx.configuration.title}</h2>
 
 						<div className={style.infoContainer}>
 							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>

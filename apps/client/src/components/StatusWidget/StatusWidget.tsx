@@ -1,15 +1,18 @@
 // Internal dependencies
 import style from './StatusWidget.module.scss';
-import Widget from '../../../../components/Widget/Widget';
+import Widget from '../Widget/Widget';
 
 interface StatusWidgetProps {
 	icon: string;
 	text: string;
+	widget?: boolean;
 }
 
-export default function StatusWidget({ icon, text }: StatusWidgetProps) {
+export default function StatusWidget({ icon, text, widget = true }: StatusWidgetProps) {
+	const Wrapper = widget ? Widget : 'div';
+
 	return (
-		<Widget>
+		<Wrapper>
 			<div className={style.statusContainer}>
 				<img
 					className={style.icon}
@@ -18,6 +21,6 @@ export default function StatusWidget({ icon, text }: StatusWidgetProps) {
 				/>
 				<p>{text}</p>
 			</div>
-		</Widget>
+		</Wrapper>
 	);
 }

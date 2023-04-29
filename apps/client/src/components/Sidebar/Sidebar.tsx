@@ -100,12 +100,20 @@ export default function Sidebar({ user }: SidebarProps) {
 								/>
 							)}
 							{(user.role == UserRoleEnum.ROOT || user.role == UserRoleEnum.ADMIN) && (
-								<Button
-									text='Nginx'
-									icon='/icons/nginx.svg'
-									onClick={() => changeLocation('/settings/nginx')}
-									selected={location.pathname === '/settings/nginx'}
-								/>
+								<>
+									<Button
+										text='Nginx'
+										icon='/icons/nginx.svg'
+										onClick={() => changeLocation('/settings/nginx')}
+										selected={location.pathname === '/settings/nginx'}
+									/>
+									<Button
+										text={t.sidebar.settings.mail}
+										icon='/icons/mail.svg'
+										onClick={() => changeLocation('/settings/mail')}
+										selected={location.pathname === '/settings/mail'}
+									/>
+								</>
 							)}
 						</>
 					</ButtonWrapper>

@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import style from './Project.module.scss';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../components/Button/Button';
-import StatusWidget from './components/StatusWidget/StatusWidget';
+import StatusWidget from '../../components/StatusWidget/StatusWidget';
 import EnviromentVariablesTable from './components/EnviromentVariablesTable/EnviromentVariablesTable';
 import ContainersTable from './components/ContainersTable/ContainersTable';
 import AccessControlTable from './components/AccessControlTable/AccessControlTable';

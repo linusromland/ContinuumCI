@@ -21,6 +21,7 @@ export type TranslationKeys = {
 			title: string;
 			general: string;
 			users: string;
+			mail: string;
 		};
 		footer: {
 			authenticatedAs: string;
@@ -458,6 +459,7 @@ export type TranslationKeys = {
 	};
 	setup: {
 		emailSettingsError: string;
+		emailSettingsSuccess: string;
 		userCreateError: string;
 	};
 	continuousDeployment: {
@@ -473,5 +475,13 @@ export type TranslationKeys = {
 		documentation: string;
 		regenerateSuccess: string;
 		regenerateError: string;
+	};
+	mail: {
+		title: string;
+		configurationStatus: string;
+		configurationNotSet: string;
+		configurationWorking: string;
+		configurationNotWorking: string;
+		save: string;
 	};
 };

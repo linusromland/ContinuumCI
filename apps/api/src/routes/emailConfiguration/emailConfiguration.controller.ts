@@ -26,4 +26,10 @@ export class EmailConfigurationController {
 	async configured() {
 		return this.emailConfigurationService.configured();
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('test')
+	async test() {
+		return this.emailConfigurationService.checkEmailConfiguration();
+	}
 }

@@ -3,9 +3,10 @@ import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
 
 // Internal Dependencies
-import Button from '../../../components/Button/Button';
-import CustomSelect from '../../../components/CustomSelect/CustomSelect';
+import Button from '../Button/Button';
+import CustomSelect from '../CustomSelect/CustomSelect';
 import style from './EmailConfigurationInput.module.scss';
+import formStyle from '../../styles/formStyle.module.scss';
 
 const EmailConfigurationSchema = Yup.object().shape({
 	service: Yup.object().shape({
@@ -19,6 +20,16 @@ const EmailConfigurationSchema = Yup.object().shape({
 });
 
 interface EmailConfigurationInputProps {
+	initialValues?: {
+		service: {
+			value: string;
+			label: string;
+		};
+		gmail: {
+			email: string;
+			password: string;
+		};
+	};
 	onSubmit: (
 		skip?: boolean,
 		values?: {
@@ -32,28 +43,36 @@ interface EmailConfigurationInputProps {
 			};
 		}
 	) => void;
+	saveButtonText?: string;
+	hideSkip?: boolean;
 }
 
-export default function EmailConfigurationInput({ onSubmit }: EmailConfigurationInputProps): JSX.Element {
+export default function EmailConfigurationInput({
+	initialValues = {
+		service: {
+			value: 'gmail',
+			label: 'Gmail'
+		},
+		gmail: {
+			email: '',
+			password: ''
+		}
+	},
+	hideSkip,
+	saveButtonText = 'Continue',
+	onSubmit
+}: EmailConfigurationInputProps): JSX.Element {
 	return (
 		<Formik
-			initialValues={{
-				service: {
-					value: 'gmail',
-					label: 'Gmail'
-				},
-				gmail: {
-					email: '',
-					password: ''
-				}
-			}}
+			initialValues={initialValues}
+			enableReinitialize
 			validationSchema={EmailConfigurationSchema}
-			onSubmit={(values) => {
-				onSubmit(false, values);
+			onSubmit={async (values) => {
+				await onSubmit(false, values);
 			}}
 		>
 			{({ dirty, isSubmitting, values }) => (
-				<Form className={style.form}>
+				<Form className={formStyle.form}>
 					<Field
 						name='service'
 						placeholder='Service'
@@ -63,7 +82,7 @@ export default function EmailConfigurationInput({ onSubmit }: EmailConfiguration
 					<ErrorMessage
 						name='service'
 						component='div'
-						className={style.error}
+						className={formStyle.formError}
 					/>
 
 					{values.service.value === 'gmail' && (
@@ -71,40 +90,44 @@ export default function EmailConfigurationInput({ onSubmit }: EmailConfiguration
 							<Field
 								name='gmail.email'
 								placeholder='Email'
-								className={style.input}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='gmail.email'
 								component='div'
-								className={style.error}
+								className={formStyle.formError}
 							/>
 
 							<Field
 								name='gmail.password'
 								placeholder='One Time Password'
 								type='password'
-								className={style.input}
+								className={formStyle.formInput}
 							/>
 							<ErrorMessage
 								name='gmail.password'
 								component='div'
-								className={style.error}
+								className={formStyle.formError}
 							/>
 						</>
 					)}
 					<div className={style.buttons}>
-						<Button
-							text='Skip'
-							type='button'
-							onClick={() => onSubmit(true)}
-						/>
+						{!hideSkip && (
+							<Button
+								text='Skip'
+								type='button'
+								onClick={() => onSubmit(true)}
+								small
+							/>
+						)}
 
 						<Button
-							text='Continue'
+							text={saveButtonText}
 							type='submit'
 							disabled={!dirty || isSubmitting}
 							icon='/icons/save.svg'
 							loading={isSubmitting}
+							small
 						/>
 					</div>
 				</Form>

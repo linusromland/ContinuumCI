@@ -27,6 +27,7 @@ import Domains from './Domains/Domains';
 import GeneralSettings from './Settings/General/General';
 import UserSettings from './Settings/Users/Users';
 import NginxSettings from './Settings/Nginx/Nginx';
+import MailSettings from './Settings/Mail/Mail';
 
 export default function Router(): JSX.Element {
 	return (
@@ -70,6 +71,10 @@ export default function Router(): JSX.Element {
 							<Route
 								path='/settings/nginx'
 								element={<NginxSettings />}
+							/>
+							<Route
+								path='/settings/mail'
+								element={<MailSettings />}
 							/>
 						</Route>
 					</Route>

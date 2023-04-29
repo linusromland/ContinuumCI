@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 // Internal Dependencies
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
-import EmailConfigurationInput from './EmailConfigurationInput/EmailConfigurationInput';
+import EmailConfigurationInput from '../../components/EmailConfigurationInput/EmailConfigurationInput';
 import style from './Setup.module.scss';
 import { createUser } from '../../utils/api/user';
 import { getSetup } from '../../utils/api/setup';

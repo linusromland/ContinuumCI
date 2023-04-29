@@ -56,6 +56,37 @@ export class EmailConfigurationService {
 		}
 	}
 
+	async checkEmailConfiguration(): Promise<ResponseType> {
+		try {
+			const emailConfiguration = await this.EmailConfigurationModel.findOne().lean();
+
+			if (!emailConfiguration) {
+				throw new InternalServerErrorException({
+					success: false,
+					message: 'Email configuration not found'
+				});
+			}
+
+			const verifiedEmailConfiguration = await this.verifyEmailConfiguration(emailConfiguration);
+
+			return {
+				success: verifiedEmailConfiguration,
+				message: verifiedEmailConfiguration
+					? 'Email configuration verified successfully'
+					: 'Invalid email configuration'
+			};
+		} catch (error) {
+			if (error instanceof BadRequestException) {
+				throw error;
+			}
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: (error as string | null) || 'Something went wrong'
+			});
+		}
+	}
+
 	async verifyEmailConfiguration(emailConfiguration: EmailConfigurationQueryClass): Promise<boolean> {
 		//Test the email configuration
 		const transporter = nodemailer.createTransport({
@@ -75,7 +106,7 @@ export class EmailConfigurationService {
 	}
 
 	async get(): Promise<ResponseType<EmailConfigurationClass>> {
-		return await this.EmailConfigurationModel.findOne().select('-_id -__v -auth.pass').lean();
+		return await this.EmailConfigurationModel.findOne().select('-_id -__v').lean();
 	}
 
 	async configured(): Promise<ResponseType<boolean>> {
