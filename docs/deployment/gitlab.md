@@ -12,7 +12,7 @@ To add these variables, go to your repository on GitLab and click on "Settings".
 
 Add two variables with the names CONTINUUMCI_API and TOKEN, and set their values to your ContinuumCI API URL and CD token, respectively.
 
-createSecretGitLab
+![createSecret](images/gitlab/createSecret.png)
 
 ## Step 2: Create a GitLab CI/CD pipeline
 
@@ -89,14 +89,16 @@ call_continuumci_deploy_api:
         - if: '$CI_COMMIT_BRANCH == "master"'
 ```
 
+![createActionsFile](images/gitlab/createActionsFile.png)
+
 ## Step 3: Run the pipeline
 
 Once you've created your pipeline file, commit and push your changes to your repository. This will trigger GitLab CI/CD to run your pipeline and deploy your project to ContinuumCI.
 
 ## Step 4: Verify that your project was deployed successfully
 
-Once the file is committed and pushed, you can verify that your project was deployed successfully by checking the job status on GitLab. Just click on the "CI/CD" tab in the sidebar on GitLab and click on the job that was just run.
+Once the file is committed and pushed, you can verify that your project was deployed successfully by checking the job status on GitLab. Just click on the checkmark or X on the latests commit.
 
 If the job was successful, you should see a green checkmark next to it. If the job failed, you should see a red X next to it, you can click on the job to see the logs and find out what went wrong.
 
-![jobStatus](images/github/jobStatus.png)
+![jobStatus](images/gitlab/jobStatus.png)

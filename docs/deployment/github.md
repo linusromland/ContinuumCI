@@ -12,7 +12,7 @@ To add these secrets, go to your repository on GitHub and click on "Settings". T
 
 Add two secrets with the names CONTINUUMCI_API and TOKEN, and set their values to your ContinuumCI API URL and CD token, respectively.
 
-![createSecretGitHub](images/github/createSecretGitHub.png)
+![createSecret](images/github/createSecret.png)
 
 ## Step 2: Create a GitHub Actions workflow
 
