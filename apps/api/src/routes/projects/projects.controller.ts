@@ -65,4 +65,9 @@ export class ProjectsController {
 	regenerateCdToken(@Request() req, @Body('projectId') projectId: string) {
 		return this.projectsService.regenerateCdToken(req.user.sub, projectId);
 	}
+
+	@Get('cdDeploy/:cdToken')
+	cdDeploy(@Param('cdToken') cdToken: string) {
+		return this.projectsService.cdDeploy(cdToken);
+	}
 }

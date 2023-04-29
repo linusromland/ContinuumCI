@@ -158,6 +158,7 @@ export class ProjectsService {
 				message: 'User not found'
 			});
 		}
+
 		const project = await this.ProjectModel.findById(projectId);
 
 		if (!project) {
@@ -457,6 +458,104 @@ export class ProjectsService {
 			throw new BadRequestException({
 				success: false,
 				message: 'Error while generating token'
+			});
+		}
+	}
+
+	async cdDeploy(token: string): Promise<ResponseType<string[]>> {
+		const project = await this.ProjectModel.findOne({ cdToken: token });
+		const owner = project.permissions.find((permission) => permission.role === ProjectRoleEnum.OWNER);
+
+		const logs: string[] = [];
+
+		if (!project) {
+			throw new BadRequestException({
+				success: false,
+				message: 'Project not found'
+			});
+		}
+
+		try {
+			const git = simpleGit({
+				baseDir: `${REPOSITORIES_DIRECTORY}/${project._id}`
+			});
+
+			// Discard all changes
+			await git.reset(['--hard']);
+
+			// Pull the latest changes
+			const result = await git.pull();
+
+			if (!(await updateCompose(project, this.ProjectModel))) {
+				throw new BadRequestException({
+					success: false,
+					message: 'Project sync failed'
+				});
+			}
+
+			if (project.enabled && result.files.length) {
+				// Forefully remove the deployment
+				const removeDeployment = await this.deploymentService.removeDeployment(
+					owner.user as string,
+					project._id,
+					true
+				);
+
+				const removeDeploymentData = removeDeployment.data[0] as unknown as {
+					err: string;
+					out: string;
+				};
+
+				if (removeDeploymentData.err && removeDeploymentData.out) {
+					const removeDeploymentLogs = [
+						...removeDeploymentData.err.split('\n'),
+						...removeDeploymentData.out.split('\n')
+					];
+
+					logs.push(...removeDeploymentLogs);
+				}
+
+				// Create a new deployment
+				const createDeployment = await this.deploymentService.createDeployment(
+					owner.user as string,
+					project._id
+				);
+
+				const createDeploymentData = createDeployment.data[0] as unknown as {
+					err: string;
+					out: string;
+				};
+
+				if (createDeploymentData.err && createDeploymentData.out) {
+					const createDeploymentLogs = [
+						...createDeploymentData.err.split('\n'),
+						...createDeploymentData.out.split('\n')
+					];
+
+					logs.push(...createDeploymentLogs);
+				}
+			}
+
+			if (!result.files.length) {
+				return {
+					success: true,
+					message: 'alreadyInSync',
+					data: logs
+				};
+			}
+
+			return {
+				success: true,
+				message: 'Project synced successfully',
+				data: logs
+			};
+		} catch (e) {
+			if (e instanceof BadRequestException) throw e;
+
+			throw new BadRequestException({
+				success: false,
+				message: 'Project sync failed',
+				data: logs
 			});
 		}
 	}
