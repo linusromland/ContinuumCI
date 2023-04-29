@@ -15,12 +15,14 @@ import TextEditModal from '../../../components/TextEditModal/TextEditModal';
 import formatRole from '../../../utils/formatRole';
 import ChangePasswordForm from './components/ChangePasswordForm/ChangePasswordForm';
 import useTranslations from '../../../i18n/translations';
+import { Loading } from '../../../components/Loading/Loading';
 
 export default function GeneralSettings(): JSX.Element {
 	const t = useTranslations();
 	const [changeUsernameModal, setChangeUsernameModal] = useState(false);
 	const [changeEmailModal, setChangeEmailModal] = useState(false);
 	const [user, setUser] = useState({} as UserClass);
+	const [dataReady, setDataReady] = useState(false);
 
 	useEffect(() => {
 		getData();
@@ -33,7 +35,10 @@ export default function GeneralSettings(): JSX.Element {
 		if (user) {
 			setUser(user);
 		}
+		setDataReady(true);
 	}
+
+	if (!dataReady) return <Loading />;
 
 	return (
 		<>

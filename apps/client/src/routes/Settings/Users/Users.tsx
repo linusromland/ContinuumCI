@@ -13,6 +13,7 @@ import { UserClass } from 'shared/src/classes';
 import { UserRoleEnum } from 'shared/src/enums';
 import ChangeRoleModal from './components/ChangeRoleModal/ChangeRoleModal';
 import useTranslations from '../../../i18n/translations';
+import { Loading } from '../../../components/Loading/Loading';
 
 export default function Users(): JSX.Element {
 	const t = useTranslations();
@@ -20,6 +21,7 @@ export default function Users(): JSX.Element {
 	const [users, setUsers] = useState([] as UserClass[]);
 	const [selectedUser, setSelectedUser] = useState(null as UserClass | null);
 	const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
+	const [dataReady, setDataReady] = useState(false);
 
 	useEffect(() => {
 		getData();
@@ -28,7 +30,10 @@ export default function Users(): JSX.Element {
 	async function getData() {
 		const response = await getUsers();
 		setUsers(response.data as UserClass[]);
+		setDataReady(true);
 	}
+
+	if (!dataReady) return <Loading />;
 
 	return (
 		<div className={style.main}>

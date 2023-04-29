@@ -16,6 +16,7 @@ import { NginxConfigurationType } from 'shared/src/types';
 import { getConfiguration, updateConfiguration } from '../../../utils/api/nginx/configuration';
 import { customStyles } from '../../../components/CustomSelect/CustomSelect';
 import useTranslations from '../../../i18n/translations';
+import { Loading } from '../../../components/Loading/Loading';
 
 export default function Nginx(): JSX.Element {
 	const t = useTranslations();
@@ -31,6 +32,7 @@ export default function Nginx(): JSX.Element {
 	const [sitesEnabledDirectoryModal, setSitesEnabledDirectoryModal] = useState(false);
 	const [accessLogLocationModal, setAccessLogLocationModal] = useState(false);
 	const [localIpAdressesModal, setLocalIpAdressesModal] = useState(false);
+	const [dataReady, setDataReady] = useState(false);
 	const [selectedDomainName, setSelectedDomainName] = useState({
 		value: '',
 		label: ''
@@ -65,10 +67,17 @@ export default function Nginx(): JSX.Element {
 		}
 	}
 
+	async function getData() {
+		await getDomainsData();
+		await getConfigurationData();
+		setDataReady(true);
+	}
+
 	useEffect(() => {
-		getDomainsData();
-		getConfigurationData();
+		getData();
 	}, []);
+
+	if (!dataReady) return <Loading />;
 
 	return (
 		<>
