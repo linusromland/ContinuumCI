@@ -1,60 +1,11 @@
+// Themes imports
+@forward 'themes/light';
+@forward 'themes/dark';
+
 // Border radius
 $border-radius: 0.5rem;
 
-:root [data-theme='light'] {
-	// Main Colors
-	$primary: #a4e869;
-	--primary: #{$primary};
-	--primary-lighten-25: #{lighten($primary, 25%)};
-	--primary-lighten-20: #{lighten($primary, 20%)};
-	--primary-lighten-10: #{lighten($primary, 10%)};
-	--primary-darken-20: #{darken($primary, 20%)};
-
-	$secondary: #26b99a;
-	--secondary: #{$secondary};
-	--secondary-lighten-25: #{lighten($secondary, 25%)};
-	--secondary-lighten-10: #{lighten($secondary, 10%)};
-
-	$background: #f3f3f3;
-	--background: #{$background};
-	--background-lighten-15: #{lighten($background, 15%)};
-	--background-darken-10: #{darken($background, 10%)};
-	--background-darken-5: #{darken($background, 5%)};
-	--background-darken-2: #{darken($background, 2%)};
-
-	$background-secondary: #1a1c1e;
-	--background-secondary: #{$background-secondary};
-	--background-secondary-lighten-15: #{lighten($background-secondary, 15%)};
-	--background-secondary-lighten-10: #{lighten($background-secondary, 10%)};
-
-	// Text Colors
-	$text-primary: #000000;
-	--text-primary: #{$text-primary};
-	--text-primary-lighten-70: #{lighten($text-primary, 25%)};
-	--text-primary-lighten-30: #{lighten($text-primary, 30%)};
-	--text-primary-lighten-25: #{lighten($text-primary, 25%)};
-	--text-primary-lighten-20: #{lighten($text-primary, 20%)};
-
-	$text-secondary: #f7f7f7;
-	--text-secondary: #{$text-secondary};
-	--text-secondary-darken-10: #{darken($text-secondary, 10%)};
-
-	$text-moody: #b4b6be;
-	--text-moody: #{$text-moody};
-
-	// Error Color
-	$success: #4caf50;
-	--success: #{$success};
-	--success-lighten-20: #{lighten($success, 20%)};
-	--success-lighten-10: #{lighten($success, 10%)};
-
-	$warning: #ed6c02;
-	--warning: #{$warning};
-	--warning-lighten-20: #{lighten($warning, 20%)};
-	--warning-lighten-10: #{lighten($warning, 10%)};
-
-	$error: #d32f2f;
-	--error: #{$error};
-	--error-lighten-20: #{lighten($error, 20%)};
-	--error-lighten-10: #{lighten($error, 10%)};
+// Set default text color
+* {
+	color: var(--text-primary);
 }

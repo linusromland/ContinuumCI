@@ -12,14 +12,13 @@
 
 .link {
 	font-size: 1rem;
-	font-weight: 400;
-	margin-bottom: 1rem;
-	color: #0000ff;
+	color: var(--link-color);
+	font-weight: 500;
+	transition: color 0.2s ease-in-out;
 	text-decoration: underline;
 	cursor: pointer;
 
 	&:hover {
-		color: #3636d3;
-		text-decoration: underline;
+		color: var(--link-color-hover);
 	}
 }

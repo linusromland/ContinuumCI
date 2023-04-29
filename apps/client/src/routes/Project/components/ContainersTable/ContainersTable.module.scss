@@ -49,3 +49,14 @@
 	display: flex;
 	justify-content: flex-end;
 }
+
+.link {
+	font-size: 1rem;
+	color: var(--link-color);
+	font-weight: 500;
+	transition: color 0.2s ease-in-out;
+
+	&:hover {
+		color: var(--link-color-hover);
+	}
+}

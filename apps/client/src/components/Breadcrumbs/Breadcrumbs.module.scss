@@ -21,12 +21,12 @@
 
 .link {
 	font-size: 1rem;
-	color: #1a0dab;
+	color: var(--link-color);
 	font-weight: 500;
 	transition: color 0.2s ease-in-out;
 
 	&:hover {
-		color: lighten(#1a0dab, 20%);
+		color: var(--link-color-hover);
 	}
 }
 

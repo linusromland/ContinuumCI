@@ -54,7 +54,12 @@ export default function Containers(): JSX.Element {
 									widget={false}
 									headers={[t.containers.name, t.containers.state, t.containers.created]}
 									data={containers.map((container) => [
-										<Link to={`/containers/${container.id}`}>{container.name}</Link>,
+										<Link
+											to={`/containers/${container.id}`}
+											className={style.link}
+										>
+											{container.name}
+										</Link>,
 										container.state,
 										container.created
 											? dayjs(container.created * 1000).format('YYYY-MM-DD HH:mm')

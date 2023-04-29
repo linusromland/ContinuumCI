@@ -45,7 +45,12 @@ export default function ContainersTable({ projectId }: ContainersTableProps): JS
 					widget={false}
 					headers={[t.containersTable.name, t.containersTable.state, t.containersTable.created]}
 					data={containers.map((container) => [
-						<Link to={`/containers/${container.id}`}>{container.name}</Link>,
+						<Link
+							to={`/containers/${container.id}`}
+							className={style.link}
+						>
+							{container.name}
+						</Link>,
 						container.state,
 						container.created ? dayjs(container.created * 1000).format('YYYY-MM-DD HH:mm') : '-'
 					])}
