@@ -21,6 +21,14 @@ async function syncProject(projectId: string): Promise<ResponseType> {
 	return request.data as ResponseType;
 }
 
+async function regenerateCdToken(projectId: string): Promise<ResponseType> {
+	const request = await api.post(`/projects/regenerateCdToken`, {
+		projectId
+	});
+
+	return request.data as ResponseType;
+}
+
 async function createProject(data: ProjectQueryClass): Promise<ResponseType> {
 	const request = await api.post('/projects/create', {
 		...data,
@@ -42,4 +50,4 @@ async function deleteProject(projectId: string): Promise<ResponseType> {
 	return request.data as ResponseType;
 }
 
-export { getAllProjects, getProject, syncProject, createProject, editProject, deleteProject };
+export { getAllProjects, getProject, syncProject, createProject, regenerateCdToken, editProject, deleteProject };

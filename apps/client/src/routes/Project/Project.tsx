@@ -16,7 +16,7 @@ import TextEditModal from '../../components/TextEditModal/TextEditModal';
 import { Loading } from '../../components/Loading/Loading';
 import { ProjectDeploymentStatus, ProjectSyncStatus } from 'shared/src/enums';
 import { ProjectClass, UserClass } from 'shared/src/classes';
-import { syncProject, editProject, getProject, deleteProject } from '../../utils/api/projects';
+import { syncProject, editProject, getProject, deleteProject, regenerateCdToken } from '../../utils/api/projects';
 import { createDeployment, removeDeployment } from '../../utils/api/deployment';
 import useTranslations from '../../i18n/translations';
 import ContinuousDeployment from './components/ContinuousDeployment/ContinuousDeployment';
@@ -233,7 +233,14 @@ export default function Project() {
 						<ContinuousDeployment
 							token={project.cdToken as string}
 							regenerateToken={async () => {
-								console.log('regenerate');
+								const response = await regenerateCdToken(project._id);
+
+								if (response.success) {
+									toast.success(t.continuousDeployment.regenerateSuccess);
+									getData();
+								} else {
+									toast.error(t.continuousDeployment.regenerateError);
+								}
 							}}
 						/>
 					</div>

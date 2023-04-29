@@ -466,11 +466,14 @@ export const sv: TranslationKeys = {
 		title: 'Continuous Deployment',
 		token: 'Nyckel',
 		regenerateToken: 'Generera ny nyckel',
+		confirmRegenerateToken: 'Bekräfta generering av ny nyckel',
 		copy: 'Kopiera',
 		copySuccess: 'Kopierat till urklipp!',
 		copyError: 'Ett fel inträffade vid kopiering till urklipp.',
 		apiURL: 'API URL',
 		footerText: 'Läs mer om hur du använder Continuous Deployment i',
-		documentation: 'dokumentation.'
+		documentation: 'dokumentation.',
+		regenerateSuccess: 'Ny nyckel har genererats!',
+		regenerateError: 'Ett fel inträffade vid generering av ny nyckel.'
 	}
 };

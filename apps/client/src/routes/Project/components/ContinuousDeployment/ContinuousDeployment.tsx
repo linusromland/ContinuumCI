@@ -1,9 +1,12 @@
+// External dependencies
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 // Internal dependencies
 import style from './ContinuousDeployment.module.scss';
 import Widget from '../../../../components/Widget/Widget';
 import useTranslations from '../../../../i18n/translations';
 import Button from '../../../../components/Button/Button';
-import { toast } from 'react-toastify';
 
 interface ContinuousDeploymentProps {
 	token: string;
@@ -12,6 +15,7 @@ interface ContinuousDeploymentProps {
 
 export default function ContinuousDeployment({ token, regenerateToken }: ContinuousDeploymentProps): JSX.Element {
 	const t = useTranslations();
+	const [confirmRegenerate, setConfirmRegenerate] = useState(false);
 
 	const API_HOST = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -45,8 +49,17 @@ export default function ContinuousDeployment({ token, regenerateToken }: Continu
 							small
 						/>
 						<Button
-							text={t.continuousDeployment.regenerateToken}
-							onClick={regenerateToken}
+							text={
+								confirmRegenerate
+									? t.continuousDeployment.confirmRegenerateToken
+									: t.continuousDeployment.regenerateToken
+							}
+							onClick={() => {
+								if (confirmRegenerate) {
+									regenerateToken();
+									setConfirmRegenerate(false);
+								} else setConfirmRegenerate(true);
+							}}
 							small
 						/>
 					</div>

@@ -464,11 +464,14 @@ export type TranslationKeys = {
 		title: string;
 		token: string;
 		regenerateToken: string;
+		confirmRegenerateToken: string;
 		copy: string;
 		copySuccess: string;
 		copyError: string;
 		apiURL: string;
 		footerText: string;
 		documentation: string;
+		regenerateSuccess: string;
+		regenerateError: string;
 	};
 };

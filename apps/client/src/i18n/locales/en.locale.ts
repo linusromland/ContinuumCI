@@ -466,11 +466,14 @@ export const en: TranslationKeys = {
 		title: 'Continuous Deployment',
 		token: 'Token',
 		regenerateToken: 'Regenerate Token',
+		confirmRegenerateToken: 'Confirm Regenerate Token',
 		copy: 'Copy',
 		copySuccess: 'Copied to clipboard!',
 		copyError: 'Failed to copy to clipboard.',
 		apiURL: 'API URL',
 		footerText: 'You can find more information about Continuous Deployment in the',
-		documentation: 'documentation.'
+		documentation: 'documentation.',
+		regenerateSuccess: 'Token has been successfully regenerated!',
+		regenerateError: 'An error occurred while regenerating the token.'
 	}
 };
