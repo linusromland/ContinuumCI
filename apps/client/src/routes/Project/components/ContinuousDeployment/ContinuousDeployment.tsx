@@ -17,7 +17,15 @@ export default function ContinuousDeployment({ token, regenerateToken }: Continu
 	const t = useTranslations();
 	const [confirmRegenerate, setConfirmRegenerate] = useState(false);
 
-	const API_HOST = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+	let API_HOST = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+	if (API_HOST.startsWith('/')) {
+		API_HOST = window.location.origin + API_HOST;
+	}
+
+	if (API_HOST.endsWith('/')) {
+		API_HOST = API_HOST.slice(0, -1);
+	}
 
 	function copyToClipboard(text: string) {
 		try {

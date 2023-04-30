@@ -36,12 +36,11 @@ export default function ProjectCreateModal({ onClose, submit, open }: ProjectCre
 						.required(t.projects.newProject.schema.name.required),
 					gitUrl: Yup.string()
 						.url(t.projects.newProject.schema.repositoryUrl.invalid)
-						.required(t.projects.newProject.schema.repositoryUrl.invalid),
+						.required(t.projects.newProject.schema.repositoryUrl.invalid)
+						.matches(/\.git$/, t.projects.newProject.schema.repositoryUrl.invalid),
 					branch: Yup.string().required(t.projects.newProject.schema.branch.required)
 				})}
-				onSubmit={(values) => {
-					submit(values);
-				}}
+				onSubmit={submit}
 			>
 				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>

@@ -15,6 +15,7 @@ const defaultProject: ProjectClass = {
 		}
 	],
 	branch: '',
+	cdToken: '',
 	syncStatus: ProjectSyncStatus.IN_SYNC,
 	deploymentStatus: ProjectDeploymentStatus.RUNNING,
 	permissions: [],

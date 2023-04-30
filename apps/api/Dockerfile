@@ -1,5 +1,9 @@
 FROM node:18-alpine as api
 
+# Install git
+RUN apk update
+RUN apk add --no-cache git
+
 # Build the nodejs app
 WORKDIR /app
 
