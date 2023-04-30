@@ -1,6 +1,9 @@
 // External Dependencies
 import { useEffect, useState } from 'react';
 import { filesize } from 'filesize';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 // Internal Dependencies
 import style from './Overview.module.scss';
@@ -15,6 +18,11 @@ import { formatNumber } from '../../utils/formatNumber';
 import { getLogs } from '../../utils/api/nginx/logs';
 import useTranslations from '../../i18n/translations';
 import { Loading } from '../../components/Loading/Loading';
+
+// DayJS Plugins
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
+const formatString = 'DD/MMM/YYYY:HH:mm:ss Z';
 
 type filesizeType = {
 	value: number;
@@ -191,7 +199,7 @@ export default function Overview(): JSX.Element {
 						t.overview.requestTable.size
 					]}
 					data={logs.map((log) => [
-						log.time_local,
+						dayjs.utc(log.time_local, formatString).format('YYYY-MM-DD HH:mm:ss'),
 						log.request_method,
 						log.status.toString(),
 						log.request_url,
