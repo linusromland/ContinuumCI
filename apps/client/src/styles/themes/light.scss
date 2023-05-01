@@ -19,6 +19,8 @@
 	--background-darken-5: #{darken($background, 5%)};
 	--background-darken-2: #{darken($background, 2%)};
 
+	--input-background: var(--background);
+
 	$background-secondary: #1a1c1e;
 	--background-secondary: #{$background-secondary};
 	--background-secondary-lighten-15: #{lighten($background-secondary, 15%)};
@@ -58,4 +60,8 @@
 	--error: #{$error};
 	--error-lighten-20: #{lighten($error, 20%)};
 	--error-lighten-10: #{lighten($error, 10%)};
+
+	// Box shadow
+	$box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.2);
+	--box-shadow: #{$box-shadow};
 }

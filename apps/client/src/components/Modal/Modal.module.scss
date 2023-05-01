@@ -15,7 +15,7 @@
 
 .modalContent {
 	position: relative;
-	background-color: #fff;
+	background-color: var(--background);
 	padding: 2rem;
 	border-radius: $border-radius;
 	min-width: 30rem;

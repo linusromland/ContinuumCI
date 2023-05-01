@@ -1,7 +1,7 @@
 @use 'src/styles' as *;
 
 .sidebar {
-	background-color: var(--background-secondary);
+	background-color: var(--background-sidebar);
 	display: flex;
 	flex-direction: column;
 
@@ -28,7 +28,7 @@
 	margin-bottom: 1rem;
 
 	h1 {
-		color: var(--text-secondary);
+		color: var(--text-sidebar);
 		font-size: 1.3rem;
 		font-weight: 300;
 		margin-left: 1rem;
@@ -77,11 +77,11 @@
 	&:hover {
 		opacity: 0.8;
 		border-radius: $border-radius;
-		background-color: var(--background-secondary-lighten-10);
+		background-color: var(--background-sidebar-hover);
 	}
 
 	img {
-		color: var(--text-secondary);
+		color: var(--text-sidebar);
 		width: 2.5rem;
 		height: 2.5rem;
 		font-weight: 300;
@@ -95,7 +95,7 @@
 .footer {
 	.footerText {
 		margin-left: 0.5rem;
-		color: var(--text-moody);
+		color: var(--text-sidebar-moody);
 		font-size: 0.8rem;
 		font-weight: 300;
 		margin-bottom: 0.4rem;
@@ -104,7 +104,7 @@
 
 		span {
 			font-weight: 700;
-			color: var(--text-moody);
+			color: var(--text-sidebar-moody);
 		}
 	}
 }

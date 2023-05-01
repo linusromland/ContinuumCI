@@ -5,6 +5,18 @@
 // Border radius
 $border-radius: 0.5rem;
 
+:root {
+	$background-sidebar: #1a1c1e;
+	--background-sidebar: #{$background-sidebar};
+	--background-sidebar-hover: lighten(#{$background-sidebar}, 10%);
+
+	$text-sidebar: #f7f7f7;
+	--text-sidebar: #{$text-sidebar};
+
+	$text-sidebar-moody: #b4b6be;
+	--text-sidebar-moody: #{$text-sidebar-moody};
+}
+
 // Set default text color
 * {
 	color: var(--text-primary);

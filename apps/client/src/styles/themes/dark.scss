@@ -2,22 +2,24 @@
 	// Main Colors
 	$primary: #81c784;
 	--primary: #{$primary};
-	--primary-lighten-25: #{lighten($primary, 25%)};
-	--primary-lighten-20: #{lighten($primary, 20%)};
-	--primary-lighten-10: #{lighten($primary, 10%)};
-	--primary-darken-20: #{darken($primary, 20%)};
+	--primary-lighten-25: #{darken($primary, 25%)};
+	--primary-lighten-20: #{darken($primary, 20%)};
+	--primary-lighten-10: #{darken($primary, 10%)};
+	--primary-darken-20: #{lighten($primary, 20%)};
 
 	$secondary: #4db6ac;
 	--secondary: #{$secondary};
-	--secondary-lighten-25: #{lighten($secondary, 25%)};
-	--secondary-lighten-10: #{lighten($secondary, 10%)};
+	--secondary-lighten-25: #{darken($secondary, 25%)};
+	--secondary-lighten-10: #{darken($secondary, 10%)};
 
 	$background: #353636;
 	--background: #{$background};
-	--background-lighten-15: #{lighten($background, 15%)};
-	--background-darken-10: #{darken($background, 10%)};
-	--background-darken-5: #{darken($background, 5%)};
-	--background-darken-2: #{darken($background, 2%)};
+	--background-lighten-15: #{darken($background, 15%)};
+	--background-darken-10: #{lighten($background, 10%)};
+	--background-darken-5: #{lighten($background, 5%)};
+	--background-darken-2: #{lighten($background, 2%)};
+
+	--input-background: var(--background-lighten-15);
 
 	$background-secondary: #1a1c1e;
 	--background-secondary: #{$background-secondary};
@@ -46,16 +48,20 @@
 	// Error Color
 	$success: #81c784;
 	--success: #{$success};
-	--success-lighten-20: #{lighten($success, 20%)};
-	--success-lighten-10: #{lighten($success, 10%)};
+	--success-lighten-20: #{darken($success, 20%)};
+	--success-lighten-10: #{darken($success, 10%)};
 
 	$warning: #ffa726;
 	--warning: #{$warning};
-	--warning-lighten-20: #{lighten($warning, 20%)};
-	--warning-lighten-10: #{lighten($warning, 10%)};
+	--warning-lighten-20: #{darken($warning, 20%)};
+	--warning-lighten-10: #{darken($warning, 10%)};
 
 	$error: #e57373;
 	--error: #{$error};
-	--error-lighten-20: #{lighten($error, 20%)};
-	--error-lighten-10: #{lighten($error, 10%)};
+	--error-lighten-20: #{darken($error, 20%)};
+	--error-lighten-10: #{darken($error, 10%)};
+
+	// Box shadow
+	$box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.6);
+	--box-shadow: #{$box-shadow};
 }
