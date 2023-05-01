@@ -405,11 +405,15 @@ export const en: TranslationKeys = {
 			availableDomains: 'Available Domains',
 			noDomainsFound: 'No domains found.',
 			addDomainName: 'Add Domain Name',
+			domainAdded: 'Domain name has been successfully added!',
 			failedToAddDomain: 'Failed to add domain name.',
-			removeDomainName: 'Remove Domain Name',
+			successRemoveDomain: 'Domain name has been successfully removed!',
 			failedToRemoveDomain: 'Failed to remove domain name.',
 			add: 'Add Domain',
-			remove: 'Remove Domain'
+			remove: 'Remove Domain',
+			confirmRemove: 'Confirm Domain Removal',
+			domainNameRequired: 'Domain name is required.',
+			domain: 'Domain'
 		}
 	},
 	addUserModal: {

@@ -15,6 +15,7 @@ interface TextEditModalProps {
 	validationSchema: unknown;
 	title?: string;
 	fieldName?: string;
+	submitText?: string;
 }
 
 export default function TextEditModal({
@@ -24,7 +25,8 @@ export default function TextEditModal({
 	initialValues,
 	validationSchema,
 	title,
-	fieldName = 'inputName'
+	fieldName = 'inputName',
+	submitText
 }: TextEditModalProps) {
 	const t = useTranslations();
 
@@ -38,9 +40,7 @@ export default function TextEditModal({
 				initialValues={initialValues}
 				enableReinitialize
 				validationSchema={validationSchema}
-				onSubmit={(values) => {
-					submit(values);
-				}}
+				onSubmit={submit}
 			>
 				{({ isSubmitting, dirty }) => (
 					<Form className={formStyle.form}>
@@ -64,7 +64,7 @@ export default function TextEditModal({
 							/>
 						</div>
 						<Button
-							text={`${t.editModal.update} ${fieldName}`}
+							text={submitText ?? `${t.editModal.update} ${fieldName}`}
 							disabled={isSubmitting || !dirty}
 							type='submit'
 							theme='secondary'

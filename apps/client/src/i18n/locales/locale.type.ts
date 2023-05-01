@@ -403,11 +403,15 @@ export type TranslationKeys = {
 			availableDomains: string;
 			noDomainsFound: string;
 			addDomainName: string;
+			domainAdded: string;
 			failedToAddDomain: string;
-			removeDomainName: string;
+			successRemoveDomain: string;
 			failedToRemoveDomain: string;
 			add: string;
 			remove: string;
+			confirmRemove: string;
+			domainNameRequired: string;
+			domain: string;
 		};
 	};
 	addUserModal: {

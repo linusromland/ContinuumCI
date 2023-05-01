@@ -405,11 +405,15 @@ export const sv: TranslationKeys = {
 			availableDomains: 'Tillgängliga domäner',
 			noDomainsFound: 'Inga domäner hittades.',
 			addDomainName: 'Lägg till domännamn',
+			domainAdded: 'Domännamnet har lagts till!',
 			failedToAddDomain: 'Misslyckades med att lägga till domännamn.',
-			removeDomainName: 'Ta bort domännamn',
+			successRemoveDomain: 'Domännamnet har tagits bort!',
 			failedToRemoveDomain: 'Misslyckades med att ta bort domännamn.',
 			add: 'Lägg till domän',
-			remove: 'Ta bort domän'
+			remove: 'Ta bort domän',
+			confirmRemove: 'Bekräfta borttagning',
+			domainNameRequired: 'Domännamn krävs.',
+			domain: 'Domän'
 		}
 	},
 	addUserModal: {

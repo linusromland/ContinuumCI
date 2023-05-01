@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import clsx from 'clsx';
-import Select from 'react-select';
 
 // Internal dependencies
 import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumbs';
@@ -14,7 +13,6 @@ import { createDomain, deleteDomain, getDomains } from '../../../utils/api/nginx
 import { toast } from 'react-toastify';
 import { NginxConfigurationType } from 'shared/src/types';
 import { getConfiguration, updateConfiguration } from '../../../utils/api/nginx/configuration';
-import { customStyles } from '../../../components/CustomSelect/CustomSelect';
 import useTranslations from '../../../i18n/translations';
 import { Loading } from '../../../components/Loading/Loading';
 
@@ -28,15 +26,12 @@ export default function Nginx(): JSX.Element {
 		}[]
 	);
 	const [nginxConfiguration, setNginxConfiguration] = useState({} as NginxConfigurationType);
-	const [newDomainName, setNewDomainName] = useState('');
 	const [sitesEnabledDirectoryModal, setSitesEnabledDirectoryModal] = useState(false);
 	const [accessLogLocationModal, setAccessLogLocationModal] = useState(false);
 	const [localIpAdressesModal, setLocalIpAdressesModal] = useState(false);
+	const [newDomainModal, setNewDomainModal] = useState(false);
 	const [dataReady, setDataReady] = useState(false);
-	const [selectedDomainName, setSelectedDomainName] = useState({
-		value: '',
-		label: ''
-	});
+	const [confirmRemoveDomain, setConfirmRemoveDomain] = useState('');
 
 	async function getDomainsData() {
 		const response = await getDomains();
@@ -135,89 +130,58 @@ export default function Nginx(): JSX.Element {
 				<Widget>
 					<div className={style.container}>
 						<h2 className={style.subtitle}>{t.nginx.domains.title}</h2>
-
+						<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
+							{t.nginx.domains.availableDomains}:
+						</h3>
 						<div className={style.infoContainer}>
-							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								{t.nginx.domains.availableDomains}:
-							</h3>
 							{domainNames.map((domainName, index) => (
-								<p className={clsx(style.infoContainerValue, style[`row${index + 1}`], style.col2)}>
-									{domainName.label}
-								</p>
+								<>
+									<p className={clsx(style.infoContainerValue, style[`row${index + 1}`], style.col1)}>
+										{domainName.label}
+									</p>
+									<Button
+										text={
+											confirmRemoveDomain !== domainName.value
+												? t.nginx.domains.remove
+												: t.nginx.domains.confirmRemove
+										}
+										onClick={async () => {
+											if (confirmRemoveDomain !== domainName.value) {
+												setConfirmRemoveDomain(domainName.value);
+												return;
+											}
+
+											const response = await deleteDomain(domainName.value);
+
+											if (response) {
+												getDomainsData();
+												setConfirmRemoveDomain('');
+												toast.success(t.nginx.domains.successRemoveDomain);
+											} else {
+												toast.error(t.nginx.domains.failedToRemoveDomain);
+											}
+										}}
+										small
+										theme='error'
+										icon='/icons/delete.svg'
+										className={clsx(style[`row${index + 1}`], style.col2)}
+									/>
+								</>
 							))}
 
 							{domainNames.length === 0 && (
-								<p className={clsx(style.infoContainerValue, style.row1, style.col2)}>
+								<p className={clsx(style.infoContainerValue, style.row1, style.col1)}>
 									{t.nginx.domains.noDomainsFound}
 								</p>
 							)}
 						</div>
-						<div className={clsx(style.infoContainer, style.actions)}>
-							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								{t.nginx.domains.addDomainName}:
-							</h3>
-							<input
-								className={clsx(style.input, style.row1, style.col2)}
-								type='text'
-								placeholder='example.com'
-								value={newDomainName}
-								onChange={(e) => {
-									setNewDomainName(e.target.value);
-								}}
-							/>
-
+						<div className={style.infoContainer}>
 							<Button
 								text={t.nginx.domains.add}
 								small
 								theme='secondary'
-								className={clsx(style.row1, style.col3)}
-								onClick={async () => {
-									if (!newDomainName) return;
-
-									const response = await createDomain(newDomainName);
-
-									if (response) {
-										getDomainsData();
-										setNewDomainName('');
-									} else {
-										toast.error(t.nginx.domains.failedToAddDomain);
-									}
-								}}
-							/>
-						</div>
-						<div className={style.infoContainer}>
-							<h3 className={clsx(style.infoContainerTitle, style.row1, style.col1)}>
-								{t.nginx.domains.removeDomainName}:
-							</h3>
-							<Select
-								className={clsx(style.row1, style.col2)}
-								styles={customStyles}
-								onChange={(option) => {
-									if (option && option.value) setSelectedDomainName(option);
-								}}
-								value={selectedDomainName}
-								options={domainNames}
-							/>
-							<Button
-								text={t.nginx.domains.remove}
-								small
-								theme='secondary'
-								className={clsx(style.row1, style.col3)}
-								onClick={async () => {
-									if (!selectedDomainName) return;
-
-									const response = await deleteDomain(selectedDomainName.value);
-
-									if (response) {
-										getDomainsData();
-										setSelectedDomainName({
-											label: '',
-											value: ''
-										});
-									} else {
-										toast.error(t.nginx.domains.failedToRemoveDomain);
-									}
-								}}
+								className={clsx(style.row1, style.col1)}
+								onClick={() => setNewDomainModal(true)}
 							/>
 						</div>
 					</div>
@@ -290,6 +254,33 @@ export default function Nginx(): JSX.Element {
 						accessLogLocation: nginxConfiguration.accessLogLocation,
 						localIps: values.localIps
 					});
+				}}
+			/>
+
+			<TextEditModal
+				title={t.nginx.domains.addDomainName}
+				fieldName={t.nginx.domains.domain}
+				open={newDomainModal}
+				onClose={() => {
+					setNewDomainModal(false);
+				}}
+				initialValues={{
+					[t.nginx.domains.domain]: ''
+				}}
+				validationSchema={Yup.object().shape({
+					[t.nginx.domains.domain]: Yup.string().required(t.nginx.domains.domainNameRequired)
+				})}
+				submitText={t.nginx.domains.add}
+				submit={async (values) => {
+					const response = await createDomain(values[t.nginx.domains.domain]);
+
+					if (response) {
+						getDomainsData();
+						setNewDomainModal(false);
+						toast.success(t.nginx.domains.domainAdded);
+					} else {
+						toast.error(t.nginx.domains.failedToAddDomain);
+					}
 				}}
 			/>
 		</>
