@@ -8,7 +8,6 @@
     	<h1>ContinuumCI</h1>
     </div>
     <p>ContinuumCI is a self-hosted continuous deployment tool that makes it easy to automatically deploy code from GitHub. It is built using Nest.JS and React, and is designed to be easy to set up and use.</p>
-
 </div>
 
 ## Table of Contents
