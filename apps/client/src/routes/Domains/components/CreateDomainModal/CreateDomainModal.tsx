@@ -182,7 +182,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 								port = service?.containerPorts[0].toString();
 							}
 
-							proxy_passes.push(`http://host.docker.internal:${port}`);
+							proxy_passes.push(`http://172.17.0.1:${port}`);
 						} else {
 							proxy_passes.push(location.proxy_pass);
 						}
