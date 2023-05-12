@@ -1,7 +1,7 @@
 // External dependencies
 import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import Docker from 'dockerode';
-import Compose, { IDockerComposeResult } from 'docker-compose';
+import { IDockerComposeResult } from 'docker-compose';
 import fs from 'fs';
 import yaml from 'js-yaml';
 
@@ -230,25 +230,27 @@ export class DockerService {
 		}
 
 		try {
-			// Deploy the project
-			await Compose.down({
-				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
-				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
-				log: true
-			}).then(
-				// On output, save the output
-				(output) => {
-					result.push(output);
-				},
-				// On error
-				() => {
-					throw new InternalServerErrorException({
-						success: false,
-						message: 'Failed to undeploy the project',
-						data: result
-					});
-				}
-			);
+			await new Promise((resolve, reject) => {
+				const composeDownCommand = `docker compose -f ${REPOSITORIES_DIRECTORY}/${
+					project._id
+				}/docker-compose.yml -p ${project.name.replace(/ /g, '_').toLowerCase()} down`;
+
+				exec(composeDownCommand, (error, stdout, stderr) => {
+					result.push(stdout as undefined as IDockerComposeResult);
+					if (error) {
+						console.error(`exec error: ${error}`);
+						reject(false);
+						throw new InternalServerErrorException({
+							success: false,
+							message: 'Failed to undeploy the project',
+							data: result
+						});
+					}
+					console.log(`stdout: ${stdout}`);
+					console.error(`stderr: ${stderr}`);
+					resolve(true);
+				});
+			});
 
 			return result;
 		} catch (error) {
