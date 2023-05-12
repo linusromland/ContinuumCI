@@ -314,7 +314,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 															label:
 																service.name +
 																(service.ports.length === 1
-																	? ` (${t.domains.port} ${service.ports[0]})`
+																	? ` (${t.domains.port} ${service.containerPorts[0]})`
 																	: '')
 														})) || []
 												}
