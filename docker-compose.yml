@@ -45,7 +45,7 @@ services:
         networks:
             - default
         volumes:
-            - projects_data:/apps/api/src/projects
+            - projects_data:/app/apps/api/src/repositories
         privileged: true
     client:
         depends_on:
