@@ -23,7 +23,7 @@ async function updateCompose(project: ProjectClass, ProjectModel: Model<ProjectC
 		// Update the services in db
 		const updatedServices = services.map((service) => ({
 			name: service,
-			containerPorts: dockerCompose.services[service].ports.map((port) => port.split(':')[1]) || [],
+			containerPorts: dockerCompose.services[service].ports?.map((port) => port.split(':')[1]) || [],
 			ports: project.services.find((s) => s.name === service)?.ports || []
 		}));
 
