@@ -56,9 +56,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps): JSX
 					{t.projects.projectCard.repository}: <a>{project.gitUrl}</a>
 				</p>
 				<p>
-					URL: <a>https://romland.dev</a>
-				</p>
-				<p>
 					{t.projects.header.lastUpdated}:{' '}
 					<span>{project.updatedAt ? dayjs(project.updatedAt).format('YYYY-MM-DD HH:mm:ss') : 'Never'}</span>
 				</p>
