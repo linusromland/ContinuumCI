@@ -242,7 +242,10 @@ export class ProjectsService {
 			});
 		}
 
-		const createdProject = new this.ProjectModel(project);
+		const createdProject = new this.ProjectModel({
+			...project,
+			cdToken: new Types.ObjectId()
+		});
 
 		createdProject.permissions.push({
 			user: userId,

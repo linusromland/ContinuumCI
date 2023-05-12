@@ -59,7 +59,6 @@ export const ProjectSchema = new Schema(
 		],
 		cdToken: {
 			type: Types.ObjectId,
-			default: new Types.ObjectId(),
 			unique: true
 		}
 	},
