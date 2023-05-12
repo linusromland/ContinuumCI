@@ -2,7 +2,7 @@ FROM node:18-alpine as api
 
 # Install git
 RUN apk update
-RUN apk add --no-cache git
+RUN apk add --no-cache git docker-cli-compose
 
 # Build the nodejs app
 WORKDIR /app

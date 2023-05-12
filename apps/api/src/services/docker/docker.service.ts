@@ -7,10 +7,11 @@ import yaml from 'js-yaml';
 
 // Internal dependencies
 import { EnvironmentVariablesClass, ProjectClass } from 'shared/src/classes';
-import { REPOSITORIES_DIRECTORY } from 'src/utils/env';
+import { REPOSITORIES_DIRECTORY, DOCKER_HOST, DOCKER_PORT } from 'src/utils/env';
 import { ProjectDeploymentStatus } from 'shared/src/enums';
 import { Model } from 'mongoose';
 import { ContainerType } from 'shared/src/types';
+import { exec } from 'child_process';
 
 @Injectable()
 export class DockerService {
@@ -20,7 +21,13 @@ export class DockerService {
 		@Inject('PROJECT_MODEL')
 		private ProjectModel: Model<ProjectClass>
 	) {
-		this.docker = new Docker();
+		this.docker = new Docker({
+			host: `http://${DOCKER_HOST}`,
+			port: DOCKER_PORT
+		});
+
+		// Check if docker is running
+		this.docker.ping();
 	}
 
 	async getInformation(): Promise<{
@@ -141,26 +148,45 @@ export class DockerService {
 		fs.writeFileSync(COMPOSE_FILE_LOCATION, updatedFileContents);
 
 		try {
-			// Deploy the project
-			await Compose.upAll({
-				cwd: `${REPOSITORIES_DIRECTORY}/${project._id}`,
-				composeOptions: [`-p=${project.name.replace(/ /g, '_').toLowerCase()}`],
-				commandOptions: ['--build'],
-				log: true
-			}).then(
-				// On output, save the output
-				(output) => {
-					result.push(output);
-				},
-				// On error
-				() => {
-					throw new InternalServerErrorException({
-						success: false,
-						message: 'Failed to deploy the project',
-						data: result
-					});
-				}
-			);
+			await new Promise((resolve, reject) => {
+				// Set the DOCKER_HOST environment variable
+				exec(`export DOCKER_HOST=tcp://${DOCKER_HOST}`, (error, stdout, stderr) => {
+					if (error) {
+						console.log('error', error);
+						reject(false);
+					}
+					if (stderr) {
+						console.log('stderr', stderr);
+						reject(false);
+					}
+					console.log('stdout', stdout);
+					resolve(true);
+				});
+			});
+
+			await new Promise((resolve, reject) => {
+				// Deploy the project
+				const composeCommand = `docker compose -f ${REPOSITORIES_DIRECTORY}/${
+					project._id
+				}/docker-compose.yml -p ${project.name.replace(/ /g, '_').toLowerCase()} up -d --build`;
+
+				exec(composeCommand, (error, stdout, stderr) => {
+					console.log('composeCommand', composeCommand);
+					result.push(stdout as undefined as IDockerComposeResult);
+					if (error) {
+						console.error(`exec error: ${error}`);
+						reject(false);
+						throw new InternalServerErrorException({
+							success: false,
+							message: 'Failed to deploy the project',
+							data: result
+						});
+					}
+					console.log(`stdout: ${stdout}`);
+					console.error(`stderr: ${stderr}`);
+					resolve(true);
+				});
+			});
 
 			return result;
 		} catch (error) {
