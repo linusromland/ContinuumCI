@@ -179,7 +179,7 @@ export default function CreateDomainModal({ open, onClose }: DomainModalProps) {
 									(service) => service.name === location.project?.service.value
 								);
 
-								port = service?.containerPorts[0].toString();
+								port = service?.ports[0].toString();
 							}
 
 							proxy_passes.push(`http://172.17.0.1:${port}`);
