@@ -44,7 +44,7 @@
 		"eslint-config-turbo": "0.0.4",
 		"eslint-plugin-turbo": "^0.0.4",
 		"js-yaml": "^4.1.0",
-		"mongoose": "^6.9.1"
+		"mongoose": "^6.12.0"
 	},
 	"packageManager": "npm@8.19.2"
 }
